@@ -1,0 +1,9 @@
+<div class="inline-flex space-x-1 items-center border border-gray-300 p-1 hover:bg-marsgray-200">
+    <nwn-svg-icon [type]="type" [nwnSvgIcon]="nwnSvgIcon"></nwn-svg-icon>
+    <div class="text-body text-marsgray-700">
+        <ng-content></ng-content>
+    </div>
+    <nwn-button type="icon" size="iconsm">
+        <nwn-svg-icon size="md" nwnSvgIcon="close"></nwn-svg-icon>
+    </nwn-button>
+</div>

@@ -1,0 +1,20 @@
+<button
+    [class]="class"
+    [ngClass]="{
+        btn: size === 'lg',
+        'small-btn': size === 'sm',
+        'icon-small-btn': size === 'iconsm',
+        'icon-large-btn': size === 'iconlg',
+        'primary-btn': type === 'primary',
+        'secondary-btn': type === 'secondary',
+        'link-btn': type === 'link',
+        'transparent-btn': type === 'transparent',
+        'icon-btn': type === 'icon',
+        'disabled-primary-btn': disabled == true && type === 'primary',
+        'disabled-secondary-btn': disabled == true && type === 'secondary',
+        'disabled-link-btn': disabled == true && type === 'link',
+        'disabled-transparent-btn': disabled == true && type === 'transparent'
+    }"
+>
+    <ng-content></ng-content>
+</button>
