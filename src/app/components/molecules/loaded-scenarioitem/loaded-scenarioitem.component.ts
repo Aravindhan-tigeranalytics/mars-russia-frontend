@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class LoadedScenarioitemComponent {
     @Input()
-    title: string = 'Untitled scenario';
+    title: string = 'Galaxy promo scenario';
 }

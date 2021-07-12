@@ -40,5 +40,5 @@ const LoadedScenarioitemTemplate: Story<LoadedScenarioitemComponent> = (args: Lo
 export const LoadedScenarioitem = LoadedScenarioitemTemplate.bind({});
 LoadedScenarioitem.storyName = 'Loaded Scenario Item';
 LoadedScenarioitem.args = {
-    title: 'Untitled scenario',
+    title: 'Galaxy promo scenario',
 };
