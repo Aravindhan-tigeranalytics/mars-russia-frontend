@@ -38,8 +38,12 @@ export class SvgIconComponent {
         | 'plus'
         | 'upload'
         | 'download'
+        | 'tickmark'
         | 'lightning-bolt'
         | 'save'
         | 'save-download'
-        | 'more-horizontal' = 'logout';
+        | 'more-horizontal'
+        | 'chevron-up'
+        | 'chevron-down'
+        | 'copy' = 'logout';
 }

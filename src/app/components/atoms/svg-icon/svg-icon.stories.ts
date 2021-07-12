@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // Import Menu Item
 import { SvgIconComponent } from './svg-icon.component';
+import { SvgIconDirective } from './svg-icon.directive';
 
 // Define component
 export default {
@@ -17,7 +18,7 @@ export default {
         moduleMetadata({
             imports: [CommonModule],
             // Declare all components used here including the actual component
-            declarations: [SvgIconComponent],
+            declarations: [SvgIconComponent, SvgIconDirective],
         }),
     ],
     // Define control types

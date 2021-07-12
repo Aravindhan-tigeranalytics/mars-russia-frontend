@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'nwn-status-bar',
@@ -7,5 +7,5 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class StatusBarComponent {
     @Input()
-    statusIconClass = 'text-white stroke-current';
+    nwnStatusBar: 'yettobesimulated' | 'viewmore' | 'viewless' = 'yettobesimulated';
 }

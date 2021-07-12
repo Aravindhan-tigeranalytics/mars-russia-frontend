@@ -7,19 +7,26 @@ import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '@atoms/svg-icon/svg-icon.component';
 import { ButtonComponent } from '@atoms/button/button.component';
 import { LinkComponent } from '@atoms/link/link.component';
+import { SimulatedFilterItemComponent } from '@atoms/simulated-filter-item/simulated-filter-item.component';
+
 // Molecules
 import { MenuItemComponent } from '@molecules/menu-item/menu-item.component';
 import { StatusBarComponent } from '@molecules/status-bar/status-bar.component';
 import { FilterItemComponent } from '@molecules/filter-item/filter-item.component';
 import { PromotoolTabComponent } from '@molecules/promotool-tab/promotool-tab.component';
 import { LoadedScenarioControlsComponent } from '@molecules/loaded-scenario-controls/loaded-scenario-controls.component';
+import { LoadedScenarioExpandComponent } from '@molecules/loaded-scenario-expand/loaded-scenario-expand.component';
 import { PromoElasticityComponent } from '@molecules/promo-elasticity/promo-elasticity.component';
 import { LoadedScenarioitemComponent } from '@molecules/loaded-scenarioitem/loaded-scenarioitem.component';
+import { WeeklyPromotionComponent } from '@molecules/weekly-promotion/weekly-promotion.component';
+import { SummaryPlaceholderComponent } from '@molecules/summary-placeholder/summary-placeholder.component';
+
 // Organisms
 import { HeaderComponent } from '@organisms/header/header.component';
 import { LoadedScenarioHeaderComponent } from '@organisms/loaded-scenario-header/loaded-scenario-header.component';
 import { SideMenuComponent } from '@organisms/side-menu/side-menu.component';
 import { SideBarComponent } from '@organisms/side-bar/side-bar.component';
+import { SummaryComponent } from '@organisms/summary/summary.component';
 
 // Import the actual component
 import { PromoScenarioBuilderComponent } from './promo-scenario-builder.component';
@@ -41,19 +48,24 @@ export default {
                 ButtonComponent,
                 LinkComponent,
                 SvgIconComponent,
+                SimulatedFilterItemComponent,
                 // Molecules
                 MenuItemComponent,
                 StatusBarComponent,
                 PromotoolTabComponent,
                 FilterItemComponent,
                 LoadedScenarioControlsComponent,
+                LoadedScenarioExpandComponent,
                 LoadedScenarioitemComponent,
                 PromoElasticityComponent,
+                WeeklyPromotionComponent,
                 // Organisms
                 HeaderComponent,
                 LoadedScenarioHeaderComponent,
                 SideMenuComponent,
                 SideBarComponent,
+                SummaryComponent,
+                SummaryPlaceholderComponent,
                 // Page
                 PromoScenarioBuilderComponent,
             ],
