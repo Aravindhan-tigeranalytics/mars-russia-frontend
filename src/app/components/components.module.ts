@@ -36,9 +36,10 @@ import { LoadedScenarioHeaderComponent } from '@organisms/loaded-scenario-header
 import { SummaryComponent } from '@organisms/summary/summary.component';
 import { TabNavItemComponent } from '@molecules/tab-nav-item/tab-nav-item.component';
 import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-    imports: [],
+    imports: [CommonModule],
     declarations: [
         ButtonComponent,
         LinkComponent,
@@ -73,20 +74,37 @@ import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
         LoadedScenarioExpandComponent,
     ],
     exports: [
+        CommonModule,
         ButtonComponent,
-        FilterItemComponent,
+        LinkComponent,
+        PromotoolTabComponent,
         SvgIconComponent,
         StatusBarComponent,
         MenuItemComponent,
+        FilterItemComponent,
+        MetricItemComponent,
+        CommandHeaderComponent,
+        CommandMultiselectComponent,
+        CommandIconitemComponent,
+        CheckboxComponent,
         SideMenuComponent,
         SideBarComponent,
         HeaderComponent,
-        PromoElasticityComponent,
-        LoadedScenarioControlsComponent,
         LoadedScenarioitemComponent,
         LoadedScenarioHeaderComponent,
+        LoadedScenarioControlsComponent,
+        PromoElasticityComponent,
+        SvgIconDirective,
+        StatusBarDirective,
+        SimulatedFilterItemDirective,
+        SimulatedFilterItemComponent,
+        WeeklyPromotionComponent,
         SummaryComponent,
         SummaryPlaceholderComponent,
+        ToggleCtaComponent,
+        ToggleComponent,
+        TabNavItemComponent,
+        TabCtaComponent,
         LoadedScenarioExpandComponent,
     ],
 })

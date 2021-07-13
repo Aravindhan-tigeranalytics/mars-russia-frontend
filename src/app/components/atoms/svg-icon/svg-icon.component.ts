@@ -10,13 +10,14 @@ export class SvgIconComponent {
     size: 'xs' | 'sm' | 'md' | 'lg' = 'lg';
 
     @Input()
-    type: 'stroke' | 'fill' | 'fill-stroke' = 'stroke';
+    type: string | 'stroke' | 'fill' | 'fill-stroke' = 'stroke';
 
     @Input()
     class = '';
 
     @Input()
     nwnSvgIcon:
+        | string
         | 'logout'
         | 'simulator'
         | 'optimizer'
@@ -45,5 +46,10 @@ export class SvgIconComponent {
         | 'more-horizontal'
         | 'chevron-up'
         | 'chevron-down'
-        | 'copy' = 'logout';
+        | 'copy'
+        | 'arrow-up'
+        | 'arrow-down'
+        | 'filter'
+        | 'carret-up'
+        | 'carret-down' = 'logout';
 }
