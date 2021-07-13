@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class SvgIconComponent {
     @Input()
-    size: 'xs' | 'sm' | 'md' | 'lg' = 'lg';
+    size: string | 'xs' | 'sm' | 'md' | 'lg' = 'lg';
 
     @Input()
     type: string | 'stroke' | 'fill' | 'fill-stroke' = 'stroke';
