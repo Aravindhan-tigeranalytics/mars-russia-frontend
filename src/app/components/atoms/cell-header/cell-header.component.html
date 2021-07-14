@@ -1,0 +1,16 @@
+<div
+    [ngClass]="{
+        'header-sm': type === 'headersm',
+        'sub-header-sm': type === 'subheadersm',
+        'sub-header-md': type === 'subheadermd',
+        'sub-header-lg': type === 'subheaderlg',
+        'bg-white': type === 'bgwhite',
+        'bg-transparent': type === 'bgtransparent',
+        'bg-gray-100': type === 'bggray-100'
+    }"
+>
+    <p>
+        <ng-content></ng-content>
+    </p>
+    <!-- <p class="text-caption text-marsgray-700 font-medium">{{ date }}</p> -->
+</div>

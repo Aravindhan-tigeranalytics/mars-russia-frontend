@@ -2,6 +2,7 @@
     class="
         flex flex-row
         bg-white
+        hover:bg-marsgray-50
         items-center
         px-6
         py-3
@@ -13,11 +14,13 @@
     "
     [ngClass]="{ 'command-iconItem-borderLeft': borderLeft == true }"
 >
-    <div class="flex flex-row items-center space-x-2">
-        <nwn-svg-icon type="stroke" nwnSvgIcon="retailers"></nwn-svg-icon>
+    <div class="flex flex-row items-center space-x-4">
+        <nwn-svg-icon [type]="type" [nwnSvgIcon]="nwnSvgIcon"></nwn-svg-icon>
         <p class="text-body-standard text-marsgray-700 group-hover:text-marsblue-600">
             <ng-content></ng-content>
         </p>
     </div>
-    <nwn-svg-icon type="fill" nwnSvgIcon="tickmark"></nwn-svg-icon>
+    <div [ngClass]="{ hidden: hideTick == true }">
+        <nwn-svg-icon type="fill" nwnSvgIcon="tickmark"></nwn-svg-icon>
+    </div>
 </div>

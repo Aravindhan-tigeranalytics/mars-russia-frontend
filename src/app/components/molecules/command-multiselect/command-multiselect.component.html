@@ -1,9 +1,12 @@
 <div
-    class="flex flex-row h-14 bg-white items-center space-x-4 justify-between px-6 py-4 border-l-4 border-marsblue-600"
+    class="flex flex-row h-12 bg-white hover:bg-marsgray-50 items-center space-x-4 justify-between px-6 py-4"
+    [ngClass]="{
+        'left-border': leftBorder == true
+    }"
 >
-    <nwn-checkbox>Walmart</nwn-checkbox>
+    <nwn-checkbox><ng-content></ng-content></nwn-checkbox>
 
-    <nwn-button type="icon" size="iconsm" [ngClass]="{ hidden: closeButton == false }">
+    <nwn-button type="icon" size="iconsm" [ngClass]="{ hidden: hideClose == true }">
         <nwn-svg-icon type="stroke" nwnSvgIcon="close" size="md"></nwn-svg-icon>
     </nwn-button>
 </div>

@@ -8,4 +8,11 @@ import { Component, Input } from '@angular/core';
 export class CommandIconitemComponent {
     @Input()
     borderLeft: boolean = false;
+
+    @Input()
+    nwnSvgIcon = '';
+    @Input()
+    type = '';
+    @Input()
+    hideTick: boolean = false;
 }

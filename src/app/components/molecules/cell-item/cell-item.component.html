@@ -1,0 +1,69 @@
+<div class="px-3 py-2 space-y-1 bg-white" nwnCellItem="nwnCellItem">
+    <ng-container *ngIf="nwnCellItem === 'carret-up'">
+        <p class="text-caption text-marsgray-500">$88.60 M</p>
+        <div class="flex flex-row items-center space-x-1">
+            <p
+                class="text-body text-marsgray-700"
+                [ngClass]="{
+                    'text-size-md': size === 'textsize-md',
+                    'text-size-lg': size === 'textsize-lg'
+                }"
+            >
+                $88.60 M
+                <span
+                    class="inline-flex items-center justify-center space-x-1"
+                    [ngClass]="{
+                        'text-marsgreen-accent': color === 'green',
+                        'text-marsred-600': color === 'red',
+                        'text-marsgray-500': color === 'neutral'
+                    }"
+                >
+                    ($0.20 M)
+
+                    <nwn-svg-icon type="fill" nwnSvgIcon="carret-up"></nwn-svg-icon>
+                </span>
+            </p>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="nwnCellItem === 'carret-down'">
+        <p class="text-caption text-marsgray-500">$88.60 M</p>
+        <div class="flex flex-row items-center space-x-1">
+            <p
+                class="text-body text-marsgray-700"
+                [ngClass]="{
+                    'text-size-md': size === 'textsize-md',
+                    'text-size-lg': size === 'textsize-lg'
+                }"
+            >
+                $88.60 M
+                <span
+                    class="inline-flex items-center justify-center space-x-1"
+                    [ngClass]="{
+                        'text-marsgreen-accent': color === 'green',
+                        'text-marsred-600': color === 'red',
+                        'text-marsgray-500': color === 'neutral'
+                    }"
+                >
+                    ($0.20 M)
+
+                    <nwn-svg-icon type="fill" nwnSvgIcon="carret-down"></nwn-svg-icon>
+                </span>
+            </p>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="nwnCellItem === 'promo'">
+        <p class="text-caption text-marsgray-500">$88.60 M</p>
+        <div class="flex flex-row items-center space-x-1">
+            <p
+                class="text-body text-marsgray-700"
+                [ngClass]="{
+                    'text-size-md': size === 'textsize-md',
+                    'text-size-lg': size === 'textsize-lg'
+                }"
+            >
+                TPR - 10%
+                <span class="inline-flex items-center justify-center space-x-1 text-gray-700"> TRP- 20% (Co-5%) </span>
+            </p>
+        </div>
+    </ng-container>
+</div>

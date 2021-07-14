@@ -33,7 +33,7 @@ export default {
 // primary button template
 const PromotoolTabTemplate: Story<PromotoolTabComponent> = (args: PromotoolTabComponent) => ({
     props: { ...args },
-    template: `<nwn-promotool-tab [href]="href" type="fill" nwnSvgIcon="promo-tool" [active]="active">Promo Optimizer</nwn-promotool-tab>`,
+    template: `<nwn-promotool-tab [href]="href" type="fill" nwnSvgIcon="optimizer" [active]="active">Promo Optimizer</nwn-promotool-tab>`,
 });
 
 //  Primary button

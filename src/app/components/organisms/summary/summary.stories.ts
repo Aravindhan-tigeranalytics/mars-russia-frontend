@@ -6,11 +6,24 @@ import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '@atoms/svg-icon/svg-icon.component';
 import { ButtonComponent } from '@atoms/button/button.component';
 import { SimulatedFilterItemComponent } from '@atoms/simulated-filter-item/simulated-filter-item.component';
+
+import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
+import { TabNavItemComponent } from '@molecules/tab-nav-item/tab-nav-item.component';
+import { ToggleCtaComponent } from '@atoms/toggle-cta/toggle-cta.component';
+import { ToggleComponent } from '@molecules/toggle/toggle.component';
+import { LegendItemsComponent } from '@atoms/legend-items/legend-items.component';
+import { CellItemComponent } from '@molecules/cell-item/cell-item.component';
+import { CellWeekItemComponent } from '@molecules/cell-week-item/cell-week-item.component';
+
 import { SummaryPlaceholderComponent } from '@molecules/summary-placeholder/summary-placeholder.component';
 
 import { FilterItemComponent } from '@molecules/filter-item/filter-item.component';
 import { LoadedScenarioitemComponent } from '@molecules/loaded-scenarioitem/loaded-scenarioitem.component';
 import { PromoElasticityComponent } from '@molecules/promo-elasticity/promo-elasticity.component';
+
+import { CellHeaderComponent } from '@atoms/cell-header/cell-header.component';
+
+import { CellItemDirective } from '@molecules/cell-item/cell-item.directive';
 
 // Import Menu Item
 import { SummaryComponent } from './summary.component';
@@ -36,6 +49,15 @@ export default {
                 LoadedScenarioitemComponent,
                 PromoElasticityComponent,
                 SimulatedFilterItemComponent,
+                TabCtaComponent,
+                TabNavItemComponent,
+                ToggleCtaComponent,
+                ToggleComponent,
+                LegendItemsComponent,
+                CellItemComponent,
+                CellWeekItemComponent,
+                CellHeaderComponent,
+                CellItemDirective,
             ],
         }),
     ],

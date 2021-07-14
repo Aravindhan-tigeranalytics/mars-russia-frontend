@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // Import all components used
 import { SvgIconComponent } from '@atoms/svg-icon/svg-icon.component';
+import { SvgIconDirective } from '@atoms/svg-icon/svg-icon.directive';
 
 // Import Menu Item
 import { CommandHeaderComponent } from './command-header.component';
@@ -20,7 +21,7 @@ export default {
         moduleMetadata({
             imports: [CommonModule],
             // Declare all components used here including the actual component
-            declarations: [CommandHeaderComponent, SvgIconComponent],
+            declarations: [CommandHeaderComponent, SvgIconComponent, SvgIconDirective],
         }),
     ],
     // Define control types
@@ -33,7 +34,7 @@ export default {
 // primary button template
 const CommandHeaderTemplate: Story<CommandHeaderComponent> = (args: CommandHeaderComponent) => ({
     props: { ...args },
-    template: `<nwn-command-header >Promo optimizer</nwn-command-header>`,
+    template: `<nwn-command-header type="stroke" nwnSvgIcon="filter">Promo optimizer</nwn-command-header>`,
 });
 
 //  Primary button

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'nwn-command-multiselect',
@@ -7,5 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CommandMultiselectComponent {
     @Input()
-    closeButton: boolean = false;
+    hideClose: boolean = false;
+    @Input()
+    leftBorder: boolean = false;
 }

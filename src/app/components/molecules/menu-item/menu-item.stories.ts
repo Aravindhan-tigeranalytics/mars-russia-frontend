@@ -33,7 +33,7 @@ export default {
 // primary button template
 const MenuItemTemplate: Story<MenuItemComponent> = (args: MenuItemComponent) => ({
     props: { ...args },
-    template: `<nwn-menu-item [href]="href" type="type" [nwnSvgIcon]="nwnSvgIcon">Promo Tool</nwn-menu-item>`,
+    template: `<nwn-menu-item [href]="href" type="stroke" [nwnSvgIcon]="nwnSvgIcon">Promo Tool</nwn-menu-item>`,
 });
 
 //  Primary button
@@ -42,5 +42,4 @@ MenuItem.storyName = 'Menu Item';
 MenuItem.args = {
     href: '/',
     nwnSvgIcon: 'promo-tool',
-    type: 'fill';
 };
