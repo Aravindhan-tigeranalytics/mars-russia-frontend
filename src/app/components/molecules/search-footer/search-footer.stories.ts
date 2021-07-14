@@ -30,7 +30,9 @@ export default {
 // primary button template
 const SearchFooterTemplate: Story<SearchFooterComponent> = (args: SearchFooterComponent) => ({
     props: { ...args },
-    template: `<nwn-search-footer [hideApply]="true"></nwn-search-footer>`,
+    template: `<div class="w-[650px]"><nwn-search-footer [showKeyBoardCtrl]="true"
+    [showApply]="true"
+    [showBack]="true"></nwn-search-footer></div>`,
 });
 
 //  Primary button

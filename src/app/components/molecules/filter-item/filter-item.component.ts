@@ -10,4 +10,6 @@ export class FilterItemComponent {
     nwnSvgIcon = 'retailers';
     @Input()
     type = 'stroke';
+    @Input()
+    hideClose: boolean = false;
 }

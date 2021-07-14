@@ -15,7 +15,10 @@
     [ngClass]="{ 'command-iconItem-borderLeft': borderLeft == true }"
 >
     <div class="flex flex-row items-center space-x-4">
-        <nwn-svg-icon [type]="type" [nwnSvgIcon]="nwnSvgIcon"></nwn-svg-icon>
+        <div class="text-marsgray-700">
+            <nwn-svg-icon [type]="type" [nwnSvgIcon]="nwnSvgIcon"></nwn-svg-icon>
+        </div>
+
         <p class="text-body-standard text-marsgray-700 group-hover:text-marsblue-600">
             <ng-content></ng-content>
         </p>

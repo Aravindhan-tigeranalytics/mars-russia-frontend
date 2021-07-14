@@ -12,9 +12,6 @@ import { SearchFooterComponent } from '@molecules/search-footer/search-footer.co
 import { CheckboxComponent } from '@atoms/checkbox/checkbox.component';
 import { CommandMultiselectComponent } from '@molecules/command-multiselect/command-multiselect.component';
 
-import { TabNavItemComponent } from '@molecules/tab-nav-item/tab-nav-item.component';
-import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
-
 // Import Menu Item
 import { FilterStrageticCellsComponent } from './filter-stragetic-cells.component';
 
@@ -39,8 +36,6 @@ export default {
                 CommandMultiselectComponent,
                 CommandSearchComponent,
                 SearchFooterComponent,
-                TabNavItemComponent,
-                TabCtaComponent,
                 FilterStrageticCellsComponent,
                 CheckboxComponent,
             ],

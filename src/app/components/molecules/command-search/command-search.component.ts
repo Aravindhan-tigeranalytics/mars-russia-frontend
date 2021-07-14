@@ -7,6 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class CommandSearchComponent {
     @Input()
+    placeholder = 'Search promo metrics';
+    @Input()
     closesvgClass = 'absolute right-4 top-6 text-black stroke-current';
     @Input()
     hideClose: boolean = false;
