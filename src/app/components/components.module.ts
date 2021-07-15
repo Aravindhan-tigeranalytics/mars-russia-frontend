@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// Custom Components
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
+
 // Atoms
 import { ButtonComponent } from '@atoms/button/button.component';
 import { LinkComponent } from '@atoms/link/link.component';
 import { SvgIconComponent } from '@atoms/svg-icon/svg-icon.component';
 import { CheckboxComponent } from '@atoms/checkbox/checkbox.component';
 import { SvgIconDirective } from '@atoms/svg-icon/svg-icon.directive';
+import { DropdownComponent } from '@atoms/dropdown/dropdown.component';
 import { ToggleCtaComponent } from '@atoms/toggle-cta/toggle-cta.component';
 import { SimulatedFilterItemDirective } from '@atoms/simulated-filter-item/simulated-filter-item.directive';
 import { SimulatedFilterItemComponent } from '@atoms/simulated-filter-item/simulated-filter-item.component';
@@ -14,6 +20,7 @@ import { LegendItemsComponent } from '@atoms/legend-items/legend-items.component
 import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
 import { LegendItemsDirective } from '@atoms/legend-items/legend-items.directive';
 import { CellHeaderComponent } from '@atoms/cell-header/cell-header.component';
+import { SliderComponent } from '@atoms/slider/slider.component';
 
 // Molecules
 import { SearchFooterComponent } from '@molecules/search-footer/search-footer.component';
@@ -29,15 +36,19 @@ import { StatusBarComponent } from '@molecules/status-bar/status-bar.component';
 import { LoadedScenarioControlsComponent } from '@molecules/loaded-scenario-controls/loaded-scenario-controls.component';
 import { LoadedScenarioExpandComponent } from '@molecules/loaded-scenario-expand/loaded-scenario-expand.component';
 import { LoadedScenarioitemComponent } from '@molecules/loaded-scenarioitem/loaded-scenarioitem.component';
+import { FilterComponent } from '@molecules/filter/filter.component';
 import { StatusBarDirective } from '@molecules/status-bar/status-bar.directive';
 import { PromoElasticityComponent } from '@molecules/promo-elasticity/promo-elasticity.component';
 import { CellItemComponent } from '@molecules/cell-item/cell-item.component';
 import { CellWeekItemComponent } from '@molecules/cell-week-item/cell-week-item.component';
+import { ComparescenarioCellHeaderComponent } from '@molecules/comparescenario-cell-header/comparescenario-cell-header.component';
 import { WeeklyPromotionComponent } from '@molecules/weekly-promotion/weekly-promotion.component';
 import { ScenarioLoadCardComponent } from '@molecules/scenario-load-card/scenario-load-card.component';
 import { SummaryPlaceholderComponent } from '@molecules/summary-placeholder/summary-placeholder.component';
+import { ChartToolTipComponent } from '@molecules/chart-tool-tip/chart-tool-tip.component';
 import { ToggleComponent } from '@molecules/toggle/toggle.component';
 import { TabNavItemComponent } from '@molecules/tab-nav-item/tab-nav-item.component';
+import { TableViewComponent } from '@molecules/table-view/table-view.component';
 import { CellItemDirective } from '@molecules/cell-item/cell-item.directive';
 import { MetricItemPopupComponent } from '@molecules/metric-item-popup/metric-item-popup.component';
 import { ModalComponent } from '@molecules/modal/modal.component';
@@ -50,6 +61,7 @@ import { LoadedScenarioHeaderComponent } from '@organisms/loaded-scenario-header
 import { FilterRetailerComponent } from '@organisms/filter-retailer/filter-retailer.component';
 import { SummaryComponent } from '@organisms/summary/summary.component';
 import { FilterBasicComponent } from '@organisms/filter-basic/filter-basic.component';
+import { PromoscenariobuilderInitialstateComponent } from '@organisms/promoscenariobuilder-initialstate/promoscenariobuilder-initialstate.component';
 import { FilterCategoriesComponent } from '@organisms/filter-categories/filter-categories.component';
 import { FilterStrageticCellsComponent } from '@organisms/filter-stragetic-cells/filter-stragetic-cells.component';
 import { FilterBrandsComponent } from '@organisms/filter-brands/filter-brands.component';
@@ -63,11 +75,29 @@ import { LoadedPricingScenarioComponent } from '@organisms/loaded-pricing-scenar
 import { LoadedPromosimulatorScenarioComponent } from '@organisms/loaded-promosimulator-scenario/loaded-promosimulator-scenario.component';
 import { PromoScenariobuilderPopupComponent } from '@organisms/promo-scenariobuilder-popup/promo-scenariobuilder-popup.component';
 import { PromoElasticityPopupComponent } from '@organisms/promo-elasticity-popup/promo-elasticity-popup.component';
-import { OpenedModalComponent } from '@organisms/opened-modal/opened-modal.component';
 import { PromoOptimizerPopupComponent } from '@organisms/promo-optimizer-popup/promo-optimizer-popup.component';
+import { AddCompareScenarioComponent } from '@organisms/add-compare-scenario/add-compare-scenario.component';
+import { ComparePromoOptimizerComponent } from '@organisms/compare-promo-optimizer/compare-promo-optimizer.component';
+import { ComparePromoScenarioComponent } from '@organisms/compare-promo-scenario/compare-promo-scenario.component';
+import { ManageMetricsComponent } from '@organisms/manage-metrics/manage-metrics.component';
+import { CompulsoryWeeksPopupComponent } from '@organisms/compulsory-weeks-popup/compulsory-weeks-popup.component';
+import { WeekItemComponent } from '@molecules/week-item/week-item.component';
+import { WeeksIgnoredComponent } from '@organisms/weeks-ignored/weeks-ignored.component';
+import { NumberPromoWeeksComponent } from '@organisms/number-promo-weeks/number-promo-weeks.component';
+import { DurationPromoWavesComponent } from '@organisms/duration-promo-waves/duration-promo-waves.component';
+import { MinimumGapWavesComponent } from '@organisms/minimum-gap-waves/minimum-gap-waves.component';
+import { NumberPromoWavesComponent } from '@organisms/number-promo-waves/number-promo-waves.component';
+import { MacPopupComponent } from '@organisms/mac-popup/mac-popup.component';
+import { AddPromotionComponent } from '@organisms/add-promotion/add-promotion.component';
+import { TextInputComponent } from '@atoms/text-input/text-input.component';
+import { TextInputDirective } from '@atoms/text-input/text-input.directive';
+import { SaveScenarioComponent } from './organisms/save-scenario/save-scenario.component';
+import { UploadItemsDirective } from './atoms/upload-items/upload-items.directive';
+import { UploadItemsComponent } from './atoms/upload-items/upload-items.component';
+import { UploadWeeklyPromotionsComponent } from './organisms/upload-weekly-promotions/upload-weekly-promotions.component';
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, NgxSliderModule, NgSelectModule, FormsModule],
     declarations: [
         ButtonComponent,
         LinkComponent,
@@ -91,10 +121,14 @@ import { PromoOptimizerPopupComponent } from '@organisms/promo-optimizer-popup/p
         LoadedScenarioControlsComponent,
         LoadedScenarioExpandComponent,
         PromoElasticityComponent,
+        DropdownComponent,
         CellItemComponent,
         CellWeekItemComponent,
+        ComparescenarioCellHeaderComponent,
         ScenarioLoadCardComponent,
+        ChartToolTipComponent,
         FilterRetailerComponent,
+        FilterComponent,
         SvgIconDirective,
         StatusBarDirective,
         SimulatedFilterItemDirective,
@@ -109,6 +143,8 @@ import { PromoOptimizerPopupComponent } from '@organisms/promo-optimizer-popup/p
         LegendItemsComponent,
         LegendItemsDirective,
         FilterBasicComponent,
+        PromoscenariobuilderInitialstateComponent,
+        TableViewComponent,
         CellHeaderComponent,
         CellItemDirective,
         FilterCategoriesComponent,
@@ -125,9 +161,28 @@ import { PromoOptimizerPopupComponent } from '@organisms/promo-optimizer-popup/p
         LoadedPromosimulatorScenarioComponent,
         PromoScenariobuilderPopupComponent,
         PromoElasticityPopupComponent,
-        ModalComponent,
-        OpenedModalComponent,
         PromoOptimizerPopupComponent,
+        SliderComponent,
+        AddCompareScenarioComponent,
+        ComparePromoOptimizerComponent,
+        ComparePromoScenarioComponent,
+        ManageMetricsComponent,
+        CompulsoryWeeksPopupComponent,
+        WeekItemComponent,
+        WeeksIgnoredComponent,
+        NumberPromoWeeksComponent,
+        DurationPromoWavesComponent,
+        MinimumGapWavesComponent,
+        NumberPromoWavesComponent,
+        MacPopupComponent,
+        AddPromotionComponent,
+        TextInputComponent,
+        TextInputDirective,
+        SaveScenarioComponent,
+        UploadItemsDirective,
+        UploadItemsComponent,
+        UploadWeeklyPromotionsComponent,
+        ModalComponent,
     ],
     exports: [
         ButtonComponent,
@@ -154,8 +209,11 @@ import { PromoOptimizerPopupComponent } from '@organisms/promo-optimizer-popup/p
         PromoElasticityComponent,
         CellItemComponent,
         CellWeekItemComponent,
+        ComparescenarioCellHeaderComponent,
         ScenarioLoadCardComponent,
+        ChartToolTipComponent,
         FilterRetailerComponent,
+        FilterComponent,
         SvgIconDirective,
         StatusBarDirective,
         SimulatedFilterItemDirective,
@@ -170,6 +228,8 @@ import { PromoOptimizerPopupComponent } from '@organisms/promo-optimizer-popup/p
         LegendItemsComponent,
         LegendItemsDirective,
         FilterBasicComponent,
+        PromoscenariobuilderInitialstateComponent,
+        TableViewComponent,
         CellHeaderComponent,
         CellItemDirective,
         FilterCategoriesComponent,
@@ -185,6 +245,24 @@ import { PromoOptimizerPopupComponent } from '@organisms/promo-optimizer-popup/p
         LoadedPricingScenarioComponent,
         LoadedPromosimulatorScenarioComponent,
         PromoScenariobuilderPopupComponent,
+        PromoElasticityPopupComponent,
+        ModalComponent,
+        PromoOptimizerPopupComponent,
+        SliderComponent,
+        NgxSliderModule,
+        NgSelectModule,
+        FormsModule,
+        AddCompareScenarioComponent,
+        ComparePromoOptimizerComponent,
+        ComparePromoScenarioComponent,
+        TextInputComponent,
+        TextInputDirective,
+        UploadItemsDirective,
+        UploadItemsComponent,
+        NgxSliderModule,
+        UploadWeeklyPromotionsComponent,
+        NgxSliderModule,
+        AddPromotionComponent,
     ],
 })
 export class ComponentModule {}

@@ -8,6 +8,17 @@ import { SvgIconComponent } from '@atoms/svg-icon/svg-icon.component';
 import { ButtonComponent } from '@atoms/button/button.component';
 import { LinkComponent } from '@atoms/link/link.component';
 import { SimulatedFilterItemComponent } from '@atoms/simulated-filter-item/simulated-filter-item.component';
+import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
+import { TabNavItemComponent } from '@molecules/tab-nav-item/tab-nav-item.component';
+import { ToggleCtaComponent } from '@atoms/toggle-cta/toggle-cta.component';
+import { ToggleComponent } from '@molecules/toggle/toggle.component';
+import { LegendItemsComponent } from '@atoms/legend-items/legend-items.component';
+import { TableViewComponent } from '@molecules/table-view/table-view.component';
+import { CellItemComponent } from '@molecules/cell-item/cell-item.component';
+import { CellWeekItemComponent } from '@molecules/cell-week-item/cell-week-item.component';
+import { ModalComponent } from '@molecules/modal/modal.component';
+
+import { PromoscenariobuilderInitialstateComponent } from '@organisms/promoscenariobuilder-initialstate/promoscenariobuilder-initialstate.component';
 
 // Molecules
 import { MenuItemComponent } from '@molecules/menu-item/menu-item.component';
@@ -27,6 +38,16 @@ import { LoadedScenarioHeaderComponent } from '@organisms/loaded-scenario-header
 import { SideMenuComponent } from '@organisms/side-menu/side-menu.component';
 import { SideBarComponent } from '@organisms/side-bar/side-bar.component';
 import { SummaryComponent } from '@organisms/summary/summary.component';
+
+import { CellHeaderComponent } from '@atoms/cell-header/cell-header.component';
+
+import { CellItemDirective } from '@molecules/cell-item/cell-item.directive';
+import { FilterBasicComponent } from '@organisms/filter-basic/filter-basic.component';
+
+import { CommandHeaderComponent } from '@molecules/command-header/command-header.component';
+import { CommandIconitemComponent } from '@molecules/command-iconitem/command-iconitem.component';
+import { CommandSearchComponent } from '@molecules/command-search/command-search.component';
+import { SearchFooterComponent } from '@molecules/search-footer/search-footer.component';
 
 // Import the actual component
 import { PromoScenarioBuilderComponent } from './promo-scenario-builder.component';
@@ -49,7 +70,9 @@ export default {
                 LinkComponent,
                 SvgIconComponent,
                 SimulatedFilterItemComponent,
+                CellHeaderComponent,
                 // Molecules
+                CellItemDirective,
                 MenuItemComponent,
                 StatusBarComponent,
                 PromotoolTabComponent,
@@ -59,6 +82,11 @@ export default {
                 LoadedScenarioitemComponent,
                 PromoElasticityComponent,
                 WeeklyPromotionComponent,
+                ModalComponent,
+                CommandHeaderComponent,
+                CommandIconitemComponent,
+                CommandSearchComponent,
+                SearchFooterComponent,
                 // Organisms
                 HeaderComponent,
                 LoadedScenarioHeaderComponent,
@@ -66,8 +94,18 @@ export default {
                 SideBarComponent,
                 SummaryComponent,
                 SummaryPlaceholderComponent,
+                FilterBasicComponent,
                 // Page
                 PromoScenarioBuilderComponent,
+                TabCtaComponent,
+                TabNavItemComponent,
+                ToggleCtaComponent,
+                ToggleComponent,
+                LegendItemsComponent,
+                TableViewComponent,
+                CellItemComponent,
+                CellWeekItemComponent,
+                PromoscenariobuilderInitialstateComponent,
             ],
         }),
     ],

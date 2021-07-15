@@ -26,16 +26,14 @@ export default {
 const LinkTemplate: Story<LinkComponent> = (args: LinkComponent) => ({
     props: { ...args },
     template: `
-    <div style="">
         <nwn-link>Mars Wrigley</nwn-link>
-    </div>
     `,
 });
 
 // Create an instances of the component
-// Link to newwwton
-export const LinkToNewwwton = LinkTemplate.bind({});
-LinkToNewwwton.storyName = 'Link Only';
-LinkToNewwwton.args = {
+// Link to Mars
+export const LinkToMars = LinkTemplate.bind({});
+LinkToMars.storyName = 'Link Only';
+LinkToMars.args = {
     href: 'https://www.mars.com/made-by-mars/mars-wrigley',
 };

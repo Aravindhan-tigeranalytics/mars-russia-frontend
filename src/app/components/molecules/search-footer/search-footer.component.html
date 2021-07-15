@@ -31,7 +31,7 @@
             <nwn-button type="primary" size="sm">Apply</nwn-button>
         </div>
         <div [ngClass]="{ hidden: showAdd == false }">
-            <nwn-button type="primary" size="sm">Add</nwn-button>
+            <nwn-button type="primary" [disabled]="disabled" size="sm">Add</nwn-button>
         </div>
         <div [ngClass]="{ hidden: showSaved == false }">
             <nwn-button type="primary" size="sm">Saved</nwn-button>
