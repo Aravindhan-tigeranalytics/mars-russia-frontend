@@ -12,4 +12,6 @@ export class ScenarioLoadCardComponent {
     showTrash: boolean = false;
     @Input()
     showCheckbox: boolean = false;
+    @Input()
+    showSubHead: boolean = false;
 }

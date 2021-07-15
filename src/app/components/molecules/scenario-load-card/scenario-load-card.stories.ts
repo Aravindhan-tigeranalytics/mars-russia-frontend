@@ -33,15 +33,39 @@ export default {
 } as Meta;
 
 // Define template
-// primary button template
+//  ScenarioLoadCard
 const ScenarioLoadCardTemplate: Story<ScenarioLoadCardComponent> = (args: ScenarioLoadCardComponent) => ({
     props: { ...args },
-    template: `<div class="w-[650px]"><nwn-scenario-load-card [hideInfo]="false"
-    [hideTrash]="true"
-    [hideCheckbox]="true"></nwn-scenario-load-card></div>`,
+    template: `<div class="w-[650px]">
+                    <nwn-scenario-load-card [showInfo]="true"
+                    [showTrash]="false"
+                    [showCheckbox]="false">
+                    <p slcHead>Promo scenario name
+                        </p>
+                        <p slcContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.</p>
+                    </nwn-scenario-load-card>
+                </div>`,
 });
 
-//  Primary button
 export const ScenarioLoadCard = ScenarioLoadCardTemplate.bind({});
 ScenarioLoadCard.storyName = 'Scenario Load Card';
 ScenarioLoadCard.args = {};
+
+const ScenarioCompareCardTemplate: Story<ScenarioLoadCardComponent> = (args: ScenarioLoadCardComponent) => ({
+    props: { ...args },
+    template: `<div class="w-[650px]">
+                    <nwn-scenario-load-card [showInfo]="false"
+                    [showTrash]="false"
+                    [showCheckbox]="true"
+                    [showSubHead]="true">
+                        <p slcHead>Promo scenario name
+                        </p>
+                        <p slcSubHead>Promo optimizer</p>
+                        <p slcContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.</p>
+                    </nwn-scenario-load-card>
+                </div>`,
+});
+
+export const ScenarioCompareCard = ScenarioCompareCardTemplate.bind({});
+ScenarioCompareCard.storyName = 'Scenario Compare Card';
+ScenarioCompareCard.args = {};
