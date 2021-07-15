@@ -31,7 +31,7 @@ export default {
 // primary button template
 const MetricItemPopupTemplate: Story<MetricItemPopupComponent> = (args: MetricItemPopupComponent) => ({
     props: { ...args },
-    template: `<nwn-metric-item-popup></nwn-metric-item-popup>`,
+    template: `<nwn-metric-item-popup><p metricPopHead>$19.82</p><p metricPopContent>List price (simulated)</p></nwn-metric-item-popup>`,
 });
 
 //  Primary button
