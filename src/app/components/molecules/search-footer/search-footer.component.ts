@@ -7,9 +7,19 @@ import { Component, Input } from '@angular/core';
 })
 export class SearchFooterComponent {
     @Input()
-    hideApply: boolean = false;
+    showApply: boolean = false;
     @Input()
-    hideBack: boolean = false;
+    showBack: boolean = false;
     @Input()
-    hideLoad: boolean = false;
+    showLoad: boolean = false;
+    @Input()
+    showKeyBoardCtrl: boolean = false;
+    @Input()
+    showClose: boolean = false;
+    @Input()
+    showAdd: boolean = false;
+    @Input()
+    showSaved: boolean = false;
+    @Input()
+    showCompare: boolean = false;
 }

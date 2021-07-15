@@ -1,6 +1,10 @@
 <div class="w-[650px]">
-    <nwn-command-header type="stroke" nwnSvgIcon="filter">Filter</nwn-command-header>
-    <nwn-command-search [hideClose]="true"></nwn-command-search>
+    <div class="border-b border-marsgray-200">
+        <nwn-command-header type="stroke" nwnSvgIcon="filter">Filter</nwn-command-header>
+    </div>
+    <div class="border-b border-marsgray-200">
+        <nwn-command-search [hideClose]="true"></nwn-command-search>
+    </div>
     <div>
         <nwn-command-iconitem type="stroke" nwnSvgIcon="retailers" [hideTick]="true"
             >Filter by retailer</nwn-command-iconitem
@@ -19,5 +23,5 @@
             >Filter by product group</nwn-command-iconitem
         >
     </div>
-    <nwn-search-footer [hideApply]="true" [hideBack]="true" [hideLoad]="true"></nwn-search-footer>
+    <nwn-search-footer [showKeyBoardCtrl]="true"></nwn-search-footer>
 </div>

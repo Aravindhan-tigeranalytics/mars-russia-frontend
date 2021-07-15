@@ -273,6 +273,20 @@
             stroke-linejoin="round"
         />
     </ng-container>
+    <ng-container *ngIf="nwnSvgIcon === 'arrow-compare'">
+        <path
+            d="M8.9998 12L12.9998 8M12.9998 8L8.9998 4M12.9998 8L3 8"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+        <path
+            d="M15.0002 20L11.0002 16M11.0002 16L15.0002 12M11.0002 16H21"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </ng-container>
     <ng-container *ngIf="nwnSvgIcon === 'arrow-up'">
         <path d="M5 10L12 3M12 3L19 10M12 3V21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </ng-container>
@@ -292,5 +306,45 @@
     </ng-container>
     <ng-container *ngIf="nwnSvgIcon === 'carret-down'">
         <path d="M12 15L8 9L16 9L12 15Z" />
+    </ng-container>
+    <ng-container *ngIf="nwnSvgIcon === 'trash'">
+        <path
+            d="M10 11V17M14 11V17M4 7H20M19 7L18.133 19.142C18.0971 19.6466 17.8713 20.1188 17.5011 20.4636C17.1309 20.8083 16.6439 21 16.138 21H7.862C7.35614 21 6.86907 20.8083 6.49889 20.4636C6.1287 20.1188 5.90292 19.6466 5.867 19.142L5 7H19ZM15 7V4C15 3.73478 14.8946 3.48043 14.7071 3.29289C14.5196 3.10536 14.2652 3 14 3H10C9.73478 3 9.48043 3.10536 9.29289 3.29289C9.10536 3.48043 9 3.73478 9 4V7H15Z"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </ng-container>
+    <ng-container *ngIf="nwnSvgIcon === 'adjustments'">
+        <path
+            d="M12 6V4M12 6C11.4696 6 10.9609 6.21071 10.5858 6.58579C10.2107 6.96086 10 7.46957 10 8C10 8.53043 10.2107 9.03914 10.5858 9.41421C10.9609 9.78929 11.4696 10 12 10M12 6C12.5304 6 13.0391 6.21071 13.4142 6.58579C13.7893 6.96086 14 7.46957 14 8C14 8.53043 13.7893 9.03914 13.4142 9.41421C13.0391 9.78929 12.5304 10 12 10M12 10V20M6 18C6.53043 18 7.03914 17.7893 7.41421 17.4142C7.78929 17.0391 8 16.5304 8 16C8 15.4696 7.78929 14.9609 7.41421 14.5858C7.03914 14.2107 6.53043 14 6 14M6 18C5.46957 18 4.96086 17.7893 4.58579 17.4142C4.21071 17.0391 4 16.5304 4 16C4 15.4696 4.21071 14.9609 4.58579 14.5858C4.96086 14.2107 5.46957 14 6 14M6 18V20M6 14V4M18 18C18.5304 18 19.0391 17.7893 19.4142 17.4142C19.7893 17.0391 20 16.5304 20 16C20 15.4696 19.7893 14.9609 19.4142 14.5858C19.0391 14.2107 18.5304 14 18 14M18 18C17.4696 18 16.9609 17.7893 16.5858 17.4142C16.2107 17.0391 16 16.5304 16 16C16 15.4696 16.2107 14.9609 16.5858 14.5858C16.9609 14.2107 17.4696 14 18 14M18 18V20M18 14V4"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </ng-container>
+    <ng-container *ngIf="nwnSvgIcon === 'variables'">
+        <path
+            d="M4.87102 4C3.63643 6.48586 2.99594 9.22445 3.00002 12C3.00002 14.874 3.67302 17.59 4.87102 20M19.001 20C20.2353 17.5141 20.8754 14.7755 20.871 12C20.871 9.126 20.198 6.41 19.001 4M9.00002 9H10.246C10.4632 9.0001 10.6745 9.0709 10.8478 9.2017C11.0212 9.3325 11.1473 9.51619 11.207 9.725L12.793 15.275C12.8527 15.4838 12.9788 15.6675 13.1522 15.7983C13.3256 15.9291 13.5368 15.9999 13.754 16H15M16 9H15.92C15.6315 8.99988 15.3463 9.0622 15.0841 9.18268C14.8219 9.30317 14.5889 9.47896 14.401 9.698L9.60002 15.302C9.41206 15.5212 9.17887 15.697 8.91649 15.8175C8.65411 15.938 8.36875 16.0003 8.08002 16H8.00002"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </ng-container>
+    <ng-container *ngIf="nwnSvgIcon === 'trending-up'">
+        <path
+            d="M13 7H21M21 7V15M21 7L13 15L9 11L3 17"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </ng-container>
+    <ng-container *ngIf="nwnSvgIcon === 'trending-down'">
+        <path
+            d="M13 17H21M21 17V9M21 17L13 9L9 13L3 7"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
     </ng-container>
 </svg>

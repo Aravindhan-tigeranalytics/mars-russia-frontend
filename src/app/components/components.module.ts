@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 // Atoms
 import { ButtonComponent } from '@atoms/button/button.component';
@@ -10,6 +11,9 @@ import { ToggleCtaComponent } from '@atoms/toggle-cta/toggle-cta.component';
 import { SimulatedFilterItemDirective } from '@atoms/simulated-filter-item/simulated-filter-item.directive';
 import { SimulatedFilterItemComponent } from '@atoms/simulated-filter-item/simulated-filter-item.component';
 import { LegendItemsComponent } from '@atoms/legend-items/legend-items.component';
+import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
+import { LegendItemsDirective } from '@atoms/legend-items/legend-items.directive';
+import { CellHeaderComponent } from '@atoms/cell-header/cell-header.component';
 
 // Molecules
 import { SearchFooterComponent } from '@molecules/search-footer/search-footer.component';
@@ -30,8 +34,13 @@ import { PromoElasticityComponent } from '@molecules/promo-elasticity/promo-elas
 import { CellItemComponent } from '@molecules/cell-item/cell-item.component';
 import { CellWeekItemComponent } from '@molecules/cell-week-item/cell-week-item.component';
 import { WeeklyPromotionComponent } from '@molecules/weekly-promotion/weekly-promotion.component';
+import { ScenarioLoadCardComponent } from '@molecules/scenario-load-card/scenario-load-card.component';
 import { SummaryPlaceholderComponent } from '@molecules/summary-placeholder/summary-placeholder.component';
 import { ToggleComponent } from '@molecules/toggle/toggle.component';
+import { TabNavItemComponent } from '@molecules/tab-nav-item/tab-nav-item.component';
+import { CellItemDirective } from '@molecules/cell-item/cell-item.directive';
+import { MetricItemPopupComponent } from '@molecules/metric-item-popup/metric-item-popup.component';
+import { ModalComponent } from '@molecules/modal/modal.component';
 
 // Organisms
 import { SideMenuComponent } from '@organisms/side-menu/side-menu.component';
@@ -40,18 +49,22 @@ import { HeaderComponent } from '@organisms/header/header.component';
 import { LoadedScenarioHeaderComponent } from '@organisms/loaded-scenario-header/loaded-scenario-header.component';
 import { FilterRetailerComponent } from '@organisms/filter-retailer/filter-retailer.component';
 import { SummaryComponent } from '@organisms/summary/summary.component';
-import { TabNavItemComponent } from '@molecules/tab-nav-item/tab-nav-item.component';
-import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
-import { LegendItemsDirective } from '@atoms/legend-items/legend-items.directive';
 import { FilterBasicComponent } from '@organisms/filter-basic/filter-basic.component';
-import { CellHeaderComponent } from './atoms/cell-header/cell-header.component';
-import { CommonModule } from '@angular/common';
-import { CellItemDirective } from './molecules/cell-item/cell-item.directive';
-import { FilterCategoriesComponent } from './organisms/filter-categories/filter-categories.component';
-import { FilterStrageticCellsComponent } from './organisms/filter-stragetic-cells/filter-stragetic-cells.component';
-import { FilterBrandsComponent } from './organisms/filter-brands/filter-brands.component';
-import { FilterBrandsFormatsComponent } from './organisms/filter-brands-formats/filter-brands-formats.component';
-import { FilterProductGroupsComponent } from './organisms/filter-product-groups/filter-product-groups.component';
+import { FilterCategoriesComponent } from '@organisms/filter-categories/filter-categories.component';
+import { FilterStrageticCellsComponent } from '@organisms/filter-stragetic-cells/filter-stragetic-cells.component';
+import { FilterBrandsComponent } from '@organisms/filter-brands/filter-brands.component';
+import { FilterBrandsFormatsComponent } from '@organisms/filter-brands-formats/filter-brands-formats.component';
+import { FilterProductGroupsComponent } from '@organisms/filter-product-groups/filter-product-groups.component';
+import { LoadScenarioPricingComponent } from '@organisms/load-scenario-pricing/load-scenario-pricing.component';
+import { LoadScenarioPromosimulatorComponent } from '@organisms/load-scenario-promosimulator/load-scenario-promosimulator.component';
+import { PricingScenarioComponent } from '@organisms/pricing-scenario/pricing-scenario.component';
+import { PromoSimulatorScenarioComponent } from '@organisms/promo-simulator-scenario/promo-simulator-scenario.component';
+import { LoadedPricingScenarioComponent } from '@organisms/loaded-pricing-scenario/loaded-pricing-scenario.component';
+import { LoadedPromosimulatorScenarioComponent } from '@organisms/loaded-promosimulator-scenario/loaded-promosimulator-scenario.component';
+import { PromoScenariobuilderPopupComponent } from '@organisms/promo-scenariobuilder-popup/promo-scenariobuilder-popup.component';
+import { PromoElasticityPopupComponent } from '@organisms/promo-elasticity-popup/promo-elasticity-popup.component';
+import { OpenedModalComponent } from '@organisms/opened-modal/opened-modal.component';
+import { PromoOptimizerPopupComponent } from '@organisms/promo-optimizer-popup/promo-optimizer-popup.component';
 
 @NgModule({
     imports: [CommonModule],
@@ -80,6 +93,7 @@ import { FilterProductGroupsComponent } from './organisms/filter-product-groups/
         PromoElasticityComponent,
         CellItemComponent,
         CellWeekItemComponent,
+        ScenarioLoadCardComponent,
         FilterRetailerComponent,
         SvgIconDirective,
         StatusBarDirective,
@@ -102,6 +116,18 @@ import { FilterProductGroupsComponent } from './organisms/filter-product-groups/
         FilterBrandsComponent,
         FilterBrandsFormatsComponent,
         FilterProductGroupsComponent,
+        LoadScenarioPricingComponent,
+        LoadScenarioPromosimulatorComponent,
+        PricingScenarioComponent,
+        PromoSimulatorScenarioComponent,
+        MetricItemPopupComponent,
+        LoadedPricingScenarioComponent,
+        LoadedPromosimulatorScenarioComponent,
+        PromoScenariobuilderPopupComponent,
+        PromoElasticityPopupComponent,
+        ModalComponent,
+        OpenedModalComponent,
+        PromoOptimizerPopupComponent,
     ],
     exports: [
         ButtonComponent,
@@ -128,6 +154,7 @@ import { FilterProductGroupsComponent } from './organisms/filter-product-groups/
         PromoElasticityComponent,
         CellItemComponent,
         CellWeekItemComponent,
+        ScenarioLoadCardComponent,
         FilterRetailerComponent,
         SvgIconDirective,
         StatusBarDirective,
@@ -145,6 +172,19 @@ import { FilterProductGroupsComponent } from './organisms/filter-product-groups/
         FilterBasicComponent,
         CellHeaderComponent,
         CellItemDirective,
+        FilterCategoriesComponent,
+        FilterStrageticCellsComponent,
+        FilterBrandsComponent,
+        FilterBrandsFormatsComponent,
+        FilterProductGroupsComponent,
+        LoadScenarioPricingComponent,
+        LoadScenarioPromosimulatorComponent,
+        PricingScenarioComponent,
+        PromoSimulatorScenarioComponent,
+        MetricItemPopupComponent,
+        LoadedPricingScenarioComponent,
+        LoadedPromosimulatorScenarioComponent,
+        PromoScenariobuilderPopupComponent,
     ],
 })
 export class ComponentModule {}
