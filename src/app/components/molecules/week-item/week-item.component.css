@@ -8,7 +8,7 @@
     border-right: 15px solid transparent;
 }
 .compulsory-week-item {
-    @apply px-2 py-2 space-y-1 text-left relative border border-marsgreen-accent bg-marsgreen-100;
+    /* @apply px-2 py-2 space-y-1 text-left relative border border-marsgreen-accent bg-marsgreen-100; */
 }
 .disable-week-item {
     @apply px-2 py-2 space-y-1 text-left relative border border-marsred-400 bg-marsred-100;

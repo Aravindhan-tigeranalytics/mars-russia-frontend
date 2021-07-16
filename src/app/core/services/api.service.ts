@@ -18,12 +18,12 @@ export class ApiService {
   private formatErrors(error: any) {
     return  throwError(error.error);
   }
-   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+   get<T>(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     var reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
       'Authorization': 'Token ' + this.token
    });
-    return this.http.get(`${this.api_path}${path}`,{ headers: reqHeader })
+    return this.http.get<T>(`${this.api_path}${path}`,{ headers: reqHeader })
       .pipe(catchError(this.formatErrors));
   }
 

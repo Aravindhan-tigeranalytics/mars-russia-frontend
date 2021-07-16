@@ -1,5 +1,8 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "cli": {
+      "analytics": "87b5c64e-6441-44af-b5fe-297509d5ce3f"
+    },
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
@@ -40,6 +43,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "aot": false,
                         "outputPath": "dist/angular-tailwind-storybook",
                         "index": "src/index.html",
                         "main": "src/main.ts",

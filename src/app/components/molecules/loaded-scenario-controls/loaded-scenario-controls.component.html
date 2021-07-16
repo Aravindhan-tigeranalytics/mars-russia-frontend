@@ -2,7 +2,9 @@
     <div class="flex flex-row space-x-2 items-center">
         <div class="flex flex-row space-x-2 border-r border-marsgray-300 pr-2">
             <nwn-button type="icon" size="iconsm">
-                <nwn-svg-icon type="stroke" nwnSvgIcon="upload"></nwn-svg-icon>
+                <input type="file" accept="image/*" hidden="true" #file>
+
+                <nwn-svg-icon (click)="file.click()" type="stroke" nwnSvgIcon="upload"></nwn-svg-icon>
             </nwn-button>
             <nwn-button type="icon" size="iconsm">
                 <nwn-svg-icon type="stroke" nwnSvgIcon="download"></nwn-svg-icon>

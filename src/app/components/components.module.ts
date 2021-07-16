@@ -263,6 +263,7 @@ import { UploadWeeklyPromotionsComponent } from './organisms/upload-weekly-promo
         UploadWeeklyPromotionsComponent,
         NgxSliderModule,
         AddPromotionComponent,
+        WeeksIgnoredComponent
     ],
 })
 export class ComponentModule {}
