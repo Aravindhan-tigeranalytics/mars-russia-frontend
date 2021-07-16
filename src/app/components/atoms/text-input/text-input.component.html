@@ -1,0 +1,44 @@
+<div nwnTextInput="nwnTextInput">
+    <ng-container *ngIf="nwnTextInput === 'text'">
+        <div class="flex flex-col space-y-2">
+            <label class="text-body text-gray-700 font-medium"><ng-content select="[label]"></ng-content></label>
+            <input
+                type="text"
+                class="
+                    h-10
+                    w-full
+                    p-3
+                    rounded-none
+                    border border-marsgray-300
+                    focus:border-marsgray-500
+                    focus:outline-none
+                    bg-white
+                "
+                [ngClass]="{ 'border-marsred-600': error == false }"
+                placeholder="{{ placeholder }}"
+            />
+        </div>
+    </ng-container>
+    <ng-container *ngIf="nwnTextInput === 'textarea'">
+        <div class="flex flex-col space-y-2">
+            <label class="text-body text-gray-700 font-medium"
+                ><ng-content select="[labeltextarea]"></ng-content
+            ></label>
+            <textarea
+                type="text"
+                class="
+                    h-20
+                    w-full
+                    p-3
+                    border border-marsgray-300
+                    focus:border-marsgray-500
+                    focus:outline-none
+                    bg-white
+                    rounded-none
+                "
+                [ngClass]="{ 'border-marsred-600': error == true }"
+                placeholder="{{ placeholder }}"
+            ></textarea>
+        </div>
+    </ng-container>
+</div>

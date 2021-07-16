@@ -12,10 +12,13 @@ import { TabNavItemComponent } from '@molecules/tab-nav-item/tab-nav-item.compon
 import { ToggleCtaComponent } from '@atoms/toggle-cta/toggle-cta.component';
 import { ToggleComponent } from '@molecules/toggle/toggle.component';
 import { LegendItemsComponent } from '@atoms/legend-items/legend-items.component';
+import { TableViewComponent } from '@molecules/table-view/table-view.component';
 import { CellItemComponent } from '@molecules/cell-item/cell-item.component';
 import { CellWeekItemComponent } from '@molecules/cell-week-item/cell-week-item.component';
 
 import { SummaryPlaceholderComponent } from '@molecules/summary-placeholder/summary-placeholder.component';
+
+import { PromoscenariobuilderInitialstateComponent } from '@organisms/promoscenariobuilder-initialstate/promoscenariobuilder-initialstate.component';
 
 import { FilterItemComponent } from '@molecules/filter-item/filter-item.component';
 import { LoadedScenarioitemComponent } from '@molecules/loaded-scenarioitem/loaded-scenarioitem.component';
@@ -49,11 +52,13 @@ export default {
                 LoadedScenarioitemComponent,
                 PromoElasticityComponent,
                 SimulatedFilterItemComponent,
+                PromoscenariobuilderInitialstateComponent,
                 TabCtaComponent,
                 TabNavItemComponent,
                 ToggleCtaComponent,
                 ToggleComponent,
                 LegendItemsComponent,
+                TableViewComponent,
                 CellItemComponent,
                 CellWeekItemComponent,
                 CellHeaderComponent,

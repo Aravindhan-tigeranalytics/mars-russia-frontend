@@ -1,15 +1,24 @@
 /* Size */
 .btn {
-    @apply px-6 py-3 inline-flex space-x-2 items-center justify-between font-bold focus:outline-none;
+    @apply px-6 py-2.5 inline-flex space-x-2 items-center font-bold focus:outline-none;
 }
 .small-btn {
-    @apply px-6 py-1 inline-flex space-x-2 text-title-small items-center font-bold focus:outline-none;
+    @apply px-6 py-1.5 inline-flex space-x-2 text-title-small items-center font-bold focus:outline-none;
+}
+.ghost-large {
+    @apply px-0 py-0 inline-flex space-x-2 items-center focus:outline-none;
+}
+.ghost-small {
+    @apply px-0 py-0 inline-flex space-x-2 text-title-small items-center focus:outline-none;
 }
 .icon-small-btn {
     @apply p-1 flex space-x-2 items-center focus:outline-none;
 }
 .icon-large-btn {
     @apply p-2 flex space-x-2 items-center focus:outline-none;
+}
+.no-size {
+    @apply p-0;
 }
 
 /* Types */
@@ -25,8 +34,17 @@
 .transparent-btn {
     @apply text-marsgray-700 bg-transparent hover:bg-marsgray-200;
 }
+.ghost-white-btn {
+    @apply text-white text-transparent bg-transparent hover:bg-transparent;
+}
+.ghost-dark-btn {
+    @apply text-marsgray-700 text-transparent bg-transparent hover:bg-transparent;
+}
 .icon-btn {
     @apply text-marsgray-700 bg-transparent hover:bg-marsgray-200;
+}
+.no-style {
+    @apply bg-transparent border-none focus:outline-none;
 }
 
 /* Disabled / Enabled */
@@ -41,4 +59,10 @@
 }
 .disabled-transparent-btn {
     @apply text-gray-400 cursor-not-allowed bg-transparent hover:bg-transparent;
+}
+.disabled-ghostwhite-btn {
+    @apply text-white cursor-not-allowed bg-transparent hover:bg-transparent;
+}
+.disabled-ghostdark-btn {
+    @apply text-marsgray-700 cursor-not-allowed bg-transparent hover:bg-transparent;
 }

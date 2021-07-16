@@ -1,9 +1,23 @@
-<div class="py-4 flex flex-col space-y-3">
+<div class="py-4 px-1 flex flex-col space-y-3 hover:bg-marsgray-200">
     <div class="flex flex-row items-center justify-between space-x-6">
         <nwn-button type="icon" size="iconsm" (click)="decrement()">
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
         </nwn-button>
-        <p class="text-title-medium text-marsgray-700 w-5">{{ counter }}</p>
+        <input
+            class="
+                text-title-medium text-marsgray-700
+                w-10
+                appearance-none
+                bg-transparent
+                rounded-none
+                border border-transparent
+                focus:border-marsgray-500
+                focus:outline-none
+                text-center
+            "
+            type="number"
+            value="{{ counter }}"
+        />
         <nwn-button type="icon" size="iconsm" (click)="increment()">
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
         </nwn-button>

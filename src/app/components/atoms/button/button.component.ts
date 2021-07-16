@@ -7,10 +7,11 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonComponent {
     @Input()
-    size: 'sm' | 'lg' | 'iconsm' | 'iconlg' = 'lg';
+    size: string | 'nosize' | 'sm' | 'lg' | 'iconsm' | 'iconlg' | 'ghostsm' | 'ghostlg' = 'lg';
 
     @Input()
-    type: 'primary' | 'secondary' | 'link' | 'transparent' | 'icon' = 'primary';
+    type: string | 'nostyle' | 'primary' | 'secondary' | 'link' | 'transparent' | 'icon' | 'ghostwhite' | 'ghostdark' =
+        'primary';
 
     @Input()
     disabled: boolean = false;

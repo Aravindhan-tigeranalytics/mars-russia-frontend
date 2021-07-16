@@ -22,4 +22,8 @@ export class SearchFooterComponent {
     showSaved: boolean = false;
     @Input()
     showCompare: boolean = false;
+    @Input()
+    disabled: boolean = false;
+    @Input()
+    type = '';
 }

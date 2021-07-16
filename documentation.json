@@ -2066,7 +2066,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"adjustments\">Pricing scenario</nwn-command-header>\n    </div>\n    <div class=\"h-auto bg-white\">\n        <div class=\"px-6 py-4 bg-white\">\n            <nwn-scenario-load-card></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-gray-200 px-2 bg-gray-100\">\n            <nwn-cell-header type=\"headersm\">Filters</nwn-cell-header>\n        </div>\n        <div class=\"grid grid-cols-2\">\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$19.82</p>\n                    <p noteContent>List price (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$24.20</p>\n                    <p noteContent>RSP w/o VAT (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$5.15</p>\n                    <p noteContent>COGS (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>-2.5</p>\n                    <p noteContent>Price elasticity (base)</p>\n                </nwn-metric-item-popup>\n            </div>\n        </div>\n    </div>\n    <nwn-search-footer [showClose]=\"true\"></nwn-search-footer>\n</div>\n"
+            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"adjustments\">Pricing scenario</nwn-command-header>\n    </div>\n    <div class=\"h-auto bg-white\">\n        <div class=\"px-6 py-4 bg-white\">\n            <nwn-scenario-load-card>\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-gray-200 px-2 bg-gray-100\">\n            <nwn-cell-header type=\"headersm\">Filters</nwn-cell-header>\n        </div>\n        <div class=\"grid grid-cols-2\">\n            <div>\n                <nwn-metric-item-popup>\n                    <p metricPopHead>$19.82</p>\n                    <p metricPopContent>List price (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p metricPopHead>$24.20</p>\n                    <p metricPopContent>RSP w/o VAT (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p metricPopHead>$5.15</p>\n                    <p metricPopContent>COGS (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p metricPopHead>-2.5</p>\n                    <p metricPopContent>Price elasticity (base)</p>\n                </nwn-metric-item-popup>\n            </div>\n        </div>\n    </div>\n    <nwn-search-footer [showClose]=\"true\"></nwn-search-footer>\n</div>\n"
         },
         {
             "name": "LoadedPromosimulatorScenarioComponent",
@@ -2128,7 +2128,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"adjustments\">Promo Simulator scenario</nwn-command-header>\n    </div>\n    <div class=\"h-auto bg-white\">\n        <div class=\"px-6 py-4 bg-white\">\n            <nwn-scenario-load-card></nwn-scenario-load-card>\n        </div>\n    </div>\n    <nwn-search-footer [showClose]=\"true\"></nwn-search-footer>\n</div>\n"
+            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"adjustments\">Promo Simulator scenario</nwn-command-header>\n    </div>\n    <div class=\"h-auto bg-white\">\n        <div class=\"px-6 py-4 bg-white\">\n            <nwn-scenario-load-card>\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n    </div>\n    <nwn-search-footer [showClose]=\"true\"></nwn-search-footer>\n</div>\n"
         },
         {
             "name": "LoadedScenarioControlsComponent",
@@ -2354,7 +2354,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"plus\">Load scenario</nwn-command-header>\n    </div>\n    <div class=\"bg-gray-100 border-b border-marsgray-200\">\n        <div class=\"flex flex-row flex-wrap px-6\">\n            <div class=\"pr-6\">\n                <nwn-tab-cta type=\"selectedtab\">Pricing scenario</nwn-tab-cta>\n            </div>\n            <div class=\"pr-6\">\n                <nwn-tab-cta>Promo simulator scenario</nwn-tab-cta>\n            </div>\n        </div>\n    </div>\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-search [hideClose]=\"true\"></nwn-command-search>\n    </div>\n    <div class=\"h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3\">\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n    </div>\n    <nwn-search-footer [showKeyBoardCtrl]=\"true\" [showLoad]=\"true\"></nwn-search-footer>\n</div>\n"
+            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"plus\">Load scenario</nwn-command-header>\n    </div>\n    <div class=\"bg-gray-100 border-b border-marsgray-200\">\n        <div class=\"flex flex-row flex-wrap px-6\">\n            <div class=\"pr-6\">\n                <nwn-tab-cta type=\"selectedtab\">Pricing scenario</nwn-tab-cta>\n            </div>\n            <div class=\"pr-6\">\n                <nwn-tab-cta>Promo simulator scenario</nwn-tab-cta>\n            </div>\n        </div>\n    </div>\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-search [hideClose]=\"true\"></nwn-command-search>\n    </div>\n    <div class=\"h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3\">\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n    </div>\n    <nwn-search-footer [showKeyBoardCtrl]=\"true\" [showLoad]=\"true\"></nwn-search-footer>\n</div>\n"
         },
         {
             "name": "LoadScenarioPromosimulatorComponent",
@@ -2394,7 +2394,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"plus\">Load scenario</nwn-command-header>\n    </div>\n    <div class=\"bg-gray-100 border-b border-marsgray-200\">\n        <div class=\"flex flex-row flex-wrap px-6\">\n            <div class=\"pr-6\">\n                <nwn-tab-cta>Pricing scenario</nwn-tab-cta>\n            </div>\n            <div class=\"pr-6\">\n                <nwn-tab-cta type=\"selectedtab\">Promo simulator scenario</nwn-tab-cta>\n            </div>\n        </div>\n    </div>\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-search [hideClose]=\"true\"></nwn-command-search>\n    </div>\n    <div class=\"h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3\">\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\"></nwn-scenario-load-card>\n        </div>\n    </div>\n    <nwn-search-footer [showKeyBoardCtrl]=\"true\" [showLoad]=\"true\"></nwn-search-footer>\n</div>\n"
+            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"plus\">Load scenario</nwn-command-header>\n    </div>\n    <div class=\"bg-gray-100 border-b border-marsgray-200\">\n        <div class=\"flex flex-row flex-wrap px-6\">\n            <div class=\"pr-6\">\n                <nwn-tab-cta>Pricing scenario</nwn-tab-cta>\n            </div>\n            <div class=\"pr-6\">\n                <nwn-tab-cta type=\"selectedtab\">Promo simulator scenario</nwn-tab-cta>\n            </div>\n        </div>\n    </div>\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-search [hideClose]=\"true\"></nwn-command-search>\n    </div>\n    <div class=\"h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3\">\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-marsgray-300 p-3\">\n            <nwn-scenario-load-card [showInfo]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n    </div>\n    <nwn-search-footer [showKeyBoardCtrl]=\"true\" [showLoad]=\"true\"></nwn-search-footer>\n</div>\n"
         },
         {
             "name": "MenuItemComponent",
@@ -2598,7 +2598,7 @@
         },
         {
             "name": "MetricItemPopupComponent",
-            "id": "component-MetricItemPopupComponent-e74308143eb1857a7e34473346109d31",
+            "id": "component-MetricItemPopupComponent-320faf037967e5fad1c49ad4d349866e",
             "file": "src/app/components/molecules/metric-item-popup/metric-item-popup.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2625,7 +2625,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n    selector: 'nwn-metric-item-popup',\n    templateUrl: './metric-item-popup.component.html',\n    styleUrls: ['./metric-item-popup.component.css'],\n})\nexport class MetricItemPopupComponent {}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\n\n@Component({\n    selector: 'nwn-metric-item-popup',\n    templateUrl: './metric-item-popup.component.html',\n    styleUrls: ['./metric-item-popup.component.css'],\n})\nexport class MetricItemPopupComponent {}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2634,7 +2634,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<div class=\"flex flex-col space-y-2 px-6 py-3 bg-white w-full\">\n    <div class=\"text-title-medium text-marsgray-700 font-normal\">\n        <ng-content select=\"[amountProjeted]\"></ng-content>\n    </div>\n    <div class=\"text-body text-marsgray-500 font-normal\"><ng-content select=\"[noteContent]\"></ng-content></div>\n</div>\n"
+            "templateData": "<div class=\"flex flex-col space-y-2 px-6 py-3 bg-white w-full\">\n    <div class=\"text-title-medium text-marsgray-700 font-normal\">\n        <ng-content select=\"[metricPopHead]\"></ng-content>\n    </div>\n    <div class=\"text-body text-marsgray-500 font-normal\"><ng-content select=\"[metricPopContent]\"></ng-content></div>\n</div>\n"
         },
         {
             "name": "ModalComponent",
@@ -2794,7 +2794,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"adjustments\">Pricing scenario</nwn-command-header>\n    </div>\n    <div class=\"h-auto bg-white\">\n        <div class=\"px-6 py-4 bg-white\">\n            <nwn-scenario-load-card [showTrash]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-gray-200 px-2 bg-gray-100\">\n            <nwn-cell-header type=\"headersm\">Filters</nwn-cell-header>\n        </div>\n        <div class=\"flex flex-row flex-wrap px-6 pt-2\">\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"retailers\">3 retailers</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"categories\">Chocolate</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"brands\">All brands</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"brand-formats\"\n                    >Galaxy silk</nwn-filter-item\n                >\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"product-groups\"\n                    >5 product groups</nwn-filter-item\n                >\n            </div>\n        </div>\n        <div class=\"border border-gray-200 px-2 bg-gray-100\">\n            <nwn-cell-header type=\"headersm\">Filters</nwn-cell-header>\n        </div>\n        <div class=\"grid grid-cols-2\">\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$19.82</p>\n                    <p noteContent>List price (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$24.20</p>\n                    <p noteContent>RSP w/o VAT (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$5.15</p>\n                    <p noteContent>COGS (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>-2.5</p>\n                    <p noteContent>Price elasticity (base)</p>\n                </nwn-metric-item-popup>\n            </div>\n        </div>\n    </div>\n    <nwn-search-footer [showBack]=\"true\" [showLoad]=\"true\"></nwn-search-footer>\n</div>\n"
+            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"adjustments\">Pricing scenario</nwn-command-header>\n    </div>\n    <div class=\"h-auto bg-white\">\n        <div class=\"px-6 py-4 bg-white\">\n            <nwn-scenario-load-card [showTrash]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-gray-200 px-2 bg-gray-100\">\n            <nwn-cell-header type=\"headersm\">Filters</nwn-cell-header>\n        </div>\n        <div class=\"flex flex-row flex-wrap px-6 pt-2\">\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"retailers\">3 retailers</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"categories\">Chocolate</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"brands\">All brands</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"brand-formats\"\n                    >Galaxy silk</nwn-filter-item\n                >\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"product-groups\"\n                    >5 product groups</nwn-filter-item\n                >\n            </div>\n        </div>\n        <div class=\"border border-gray-200 px-2 bg-gray-100\">\n            <nwn-cell-header type=\"headersm\">Filters</nwn-cell-header>\n        </div>\n        <div class=\"grid grid-cols-2\">\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$19.82</p>\n                    <p noteContent>List price (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$24.20</p>\n                    <p noteContent>RSP w/o VAT (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>$5.15</p>\n                    <p noteContent>COGS (simulated)</p>\n                </nwn-metric-item-popup>\n            </div>\n            <div>\n                <nwn-metric-item-popup>\n                    <p amountProjeted>-2.5</p>\n                    <p noteContent>Price elasticity (base)</p>\n                </nwn-metric-item-popup>\n            </div>\n        </div>\n    </div>\n    <nwn-search-footer [showBack]=\"true\" [showLoad]=\"true\"></nwn-search-footer>\n</div>\n"
         },
         {
             "name": "PromoElasticityComponent",
@@ -3096,7 +3096,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"adjustments\">Promo Simulator scenario</nwn-command-header>\n    </div>\n    <div class=\"h-auto bg-white\">\n        <div class=\"px-6 py-4 bg-white\">\n            <nwn-scenario-load-card [showTrash]=\"true\"></nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-gray-200 px-2 bg-gray-100\">\n            <nwn-cell-header type=\"headersm\">Filters</nwn-cell-header>\n        </div>\n        <div class=\"flex flex-row flex-wrap px-6 pt-2\">\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"retailers\">3 retailers</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"categories\">Chocolate</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"brands\">All brands</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"brand-formats\"\n                    >Galaxy silk</nwn-filter-item\n                >\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"product-groups\"\n                    >5 product groups</nwn-filter-item\n                >\n            </div>\n        </div>\n    </div>\n    <nwn-search-footer [showBack]=\"true\" [showLoad]=\"true\"></nwn-search-footer>\n</div>\n"
+            "templateData": "<div class=\"w-[650px]\">\n    <div class=\"border-b border-marsgray-200\">\n        <nwn-command-header type=\"stroke\" nwnSvgIcon=\"adjustments\">Promo Simulator scenario</nwn-command-header>\n    </div>\n    <div class=\"h-auto bg-white\">\n        <div class=\"px-6 py-4 bg-white\">\n            <nwn-scenario-load-card [showTrash]=\"true\">\n                <p slcHead>Promo scenario name</p>\n                <p slcContent>\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi\n                    nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n                </p>\n            </nwn-scenario-load-card>\n        </div>\n        <div class=\"border border-gray-200 px-2 bg-gray-100\">\n            <nwn-cell-header type=\"headersm\">Filters</nwn-cell-header>\n        </div>\n        <div class=\"flex flex-row flex-wrap px-6 pt-2\">\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"retailers\">3 retailers</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"categories\">Chocolate</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"brands\">All brands</nwn-filter-item>\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"brand-formats\"\n                    >Galaxy silk</nwn-filter-item\n                >\n            </div>\n            <div class=\"mr-2 mb-2\">\n                <nwn-filter-item [hideClose]=\"true\" type=\"stroke\" nwnSvgIcon=\"product-groups\"\n                    >5 product groups</nwn-filter-item\n                >\n            </div>\n        </div>\n    </div>\n    <nwn-search-footer [showBack]=\"true\" [showLoad]=\"true\"></nwn-search-footer>\n</div>\n"
         },
         {
             "name": "PromotoolTabComponent",
@@ -3238,7 +3238,7 @@
         },
         {
             "name": "ScenarioLoadCardComponent",
-            "id": "component-ScenarioLoadCardComponent-314340f431288770ab0e372ce1f49223",
+            "id": "component-ScenarioLoadCardComponent-1a395bcb318332ce8a04218de75e39b1",
             "file": "src/app/components/molecules/scenario-load-card/scenario-load-card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -3269,6 +3269,14 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 10,
+                    "type": "boolean"
+                },
+                {
+                    "name": "showSubHead",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
                     "type": "boolean"
                 },
                 {
@@ -3315,6 +3323,22 @@
                     ]
                 },
                 {
+                    "name": "showSubHead",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 16,
+                    "decorators": [
+                        {
+                            "name": "Input",
+                            "stringifiedArguments": ""
+                        }
+                    ]
+                },
+                {
                     "name": "showTrash",
                     "defaultValue": "false",
                     "deprecated": false,
@@ -3339,7 +3363,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\n\n@Component({\n    selector: 'nwn-scenario-load-card',\n    templateUrl: './scenario-load-card.component.html',\n    styleUrls: ['./scenario-load-card.component.css'],\n})\nexport class ScenarioLoadCardComponent {\n    @Input()\n    showInfo: boolean = false;\n    @Input()\n    showTrash: boolean = false;\n    @Input()\n    showCheckbox: boolean = false;\n}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\n\n@Component({\n    selector: 'nwn-scenario-load-card',\n    templateUrl: './scenario-load-card.component.html',\n    styleUrls: ['./scenario-load-card.component.css'],\n})\nexport class ScenarioLoadCardComponent {\n    @Input()\n    showInfo: boolean = false;\n    @Input()\n    showTrash: boolean = false;\n    @Input()\n    showCheckbox: boolean = false;\n    @Input()\n    showSubHead: boolean = false;\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3348,7 +3372,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<div class=\"bg-white flex flex-col space-y-2 w-full\">\n    <div class=\"flex flex-row space-x-2 justify-between items-center\">\n        <p class=\"text-marsgray-700 text-body-standard\">Promo scenario name</p>\n        <div class=\"\">\n            <nwn-button\n                type=\"icon\"\n                size=\"iconsm\"\n                [ngClass]=\"{\n                    hidden: showInfo == false\n                }\"\n            >\n                <nwn-svg-icon type=\"stroke\" nwnSvgIcon=\"info\" size=\"md\" class=\"text-gray-700\"></nwn-svg-icon>\n            </nwn-button>\n            <nwn-button\n                type=\"icon\"\n                size=\"iconsm\"\n                [ngClass]=\"{\n                    hidden: showTrash == false\n                }\"\n            >\n                <nwn-svg-icon type=\"stroke\" nwnSvgIcon=\"trash\" size=\"md\" class=\"text-gray-700\"></nwn-svg-icon>\n            </nwn-button>\n            <nwn-checkbox\n                [ngClass]=\"{\n                    hidden: showCheckbox == false\n                }\"\n            ></nwn-checkbox>\n        </div>\n    </div>\n    <p class=\"text-marsgray-500 text-body-standard\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit.\n        Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.\n    </p>\n</div>\n"
+            "templateData": "<div class=\"bg-white flex flex-col space-y-2 w-full\">\n    <div class=\"flex flex-row space-x-2 justify-between items-center\">\n        <div>\n            <div class=\"text-marsgray-700 text-body-standard\"><ng-content select=\"[slcHead]\"></ng-content></div>\n            <div class=\"text-marsgray-500 text-caption\" [ngClass]=\"{ hidden: showSubHead == false }\">\n                <ng-content select=\"[slcSubHead]\"></ng-content>\n            </div>\n        </div>\n        <div class=\"\">\n            <nwn-button\n                type=\"icon\"\n                size=\"iconsm\"\n                [ngClass]=\"{\n                    hidden: showInfo == false\n                }\"\n            >\n                <nwn-svg-icon type=\"stroke\" nwnSvgIcon=\"info\" size=\"md\" class=\"text-gray-700\"></nwn-svg-icon>\n            </nwn-button>\n            <nwn-button\n                type=\"icon\"\n                size=\"iconsm\"\n                [ngClass]=\"{\n                    hidden: showTrash == false\n                }\"\n            >\n                <nwn-svg-icon type=\"stroke\" nwnSvgIcon=\"trash\" size=\"md\" class=\"text-gray-700\"></nwn-svg-icon>\n            </nwn-button>\n            <nwn-checkbox\n                [ngClass]=\"{\n                    hidden: showCheckbox == false\n                }\"\n            ></nwn-checkbox>\n        </div>\n    </div>\n    <div class=\"text-marsgray-500 text-body-standard\">\n        <ng-content select=\"[slcContent]\"></ng-content>\n    </div>\n</div>\n"
         },
         {
             "name": "SearchFooterComponent",
@@ -4966,21 +4990,21 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\r\n    production: false,\r\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/environments/environment.prod.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\r\n    production: true,\r\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\r\n    production: false,\r\n}"
             },
             {
                 "name": "FilterBasic",
@@ -5610,7 +5634,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<MetricItemPopupComponent>",
-                "defaultValue": "(args: MetricItemPopupComponent) => ({\n    props: { ...args },\n    template: `<nwn-metric-item-popup></nwn-metric-item-popup>`,\n})"
+                "defaultValue": "(args: MetricItemPopupComponent) => ({\n    props: { ...args },\n    template: `<nwn-metric-item-popup><p metricPopHead>$19.82</p><p metricPopContent>List price (simulated)</p></nwn-metric-item-popup>`,\n})"
             },
             {
                 "name": "MetricItemTemplate",
@@ -5913,6 +5937,26 @@
                 "defaultValue": "(args: PromotoolTabComponent) => ({\n    props: { ...args },\n    template: `<nwn-promotool-tab [href]=\"href\" type=\"fill\" nwnSvgIcon=\"optimizer\" [active]=\"active\">Promo Optimizer</nwn-promotool-tab>`,\n})"
             },
             {
+                "name": "ScenarioCompareCard",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/molecules/scenario-load-card/scenario-load-card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "ScenarioCompareCardTemplate.bind({})"
+            },
+            {
+                "name": "ScenarioCompareCardTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/molecules/scenario-load-card/scenario-load-card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ScenarioLoadCardComponent>",
+                "defaultValue": "(args: ScenarioLoadCardComponent) => ({\n    props: { ...args },\n    template: `<div class=\"w-[650px]\">\n                    <nwn-scenario-load-card [showInfo]=\"false\"\n                    [showTrash]=\"false\"\n                    [showCheckbox]=\"true\"\n                    [showSubHead]=\"true\">\n                        <p slcHead>Promo scenario name\n                        </p>\n                        <p slcSubHead>Promo optimizer</p>\n                        <p slcContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.</p>\n                    </nwn-scenario-load-card>\n                </div>`,\n})"
+            },
+            {
                 "name": "ScenarioLoadCard",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -5930,7 +5974,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<ScenarioLoadCardComponent>",
-                "defaultValue": "(args: ScenarioLoadCardComponent) => ({\n    props: { ...args },\n    template: `<div class=\"w-[650px]\"><nwn-scenario-load-card [hideInfo]=\"false\"\n    [hideTrash]=\"true\"\n    [hideCheckbox]=\"true\"></nwn-scenario-load-card></div>`,\n})"
+                "defaultValue": "(args: ScenarioLoadCardComponent) => ({\n    props: { ...args },\n    template: `<div class=\"w-[650px]\">\n                    <nwn-scenario-load-card [showInfo]=\"true\"\n                    [showTrash]=\"false\"\n                    [showCheckbox]=\"false\">\n                    <p slcHead>Promo scenario name\n                        </p>\n                        <p slcContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.</p>\n                    </nwn-scenario-load-card>\n                </div>`,\n})"
             },
             {
                 "name": "SearchFooter",
@@ -6561,18 +6605,6 @@
                     "defaultValue": "(args: CommandSearchComponent) => ({\n    props: { ...args },\n    template: `<nwn-command-search ></nwn-command-search>`,\n})"
                 }
             ],
-            "src/environments/environment.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{\r\n    production: false,\r\n}"
-                }
-            ],
             "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
@@ -6583,6 +6615,18 @@
                     "deprecationMessage": "",
                     "type": "object",
                     "defaultValue": "{\r\n    production: true,\r\n}"
+                }
+            ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\r\n    production: false,\r\n}"
                 }
             ],
             "src/app/components/organisms/filter-basic/filter-basic.stories.ts": [
@@ -7394,7 +7438,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<MetricItemPopupComponent>",
-                    "defaultValue": "(args: MetricItemPopupComponent) => ({\n    props: { ...args },\n    template: `<nwn-metric-item-popup></nwn-metric-item-popup>`,\n})"
+                    "defaultValue": "(args: MetricItemPopupComponent) => ({\n    props: { ...args },\n    template: `<nwn-metric-item-popup><p metricPopHead>$19.82</p><p metricPopContent>List price (simulated)</p></nwn-metric-item-popup>`,\n})"
                 }
             ],
             "src/app/components/molecules/modal/modal.stories.ts": [
@@ -7715,6 +7759,26 @@
             ],
             "src/app/components/molecules/scenario-load-card/scenario-load-card.stories.ts": [
                 {
+                    "name": "ScenarioCompareCard",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/molecules/scenario-load-card/scenario-load-card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "ScenarioCompareCardTemplate.bind({})"
+                },
+                {
+                    "name": "ScenarioCompareCardTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/molecules/scenario-load-card/scenario-load-card.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ScenarioLoadCardComponent>",
+                    "defaultValue": "(args: ScenarioLoadCardComponent) => ({\n    props: { ...args },\n    template: `<div class=\"w-[650px]\">\n                    <nwn-scenario-load-card [showInfo]=\"false\"\n                    [showTrash]=\"false\"\n                    [showCheckbox]=\"true\"\n                    [showSubHead]=\"true\">\n                        <p slcHead>Promo scenario name\n                        </p>\n                        <p slcSubHead>Promo optimizer</p>\n                        <p slcContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.</p>\n                    </nwn-scenario-load-card>\n                </div>`,\n})"
+                },
+                {
                     "name": "ScenarioLoadCard",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -7732,7 +7796,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<ScenarioLoadCardComponent>",
-                    "defaultValue": "(args: ScenarioLoadCardComponent) => ({\n    props: { ...args },\n    template: `<div class=\"w-[650px]\"><nwn-scenario-load-card [hideInfo]=\"false\"\n    [hideTrash]=\"true\"\n    [hideCheckbox]=\"true\"></nwn-scenario-load-card></div>`,\n})"
+                    "defaultValue": "(args: ScenarioLoadCardComponent) => ({\n    props: { ...args },\n    template: `<div class=\"w-[650px]\">\n                    <nwn-scenario-load-card [showInfo]=\"true\"\n                    [showTrash]=\"false\"\n                    [showCheckbox]=\"false\">\n                    <p slcHead>Promo scenario name\n                        </p>\n                        <p slcContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.</p>\n                    </nwn-scenario-load-card>\n                </div>`,\n})"
                 }
             ],
             "src/app/components/molecules/search-footer/search-footer.stories.ts": [
@@ -9267,7 +9331,27 @@
                 "linktype": "component",
                 "name": "ScenarioLoadCardComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/molecules/scenario-load-card/scenario-load-card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ScenarioCompareCard",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/molecules/scenario-load-card/scenario-load-card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ScenarioCompareCardTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {

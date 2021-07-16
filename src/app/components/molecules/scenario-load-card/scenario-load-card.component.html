@@ -1,6 +1,11 @@
 <div class="bg-white flex flex-col space-y-2 w-full">
     <div class="flex flex-row space-x-2 justify-between items-center">
-        <p class="text-marsgray-700 text-body-standard">Promo scenario name</p>
+        <div>
+            <div class="text-marsgray-700 text-body-standard"><ng-content select="[slcHead]"></ng-content></div>
+            <div class="text-marsgray-500 text-caption" [ngClass]="{ hidden: showSubHead == false }">
+                <ng-content select="[slcSubHead]"></ng-content>
+            </div>
+        </div>
         <div class="">
             <nwn-button
                 type="icon"
@@ -27,8 +32,7 @@
             ></nwn-checkbox>
         </div>
     </div>
-    <p class="text-marsgray-500 text-body-standard">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit.
-        Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.
-    </p>
+    <div class="text-marsgray-500 text-body-standard">
+        <ng-content select="[slcContent]"></ng-content>
+    </div>
 </div>

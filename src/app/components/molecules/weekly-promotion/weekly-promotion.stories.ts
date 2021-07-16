@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 // Import all components used
 import { SvgIconComponent } from '@atoms/svg-icon/svg-icon.component';
 import { ButtonComponent } from '@atoms/button/button.component';
+// import { DropdownComponent } from '@atoms/dropdown/dropdown.component';
 
 // Import Menu Item
 import { WeeklyPromotionComponent } from './weekly-promotion.component';

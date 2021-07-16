@@ -1,0 +1,31 @@
+<div class="w-[650px]">
+    <div class="border-b border-marsgray-200">
+        <nwn-command-header type="stroke" nwnSvgIcon="adjustments">Promotion details</nwn-command-header>
+    </div>
+    <div class="h-auto bg-white">
+        <div class="border-b border-marsgray-200">
+            <nwn-command-search [hideClose]="true"></nwn-command-search>
+        </div>
+        <nwn-slider></nwn-slider>
+        <div class="border border-gray-200 px-2 bg-gray-100">
+            <nwn-cell-header type="headersm">Input promotions</nwn-cell-header>
+        </div>
+        <div>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">TPR - 35%</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">N + 1 - 20%</nwn-command-multiselect>
+        </div>
+        <div class="border border-gray-200 px-2 bg-gray-100">
+            <nwn-cell-header type="headersm">Baseline promotions</nwn-cell-header>
+        </div>
+        <div>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">TPR - 10%</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">TPR - 20%</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">TPR - 25%</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">MAC, %NSV</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">N + 1 - 7%</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">TE / Unit</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">N + 1 - 15%</nwn-command-multiselect>
+        </div>
+    </div>
+    <nwn-search-footer [showApply]="true"></nwn-search-footer>
+</div>
