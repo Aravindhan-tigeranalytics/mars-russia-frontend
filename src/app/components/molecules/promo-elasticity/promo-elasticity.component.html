@@ -3,7 +3,21 @@
         <nwn-button type="icon" size="iconsm" (click)="decrement()">
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
         </nwn-button>
-        <p class="text-title-medium text-marsgray-700 w-5">{{ counter }}</p>
+        <input
+            class="
+                text-title-medium text-marsgray-700
+                w-10
+                appearance-none
+                bg-transparent
+                rounded-none
+                border border-transparent
+                focus:border-marsgray-500
+                focus:outline-none
+                text-center
+            "
+            type="number"
+            value="{{ counter }}"
+        />
         <nwn-button type="icon" size="iconsm" (click)="increment()">
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
         </nwn-button>

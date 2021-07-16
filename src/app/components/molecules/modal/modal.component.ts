@@ -30,7 +30,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
         // close modal on background click
         this.element.addEventListener('click', (el: { target: { className: string } }) => {
-            debugger;
             if (el.target.className === 'nwn-modal-bg') {
                 this.close();
             }
@@ -48,7 +47,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     // open modal
     open(): void {
-        debugger;
         this.element.style.display = 'block';
         document.body.classList.add('nwn-modal-open');
     }
