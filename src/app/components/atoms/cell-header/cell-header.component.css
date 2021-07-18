@@ -8,5 +8,5 @@
     @apply text-marsgray-700 text-body font-medium px-4 py-5 w-full;
 }
 .sub-header-lg {
-    @apply text-marsgray-700 text-body font-medium px-4 py-5 w-full;
+    @apply text-marsgray-700 text-body font-medium pl-4 pr-10 py-5 w-full;
 }

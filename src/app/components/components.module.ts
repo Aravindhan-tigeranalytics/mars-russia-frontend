@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 
 // Atoms
 import { ButtonComponent } from '@atoms/button/button.component';
@@ -21,6 +23,7 @@ import { TabCtaComponent } from '@atoms/tab-cta/tab-cta.component';
 import { LegendItemsDirective } from '@atoms/legend-items/legend-items.directive';
 import { CellHeaderComponent } from '@atoms/cell-header/cell-header.component';
 import { SliderComponent } from '@atoms/slider/slider.component';
+import { SelectOptionComponent } from '@atoms/select-option/select-option.component';
 
 // Molecules
 import { SearchFooterComponent } from '@molecules/search-footer/search-footer.component';
@@ -52,11 +55,12 @@ import { TableViewComponent } from '@molecules/table-view/table-view.component';
 import { CellItemDirective } from '@molecules/cell-item/cell-item.directive';
 import { MetricItemPopupComponent } from '@molecules/metric-item-popup/metric-item-popup.component';
 import { ModalComponent } from '@molecules/modal/modal.component';
+import { D3ChartComponent } from '@molecules/d3-chart/d3-chart.component';
 
 // Organisms
 import { SideMenuComponent } from '@organisms/side-menu/side-menu.component';
 import { SideBarComponent } from '@organisms/side-bar/side-bar.component';
-import { HeaderComponent } from '@organisms/header/header.component';
+import { PromoHeaderComponent } from '@organisms/promo-header/promo-header.component';
 import { LoadedScenarioHeaderComponent } from '@organisms/loaded-scenario-header/loaded-scenario-header.component';
 import { FilterRetailerComponent } from '@organisms/filter-retailer/filter-retailer.component';
 import { SummaryComponent } from '@organisms/summary/summary.component';
@@ -95,9 +99,21 @@ import { SaveScenarioComponent } from './organisms/save-scenario/save-scenario.c
 import { UploadItemsDirective } from './atoms/upload-items/upload-items.directive';
 import { UploadItemsComponent } from './atoms/upload-items/upload-items.component';
 import { UploadWeeklyPromotionsComponent } from './organisms/upload-weekly-promotions/upload-weekly-promotions.component';
+import { BaselineLiftComponent } from './molecules/baseline-lift/baseline-lift.component';
+import { PromosimulatorBuilderAggregatedComponent } from './organisms/promosimulator-builder-aggregated/promosimulator-builder-aggregated.component';
+import { MarsCustomerPlMetricsComponent } from './molecules/mars-customer-pl-metrics/mars-customer-pl-metrics.component';
+import { PlChartComponent } from '@organisms/charts/pl-chart/pl-chart.component';
+import { BaselineLiftChartComponent } from '@organisms/charts/baseline-lift-chart/baseline-lift-chart.component';
+import { KpiMetricsComponent } from './molecules/kpi-metrics/kpi-metrics.component';
+import { CompareScenarioPopupComponent } from './organisms/compare-scenario-popup/compare-scenario-popup.component';
+import { PromotionPlansTabComponent } from './molecules/promotion-plans-tab/promotion-plans-tab.component';
+import { LoadedOptimizerHeaderComponent } from './organisms/loaded-optimizer-header/loaded-optimizer-header.component';
+import { MetricItemDirective } from './molecules/metric-item/metric-item.directive';
+import { LargeToolTipComponent } from './molecules/large-tool-tip/large-tool-tip.component';
+import { PromoOptimizerAggregatedComponent } from './organisms/promo-optimizer-aggregated/promo-optimizer-aggregated.component';
 
 @NgModule({
-    imports: [CommonModule, NgxSliderModule, NgSelectModule, FormsModule],
+    imports: [CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule],
     declarations: [
         ButtonComponent,
         LinkComponent,
@@ -115,7 +131,7 @@ import { UploadWeeklyPromotionsComponent } from './organisms/upload-weekly-promo
         CheckboxComponent,
         SideMenuComponent,
         SideBarComponent,
-        HeaderComponent,
+        PromoHeaderComponent,
         LoadedScenarioitemComponent,
         LoadedScenarioHeaderComponent,
         LoadedScenarioControlsComponent,
@@ -183,6 +199,20 @@ import { UploadWeeklyPromotionsComponent } from './organisms/upload-weekly-promo
         UploadItemsComponent,
         UploadWeeklyPromotionsComponent,
         ModalComponent,
+        BaselineLiftComponent,
+        PromosimulatorBuilderAggregatedComponent,
+        MarsCustomerPlMetricsComponent,
+        SelectOptionComponent,
+        D3ChartComponent,
+        PlChartComponent,
+        BaselineLiftChartComponent,
+        KpiMetricsComponent,
+        CompareScenarioPopupComponent,
+        PromotionPlansTabComponent,
+        LoadedOptimizerHeaderComponent,
+        MetricItemDirective,
+        LargeToolTipComponent,
+        PromoOptimizerAggregatedComponent,
     ],
     exports: [
         ButtonComponent,
@@ -201,7 +231,7 @@ import { UploadWeeklyPromotionsComponent } from './organisms/upload-weekly-promo
         CheckboxComponent,
         SideMenuComponent,
         SideBarComponent,
-        HeaderComponent,
+        PromoHeaderComponent,
         LoadedScenarioitemComponent,
         LoadedScenarioHeaderComponent,
         LoadedScenarioControlsComponent,
@@ -263,6 +293,20 @@ import { UploadWeeklyPromotionsComponent } from './organisms/upload-weekly-promo
         UploadWeeklyPromotionsComponent,
         NgxSliderModule,
         AddPromotionComponent,
+        BaselineLiftComponent,
+        MarsCustomerPlMetricsComponent,
+        PromosimulatorBuilderAggregatedComponent,
+        PromoOptimizerAggregatedComponent,
+        SelectOptionComponent,
+        DropdownComponent,
+        SelectDropDownModule,
+        D3ChartComponent,
+        PlChartComponent,
+        BaselineLiftChartComponent,
+        KpiMetricsComponent,
+        CompareScenarioPopupComponent,
+        LoadedOptimizerHeaderComponent,
+        MetricItemDirective,
     ],
 })
 export class ComponentModule {}

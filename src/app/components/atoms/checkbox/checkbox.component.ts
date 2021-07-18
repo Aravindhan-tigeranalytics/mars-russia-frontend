@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'nwn-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.css']
+    selector: 'nwn-checkbox',
+    templateUrl: './checkbox.component.html',
+    styleUrls: ['./checkbox.component.css'],
 })
 export class CheckboxComponent implements OnInit {
+    constructor() {}
 
-  constructor() { }
+    ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
+    @Input()
+    showLabel: boolean = false;
 }

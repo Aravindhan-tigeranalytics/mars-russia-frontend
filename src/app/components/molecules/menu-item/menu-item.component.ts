@@ -11,7 +11,7 @@ export class MenuItemComponent {
     @Input()
     type = 'stroke';
     @Input()
-    active: boolean = false;
+    active = false;
     @Input()
     nwnSvgIcon = 'promotool';
 }

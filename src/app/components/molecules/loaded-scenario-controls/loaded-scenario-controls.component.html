@@ -24,9 +24,36 @@
             <nwn-button type="icon" size="iconsm">
                 <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
             </nwn-button>
-            <nwn-button type="icon" size="iconsm">
-                <nwn-svg-icon type="stroke" nwnSvgIcon="more-horizontal"></nwn-svg-icon>
-            </nwn-button>
+            <div class="relative">
+                <nwn-button type="icon" size="iconsm" (click)="toggleDisplayDivIf()">
+                    <nwn-svg-icon type="stroke" nwnSvgIcon="more-horizontal"></nwn-svg-icon>
+                </nwn-button>
+                <div *ngIf="!isShowDivIf">
+                    <div class="absolute z-50 top-10 right-0 bg-white shadow-sm w-[186px] h-auto">
+                        <div class="border-b">
+                            <nwn-button type="sideBorder" size="sideBorderSize" class="w-full">
+                                <nwn-svg-icon class="mr-0.5" type="stroke" nwnSvgIcon="plus" size="lg"></nwn-svg-icon>
+                                Load scenario
+                            </nwn-button>
+                        </div>
+                        <div class="">
+                            <nwn-button type="sideBorder" size="sideBorderSize" class="w-full">
+                                <nwn-svg-icon
+                                    class="mr-0.5"
+                                    type="stroke"
+                                    nwnSvgIcon="arrow-compare"
+                                    size="lg"
+                                ></nwn-svg-icon>
+                                Compare scenario
+                            </nwn-button>
+                        </div>
+                    </div>
+                    <div
+                        class="fixed bg-marsgray-900 bg-opacity-10 top-0 left-0 right-0 h-full w-full"
+                        (click)="toggleDisplayDivIf()"
+                    ></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

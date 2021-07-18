@@ -34,7 +34,7 @@ export default {
 // primary button template
 const CheckboxTemplate: Story<CheckboxComponent> = (args: CheckboxComponent) => ({
     props: { ...args },
-    template: `<nwn-checkbox></nwn-checkbox>`,
+    template: `<nwn-checkbox [showLabel]="true"></nwn-checkbox>`,
 });
 
 //  Primary button

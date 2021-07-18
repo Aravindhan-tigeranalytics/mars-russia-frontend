@@ -12,5 +12,7 @@
     <p>
         <ng-content></ng-content>
     </p>
-    <!-- <p class="text-caption text-marsgray-700 font-medium">{{ date }}</p> -->
+    <div class="text-caption text-marsgray-700 font-medium" [ngClass]="{ hidden: showDate == false }">
+        <ng-content select="[dateValue]"></ng-content>
+    </div>
 </div>
