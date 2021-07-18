@@ -1,0 +1,41 @@
+<div
+    [ngStyle]="{ 'width.px': screenWidth, 'height.px': screenHeight }"
+    class="compare-scenario-popup bg-white mx-auto my-0 scrollbar-y px-20"
+>
+    <div class="compare-head flex flex-row justify-between py-3">
+        <div class="flex flex-row items-center space-x-5">
+            <nwn-button type="icon" size="iconsm" (click)="backClicked()">
+                <nwn-svg-icon type="stroke" nwnSvgIcon="arrow-left" size="lg"></nwn-svg-icon>
+            </nwn-button>
+            <h1 class="text-title-medium texxt-marsgray-700 font-normal">Compare scenario</h1>
+        </div>
+        <div class="flex flex-row items-center space-x-5">
+            <nwn-button type="primary" size="sm">Add scenario</nwn-button>
+            <nwn-button type="icon" size="iconsm">
+                <nwn-svg-icon type="stroke" nwnSvgIcon="save-download" size="lg"></nwn-svg-icon>
+            </nwn-button>
+        </div>
+    </div>
+    <div class="compare-content pt-4">
+        <div class="flex flex-row flex-wrap border-b border-marsgray-300">
+            <div class="pr-6">
+                <nwn-tab-cta (click)="toggleTabs(1)" [type]="openTab === 1 ? 'selectedtab' : 'unselectedtab'"
+                    >KPI metrics</nwn-tab-cta
+                >
+            </div>
+            <div class="pr-6">
+                <nwn-tab-cta (click)="toggleTabs(2)" [type]="openTab === 2 ? 'selectedtab' : 'unselectedtab'"
+                    >Promotion plans</nwn-tab-cta
+                >
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="kpi-metrics" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
+                <nwn-kpi-metrics></nwn-kpi-metrics>
+            </div>
+            <div id="promotion-plans" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
+                <nwn-promotion-plans-tab></nwn-promotion-plans-tab>
+            </div>
+        </div>
+    </div>
+</div>

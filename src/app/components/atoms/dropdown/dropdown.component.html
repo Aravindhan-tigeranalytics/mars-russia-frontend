@@ -6,5 +6,11 @@
 </ul> -->
 <!--Using ng-option and for loop-->
 <!--Using items input-->
-<p>Dropdown</p>
 <!-- <ng-select [items]="cars" bindLabel="name" bindValue="id" [(ngModel)]="selectedCar"> </ng-select> -->
+<ngx-select-dropdown
+    tabindex="0"
+    [multiple]="false"
+    [(ngModel)]="singleSelect"
+    [config]="config"
+    [options]="optionsNormal"
+></ngx-select-dropdown>

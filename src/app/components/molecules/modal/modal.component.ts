@@ -54,6 +54,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     // close modal
     close(): void {
         this.element.style.display = 'none';
-        document.body.classList.remove('nwn-modal-close');
+        document.body.classList.remove('nwn-modal-open');
     }
 }

@@ -1,6 +1,12 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+.right-area {
+    width: calc(100% - 50px);
+}
+.nwn-modal-open {
+    @apply overflow-hidden;
+}
 /* You can add global styles to this file, and also import other style files */
 input[type='checkbox'] + svg {
     display: none;
@@ -64,4 +70,46 @@ input[type='checkbox']:checked + svg {
 .scroll-x-axis {
     width: 100%;
     overflow-y: hidden;
+}
+/* table freeze */
+
+table,
+th,
+tr,
+td,
+thead,
+tbody,
+.sticked.freeze_horizontal {
+    @apply p-0 outline-marsgray-1;
+}
+table,
+th,
+tr,
+thead,
+tbody,
+td {
+    border-collapse: separate !important;
+    border-spacing: 0px !important;
+}
+.scrolly_table {
+    white-space: nowrap;
+    overflow: auto;
+}
+
+.sticked.freeze {
+    z-index: 10;
+    position: relative;
+    background-color: #fff;
+}
+
+.sticked.freeze_vertical {
+    z-index: 5;
+    position: relative;
+    background-color: #fff;
+}
+
+.sticked.freeze_horizontal {
+    z-index: 1;
+    position: relative;
+    background-color: #fff;
 }

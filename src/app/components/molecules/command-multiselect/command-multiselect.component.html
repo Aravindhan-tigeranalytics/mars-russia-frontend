@@ -4,7 +4,7 @@
         'left-border': leftBorder == true
     }"
 >
-    <nwn-checkbox><ng-content></ng-content></nwn-checkbox>
+    <nwn-checkbox [showLabel]="true"><ng-content></ng-content></nwn-checkbox>
 
     <nwn-button type="icon" size="iconsm" [ngClass]="{ hidden: hideClose == true }">
         <nwn-svg-icon type="stroke" nwnSvgIcon="close" size="md"></nwn-svg-icon>

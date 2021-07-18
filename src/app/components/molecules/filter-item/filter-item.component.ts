@@ -11,5 +11,9 @@ export class FilterItemComponent {
     @Input()
     type = 'stroke';
     @Input()
+    size: string | 'smallValue' | 'largeValue' = 'largeValue';
+    @Input()
     hideClose: boolean = false;
+    @Input()
+    hideFilterIcon: boolean = false;
 }
