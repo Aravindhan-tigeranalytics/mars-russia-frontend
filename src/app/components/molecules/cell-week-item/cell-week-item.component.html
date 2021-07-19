@@ -1,12 +1,16 @@
 <div
-    class="pl-4 pr-9 py-2 space-y-1 text-left relative"
+    class="holiday pl-4 pr-9 py-2.5 space-y-1 text-left relative"
     [ngClass]="{
         'bg-marslblue-100': type === 'lowholidayweek',
         'bg-marslblue-200': type === 'mediumholidayweek',
         'bg-marslblue-300': type === 'highholidayweek'
     }"
 >
-    <div class="absolute top-0 right-0" [ngClass]="{ 'triangle-tr': active == true }"></div>
     <p class="text-caption text-marsgray-500 font-normal">03-02-2021</p>
     <p class="text-body text-marsgray-700 font-medium">Y1 Week 2</p>
+    <div class="absolute -top-1 right-0" [ngClass]="{ 'triangle-tr': active == true }"></div>
+    <div class="holiday-popover border-l-3 border-marsgray-600 shadow-xl bg-white px-4 py-2 w-[106]">
+        <p class="text-caption font-normal text-marsgray-700">Holiday week</p>
+        <p class="text-body font-medium text-marsgray-700">Christmas</p>
+    </div>
 </div>

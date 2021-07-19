@@ -75,3 +75,13 @@
 .disabled-ghostdark-btn {
     @apply text-marsgray-700 cursor-not-allowed bg-transparent hover:bg-transparent;
 }
+
+.icon-btn {
+    @apply relative;
+}
+.icon-btn .btn-tooltip {
+    @apply hidden absolute shadow whitespace-nowrap px-4 py-2 -left-6 -bottom-10 bg-white w-auto z-[99] text-caption text-marsgray-700 font-medium;
+}
+.icon-btn:hover .btn-tooltip {
+    @apply block;
+}

@@ -28,4 +28,9 @@
     }"
 >
     <ng-content></ng-content>
+    <div [ngClass]="{ hidden: showTooltip == false }">
+        <div class="btn-tooltip">
+            <ng-content select="[tooltipContent]"></ng-content>
+        </div>
+    </div>
 </button>

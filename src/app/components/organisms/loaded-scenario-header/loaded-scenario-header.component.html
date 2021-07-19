@@ -174,20 +174,28 @@
     <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
         <div class="flex flex-row space-x-2 items-center">
             <div class="flex flex-row space-x-2 border-r border-marsgray-300 pr-2">
-                <nwn-button type="icon" size="iconsm">
-                    <nwn-svg-icon type="stroke" nwnSvgIcon="download"></nwn-svg-icon>
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                    <nwn-svg-icon type="stroke" nwnSvgIcon="download"> </nwn-svg-icon>
+                    <p tooltipContent>Download weekly input</p>
                 </nwn-button>
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon
                         type="stroke"
                         nwnSvgIcon="upload"
                         (click)="sendMessage('upload-weekly-promotions')"
                     ></nwn-svg-icon>
+                    <p tooltipContent>Upload weekly input</p>
                 </nwn-button>
             </div>
             <div class="">
-                <nwn-button type="icon" size="iconsm" (click)="sendMessage('promo-scenariobuilder-popup')">
+                <nwn-button
+                    type="icon"
+                    size="iconsm"
+                    [showTooltip]="true"
+                    (click)="sendMessage('promo-scenariobuilder-popup')"
+                >
                     <nwn-svg-icon type="stroke" nwnSvgIcon="lightning-bolt"></nwn-svg-icon>
+                    <p tooltipContent>Command interface</p>
                 </nwn-button>
             </div>
         </div>
@@ -195,15 +203,18 @@
             <div class="flex flex-row space-x-4 items-center">
                 <nwn-button type="link" size="sm"> Reset </nwn-button>
                 <nwn-button type="primary" size="sm"> Simulate </nwn-button>
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
+                    <p tooltipContent>Save scenario</p>
                 </nwn-button>
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
+                    <p tooltipContent>Download scenario</p>
                 </nwn-button>
                 <div class="relative">
-                    <nwn-button type="icon" size="iconsm" (click)="toggleDisplayDivIf()">
+                    <nwn-button type="icon" size="iconsm" (click)="toggleDisplayDivIf()" [showTooltip]="true">
                         <nwn-svg-icon type="stroke" nwnSvgIcon="more-horizontal"></nwn-svg-icon>
+                        <p tooltipContent>More actions</p>
                     </nwn-button>
                     <div *ngIf="!isShowDivIf">
                         <div class="absolute z-50 top-10 right-0 bg-white shadow-sm w-[186px] h-auto">

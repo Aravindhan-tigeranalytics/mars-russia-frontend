@@ -98,21 +98,27 @@ td {
 
 .sticked.freeze {
     z-index: 10;
-    position: relative;
+    position: sticky;
     background-color: #fff;
 }
 
 .sticked.freeze_vertical {
     z-index: 5;
-    position: relative;
+    position: sticky;
     background-color: #fff;
 }
 
 .sticked.freeze_horizontal {
     z-index: 1;
-    position: relative;
+    position: sticky;
     background-color: #fff;
 }
+
+.sticked.freeze_vertical:last-child .large-tooltip,
+.sticked.freeze_vertical:nth-last-child(2) .large-tooltip {
+    @apply absolute -right-6 top-0 z-[99] shadow-xl whitespace-normal !important;
+}
+
 .ngx-dropdown-container .ngx-dropdown-button {
     @apply overflow-hidden !important;
 }
