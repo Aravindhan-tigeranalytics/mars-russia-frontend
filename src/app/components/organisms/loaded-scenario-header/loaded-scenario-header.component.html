@@ -40,6 +40,7 @@
                 >
             </div>
         </div>
+
         <div>
             <div class="bg-transparent p-4 flex flex-col space-y-2 w-60">
                 <h2 class="text-title-medium text-marsgray-700">{{ title }}</h2>
@@ -240,9 +241,20 @@
                             </div>
                         </div>
                         <div
-                            class="fixed bg-marsgray-900 bg-opacity-0 top-0 left-0 right-0 h-full w-full"
+                            class="
+                                fixed
+                                top-0
+                                left-0
+                                right-0
+                                z-[49]
+                                bg-marsgray-900 bg-opacity-0
+                                firefox:bg-opacity-0
+                                h-full
+                                w-full
+                            "
                             (click)="toggleDisplayDivIf()"
                         ></div>
+                        <!-- backdrop-filter backdrop-blur-xs -->
                     </div>
                 </div>
             </div>

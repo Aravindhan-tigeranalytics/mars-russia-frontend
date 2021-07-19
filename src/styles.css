@@ -54,7 +54,7 @@ input[type='checkbox']:checked + svg {
 .scrollbar::-webkit-scrollbar,
 .scrollbar-y::-webkit-scrollbar,
 .scrollbar-x::-webkit-scrollbar {
-    width: 6px;
+    width: 7px;
     background-color: #f5f5f5;
 }
 .scrollbar::-webkit-scrollbar-thumb,
@@ -65,7 +65,7 @@ input[type='checkbox']:checked + svg {
 }
 .scrollbar::-webkit-scrollbar,
 .scrollbar-x::-webkit-scrollbar {
-    height: 6px;
+    height: 7px;
 }
 .scroll-x-axis {
     width: 100%;
@@ -112,4 +112,7 @@ td {
     z-index: 1;
     position: relative;
     background-color: #fff;
+}
+.ngx-dropdown-container .ngx-dropdown-button {
+    @apply overflow-hidden !important;
 }
