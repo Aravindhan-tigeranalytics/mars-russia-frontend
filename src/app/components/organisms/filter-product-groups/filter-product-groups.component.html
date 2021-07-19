@@ -5,7 +5,7 @@
     <div class="border-b border-marsgray-200">
         <nwn-command-search [hideClose]="true"></nwn-command-search>
     </div>
-    <div class="scrollbar-y h-[288px]">
+    <div class="scrollbar-y h-[287px]">
         <nwn-command-multiselect (valueChangeSelect)="valueChangeSelect($event)" [value] = "product_group.value" [checked]="product_group.checked"  *ngFor="let product_group of product_groups;" [leftBorder]="false" [hideClose]="true">{{product_group.value}}</nwn-command-multiselect>
         <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Galaxy 2020</nwn-command-multiselect>
         <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Galaxy 2020</nwn-command-multiselect>

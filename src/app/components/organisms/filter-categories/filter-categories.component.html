@@ -5,7 +5,7 @@
     <div class="border-b border-marsgray-200">
         <nwn-command-search [hideClose]="true"></nwn-command-search>
     </div>
-    <div class="scrollbar-y h-[288px]">
+    <div class="scrollbar-y h-[287px]">
         <nwn-command-multiselect  (valueChangeSelect)="valueChangeSelect($event)" *ngFor="let category of categories;" [value] = "category.value" [checked]="category.checked" [leftBorder]="false" [hideClose]="true">{{category.value}}</nwn-command-multiselect>
         <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Chocolate</nwn-command-multiselect>
         <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Chocolate</nwn-command-multiselect>
