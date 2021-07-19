@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input ,EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'nwn-filter-stragetic-cells',
@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./filter-stragetic-cells.component.css']
 })
 export class FilterStrageticCellsComponent implements OnInit {
+  @Input()
+  stragetic_cells:Array<string> = []
+  @Output()
+  strategicCellChange = new EventEmitter()
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+  valueChangeSelect(event:any){
+    this.strategicCellChange.emit(event)
   }
 
 }

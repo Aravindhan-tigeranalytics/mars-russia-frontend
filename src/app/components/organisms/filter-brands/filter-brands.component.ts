@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,EventEmitter, Output  } from '@angular/core';
 
 @Component({
   selector: 'nwn-filter-brands',
@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterBrandsComponent implements OnInit {
 
+  @Input()
+  brands:Array<string> = []
+
+  @Output()
+  brandChange = new EventEmitter()
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+  valueChangeSelect(event:any){
+    this.brandChange.emit(event)
   }
 
 }

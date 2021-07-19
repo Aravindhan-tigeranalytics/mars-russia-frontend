@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,EventEmitter, Output  } from '@angular/core';
+import {CheckboxModel} from "../../../core/models"
 
 @Component({
   selector: 'nwn-filter-categories',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterCategoriesComponent implements OnInit {
 
+  @Input()
+  categories:Array<CheckboxModel> = []
+
+  @Output()
+  categoryChange = new EventEmitter()
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+  valueChangeSelect(event:any){
+    this.categoryChange.emit(event)
   }
 
 }

@@ -10,12 +10,8 @@ export class OptimizerService {
     private apiService: ApiService
   ) { }
 
-  fertchVal(){  
-    this.apiService.get<Product[]>('api/scenario/promo-simulate-test/').subscribe(data=>{
-      console.log(data , "data")
-    },error=>{
-      console.log(error , "error")
-    })
+  fetchVal(){  
+    return this.apiService.get<Product[]>('api/scenario/promo-simulate-test/')
   }
   fetch_week_value(id:number){
    

@@ -8,26 +8,36 @@
             <div class="flex flex-row items-center justify-between border-b border-gray-300 py-2">
                 <div class="flex flex-row flex-wrap content-start items-center justify-start">
                     <div class="mr-2 mb-2">
-                        <nwn-button type="nostyle" size="nosize" (click)="openModal('filter-basic-1')">
-                            <nwn-filter-item type="stroke" nwnSvgIcon="retailers">223 retailers</nwn-filter-item>
+                        <nwn-button type="nostyle" size="nosize" (click)="openModal('filter-retailer')">
+                            <nwn-filter-item type="stroke" nwnSvgIcon="retailers">{{ retailers?.length }} retailers</nwn-filter-item>
                         </nwn-button>
                     </div>
                     <div class="mr-2 mb-2">
-                        <nwn-filter-item type="stroke" nwnSvgIcon="categories">223 categories</nwn-filter-item>
+                        <nwn-button type="nostyle" size="nosize" (click)="openModal('filter-category')">
+                        <nwn-filter-item type="stroke" nwnSvgIcon="categories">{{ categories?.length }} categories</nwn-filter-item>
+                        </nwn-button>
                     </div>
                     <div class="mr-2 mb-2">
+                        <nwn-button type="nostyle" size="nosize" (click)="openModal('filter-strategic-cell')">
                         <nwn-filter-item type="stroke" nwnSvgIcon="strategic-cells"
-                            >223 strategic cells</nwn-filter-item
+                            >{{ strategic_cell?.length }} strategic cells</nwn-filter-item
                         >
+                    </nwn-button>
                     </div>
                     <div class="mr-2 mb-2">
-                        <nwn-filter-item type="stroke" nwnSvgIcon="brands">223 brands</nwn-filter-item>
+                        <nwn-button type="nostyle" size="nosize" (click)="openModal('filter-brands')">
+                        <nwn-filter-item type="stroke" nwnSvgIcon="brands">{{ brands?.length }} brands</nwn-filter-item>
+                    </nwn-button>
                     </div>
                     <div class="mr-2 mb-2">
-                        <nwn-filter-item type="stroke" nwnSvgIcon="brand-formats">223 brand formats</nwn-filter-item>
+                        <nwn-button type="nostyle" size="nosize" (click)="openModal('filter-brands-format')">
+                        <nwn-filter-item type="stroke" nwnSvgIcon="brand-formats">{{ brands_format?.length }} brand formats</nwn-filter-item>
+                    </nwn-button>
                     </div>
                     <div class="mr-2 mb-2">
-                        <nwn-filter-item type="stroke" nwnSvgIcon="product-groups">232 product groups</nwn-filter-item>
+                        <nwn-button type="nostyle" size="nosize" (click)="openModal('filter-product-group')">
+                        <nwn-filter-item type="stroke" nwnSvgIcon="product-groups">{{ product_group?.length }} product groups</nwn-filter-item>
+                    </nwn-button>
                     </div>
                 </div>
                 <div>
@@ -39,13 +49,17 @@
                     <div class="flex flex-row flex-wrap items-center justify-between py-4">
                         <div class="flex flex-row flex-wrap items-center">
                             <div class="mr-2 mb-2">dropdown</div>
-                            <div class="flex flex-row flex-wrap items-center justify-start">
-                                <div class="mr-2 mb-2">
-                                    <nwn-simulated-filter-item type="default" size="sfi"
+                            <div  *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center justify-start">
+                                <div class="mr-2 mb-2" *ngFor="let key of quarter_year; let first = first;">
+                                    <!-- <nwn-simulated-filter-item type="default" size="sfi"
                                         >Y1 Q1</nwn-simulated-filter-item
-                                    >
+                                    > -->
+                                    <nwn-simulated-filter-item (click)="changeQuarter(key)"
+                                     [selected_quarter]="selected_quarter" [key]="key" type="default" 
+                                     size="sfi">{{key}}
+                                    </nwn-simulated-filter-item>
                                 </div>
-                                <div class="mr-2 mb-2">
+                                <!-- <div class="mr-2 mb-2">
                                     <nwn-simulated-filter-item type="default" size="sfi"
                                         >Y1 Q2</nwn-simulated-filter-item
                                     >
@@ -99,7 +113,7 @@
                                     <nwn-simulated-filter-item type="default" size="sfi"
                                         >Y3 Q4</nwn-simulated-filter-item
                                     >
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="flex flex-row flex-wrap items-center">
@@ -118,8 +132,11 @@
                             </nwn-button>
                         </div>
                     </div>
-                    <div class="flex flex-row flex-wrap items-center">
-                        <div class="mr-2 mb-2">
+                    <div *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center">
+                        <div class="mr-2 mb-2" *ngFor="let product_week of selected_product_week">
+                            <nwn-weekly-promotion [product_week] = "product_week"></nwn-weekly-promotion>
+                        </div>
+                        <!-- <div class="mr-2 mb-2">
                             <nwn-weekly-promotion></nwn-weekly-promotion>
                         </div>
                         <div class="mr-2 mb-2">
@@ -151,10 +168,7 @@
                         </div>
                         <div class="mr-2 mb-2">
                             <nwn-weekly-promotion></nwn-weekly-promotion>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-weekly-promotion></nwn-weekly-promotion>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="flex flex-row flex-wrap items-center justify-between space-x-2 border-b border-gray-300">
@@ -181,9 +195,30 @@
         <nwn-slider></nwn-slider>
     </div>
 </div>
-<nwn-modal id="filter-basic-1" class="hidden">
-    <nwn-filter-basic></nwn-filter-basic>
+<!-- <form [formGroup]="form">
+
+<nwn-modal id="filter-retailer" class="hidden">
+    <nwn-filter-retailer formArrayName="orders" [cont] = "ordersFormArray.controls?.orders" [retailers] = "retailers"></nwn-filter-retailer>
 </nwn-modal>
-<nwn-modal id="add-promotion" class="">
+</form> -->
+<nwn-modal id="filter-retailer" class="hidden">
+    <nwn-filter-retailer (retailerChange) = "retailerChange($event)" [retailers] = "retailers"></nwn-filter-retailer>
+</nwn-modal>
+<nwn-modal id="filter-category" class="hidden">
+    <nwn-filter-categories  (categoryChange) = "categoryChange($event)" [categories] = "categories"></nwn-filter-categories>
+</nwn-modal>
+<nwn-modal id="filter-strategic-cell" class="hidden">
+    <nwn-filter-stragetic-cells (strategicCellChange) = "strategicCellChange($event)" [stragetic_cells] = "strategic_cell"></nwn-filter-stragetic-cells>
+</nwn-modal>
+<nwn-modal id="filter-brands" class="hidden">
+    <nwn-filter-brands (brandChange) = "brandChange($event)"  [brands] = "brands"></nwn-filter-brands>
+</nwn-modal>
+<nwn-modal id="filter-brands-format" class="hidden">
+    <nwn-filter-brands-formats (brandFormatChange) = "brandFormatChange($event)" [brand_formats] = "brands_format"></nwn-filter-brands-formats>
+</nwn-modal>
+<nwn-modal id="filter-product-group" class="hidden">
+    <nwn-filter-product-groups (productChange) = "productChange($event)" [product_groups] = "product_group"></nwn-filter-product-groups>
+</nwn-modal>
+<nwn-modal id="add-promotion" class="hidden">
     <nwn-add-promotion></nwn-add-promotion>
 </nwn-modal>

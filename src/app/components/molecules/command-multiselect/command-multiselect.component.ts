@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output  } from '@angular/core';
 
 @Component({
     selector: 'nwn-command-multiselect',
@@ -10,4 +10,14 @@ export class CommandMultiselectComponent {
     hideClose: boolean = false;
     @Input()
     leftBorder: boolean = false;
+    @Input()
+    value:any = ''
+    @Input()
+    checked:boolean = false
+    @Output() valueChangeSelect = new EventEmitter();
+
+    valueChange(e:any){
+        this.valueChangeSelect.emit(e)
+        // console.log(e , "output event value")
+    }
 }

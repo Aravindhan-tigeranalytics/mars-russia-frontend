@@ -2,7 +2,9 @@
     <div class="relative">
         <input
             type="checkbox"
-            value="1"
+            [value]="value"
+            [checked] = "checked"   
+            (change) = "checkValue($event)"
             class="
                 form-tick
                 appearance-none

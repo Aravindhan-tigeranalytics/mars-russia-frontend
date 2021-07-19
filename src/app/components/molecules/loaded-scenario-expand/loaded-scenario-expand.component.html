@@ -2,9 +2,9 @@
     <div class="flex flex-row flex-wrap items-center justify-between py-4">
         <div class="flex flex-row flex-wrap items-center">
             <div class="mr-2 mb-2">dropdown</div>
-            <div class="flex flex-row flex-wrap items-center justify-start">
-                <div class="mr-2 mb-2">
-                    <nwn-simulated-filter-item type="default" size="sfi">Y1 Q1</nwn-simulated-filter-item>
+            <div *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center justify-start">
+                <div class="mr-2 mb-2"  *ngFor="let key of quarter_year; let first = first;">
+                    <nwn-simulated-filter-item (click)="changeQuarter(key)" [selected_quarter]="selected_quarter" [key]="key" type="default" size="sfi">{{key}}</nwn-simulated-filter-item>
                 </div>
                 <!-- <div class="mr-2 mb-2">
                     <nwn-simulated-filter-item type="default" size="sfi">Y1 Q2</nwn-simulated-filter-item>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import {SharedModule} from "../shared/shared.module"
 // Components
 import { ComponentModule } from '@components/components.module';
 
@@ -7,7 +8,7 @@ import { ComponentModule } from '@components/components.module';
 import { PromoScenarioBuilderComponent } from './promo-scenario-builder/promo-scenario-builder.component';
 
 @NgModule({
-    imports: [ComponentModule],
+    imports: [CommonModule,ComponentModule,SharedModule],
     declarations: [PromoScenarioBuilderComponent],
     exports: [PromoScenarioBuilderComponent],
 })
