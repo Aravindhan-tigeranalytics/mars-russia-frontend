@@ -4,7 +4,6 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "postinstall": "ngcc",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "lint": "tsc --noEmit && eslint . --ext js,ts,json --quiet --fix",
