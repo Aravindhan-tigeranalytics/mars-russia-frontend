@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'nwn-side-menu',
@@ -8,4 +10,18 @@ import { Component, Input } from '@angular/core';
 export class SideMenuComponent {
     @Input()
     href = '/';
+
+    currentRoute = '';
+
+    constructor(location: Location, router: Router) {
+        router.events.subscribe((val) => {
+            if (location.path() != '') {
+                this.currentRoute = location.path();
+            } else {
+                this.currentRoute = '';
+            }
+        });
+    }
+
+    ngOnInit() {}
 }

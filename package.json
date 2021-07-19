@@ -30,6 +30,9 @@
     "@ngneat/tailwind": "^7.0.3",
     "bluebird": "^3.7.2",
     "chart.js": "^3.4.1",
+    "d3": "^7.0.0",
+    "ng2-charts": "^3.0.0-rc.4",
+    "ngx-select-dropdown": "^2.1.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
@@ -48,6 +51,7 @@
     "@storybook/angular": "^6.3.4",
     "@storybook/builder-webpack5": "^6.3.4",
     "@storybook/manager-webpack5": "^6.3.4",
+    "@types/d3": "^7.0.0",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@webcomponents/custom-elements": "^1.4.3",

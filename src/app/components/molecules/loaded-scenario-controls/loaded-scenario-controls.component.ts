@@ -5,4 +5,10 @@ import { Component } from '@angular/core';
     templateUrl: './loaded-scenario-controls.component.html',
     styleUrls: ['./loaded-scenario-controls.component.css'],
 })
-export class LoadedScenarioControlsComponent {}
+export class LoadedScenarioControlsComponent {
+    isShowDivIf = true;
+
+    toggleDisplayDivIf() {
+        this.isShowDivIf = !this.isShowDivIf;
+    }
+}

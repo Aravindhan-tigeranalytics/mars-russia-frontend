@@ -11,7 +11,19 @@ module.exports = {
     },
     darkMode: false, // or 'media' or 'class'
     theme: {
+        borderWidth: {
+            DEFAULT: '1px',
+            0: '0',
+            2: '2px',
+            3: '3px',
+            4: '4px',
+            6: '6px',
+            8: '8px',
+        },
         extend: {
+            outline: {
+                'marsgray-1': ['1px solid #E4E4E7', '0px'],
+            },
             fontFamily: {
                 sans: ['Mars Centra', 'sans-serif'],
             },
@@ -89,6 +101,7 @@ module.exports = {
                     700: '#4D7C0F',
                     800: '#3F6212',
                     900: '#365314',
+                    accent: '#61A020',
                 },
                 marsyellow: {
                     50: '#FEFCE8',

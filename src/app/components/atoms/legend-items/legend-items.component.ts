@@ -18,6 +18,7 @@ export class LegendItemsComponent {
         | 'bgLBlue-100'
         | 'bgLBlue-200'
         | 'bgLBlue-300'
+        | 'bgLBlue-600'
         | 'bggreen-accent'
         | 'bgred-100'
         | 'bggreen-100' = 'bg-gray-500';

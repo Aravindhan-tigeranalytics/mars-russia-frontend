@@ -9,6 +9,14 @@ export class WeeklyPromotionComponent implements OnInit {
      
     @Input()
     product_week:ProductWeek = null as any;
+    singleSelect: any = [];
+    config = {
+        displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+        search: true,
+        placeholder: 'Add promotion',
+    };
+    @Input()
+    optionsWeeklyPromotion: any[] = [];
 
     ngOnInit(){
        
@@ -16,4 +24,9 @@ export class WeeklyPromotionComponent implements OnInit {
         // console.log(this.product_week , "promo week")
     }
 
+    constructor() {}
+
+    // ngOnInit() {}
+
+   
 }

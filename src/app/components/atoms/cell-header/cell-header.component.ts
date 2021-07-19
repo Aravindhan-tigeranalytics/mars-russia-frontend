@@ -10,4 +10,6 @@ export class CellHeaderComponent {
     type: string | 'headersm' | 'subheadersm' | 'subheaderlg' | 'subheadermd' = 'headersm';
     @Input()
     color: string | 'bgwhite' | 'bgtransparent' | 'bggray-100' = 'bgwhite';
+    @Input()
+    showDate: boolean = false;
 }

@@ -1,4 +1,4 @@
-<label class="flex space-x-4 leading-none h-3 items-center">
+<label class="flex flex-row space-x-4 leading-none h-3 items-center">
     <div class="relative">
         <input
             type="checkbox"
@@ -29,7 +29,7 @@
         </svg>
     </div>
 
-    <span class="text-marsgray-700 text-body-standard leading-none">
+    <div class="text-marsgray-700 text-body leading-none w-full mb-1" [ngClass]="{ hidden: showLabel == false }">
         <ng-content></ng-content>
-    </span>
+    </div>
 </label>

@@ -1,15 +1,55 @@
-<div class="w-[650px]">
+<div class="w-[650px] mx-auto my-6">
     <div class="border-b border-marsgray-200">
         <nwn-command-header type="stroke" nwnSvgIcon="adjustments">Promotion details</nwn-command-header>
     </div>
     <div class="h-auto bg-white">
-        <div class="border-b border-marsgray-200">
-            <nwn-command-search [hideClose]="true"></nwn-command-search>
+        <div class="px-6 py-3 space-y-2">
+            <label for="promoname">Label</label>
+            <div class="relative">
+                <select
+                    name="promoname"
+                    class="
+                        appearance-none
+                        h-10
+                        w-full
+                        py-2
+                        px-3
+                        rounded-none
+                        border border-marsgray-300
+                        focus:border-marsgray-500
+                        focus:outline-none
+                        bg-transparent
+                    "
+                >
+                    <option value="">Promo name</option>
+                    <option value="">Promo name</option>
+                    <option value="">Promo name</option>
+                </select>
+                <nwn-svg-icon type="stroke" nwnSvgIcon="chevron-down" class="absolute top-1 right-1"></nwn-svg-icon>
+            </div>
         </div>
-        <nwn-slider></nwn-slider>
+        <div class="px-6 py-2">
+            <label for="promoname">Discount depth</label>
+            <div class="custom-slider pt-4 pb-6">
+                <ngx-slider [(value)]="valueDiscountdepth" [options]="discountdepth"></ngx-slider>
+            </div>
+        </div>
+        <div class="px-6 py-2">
+            <label for="promoname">Co-investment depth</label>
+            <div class="custom-slider pt-4 pb-6">
+                <ngx-slider [(value)]="valueCoInvestment" [options]="coInvestment"></ngx-slider>
+            </div>
+        </div>
+        <div class="px-6 py-2">
+            <nwn-text-input nwnTextInput="text" placeholder="Promo name" [error]="true"
+                ><p label>Label</p></nwn-text-input
+            >
+        </div>
+        <nwn-search-footer [showAdd]="true" type="secondary"></nwn-search-footer>
         <div class="border border-gray-200 px-2 bg-gray-100">
             <nwn-cell-header type="headersm">Input promotions</nwn-cell-header>
         </div>
+
         <div>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">TPR - 35%</nwn-command-multiselect>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">N + 1 - 20%</nwn-command-multiselect>

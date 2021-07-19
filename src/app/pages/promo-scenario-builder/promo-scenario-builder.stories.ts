@@ -33,7 +33,7 @@ import { WeeklyPromotionComponent } from '@molecules/weekly-promotion/weekly-pro
 import { SummaryPlaceholderComponent } from '@molecules/summary-placeholder/summary-placeholder.component';
 
 // Organisms
-import { HeaderComponent } from '@organisms/header/header.component';
+import { PromoHeaderComponent } from '@organisms/promo-header/promo-header.component';
 import { LoadedScenarioHeaderComponent } from '@organisms/loaded-scenario-header/loaded-scenario-header.component';
 import { SideMenuComponent } from '@organisms/side-menu/side-menu.component';
 import { SideBarComponent } from '@organisms/side-bar/side-bar.component';
@@ -88,7 +88,7 @@ export default {
                 CommandSearchComponent,
                 SearchFooterComponent,
                 // Organisms
-                HeaderComponent,
+                PromoHeaderComponent,
                 LoadedScenarioHeaderComponent,
                 SideMenuComponent,
                 SideBarComponent,
