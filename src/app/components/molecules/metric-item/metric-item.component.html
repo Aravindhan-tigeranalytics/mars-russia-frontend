@@ -47,12 +47,14 @@
         </div>
     </ng-container>
     <ng-container *ngIf="nwnMetricItem === 'checkboxMetric'">
-        <div class="w-full flex flex-row space-x-1 items-center px-4 py-5 hover:bg-marsgray-200 relative">
+        <div
+            class="checkbox-metric w-full flex flex-row space-x-3 items-center px-4 py-5 hover:bg-marsgray-200 relative"
+        >
             <nwn-button
                 type="nostyle"
                 size="nosize"
-                class="absolute top-4 left-0 cursor-move"
-                [ngClass]="{ hidden: showDrad == false }"
+                class="dragBtn absolute top-4 left-0 cursor-move"
+                [ngClass]="{ hidden: disabled == true }"
             >
                 <nwn-svg-icon type="stroke" nwnSvgIcon="drag" size="lg"></nwn-svg-icon>
             </nwn-button>
@@ -60,7 +62,9 @@
                 <div class="text-title-medium text-marsgray-700 flex flex-row">
                     <ng-content select="[checkHeadValue]"></ng-content>
                 </div>
-                <nwn-checkbox [showLabel]="true"><ng-content select="[checkboxLabel]"></ng-content></nwn-checkbox>
+                <nwn-checkbox [showLabel]="true" [checkboxData]="checkboxValue" (toggle)="onRoleChangeCheckbox($event)"
+                    ><ng-content select="[checkboxLabel]"></ng-content
+                ></nwn-checkbox>
             </div>
         </div>
     </ng-container>

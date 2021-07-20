@@ -13,6 +13,8 @@
                 checked:border-transparent
                 focus:outline-none
             "
+            [(ngModel)]="checkboxData"
+            (change)="onToggle()"
         />
 
         <svg

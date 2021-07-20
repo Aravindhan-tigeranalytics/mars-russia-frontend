@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
     selector: 'nwn-checkbox',
@@ -11,5 +11,13 @@ export class CheckboxComponent implements OnInit {
     ngOnInit(): void {}
 
     @Input()
-    showLabel: boolean = false;
+    showLabel = false;
+
+    @Input() checkboxData = false;
+    @Output() toggle: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    onToggle(): void {
+        const checkedOption = this.checkboxData;
+        this.toggle.emit(checkedOption);
+    }
 }

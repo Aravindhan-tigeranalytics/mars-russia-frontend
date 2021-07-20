@@ -141,8 +141,18 @@
                 class="checkbox-metric-list flex flex-row flex-wrap items-center justify-start"
                 (cdkDropListDropped)="drop($event)"
             >
-                <div class="checkbox-metric-item" *ngFor="let checkboxMetric of checkboxMetrices" cdkDrag>
-                    <nwn-metric-item nwnMetricItem="checkboxMetric" [showDrad]="true">
+                <div
+                    class="checkbox-metric-item"
+                    *ngFor="let checkboxMetric of checkboxMetrices; let i = index"
+                    cdkDrag
+                    [cdkDragDisabled]="checkboxMetric.disabled"
+                >
+                    <nwn-metric-item
+                        nwnMetricItem="checkboxMetric"
+                        [disabled]="checkboxMetric.disabled"
+                        [checkboxValue]="!checkboxMetric.disabled"
+                        (toggle)="onRoleChangeCheckbox($event, i)"
+                    >
                         <p checkHeadValue>{{ checkboxMetric.checkHeadValue }}</p>
                         <label checkboxLabel class="-m-1">{{ checkboxMetric.checkboxLabel }}</label>
                     </nwn-metric-item>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'nwn-metric-item',
@@ -14,7 +14,18 @@ export class MetricItemComponent implements OnInit {
     nwnMetricItem: string | 'defaultRight' | 'defaultTop' | 'multipleValues' | 'checkboxMetric' = 'defaultRight';
 
     @Input()
-    showRightValue: boolean = false;
+    showRightValue = false;
+
     @Input()
-    showDrad: boolean = false;
+    disabled = false;
+
+    @Input()
+    checkboxValue = false;
+
+    @Output() toggle: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    onRoleChangeCheckbox(ev) {
+        this.checkboxValue = ev;
+        this.toggle.emit(this.checkboxValue);
+    }
 }

@@ -32,22 +32,22 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     // drag and drop
     checkboxMetrices = [
         {
-            checkHeadValue: 'x1.00',
+            checkHeadValue: 'x0.50',
             checkboxLabel: 'MAC',
             disabled: false,
         },
         {
-            checkHeadValue: 'x1.00',
+            checkHeadValue: 'x0.75',
             checkboxLabel: 'Retailer profit',
             disabled: false,
         },
         {
-            checkHeadValue: 'x1.00',
+            checkHeadValue: 'x1.50',
             checkboxLabel: 'Trade expense',
             disabled: false,
         },
         {
-            checkHeadValue: 'x1.00',
+            checkHeadValue: 'x1.25',
             checkboxLabel: 'MAC, % NSV',
             disabled: false,
         },
@@ -60,6 +60,11 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
 
     drop(event: CdkDragDrop<string[]>) {
         moveItemInArray(this.checkboxMetrices, event.previousIndex, event.currentIndex);
+    }
+
+    onRoleChangeCheckbox(ev, index) {
+        this.checkboxMetrices[index].disabled = !ev;
+        console.log(this.checkboxMetrices);
     }
 
     // select config

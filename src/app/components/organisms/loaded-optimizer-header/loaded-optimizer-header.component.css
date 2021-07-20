@@ -25,6 +25,7 @@
 .checkbox-metric-item.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-.checkbox-metric-item.cdk-drag-disabled .cursor-move {
-    @apply hidden !important;
+::ng-deep .checkbox-metric-item.cdk-drag-disabled p,
+::ng-deep .checkbox-metric-item.cdk-drag-disabled label {
+    @apply text-marsgray-500;
 }
