@@ -139,6 +139,11 @@ td {
     @apply absolute -right-6 top-0 z-[99] shadow-xl whitespace-normal !important;
 }
 
+.sticked.freeze_vertical:last-child .large-tooltip.arrow_box:after,
+.sticked.freeze_vertical:nth-last-child(2) .large-tooltip.arrow_box:after {
+    left: 95%;
+}
+
 .ngx-dropdown-container .ngx-dropdown-button {
     @apply overflow-hidden !important;
 }
