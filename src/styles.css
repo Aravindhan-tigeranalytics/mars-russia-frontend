@@ -1,6 +1,26 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer base {
+    /* Mars Bold */
+    @font-face {
+        font-family: 'Mars Centra';
+        src: local(''), url('/assets/fonts/MarsCentra/MarsCentra-Bold.woff2') format('woff2');
+    }
+    /* Mars Extra Bold */
+    @font-face {
+        font-family: 'Mars Centra';
+        font-weight: 800;
+        src: local(''), url('/assets/fonts/MarsCentra/MarsCentra-Extrabold.woff2') format('woff2');
+    }
+    /* Mars Book */
+    @font-face {
+        font-family: 'Mars Centra';
+        src: local(''), url('/assets/fonts/MarsCentra/MarsCentra-Book.woff2') format('woff2');
+    }
+}
+
 .right-area {
     width: calc(100% - 50px);
 }
@@ -121,4 +141,11 @@ td {
 
 .ngx-dropdown-container .ngx-dropdown-button {
     @apply overflow-hidden !important;
+}
+/* load scenario card */
+nwn-scenario-load-card .load-scenario-card {
+    @apply bg-white;
+}
+.active nwn-scenario-load-card .load-scenario-card {
+    @apply bg-marsgray-100;
 }

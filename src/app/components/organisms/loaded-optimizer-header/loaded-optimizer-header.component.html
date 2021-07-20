@@ -63,7 +63,7 @@
     <!-- <div class="flex flex-col">
         <nwn-loaded-scenario-expand></nwn-loaded-scenario-expand>
     </div> -->
-    <div class="flex flex-col">
+    <div id="close-expand-header" class="flex flex-col translate-x-1" *ngIf="!isExpand">
         <div class="flex flex-col border-b border-gray-300">
             <div class="flex flex-row flex-wrap items-center border-b border-marsgray-300">
                 <div class="mr-2">
@@ -73,7 +73,7 @@
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
-                    <nwn-metric-item nwnMetricItem="defaultTop">
+                    <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
                         <p topValue>5</p>
                         <p topHeadValue>3 - 7</p>
                         <p topMetricContent>Number of waves</p>
@@ -117,7 +117,7 @@
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
-                    <nwn-metric-item nwnMetricItem="multipleValues">
+                    <nwn-metric-item nwnMetricItem="multipleValues" (click)="sendMessage('promotion-details')">
                         <div multipleValue class="flex flex-row">
                             <p>TPR-10% (Co-12%), 15% ,20%</p>
                             <p>N+1-10% (Co-10%)</p>
@@ -135,35 +135,16 @@
             </div>
         </div>
         <div class="flex flex-row items-center justify-between space-x-2 border-b border-gray-300">
-            <div class="flex flex-row flex-wrap items-center justify-start">
-                <div class="">
-                    <nwn-metric-item nwnMetricItem="checkboxMetric" [showDrad]="false">
-                        <p checkHeadValue>x1.00</p>
-                        <label checkboxLabel class="-m-1">MAC</label>
-                    </nwn-metric-item>
-                </div>
-                <div class="">
-                    <nwn-metric-item nwnMetricItem="checkboxMetric" [showDrad]="false">
-                        <p checkHeadValue>x1.00</p>
-                        <label checkboxLabel class="-m-1">Retailer profit</label>
-                    </nwn-metric-item>
-                </div>
-                <div class="">
-                    <nwn-metric-item nwnMetricItem="checkboxMetric" [showDrad]="false">
-                        <p checkHeadValue>-10%</p>
-                        <label checkboxLabel class="-m-1">Trade expense</label>
-                    </nwn-metric-item>
-                </div>
-                <div class="">
-                    <nwn-metric-item nwnMetricItem="checkboxMetric" [showDrad]="false">
-                        <p checkHeadValue>x1.00</p>
-                        <label checkboxLabel class="-m-1">MAC, % NSV</label>
-                    </nwn-metric-item>
-                </div>
-                <div class="">
-                    <nwn-metric-item nwnMetricItem="checkboxMetric" [showDrad]="false">
-                        <p checkHeadValue>x1.00</p>
-                        <label checkboxLabel class="-m-1">RP, % RSV</label>
+            <div
+                cdkDropList
+                cdkDropListOrientation="horizontal"
+                class="checkbox-metric-list flex flex-row flex-wrap items-center justify-start"
+                (cdkDropListDropped)="drop($event)"
+            >
+                <div class="checkbox-metric-item" *ngFor="let checkboxMetric of checkboxMetrices" cdkDrag>
+                    <nwn-metric-item nwnMetricItem="checkboxMetric" [showDrad]="true">
+                        <p checkHeadValue>{{ checkboxMetric.checkHeadValue }}</p>
+                        <label checkboxLabel class="-m-1">{{ checkboxMetric.checkboxLabel }}</label>
                     </nwn-metric-item>
                 </div>
             </div>
@@ -183,8 +164,14 @@
     <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
         <div class="flex flex-row space-x-2 items-center">
             <div class="">
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button
+                    type="icon"
+                    size="iconsm"
+                    [showTooltip]="true"
+                    (click)="sendMessage('promo-scenariobuilder-popup')"
+                >
                     <nwn-svg-icon type="stroke" nwnSvgIcon="lightning-bolt"></nwn-svg-icon>
+                    <p tooltipContent>Command interface</p>
                 </nwn-button>
             </div>
         </div>
@@ -192,15 +179,18 @@
             <div class="flex flex-row space-x-4 items-center">
                 <nwn-button type="link" size="sm"> Reset </nwn-button>
                 <nwn-button type="primary" size="sm"> Optimize </nwn-button>
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
+                    <p tooltipContent>Save scenario</p>
                 </nwn-button>
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
+                    <p tooltipContent>Download scenario</p>
                 </nwn-button>
                 <div class="relative">
-                    <nwn-button type="icon" size="iconsm" (click)="toggleDisplayDivIf()">
+                    <nwn-button type="icon" size="iconsm" (click)="toggleDisplayDivIf()" [showTooltip]="true">
                         <nwn-svg-icon type="stroke" nwnSvgIcon="more-horizontal"></nwn-svg-icon>
+                        <p tooltipContent>More actions</p>
                     </nwn-button>
                     <div *ngIf="!isShowDivIf">
                         <div class="absolute z-50 top-10 right-0 bg-white shadow-sm w-[186px] h-auto">
@@ -246,4 +236,10 @@
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="isExpand">
+    <nwn-status-bar nwnStatusBar="viewmore" (click)="expandHeader()">View More</nwn-status-bar>
+</div>
+<div *ngIf="!isExpand">
+    <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
 </div>

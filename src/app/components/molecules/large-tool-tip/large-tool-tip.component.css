@@ -4,15 +4,16 @@
 }
 .arrow_box:after {
     bottom: 100%;
-    left: 50%;
+    left: 4%;
     border: solid transparent;
     content: '';
     height: 0;
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-color: rgba(255, 255, 255);
-    border-top-color: #ffffff;
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: #f4f4f5;
     border-width: 8px;
     margin-left: -6px;
+    z-index: 99;
 }

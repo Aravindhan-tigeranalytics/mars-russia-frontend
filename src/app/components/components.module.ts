@@ -7,6 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Atoms
 import { ButtonComponent } from '@atoms/button/button.component';
@@ -104,16 +105,27 @@ import { PromosimulatorBuilderAggregatedComponent } from './organisms/promosimul
 import { MarsCustomerPlMetricsComponent } from './molecules/mars-customer-pl-metrics/mars-customer-pl-metrics.component';
 import { PlChartComponent } from '@organisms/charts/pl-chart/pl-chart.component';
 import { BaselineLiftChartComponent } from '@organisms/charts/baseline-lift-chart/baseline-lift-chart.component';
-import { KpiMetricsComponent } from './molecules/kpi-metrics/kpi-metrics.component';
-import { CompareScenarioPopupComponent } from './organisms/compare-scenario-popup/compare-scenario-popup.component';
-import { PromotionPlansTabComponent } from './molecules/promotion-plans-tab/promotion-plans-tab.component';
-import { LoadedOptimizerHeaderComponent } from './organisms/loaded-optimizer-header/loaded-optimizer-header.component';
-import { MetricItemDirective } from './molecules/metric-item/metric-item.directive';
-import { LargeToolTipComponent } from './molecules/large-tool-tip/large-tool-tip.component';
-import { PromoOptimizerAggregatedComponent } from './organisms/promo-optimizer-aggregated/promo-optimizer-aggregated.component';
+import { KpiMetricsComponent } from '@molecules/kpi-metrics/kpi-metrics.component';
+import { CompareScenarioPopupComponent } from '@organisms/compare-scenario-popup/compare-scenario-popup.component';
+import { PromotionPlansTabComponent } from '@molecules/promotion-plans-tab/promotion-plans-tab.component';
+import { LoadedOptimizerHeaderComponent } from '@organisms/loaded-optimizer-header/loaded-optimizer-header.component';
+import { MetricItemDirective } from '@molecules/metric-item/metric-item.directive';
+import { LargeToolTipComponent } from '@molecules/large-tool-tip/large-tool-tip.component';
+import { PromoOptimizerAggregatedComponent } from '@organisms/promo-optimizer-aggregated/promo-optimizer-aggregated.component';
+import { CalendarChartComponent } from '@organisms/charts/calendar-chart/calendar-chart.component';
+import { CalendarSimulatedChartComponent } from '@organisms/charts/calendar-simulated-chart/calendar-simulated-chart.component';
+import { PromotionDetailsComponent } from './organisms/promotion-details/promotion-details.component';
 
 @NgModule({
-    imports: [CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule],
+    imports: [
+        CommonModule,
+        NgxSliderModule,
+        NgSelectModule,
+        FormsModule,
+        ChartsModule,
+        SelectDropDownModule,
+        DragDropModule,
+    ],
     declarations: [
         ButtonComponent,
         LinkComponent,
@@ -213,6 +225,9 @@ import { PromoOptimizerAggregatedComponent } from './organisms/promo-optimizer-a
         MetricItemDirective,
         LargeToolTipComponent,
         PromoOptimizerAggregatedComponent,
+        CalendarChartComponent,
+        CalendarSimulatedChartComponent,
+        PromotionDetailsComponent,
     ],
     exports: [
         ButtonComponent,
@@ -307,6 +322,10 @@ import { PromoOptimizerAggregatedComponent } from './organisms/promo-optimizer-a
         CompareScenarioPopupComponent,
         LoadedOptimizerHeaderComponent,
         MetricItemDirective,
+        CalendarChartComponent,
+        CalendarSimulatedChartComponent,
+        NumberPromoWavesComponent,
+        PromotionDetailsComponent,
     ],
 })
 export class ComponentModule {}

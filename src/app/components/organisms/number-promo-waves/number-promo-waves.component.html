@@ -21,8 +21,8 @@
                 </nwn-metric-item-popup>
             </div>
         </div>
-        <div class="">
-            <!-- <nwn-slider></nwn-slider> -->
+        <div class="custom-slider px-6 pt-4 pb-6">
+            <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider>
         </div>
     </div>
     <nwn-search-footer [showApply]="true"></nwn-search-footer>
