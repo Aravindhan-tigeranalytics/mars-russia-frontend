@@ -1,11 +1,14 @@
 ::ng-deep .promodetailselect .ngx-dropdown-container .ngx-dropdown-button {
-    @apply bg-transparent rounded-none text-body border border-marsgray-300 my-2 p-2 z-40 !important;
+    @apply bg-transparent rounded-none text-body rounded-none  border border-marsgray-300 my-2 p-2 z-40 !important;
 }
 ::ng-deep .promodetailselect .ngx-dropdown-container button .nsdicon-angle-down::before {
     @apply border-marsgray-700 !important;
 }
 ::ng-deep .promodetailselect .ngx-dropdown-container .ngx-dropdown-list-container ul {
     @apply my-0 !important;
+}
+::ng-deep .promodetailselect .ngx-dropdown-container .ngx-dropdown-list-container ul.available-items {
+    @apply m-0 max-h-[146px] overflow-y-auto rounded-none  !important;
 }
 ::ng-deep .promodetailselect .ngx-dropdown-container .ngx-dropdown-list-container ul.selected-items {
     @apply hidden !important;

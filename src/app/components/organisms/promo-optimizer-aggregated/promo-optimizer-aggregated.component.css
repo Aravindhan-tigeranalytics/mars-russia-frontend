@@ -22,8 +22,11 @@
 ::ng-deep .tableDropdown .ngx-dropdown-container button .nsdicon-angle-down::before {
     @apply border-marsgray-700 !important;
 }
+::ng-deep .tableDropdown .ngx-dropdown-container .ngx-dropdown-list-container {
+    @apply rounded-none !important;
+}
 ::ng-deep .tableDropdown .ngx-dropdown-container .ngx-dropdown-list-container ul.available-items {
-    @apply m-0  !important;
+    @apply m-0 max-h-[110px] overscroll-y-auto rounded-none !important;
 }
 ::ng-deep .tableDropdown .ngx-dropdown-container .ngx-dropdown-list-container ul li {
     @apply text-body px-3 py-2 flex flex-row items-center space-x-3 hover:text-marsblue-500  !important;
