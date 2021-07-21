@@ -1,0 +1,46 @@
+<div class="w-[650px] bg-white mx-auto my-6 promodetails">
+    <div class="border-b border-marsgray-200">
+        <nwn-command-header type="stroke" nwnSvgIcon="adjustments">Promotion details</nwn-command-header>
+    </div>
+    <div class="h-auto bg-white">
+        <div class="px-6 py-3 space-y-2 promodetailselect">
+            <label for="promoname">Label</label>
+            <ngx-select-dropdown
+                tabindex="0"
+                [multiple]="false"
+                [(ngModel)]="singleSelect"
+                [config]="config"
+                [options]="optionsNormal"
+            ></ngx-select-dropdown>
+        </div>
+        <div class="px-6 py-2">
+            <label for="promoname">Discount depth</label>
+            <div class="custom-slider pt-4 pb-6">
+                <ngx-slider [(value)]="valueDiscountdepth" [options]="discountdepth"></ngx-slider>
+            </div>
+        </div>
+        <div class="px-6 py-2">
+            <label for="promoname">Co-investment depth</label>
+            <div class="custom-slider pt-4 pb-6">
+                <ngx-slider [(value)]="valueCoInvestment" [options]="coInvestment"></ngx-slider>
+            </div>
+        </div>
+        <div class="px-6 py-2">
+            <nwn-text-input nwnTextInput="text" placeholder="Promo name" [error]="true"
+                ><p label>Label</p></nwn-text-input
+            >
+        </div>
+        <nwn-search-footer [showAdd]="true" type="secondary" color="bgWhite"></nwn-search-footer>
+        <div class="border border-gray-200 px-2 bg-gray-100">
+            <nwn-cell-header type="headersm">Promotions</nwn-cell-header>
+        </div>
+
+        <div>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">TPR - 35%</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">N + 1 - 20%</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">TPR - 35%</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">N + 1 - 20%</nwn-command-multiselect>
+        </div>
+    </div>
+    <nwn-search-footer [showApply]="true"></nwn-search-footer>
+</div>

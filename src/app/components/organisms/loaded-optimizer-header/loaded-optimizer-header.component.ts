@@ -1,11 +1,12 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'nwn-loaded-optimizer-header',
     templateUrl: './loaded-optimizer-header.component.html',
     styleUrls: ['./loaded-optimizer-header.component.css'],
 })
-export class LoadedOptimizerHeaderComponent {
+export class LoadedOptimizerHeaderComponent implements OnInit {
     @Output()
     modalEvent = new EventEmitter<string>();
 
@@ -13,12 +14,60 @@ export class LoadedOptimizerHeaderComponent {
         this.modalEvent.emit(modalType);
     }
 
+    // sho and hide more action menu
     isShowDivIf = true;
 
     toggleDisplayDivIf() {
         this.isShowDivIf = !this.isShowDivIf;
     }
 
+    // expand and collapse
+    isExpand = true;
+    expandHeader() {
+        this.isExpand = !this.isExpand;
+    }
+
+    ngOnInit() {}
+
+    // drag and drop
+    checkboxMetrices = [
+        {
+            checkHeadValue: 'x0.50',
+            checkboxLabel: 'MAC',
+            disabled: false,
+        },
+        {
+            checkHeadValue: 'x0.75',
+            checkboxLabel: 'Retailer profit',
+            disabled: false,
+        },
+        {
+            checkHeadValue: 'x1.50',
+            checkboxLabel: 'Trade expense',
+            disabled: false,
+        },
+        {
+            checkHeadValue: 'x1.25',
+            checkboxLabel: 'MAC, % NSV',
+            disabled: false,
+        },
+        {
+            checkHeadValue: 'x1.00',
+            checkboxLabel: 'RP, % RSV',
+            disabled: false,
+        },
+    ];
+
+    drop(event: CdkDragDrop<string[]>) {
+        moveItemInArray(this.checkboxMetrices, event.previousIndex, event.currentIndex);
+    }
+
+    onRoleChangeCheckbox(ev, index) {
+        this.checkboxMetrices[index].disabled = !ev;
+        console.log(this.checkboxMetrices);
+    }
+
+    // select config
     singleSelect: any = [];
     config = {
         displayKey: 'name', // if objects array passed which key to be displayed defaults to description

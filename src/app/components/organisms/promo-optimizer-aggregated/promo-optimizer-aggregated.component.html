@@ -16,31 +16,134 @@
     </div>
     <div id="agregated" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
         <div class="flex flex-row justify-between border-b border-marsgray-300">
-            <div class="border-r border-marsgra-300 pr-6 py-5">
-                <div class="pt-5 pb-10">
-                    <h1 class="text-title-medium text-gray-700 font-medium">Baseline vs Lift</h1>
-                </div>
-                <nwn-baseline-lift></nwn-baseline-lift>
-            </div>
-            <div class="py-5 pl-6">
-                <div class="flex flex-row justify-between pt-5 pb-10">
-                    <h1 class="text-title-medium text-gray-700 font-medium">Mars & Customer P&L Metrics</h1>
-                    <div class="flex flex-row space-x-2">
-                        <div class="w-20 h-auto border border-marsgray-100">
-                            <img class="w-full h-auto" src="/assets/subbrand-img/galaxysmooth.png" alt="" />
-                        </div>
-                        <div class="w-20 h-auto">
-                            <img class="w-full h-auto" src="/assets/subbrand-img/twix.png" alt="" />
-                        </div>
-                        <div class="w-20 h-auto">
-                            <img class="w-full h-auto" src="/assets/subbrand-img/american-heritage.png" alt="" />
-                        </div>
-                        <div class="flex items-center w-20 px-3 h-auto">
-                            <p class="text-body-standard text-marsgray-700 font-normal">+5</p>
+            <div
+                class="border-r border-marsgra-300 pr-6 scrollbar-x"
+                [ngStyle]="{ 'width.px': aggregatedGraphWidth }"
+            >
+                <div class="pt-5">
+                    <div class="flex justify-between pt-5 pb-10">
+                        <h1 class="text-title-medium text-gray-700 font-medium">Base calendar</h1>
+                        <div class="relative">
+                            <select
+                                class="
+                                    appearance-none
+                                    h-10
+                                    w-full
+                                    min-w-[92px]
+                                    p-2
+                                    rounded-none
+                                    border border-marsgray-300
+                                    focus:border-marsgray-500
+                                    focus:outline-none
+                                    bg-transparent
+                                    relative
+                                    z-10
+                                "
+                            >
+                                <option value="">ROI</option>
+                                <option value="">ROI</option>
+                                <option value="">ROI</option>
+                            </select>
+                            <div class="absolute top-2 right-2 z-0 text-marsgray-500">
+                                <nwn-svg-icon type="stroke" nwnSvgIcon="chevron-down"></nwn-svg-icon>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <nwn-mars-customer-pl-metrics></nwn-mars-customer-pl-metrics>
+                <div class="flex justify-center pl-36">
+                    <nwn-calendar-chart></nwn-calendar-chart>
+                </div>
+                <div class="my-6 flex flex-row-reverse">
+                    <div class="flex flex-row space-x-4">
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-100"
+                                >Low seasonality</nwn-legend-items
+                            >
+                        </div>
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-300"
+                                >Medium seasonality</nwn-legend-items
+                            >
+                        </div>
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-600"
+                                >High seasonality</nwn-legend-items
+                            >
+                        </div>
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="borderedBlue"
+                                >Holiday</nwn-legend-items
+                            >
+                        </div>
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgYellow"
+                                >ROI</nwn-legend-items
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-5 pb-10 pl-6 w-1/2 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidth }">
+                <div class="flex flex-row justify-between pt-5 pb-10">
+                    <h1 class="text-title-medium text-gray-700 font-medium">Simulated calendar</h1>
+                    <div class="relative">
+                        <select
+                            class="
+                                appearance-none
+                                h-10
+                                w-full
+                                min-w-[92px]
+                                p-2
+                                rounded-none
+                                border border-marsgray-300
+                                focus:border-marsgray-500
+                                focus:outline-none
+                                bg-transparent
+                                relative
+                                z-10
+                            "
+                        >
+                            <option value="">ROI</option>
+                            <option value="">ROI</option>
+                            <option value="">ROI</option>
+                        </select>
+                        <div class="absolute top-2 right-2 z-0 text-marsgray-500">
+                            <nwn-svg-icon type="stroke" nwnSvgIcon="chevron-down"></nwn-svg-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center pl-36">
+                    <nwn-calendar-simulated-chart></nwn-calendar-simulated-chart>
+                </div>
+                <div class="my-6 flex flex-row-reverse">
+                    <div class="flex flex-row space-x-4">
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-100"
+                                >Low seasonality</nwn-legend-items
+                            >
+                        </div>
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-300"
+                                >Medium seasonality</nwn-legend-items
+                            >
+                        </div>
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-600"
+                                >High seasonality</nwn-legend-items
+                            >
+                        </div>
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="borderedBlue"
+                                >Holiday</nwn-legend-items
+                            >
+                        </div>
+                        <div>
+                            <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgYellow"
+                                >ROI</nwn-legend-items
+                            >
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="flex flex-row justify-between items-center py-5">
@@ -79,26 +182,62 @@
                 <table class="border border-marsgray-200 text-left">
                     <thead class="bg-white">
                         <tr class="whitespace-nowrap">
-                            <th colspan="1" scope="colgroup">
-                                <nwn-cell-header type="headersm" color="bggray-100">Baseline vs Lift</nwn-cell-header>
+                            <th colspan="5" scope="colgroup">
+                                <nwn-cell-header type="headersm" color="bggray-100">Sales metrics</nwn-cell-header>
+                            </th>
+                            <th colspan="5" scope="colgroup">
+                                <nwn-cell-header type="headersm" color="bggray-100">Mars metrics</nwn-cell-header>
                             </th>
                         </tr>
                         <tr class="whitespace-nowrap">
                             <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">Units</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">Base units</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">Inc units</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">Volume</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">LSV</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">NSV</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">MAC</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">MAC, %NSV</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent"
-                                    >Incremental lift</nwn-cell-header
+                                    >Trade expense</nwn-cell-header
                                 >
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white">
                         <tr class="whitespace-nowrap">
-                            <td><nwn-cell-item></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="promo" color="neutral"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="marsplmetrics scrollbar-x">
+            <!-- <div class="marsplmetrics scrollbar-x">
                 <table class="border border-marsgray-200 text-left">
                     <thead class="bg-white">
                         <tr class="whitespace-nowrap">
@@ -151,7 +290,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> -->
         </div>
     </div>
     <div id="weekly" class="weekly" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
