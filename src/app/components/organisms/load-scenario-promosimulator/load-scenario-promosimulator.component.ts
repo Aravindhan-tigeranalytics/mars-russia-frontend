@@ -9,6 +9,19 @@ import { ModalService } from '@molecules/modal/modal.service';
     styleUrls: ['./load-scenario-promosimulator.component.css'],
 })
 export class LoadScenarioPromosimulatorComponent implements OnInit {
+    selectedIndex!: number;
+    loadPromoSimulatorItems: any[] = [
+        {
+            slcHead: 'Promo scenario name',
+            slcContent:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.',
+        },
+        {
+            slcHead: 'Promo scenario name',
+            slcContent:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi enim ultrices eget donec in nunc, mi nisl elit. Nibh proin vitae faucibus tempor mauris, justo. Turpis adipiscing egestas.',
+        },
+    ];
 
 
     list_promotion:Array<ListPromotion> = []
@@ -22,9 +35,17 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
         // })
 
     }
+    select(index: number) {
+        this.selectedIndex = index;
+    }
     loadScenario(){
         this.modal.close('load-scenario-promosimulator')
 
         // load-scenario-promosimulator
-    }
+   
+    }  
+
+   
+
+    
 }

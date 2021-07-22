@@ -19,11 +19,11 @@ export class CompareScenarioPopupComponent implements OnInit {
 
     ngOnInit(): void {
         this.optimizer.getCompareScenarioIdObservable().subscribe(data=>{
-            let obs$=[]
+            let obs$:Array<any>=[]
             console.log(data ," data to compare")
             if(data.length > 0){
                 obs$ = data.map(v=> this.optimizer.fetch_load_scenario_by_id(v))
-                combineLatest(obs$).subscribe(data=>{
+                combineLatest(obs$).subscribe((data:any)=>{
                     console.log(data, "data")
 
                     this.loaded_scenario = [...this.loaded_scenario , ...data]

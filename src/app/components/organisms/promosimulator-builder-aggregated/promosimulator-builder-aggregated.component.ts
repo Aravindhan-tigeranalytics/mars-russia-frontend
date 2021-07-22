@@ -13,6 +13,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
 
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
+    public aggregatedGraphWidth: any;
 
     plChartData:any = [];
     baselineLiftChartData:any = []
@@ -44,6 +45,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     ngOnInit(): void {
         this.weeklyTableWidth = window.innerWidth - 155;
         this.weeklyTableHeight = window.innerHeight - 150;
+        this.aggregatedGraphWidth = window.innerWidth - 155;
         this.loadStimulatedData()
     }
 

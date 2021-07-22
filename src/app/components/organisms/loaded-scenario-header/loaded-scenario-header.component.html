@@ -40,6 +40,7 @@
                 >
             </div>
         </div>
+
         <div>
             <div class="bg-transparent p-4 flex flex-col space-y-2 w-60">
                 <h2 class="text-title-medium text-marsgray-700">{{ title }}</h2>
@@ -55,7 +56,7 @@
 
     <div class="flex flex-col">
         <div class="flex flex-col border-b border-gray-300">
-            <div class="flex flex-row flex-wrap items-center justify-between py-4">
+            <div class="flex flex-row items-center justify-between py-4">
                 <div class="flex flex-row flex-wrap items-center">
                     <div class="smallDropdown mr-3">
                         <ngx-select-dropdown
@@ -173,20 +174,28 @@
     <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
         <div class="flex flex-row space-x-2 items-center">
             <div class="flex flex-row space-x-2 border-r border-marsgray-300 pr-2">
-                <nwn-button type="icon" size="iconsm">
-                    <nwn-svg-icon type="stroke" nwnSvgIcon="download"></nwn-svg-icon>
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                    <nwn-svg-icon type="stroke" nwnSvgIcon="download"> </nwn-svg-icon>
+                    <p tooltipContent>Download weekly input</p>
                 </nwn-button>
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon
                         type="stroke"
                         nwnSvgIcon="upload"
                         (click)="sendMessage('upload-weekly-promotions')"
                     ></nwn-svg-icon>
+                    <p tooltipContent>Upload weekly input</p>
                 </nwn-button>
             </div>
             <div class="">
-                <nwn-button type="icon" size="iconsm" (click)="sendMessage('promo-scenariobuilder-popup')">
+                <nwn-button
+                    type="icon"
+                    size="iconsm"
+                    [showTooltip]="true"
+                    (click)="sendMessage('promo-scenariobuilder-popup')"
+                >
                     <nwn-svg-icon type="stroke" nwnSvgIcon="lightning-bolt"></nwn-svg-icon>
+                    <p tooltipContent>Command interface</p>
                 </nwn-button>
             </div>
         </div>
@@ -194,15 +203,18 @@
             <div class="flex flex-row space-x-4 items-center">
              <nwn-button type="link" size="sm" (click)="sendMessage('Reset')"> Reset </nwn-button>
                 <nwn-button type="primary" size="sm" (click)="sendMessage('Simulate')"> Simulate </nwn-button>
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
+                    <p tooltipContent>Save scenario</p>
                 </nwn-button>
-                <nwn-button type="icon" size="iconsm">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
+                    <p tooltipContent>Download scenario</p>
                 </nwn-button>
                 <div class="relative">
-                    <nwn-button type="icon" size="iconsm" (click)="toggleDisplayDivIf()">
+                    <nwn-button type="icon" size="iconsm" (click)="toggleDisplayDivIf()" [showTooltip]="true">
                         <nwn-svg-icon type="stroke" nwnSvgIcon="more-horizontal"></nwn-svg-icon>
+                        <p tooltipContent>More actions</p>
                     </nwn-button>
                     <div *ngIf="!isShowDivIf">
                         <div class="absolute z-50 top-10 right-0 bg-white shadow-sm w-[186px] h-auto">
@@ -211,7 +223,7 @@
                                     type="sideBorder"
                                     size="sideBorderSize"
                                     class="w-full"
-                                    (click)="sendMessage('load-scenario-promosimulator')"
+                                    (click)="sendMessage('pricing-scenario')"
                                 >
                                     <nwn-svg-icon
                                         class="mr-0.5"
@@ -227,7 +239,7 @@
                                     type="sideBorder"
                                     size="sideBorderSize"
                                     class="w-full"
-                                    (click)="sendMessage('compare-promo-scenario')"
+                                    (click)="sendMessage('compare-scenario-popup')"
                                 >
                                     <nwn-svg-icon
                                         class="mr-0.5"
@@ -240,9 +252,20 @@
                             </div>
                         </div>
                         <div
-                            class="fixed bg-marsgray-900 bg-opacity-0 top-0 left-0 right-0 h-full w-full"
+                            class="
+                                fixed
+                                top-0
+                                left-0
+                                right-0
+                                z-[49]
+                                bg-marsgray-900 bg-opacity-0
+                                firefox:bg-opacity-0
+                                h-full
+                                w-full
+                            "
                             (click)="toggleDisplayDivIf()"
                         ></div>
+                        <!-- backdrop-filter backdrop-blur-xs -->
                     </div>
                 </div>
             </div>

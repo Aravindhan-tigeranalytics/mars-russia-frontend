@@ -26,4 +26,6 @@ export class SearchFooterComponent {
     disabled: boolean = false;
     @Input()
     type = '';
+    @Input()
+    color: string | 'bgGray-50' | 'bgWhite' = 'bgGray-50';
 }

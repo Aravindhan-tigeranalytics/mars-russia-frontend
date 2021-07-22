@@ -15,7 +15,7 @@
         </div>
     </div>
     <div id="agregated" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
-        <div class="flex flex-row justify-between border-b border-marsgray-300">
+        <div class="flex flex-row justify-start border-b border-marsgray-300">
             <div class="border-r border-marsgra-300 pr-6 py-5">
                 <div class="pt-5 pb-10">
                     <h1 class="text-title-medium text-gray-700 font-medium">Baseline vs Lift</h1>
@@ -41,17 +41,17 @@
                     </div>
                 </div>
             </div>
-            <div class="py-5 pl-6">
-                <div class="flex flex-row justify-between pt-5 pb-10">
+            <div class="py-5 pl-6 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidth }">
+                <div class="flex flex-row justify-between pt-5 pb-10 w-full">
                     <h1 class="text-title-medium text-gray-700 font-medium">Mars & Customer P&L Metrics</h1>
                     <div class="flex flex-row space-x-2">
                         <div class="w-20 h-auto border border-marsgray-100">
                             <img class="w-full h-auto" src="/assets/subbrand-img/galaxysmooth.png" alt="" />
                         </div>
-                        <div class="w-20 h-auto">
+                        <div class="w-20 h-auto border border-marsgray-100">
                             <img class="w-full h-auto" src="/assets/subbrand-img/twix.png" alt="" />
                         </div>
-                        <div class="w-20 h-auto">
+                        <div class="w-20 h-auto border border-marsgray-100">
                             <img class="w-full h-auto" src="/assets/subbrand-img/american-heritage.png" alt="" />
                         </div>
                         <div class="flex items-center w-20 px-3 h-auto">
@@ -106,8 +106,8 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-row justify-between items-center py-5" *ngIf="incrementalLift">
-            <div class="baselinemetrics">
+        <div class="flex flex-row justify-start items-center py-5" *ngIf="incrementalLift">
+            <div class="baselinemetrics min-w-[243px]">
                 <table class="border border-marsgray-200 text-left">
                     <thead class="bg-white">
                         <tr class="whitespace-nowrap">
@@ -130,7 +130,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="marsplmetrics">
+            <div class="marsplmetrics ml-7 scrollbar-x">
                 <table class="border border-marsgray-200 text-left">
                     <thead class="bg-white">
                         <tr class="whitespace-nowrap">

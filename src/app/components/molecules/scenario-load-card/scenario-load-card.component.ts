@@ -27,4 +27,6 @@ export class ScenarioLoadCardComponent  implements OnInit{
     showCheckbox: boolean = false;
     @Input()
     showSubHead: boolean = false;
+    @Input()
+    focus: boolean = false;
 }

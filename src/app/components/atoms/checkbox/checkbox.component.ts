@@ -13,6 +13,11 @@ checked:boolean = false
 @Output() valueChange = new EventEmitter();
 @Input()
 showLabel: boolean = false;
+ 
+
+    @Input() checkboxData = false;
+    @Output() toggle: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor() { }
 
   ngOnInit(): void {
@@ -21,12 +26,13 @@ showLabel: boolean = false;
     this.valueChange.emit({"value" : this.value,
     "checked" : e.target.checked
   });
+}
+onToggle(): void {
+  const checkedOption = this.checkboxData;
+  this.toggle.emit(checkedOption);
+}
     // console.log(e.target.checked , "e vale")
 
-  }
-    // constructor() {}
-
-    // ngOnInit(): void {}
-
-   
+    
+    
 }

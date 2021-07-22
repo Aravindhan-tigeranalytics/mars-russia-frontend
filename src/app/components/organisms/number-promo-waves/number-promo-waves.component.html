@@ -1,4 +1,4 @@
-<div class="w-[650px] mx-auto my-6">
+<div class="w-[650px] bg-white mx-auto my-6">
     <div class="border-b border-marsgray-200">
         <nwn-command-header type="stroke" nwnSvgIcon="adjustments">Number of promo waves</nwn-command-header>
     </div>
@@ -21,8 +21,8 @@
                 </nwn-metric-item-popup>
             </div>
         </div>
-        <div class="">
-            <!-- <nwn-slider></nwn-slider> -->
+        <div class="custom-slider px-6 pt-4 pb-6">
+            <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider>
         </div>
     </div>
     <nwn-search-footer [showApply]="true"></nwn-search-footer>

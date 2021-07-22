@@ -21,6 +21,9 @@ module.exports = {
             8: '8px',
         },
         extend: {
+            backdropBlur: {
+                xs: '2px',
+            },
             outline: {
                 'marsgray-1': ['1px solid #E4E4E7', '0px'],
             },

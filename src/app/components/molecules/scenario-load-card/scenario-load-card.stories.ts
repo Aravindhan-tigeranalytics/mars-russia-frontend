@@ -36,7 +36,7 @@ export default {
 //  ScenarioLoadCard
 const ScenarioLoadCardTemplate: Story<ScenarioLoadCardComponent> = (args: ScenarioLoadCardComponent) => ({
     props: { ...args },
-    template: `<div class="w-[650px]">
+    template: `<div class="w-[650px] bg-white">
                     <nwn-scenario-load-card [showInfo]="true"
                     [showTrash]="false"
                     [showCheckbox]="false">
@@ -53,7 +53,7 @@ ScenarioLoadCard.args = {};
 
 const ScenarioCompareCardTemplate: Story<ScenarioLoadCardComponent> = (args: ScenarioLoadCardComponent) => ({
     props: { ...args },
-    template: `<div class="w-[650px]">
+    template: `<div class="w-[650px] bg-white">
                     <nwn-scenario-load-card [showInfo]="false"
                     [showTrash]="false"
                     [showCheckbox]="true"

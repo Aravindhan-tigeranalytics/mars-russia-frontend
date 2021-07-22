@@ -21,4 +21,7 @@ export class ButtonComponent {
 
     @Input()
     class = '';
+
+    @Input()
+    showTooltip: boolean = false;
 }
