@@ -5,7 +5,7 @@
     @apply border-marsgray-700 !important;
 }
 ::ng-deep .smallDropdown .ngx-dropdown-container .ngx-dropdown-list-container ul.available-items {
-    @apply m-0  !important;
+    @apply m-0 max-h-[110px] overscroll-y-auto !important;
 }
 ::ng-deep .smallDropdown .ngx-dropdown-container .ngx-dropdown-list-container ul li {
     @apply text-body px-3 py-2 flex flex-row items-center space-x-3 hover:text-marsblue-500  !important;

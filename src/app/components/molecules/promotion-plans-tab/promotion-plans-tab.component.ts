@@ -18,12 +18,12 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
         this.ppTableHeight = window.innerHeight - 250;
     }
 
-    @ViewChild('weekly', { static: false }) weekly: any;
+    @ViewChild('promoplanTableScroll', { static: false }) promoplanTableScroll: any;
     scrolling_table: any;
 
     ngAfterViewInit() {
         // this.slider = this.elRef.nativeElement.querySelector('.slide');
-        this.scrolling_table = this.elRef.nativeElement.querySelector('.promoplan_table_scroll');
+        this.scrolling_table = this.elRef.nativeElement.querySelector('.promoplanTableScroll');
         this.scrolling_table.addEventListener('scroll', this.freeze_pane_listener(this.scrolling_table));
     }
 
@@ -40,12 +40,12 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
             self.currentTranslateRate = what_is_this.scrollLeft;
 
             var fixed_vertical_elts = document.getElementsByClassName(
-                'freeze_vertical',
+                'ppfreeze_vertical',
             ) as HTMLCollectionOf<HTMLElement>;
             var fixed_horizontal_elts = document.getElementsByClassName(
-                'freeze_horizontal',
+                'ppfreeze_horizontal',
             ) as HTMLCollectionOf<HTMLElement>;
-            var fixed_both_elts = document.getElementsByClassName('freeze') as HTMLCollectionOf<HTMLElement>;
+            var fixed_both_elts = document.getElementsByClassName('ppfreeze') as HTMLCollectionOf<HTMLElement>;
 
             for (i = 0; i < fixed_horizontal_elts.length; i++) {
                 // fixed_horizontal_elts[i].style.webkitTransform = translate_x;

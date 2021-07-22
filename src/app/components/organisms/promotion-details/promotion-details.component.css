@@ -40,6 +40,7 @@
 ::ng-deep .promodetailselect .ngx-dropdown-container .ngx-dropdown-list-container .search-container input {
     width: 96.5% !important;
     padding: 10px !important;
+    @apply border-marsgray-100 !important;
 }
 ::ng-deep .promodetailselect .ngx-dropdown-container .ngx-dropdown-list-container {
     @apply p-0 rounded-none shadow-lg !important;
