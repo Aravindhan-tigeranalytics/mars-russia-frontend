@@ -5,7 +5,7 @@ import { ModalService } from '@molecules/modal/modal.service';
 import {FormBuilder, FormGroup,FormArray,FormControl,ValidatorFn} from '@angular/forms';
 import {OptimizerService} from '../../core/services/optimizer.service'
 import {ProductWeek , Product, CheckboxModel} from "../../core/models"
-import { ThisReceiver } from '@angular/compiler';
+// import { ThisReceiver } from '@angular/compiler';
 
 @Component({
     selector: 'nwn-promo-scenario-builder',
@@ -13,6 +13,8 @@ import { ThisReceiver } from '@angular/compiler';
     styleUrls: ['./promo-scenario-builder.component.css'],
 })
 export class PromoScenarioBuilderComponent implements OnInit {
+    isFilterApplied: boolean = false
+    hideFilter: string = 'yettobesimulated'
     form: FormGroup = null as any;
     product:Product[] = []
     product_week:ProductWeek[] = [];
@@ -207,6 +209,19 @@ export class PromoScenarioBuilderComponent implements OnInit {
 
     receiveMessage($event: any) {
         console.log('recieved');
-        this.openModal($event);
+        if($event == 'Simulate'){
+            this.isFilterApplied = true
+            this.hideFilter = 'viewmore'
+        }
+        else if($event == 'Reset'){
+            this.isFilterApplied = false
+            this.hideFilter = 'viewless'
+        }
+        else{
+            this.openModal($event);
+        }
+
     }
+
+
 }

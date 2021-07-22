@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,27 +6,29 @@ import * as d3 from 'd3';
     templateUrl: './baseline-lift-chart.component.html',
     styleUrls: ['./baseline-lift-chart.component.css'],
 })
-export class BaselineLiftChartComponent implements OnInit {
-    // private data = [
-    //     { group: 'baseSales', baseline: '1450000', lift: '200000' },
-    //     { group: 'simulatedSales', baseline: '1600000', lift: '250000' },
-    // ];
-    private data = [
-        {
-            group: 'Baseline vs Lift',
-            baseline1: ['1450000', '200000'],
-            baseline2: ['1600000', '250000'],
-        },
-    ];
+export class BaselineLiftChartComponent implements OnInit,OnChanges {
+    @Input() baselineliftdata: any[];
 
     private svg: any;
     private margin = { top: 10, right: 0, bottom: 20, left: 60 };
     private boundingWidth = 186 - this.margin.left - this.margin.right;
     private boundingHeight = 400 - this.margin.top - this.margin.bottom;
-
+    constructor() { 
+        // Initialization inside the constructor
+        this.baselineliftdata = [];
+     }
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'baselineliftdata') {
+              this.baselineliftdata = changes[property].currentValue
+              this.drawBars(this.baselineliftdata);
+            } 
+        }
+    }
     public ngOnInit() {
         this.createSvg();
-        this.drawBars(this.data);
+        this.drawBars(this.baselineliftdata);
     }
 
     private createSvg(): void {
@@ -75,11 +77,12 @@ export class BaselineLiftChartComponent implements OnInit {
             // To make sure the axis starts and ends on round numbers
             .nice();
         const yAxisGenerator = d3.axisLeft(yScale);
+        var dollarFormat = function(d: any) { return  d3.format('0.2s')(d)};
         this.svg
             .append('g')
             .attr('class', 'yAxis')
             .call(yAxisGenerator)
-            .call(d3.axisLeft(yScale).tickFormat(d3.format('$.2s')));
+            .call(d3.axisLeft(yScale).tickFormat(dollarFormat));
 
         // Another scale for subgroup position?
         const xSubgroup = d3
@@ -189,9 +192,9 @@ export class BaselineLiftChartComponent implements OnInit {
                 .style('left', xPositionForTooltip + 'px')
                 .style('top', yPositionForTooltip + 'px');
             if (d3.select(datum.target).attr('id') === 'base') {
-                d3.select('#baseline-tooltip').select('#base').text(d3.format('$.2s')(index.value1));
+                d3.select('#baseline-tooltip').select('#base').text(dollarFormat(index.value1));
             } else {
-                d3.select('#baseline-tooltip').select('#base').text(d3.format('$.2s')(index.value2));
+                d3.select('#baseline-tooltip').select('#base').text(dollarFormat(index.value2));
             }
             d3.select('#baseline-tooltip')
                 .select('#baseColor')

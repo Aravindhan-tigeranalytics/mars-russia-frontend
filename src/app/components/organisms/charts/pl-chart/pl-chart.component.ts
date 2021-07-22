@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,24 +6,29 @@ import * as d3 from 'd3';
     templateUrl: './pl-chart.component.html',
     styleUrls: ['./pl-chart.component.css'],
 })
-export class PlChartComponent implements OnInit {
-    private data = [
-        { group: 'LSV', base: '16000000', simulated: '21000000' },
-        { group: 'Trade Expense', base: '8000000', simulated: '10000000' },
-        { group: 'NSV', base: '2000000', simulated: '4000000' },
-        { group: 'COGS', base: '18000000', simulated: '20000000' },
-        { group: 'RSV v/o VAT', base: '14000000', simulated: '16000000' },
-        { group: 'Customer Margin', base: '2000000', simulated: '4000000' },
-    ];
+export class PlChartComponent implements OnInit,OnChanges {
+    @Input() plchartdata: any[];
 
     private svg: any;
     private margin = { top: 10, right: 0, bottom: 20, left: 60 };
     private boundingWidth = 1200 - this.margin.left - this.margin.right;
     private boundingHeight = 400 - this.margin.top - this.margin.bottom;
-
+    constructor() { 
+        // Initialization inside the constructor
+        this.plchartdata = [];
+     }
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'plchartdata') {
+              this.plchartdata = changes[property].currentValue
+              this.drawBars(this.plchartdata);
+            } 
+        }
+    }
     public ngOnInit(): void {
         this.createSvg();
-        this.drawBars(this.data);
+        this.drawBars(this.plchartdata);
     }
 
     private createSvg(): void {
@@ -71,11 +76,12 @@ export class PlChartComponent implements OnInit {
             // To make sure the axis starts and ends on round numbers
             .nice();
         const yAxisGenerator = d3.axisLeft(yScale);
+        var dollarFormat = function(d: any) { return  d3.format('0.2s')(d) + ' ₽' };
         this.svg
             .append('g')
             .attr('class', 'yAxis')
             .call(yAxisGenerator)
-            .call(d3.axisLeft(yScale).tickFormat(d3.format('$.2s')));
+            .call(d3.axisLeft(yScale).tickFormat(dollarFormat));
 
         // Another scale for subgroup position?
         const xSubgroup = d3
@@ -157,7 +163,7 @@ export class PlChartComponent implements OnInit {
                 .style('opacity', '1')
                 .style('left', xPositionForTooltip + 'px')
                 .style('top', yPositionForTooltip + 'px');
-            d3.select('#pl-chart-tooltip').select('#base').text(d3.format('$.2s')(index.value));
+            d3.select('#pl-chart-tooltip').select('#base').text(dollarFormat(index.value));
             d3.select('#pl-chart-tooltip')
                 .select('#baseColor')
                 .style('background-color', d3.select(datum.target).attr('fill'));

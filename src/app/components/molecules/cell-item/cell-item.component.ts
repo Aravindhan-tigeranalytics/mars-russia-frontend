@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'nwn-cell-item',
     templateUrl: './cell-item.component.html',
     styleUrls: ['./cell-item.component.css'],
 })
-export class CellItemComponent {
+export class CellItemComponent{
     @Input()
     class = '';
     @Input()
@@ -14,4 +14,9 @@ export class CellItemComponent {
     color: string | 'green' | 'red' | 'neutral' = 'green';
     @Input()
     nwnCellItem: string | 'carret-up' | 'carret-down' | 'promo' = 'carret-up';
-}
+    @Input()
+    nwnCellData: any = {}
+    @Input()
+    differenceFormat : string | 'absolute' | 'percent' = 'absolute'
+
+   }

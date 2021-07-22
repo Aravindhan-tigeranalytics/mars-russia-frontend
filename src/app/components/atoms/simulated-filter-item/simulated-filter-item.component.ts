@@ -25,15 +25,15 @@ export class SimulatedFilterItemComponent  implements OnInit{
     }
     ngOnChanges(changes : SimpleChanges) :void
     {
-    //     if(!changes.selected_quarter.firstChange){
-    //         if(this.key == changes.selected_quarter.currentValue){
-    //             this.type = 'active'
-    //         }
-    //         else{
-    //             this.type = 'default'
-    //         }
+        if(!changes.selected_quarter.firstChange){
+            if(this.key == changes.selected_quarter.currentValue){
+                this.type = 'active'
+            }
+            else{
+                this.type = 'default'
+            }
             
-    //     }
-    //   console.log(changes , "updated value")
+        }
+      console.log(changes , "updated value")
     }
 }

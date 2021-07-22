@@ -19,6 +19,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        console.log("modal component init")
         // ensure id attribute exists
         if (!this.id) {
             console.error('modal must have an id');
@@ -30,8 +31,11 @@ export class ModalComponent implements OnInit, OnDestroy {
 
         // close modal on background click
         this.element.addEventListener('click', (el: { target: { className: string } }) => {
+            console.log("modal component click close")
+            console.log("modal component click close target",el.target.className)
             if (el.target.className === 'nwn-modal-bg') {
                 this.close();
+                // document.body.classList.add('nwn-modal-open');
             }
         });
 
@@ -41,19 +45,30 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     // remove self from modal service when component is destroyed
     ngOnDestroy(): void {
+        console.log("modal component click close destroying")
+        console.log("destroying" , this.id)
         this.modalService.remove(this.id);
         this.element.remove();
     }
 
     // open modal
     open(): void {
+        console.log("modal component open")
         this.element.style.display = 'block';
         document.body.classList.add('nwn-modal-open');
     }
 
     // close modal
     close(): void {
+        this.modalService.remove_last_modal()
+        console.log("modal component click close claose()")
         this.element.style.display = 'none';
-        document.body.classList.remove('nwn-modal-open');
+        let opened = this.modalService.get_opened_modal()
+        console.log(opened , "opened remainig..")
+        if(opened.length==0){
+            document.body.classList.remove('nwn-modal-open');
+
+        }
+       
     }
 }

@@ -1,33 +1,33 @@
 <nwn-loaded-scenario-header (modalEvent)="receiveMessage($event)"></nwn-loaded-scenario-header>
-<nwn-status-bar>YET TO BE SIMULATED</nwn-status-bar>
+<nwn-status-bar [nwnStatusBar]="hideFilter">YET TO BE SIMULATED</nwn-status-bar>
 <div>
-    <nwn-promosimulator-builder-aggregated></nwn-promosimulator-builder-aggregated>
+    <nwn-summary-placeholder *ngIf="!isFilterApplied"></nwn-summary-placeholder>
+    <nwn-promosimulator-builder-aggregated *ngIf="isFilterApplied"></nwn-promosimulator-builder-aggregated>
 </div>
-
 <!-- Modals -->
 <!-- Filter Retailer -->
 <nwn-modal id="filter-retailer" class="hidden">
-    <nwn-filter-retailer></nwn-filter-retailer>
+    <nwn-filter-retailer (retailerChange) = "retailerChange($event)" [retailers] = "retailers"></nwn-filter-retailer>
 </nwn-modal>
 <!-- Filter Category -->
 <nwn-modal id="filter-categories" class="hidden">
-    <nwn-filter-categories></nwn-filter-categories>
+    <nwn-filter-categories (categoryChange) = "categoryChange($event)" [categories] = "categories"></nwn-filter-categories>
 </nwn-modal>
 <!-- Filter Strategic Cell -->
 <nwn-modal id="filter-stragetic-cells" class="hidden">
-    <nwn-filter-stragetic-cells></nwn-filter-stragetic-cells>
+    <nwn-filter-stragetic-cells (strategicCellChange) = "strategicCellChange($event)" [stragetic_cells] = "strategic_cell"></nwn-filter-stragetic-cells>
 </nwn-modal>
 <!-- Filter Brands -->
 <nwn-modal id="filter-brands" class="hidden">
-    <nwn-filter-brands></nwn-filter-brands>
+    <nwn-filter-brands  (brandChange) = "brandChange($event)"  [brands] = "brands"></nwn-filter-brands>
 </nwn-modal>
 <!-- Filter Brand Formats -->
 <nwn-modal id="filter-brand-formats" class="hidden">
-    <nwn-filter-brands-formats></nwn-filter-brands-formats>
+    <nwn-filter-brands-formats (brandFormatChange) = "brandFormatChange($event)" [brand_formats] = "brands_format"></nwn-filter-brands-formats>
 </nwn-modal>
 <!-- Filter Product Groups -->
 <nwn-modal id="filter-product-groups" class="hidden">
-    <nwn-filter-product-groups></nwn-filter-product-groups>
+    <nwn-filter-product-groups (productChange) = "productChange($event)" [product_groups] = "product_group"></nwn-filter-product-groups>
 </nwn-modal>
 <!-- Add Promotions -->
 <nwn-modal id="add-promotion" class="hidden">
@@ -41,6 +41,8 @@
 <nwn-modal id="compare-scenario-popup" class="hidden">
     <nwn-compare-scenario-popup></nwn-compare-scenario-popup>
 </nwn-modal>
+
+
 <!-- compare-promo-scenario -->
 <nwn-modal id="compare-promo-scenario" class="hidden">
     <nwn-compare-promo-scenario></nwn-compare-promo-scenario>

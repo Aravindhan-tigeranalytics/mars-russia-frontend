@@ -1,5 +1,6 @@
 import { Component,Input,OnInit } from '@angular/core';
 import {ProductWeek} from "../../../core/models"
+import { Observable, of, from, BehaviorSubject, combineLatest } from 'rxjs';
 @Component({
     selector: 'nwn-weekly-promotion',
     templateUrl: './weekly-promotion.component.html',

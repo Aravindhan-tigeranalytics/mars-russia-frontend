@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {SharedModule} from "../shared/shared.module"
 
 // Custom Components
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -113,7 +114,7 @@ import { LargeToolTipComponent } from './molecules/large-tool-tip/large-tool-tip
 import { PromoOptimizerAggregatedComponent } from './organisms/promo-optimizer-aggregated/promo-optimizer-aggregated.component';
 
 @NgModule({
-    imports: [CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule],
+    imports: [SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule],
     declarations: [
         ButtonComponent,
         LinkComponent,
@@ -285,6 +286,7 @@ import { PromoOptimizerAggregatedComponent } from './organisms/promo-optimizer-a
         AddCompareScenarioComponent,
         ComparePromoOptimizerComponent,
         ComparePromoScenarioComponent,
+        ManageMetricsComponent,
         TextInputComponent,
         TextInputDirective,
         UploadItemsDirective,
