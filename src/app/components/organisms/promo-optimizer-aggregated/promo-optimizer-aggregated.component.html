@@ -16,12 +16,9 @@
     </div>
     <div id="agregated" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
         <div class="flex flex-row justify-between border-b border-marsgray-300">
-            <div
-                class="border-r border-marsgra-300 pr-6 scrollbar-x"
-                [ngStyle]="{ 'width.px': aggregatedGraphWidth }"
-            >
+            <div class="border-r border-marsgra-300 pr-6 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidth }">
                 <div class="pt-5">
-                    <div class="flex justify-between pt-5 pb-10">
+                    <div class="flex flex-row justify-between pt-5 pb-10">
                         <h1 class="text-title-medium text-gray-700 font-medium">Base calendar</h1>
                         <div class="relative">
                             <select
@@ -32,8 +29,6 @@
                                     min-w-[92px]
                                     p-2
                                     rounded-none
-                                    border border-marsgray-300
-                                    focus:border-marsgray-500
                                     focus:outline-none
                                     bg-transparent
                                     relative
@@ -50,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-center pl-36">
+                <div class="flex flex-row w-full max-w-[700px] mx-auto my-0">
                     <nwn-calendar-chart></nwn-calendar-chart>
                 </div>
                 <div class="my-6 flex flex-row-reverse">
@@ -95,8 +90,6 @@
                                 min-w-[92px]
                                 p-2
                                 rounded-none
-                                border border-marsgray-300
-                                focus:border-marsgray-500
                                 focus:outline-none
                                 bg-transparent
                                 relative
@@ -112,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-center pl-36">
+                <div class="flex flex-row w-full max-w-[700px] mx-auto my-0">
                     <nwn-calendar-simulated-chart></nwn-calendar-simulated-chart>
                 </div>
                 <div class="my-6 flex flex-row-reverse">

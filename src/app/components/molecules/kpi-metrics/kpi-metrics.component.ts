@@ -18,12 +18,12 @@ export class KpiMetricsComponent implements OnInit, AfterViewInit {
         this.kpiTableHeight = window.innerHeight - 250;
     }
 
-    @ViewChild('weekly', { static: false }) weekly: any;
+    @ViewChild('kpiTableScroll', { static: false }) kpiTableScroll: any;
     scrolling_table: any;
 
     ngAfterViewInit() {
         // this.slider = this.elRef.nativeElement.querySelector('.slide');
-        this.scrolling_table = this.elRef.nativeElement.querySelector('.kpi-table-scroll');
+        this.scrolling_table = this.elRef.nativeElement.querySelector('.kpiTableScroll');
         this.scrolling_table.addEventListener('scroll', this.freeze_pane_listener(this.scrolling_table));
     }
 

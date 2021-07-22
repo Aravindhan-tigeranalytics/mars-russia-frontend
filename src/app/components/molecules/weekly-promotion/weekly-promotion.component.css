@@ -8,7 +8,7 @@
     @apply m-0 max-h-[110px] overflow-y-auto !important;
 }
 ::ng-deep .weeklyPromoDropdown .ngx-dropdown-container .ngx-dropdown-list-container ul li {
-    @apply text-body px-3 py-2 flex flex-row items-center space-x-3 hover:text-marsblue-500  !important;
+    @apply text-body px-3 py-2 flex flex-row items-center space-x-3 hover:text-marsblue-500 !important;
 }
 ::ng-deep .weeklyPromoDropdown .ngx-dropdown-container .ngx-dropdown-list-container ul.selected-items {
     @apply hidden !important;
@@ -38,6 +38,7 @@
 ::ng-deep .weeklyPromoDropdown .ngx-dropdown-container .ngx-dropdown-list-container .search-container input {
     width: 89% !important;
     padding: 10px !important;
+    @apply border-marsgray-100 !important;
 }
 ::ng-deep .weeklyPromoDropdown .ngx-dropdown-container .ngx-dropdown-list-container .search-container input:focus {
     @apply border-b border-marsgray-300 !important;
