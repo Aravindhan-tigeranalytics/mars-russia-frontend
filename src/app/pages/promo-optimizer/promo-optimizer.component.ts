@@ -8,6 +8,8 @@ import { ModalService } from '@molecules/modal/modal.service';
     styleUrls: ['./promo-optimizer.component.css'],
 })
 export class PromoOptimizerComponent implements OnInit {
+    isOptimiserFilterApplied: boolean = false
+
     constructor(private modalService: ModalService) {}
 
     ngOnInit(): void {}
@@ -20,6 +22,14 @@ export class PromoOptimizerComponent implements OnInit {
     }
     receiveMessage($event: any) {
         console.log('recieved');
-        this.openModal($event);
+        if($event == 'Optimize'){
+            this.isOptimiserFilterApplied = true
+        }
+        else if($event == 'OptimizerFilterReset'){
+            this.isOptimiserFilterApplied = false
+        }
+        else{
+            this.openModal($event);
+        }
     }
 }

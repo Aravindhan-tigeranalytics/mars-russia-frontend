@@ -21,7 +21,7 @@
                     <div class="flex flex-row justify-between pt-5 pb-10">
                         <h1 class="text-title-medium text-gray-700 font-medium">Base calendar</h1>
                         <div class="relative">
-                            <select
+                            <select (change)="onChange($event,'base')"
                                 class="
                                     appearance-none
                                     h-10
@@ -35,9 +35,9 @@
                                     z-10
                                 "
                             >
-                                <option value="">ROI</option>
-                                <option value="">ROI</option>
-                                <option value="">ROI</option>
+                                <option value="roi">ROI</option>
+                                <option value="lift">Lift %</option>
+                                <option value="si">Seasonality Index</option>
                             </select>
                             <div class="absolute top-2 right-2 z-0 text-marsgray-500">
                                 <nwn-svg-icon type="stroke" nwnSvgIcon="chevron-down"></nwn-svg-icon>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="flex flex-row w-full max-w-[700px] mx-auto my-0">
-                    <nwn-calendar-chart></nwn-calendar-chart>
+                    <nwn-calendar-chart [baselineCalendarData]="baseCalendar" [baselineDropdownFilter]="baselineCalDropdown"></nwn-calendar-chart>
                 </div>
                 <div class="my-6 flex flex-row-reverse">
                     <div class="flex flex-row space-x-4">
@@ -72,7 +72,7 @@
                         </div>
                         <div>
                             <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgYellow"
-                                >ROI</nwn-legend-items
+                                >{{baselineChartLegend}}</nwn-legend-items
                             >
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                 <div class="flex flex-row justify-between pt-5 pb-10">
                     <h1 class="text-title-medium text-gray-700 font-medium">Simulated calendar</h1>
                     <div class="relative">
-                        <select
+                        <select (change)="onChange($event,'stimulated')"
                             class="
                                 appearance-none
                                 h-10
@@ -96,9 +96,9 @@
                                 z-10
                             "
                         >
-                            <option value="">ROI</option>
-                            <option value="">ROI</option>
-                            <option value="">ROI</option>
+                            <option value="roi">ROI</option>
+                            <option value="lift">Lift %</option>
+                            <option value="si">Seasonality Index</option>
                         </select>
                         <div class="absolute top-2 right-2 z-0 text-marsgray-500">
                             <nwn-svg-icon type="stroke" nwnSvgIcon="chevron-down"></nwn-svg-icon>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="flex flex-row w-full max-w-[700px] mx-auto my-0">
-                    <nwn-calendar-simulated-chart></nwn-calendar-simulated-chart>
+                    <nwn-calendar-simulated-chart [stimulatedCalendarData]="stimulatedCalendar" [stimulatedDropdownFilter]="stimulatedCalDropdown"></nwn-calendar-simulated-chart>
                 </div>
                 <div class="my-6 flex flex-row-reverse">
                     <div class="flex flex-row space-x-4">
@@ -132,7 +132,7 @@
                         </div>
                         <div>
                             <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgYellow"
-                                >ROI</nwn-legend-items
+                                >{{stimulatedChartLegend}}</nwn-legend-items
                             >
                         </div>
                     </div>
@@ -141,11 +141,11 @@
         </div>
         <div class="flex flex-row justify-between items-center py-5">
             <div class="flex flex-row flex-wrap border border-marsgray-300">
-                <div class="p-3">
-                    <nwn-toggle-cta type="selected">Absolute change</nwn-toggle-cta>
+                <div class="p-3" (click)="aggregatedSubTabClick('Absolute')">
+                    <nwn-toggle-cta type="{{aggregatedTab.absolute}}">Absolute change</nwn-toggle-cta>
                 </div>
-                <div class="p-3">
-                    <nwn-toggle-cta>Percentage change</nwn-toggle-cta>
+                <div class="p-3" (click)="aggregatedSubTabClick('Percentage')">
+                    <nwn-toggle-cta type="{{aggregatedTab.percent}}">Percentage change</nwn-toggle-cta>
                 </div>
             </div>
             <div class="flex flex-row flex-wrap space-x-4">
@@ -211,6 +211,9 @@
                                 <nwn-cell-header type="subheadermd" color="bgtransparent"
                                     >Trade expense</nwn-cell-header
                                 >
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">Customer Margin</nwn-cell-header>
                             </th>
                         </tr>
                     </thead>

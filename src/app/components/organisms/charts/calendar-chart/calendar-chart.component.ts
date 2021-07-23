@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 import * as moment from 'moment';
 
@@ -8,511 +8,10 @@ import * as moment from 'moment';
     styleUrls: ['./calendar-chart.component.css'],
 })
 export class CalendarChartComponent implements OnInit {
-    private data = [
-        {
-            date: '2021-01-06',
-            month: 'Jan',
-            year: '2021',
-            name: 'W1 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '0.9',
-        },
-        {
-            date: '2021-01-13',
-            month: 'Jan',
-            year: '2021',
-            name: 'W2 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.7',
-        },
-        {
-            date: '2021-01-20',
-            month: 'Jan',
-            year: '2021',
-            name: 'W3 2021',
-            discount: '.32',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-01-27',
-            month: 'Jan',
-            year: '2021',
-            name: 'W4 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-02-03',
-            month: 'Feb',
-            year: '2021',
-            name: 'W5 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-02-10',
-            month: 'Feb',
-            year: '2021',
-            name: 'W6 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-02-17',
-            month: 'Feb',
-            year: '2021',
-            name: 'W7 2021',
-            discount: '.32',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-02-24',
-            month: 'Feb',
-            year: '2021',
-            name: 'W8 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-03-04',
-            month: 'Mar',
-            year: '2021',
-            name: 'W9 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-03-11',
-            month: 'Mar',
-            year: '2021',
-            name: 'W10 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-03-18',
-            month: 'Mar',
-            year: '2021',
-            name: 'W11 2021',
-            discount: '.32',
-            holiday: false,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-03-25',
-            month: 'Mar',
-            year: '2021',
-            name: 'W12 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-04-07',
-            month: 'Apr',
-            year: '2021',
-            name: 'W13 2021',
-            discount: '0',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-04-14',
-            month: 'Apr',
-            year: '2021',
-            name: 'W14 2021',
-            discount: '0',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-04-21',
-            month: 'Apr',
-            year: '2021',
-            name: 'W15 2021',
-            discount: '0',
-            holiday: false,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-04-28',
-            month: 'Apr',
-            year: '2021',
-            name: 'W16 2021',
-            discount: '0',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-05-05',
-            month: 'May',
-            year: '2021',
-            name: 'W17 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-05-12',
-            month: 'May',
-            year: '2021',
-            name: 'W18 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-05-19',
-            month: 'May',
-            year: '2021',
-            name: 'W19 2021',
-            discount: '.32',
-            holiday: false,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-05-26',
-            month: 'May',
-            year: '2021',
-            name: 'W20 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-06-03',
-            month: 'Jun',
-            year: '2021',
-            name: 'W21 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-06-10',
-            month: 'Jun',
-            year: '2021',
-            name: 'W22 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-06-17',
-            month: 'Jun',
-            year: '2021',
-            name: 'W23 2021',
-            discount: '.32',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-06-24',
-            month: 'Jun',
-            year: '2021',
-            name: 'W24 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-07-07',
-            month: 'Jul',
-            year: '2021',
-            name: 'W25 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-07-14',
-            month: 'Jul',
-            year: '2021',
-            name: 'W26 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-07-21',
-            month: 'Jul',
-            year: '2021',
-            name: 'W27 2021',
-            discount: '.32',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-07-28',
-            month: 'Jul',
-            year: '2021',
-            name: 'W28 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-08-04',
-            month: 'Aug',
-            year: '2021',
-            name: 'W29 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-08-11',
-            month: 'Aug',
-            year: '2021',
-            name: 'W30 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-08-18',
-            month: 'Aug',
-            year: '2021',
-            name: 'W31 2021',
-            discount: '.32',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-08-25',
-            month: 'Aug',
-            year: '2021',
-            name: 'W32 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-09-03',
-            month: 'Sep',
-            year: '2021',
-            name: 'W33 2021',
-            discount: '0',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-09-10',
-            month: 'Sep',
-            year: '2021',
-            name: 'W34 2021',
-            discount: '0',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-09-17',
-            month: 'Sep',
-            year: '2021',
-            name: 'W35 2021',
-            discount: '0',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-09-24',
-            month: 'Sep',
-            year: '2021',
-            name: 'W36 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-10-07',
-            month: 'Oct',
-            year: '2021',
-            name: 'W37 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-10-14',
-            month: 'Oct',
-            year: '2021',
-            name: 'W38 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-10-21',
-            month: 'Oct',
-            year: '2021',
-            name: 'W39 2021',
-            discount: '.32',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-10-28',
-            month: 'Oct',
-            year: '2021',
-            name: 'W40 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-11-03',
-            month: 'Nov',
-            year: '2021',
-            name: 'W41 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-11-10',
-            month: 'Nov',
-            year: '2021',
-            name: 'W42 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-11-17',
-            month: 'Nov',
-            year: '2021',
-            name: 'W43 2021',
-            discount: '.32',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-11-24',
-            month: 'Nov',
-            year: '2021',
-            name: 'W44 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-
-        {
-            date: '2021-12-07',
-            month: 'Dec',
-            year: '2021',
-            name: 'W45 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1.7',
-        },
-        {
-            date: '2021-12-14',
-            month: 'Dec',
-            year: '2021',
-            name: 'W46 2021',
-            discount: '.15',
-            holiday: false,
-            seasonality: 'low',
-            roi: '1.2',
-        },
-        {
-            date: '2021-12-21',
-            month: 'Dec',
-            year: '2021',
-            name: 'W47 2021',
-            discount: '.32',
-            holiday: true,
-            seasonality: 'med',
-            roi: '1.5',
-        },
-        {
-            date: '2021-12-28',
-            month: 'Dec',
-            year: '2021',
-            name: 'W48 2021',
-            discount: '.25',
-            holiday: false,
-            seasonality: 'high',
-            roi: '1',
-        },
-    ];
-
-    private processedData = this.data.map((d) => ({
-        date: new Date(d.date),
-        timePeriod: moment(d.date).format('D MMM'),
-        name: d.name,
-        month: d.month,
-        year: d.year,
-        discount: d.discount,
-        seasonality: d.seasonality,
-        holiday: d.holiday,
-        roi: d.roi,
-    }));
+    @Input() 
+    baselineCalendarData: any[];
+    @Input() 
+    baselineDropdownFilter: string | 'roi' | 'lift' | 'si' = 'roi';
 
     private svg: any;
     private numberOfWeeks = 48;
@@ -520,16 +19,36 @@ export class CalendarChartComponent implements OnInit {
     private boundingWidth = 700 - this.margin.left - this.margin.right;
     private boundingHeight = 450 - this.margin.top - this.margin.bottom;
 
+    constructor() { 
+        // Initialization inside the constructor
+        this.baselineCalendarData = [];
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        console.log(this.baselineDropdownFilter)
+        for (let property in changes) {
+            if (property === 'baselineCalendarData') {
+              this.baselineCalendarData = changes[property].currentValue
+              this.drawBars(this.baselineCalendarData);
+            }
+            else if(property === 'baselineDropdownFilter'){
+                this.createSvg()
+                this.drawBars(this.baselineCalendarData);
+            } 
+        }
+    }
+
     ngOnInit(): void {
         this.createSvg();
-        this.drawBars(this.processedData);
-        console.log(this.processedData);
+        this.drawBars(this.baselineCalendarData);
+        console.log(this.baselineCalendarData);
     }
 
     private createSvg(): void {
+        d3.select('#baseCalendarSVG').remove();
         this.svg = d3
             .select('#calendarBaseChart')
-            .append('svg')
+            .append('svg').attr("id","baseCalendarSVG")
             // Wrapper
             .attr('width', this.boundingWidth + this.margin.left + this.margin.right)
             .attr('height', this.boundingHeight + this.margin.top + this.margin.bottom)
@@ -539,6 +58,20 @@ export class CalendarChartComponent implements OnInit {
     }
 
     private drawBars(data: any[]): void {
+        var key = ''
+        var label = ''
+        if(this.baselineDropdownFilter == 'roi'){
+            key = 'roi'
+            label = 'ROI'
+        }
+        else if(this.baselineDropdownFilter == 'lift'){
+            key = 'lift'
+            label = 'Lift %'
+        }
+        else if(this.baselineDropdownFilter == 'si'){
+            key = 'si'
+            label = 'Seasonality Index'
+        }
         const boundingHeight = this.boundingHeight;
         // Maxim value in the data to find the maximum bound dynamically
         const maximumDiscountInData = getMaxDiscount();
@@ -548,7 +81,7 @@ export class CalendarChartComponent implements OnInit {
         // Maxim value in the data to find the maximum bound dynamically
         const maximumROIInData = getMaxROI();
         function getMaxROI() {
-            return Math.max(...data.map((d) => d.roi));
+            return Math.max(...data.map((d) => d[key]));
         }
 
         // List of groups
@@ -630,7 +163,7 @@ export class CalendarChartComponent implements OnInit {
             .join('rect')
             .attr('x', (d: any) => xScale(d.timePeriod))
             .attr('y', (d: any) => yScale(d.discount))
-            .attr('yRoi', (d: any) => yRightScale(d.roi))
+            .attr('yRoi', (d: any) => yRightScale(d[key]))
             .attr('name', (d: any) => d.name)
             .attr('width', xScale.bandwidth())
             .attr('height', (d: any) => this.boundingHeight - yScale(d.discount))
@@ -655,7 +188,7 @@ export class CalendarChartComponent implements OnInit {
 
         const points: [number, number][] = data.map((d) => [
             (xScale(d.timePeriod) ?? 0) + xScale.bandwidth() / 2,
-            yRightScale(d.roi),
+            yRightScale(d[key]),
         ]);
         // Line
         this.svg
@@ -675,11 +208,11 @@ export class CalendarChartComponent implements OnInit {
             .enter()
             .append('circle')
             .attr('cx', (d: any) => (xScale(d.timePeriod) ?? 0) + xScale.bandwidth() / 2)
-            .attr('cy', (d: any) => yRightScale(d.roi))
+            .attr('cy', (d: any) => yRightScale(d[key]))
             .attr('r', '6')
             .attr('fill', '#FFDC00')
             .attr('opacity', 0.1)
-            .attr('yRoi', (d: any) => yRightScale(d.roi))
+            .attr('yRoi', (d: any) => yRightScale(d[key]))
             .attr('yDiscount', (d: any) => yScale(d.discount))
             .attr('name', (d: any) => d.name)
             .attr('discount', (d: any) =>
@@ -709,7 +242,7 @@ export class CalendarChartComponent implements OnInit {
             .attr('x', this.boundingWidth)
             .attr('y', -25)
             .attr('text-anchor', 'start')
-            .text('ROI');
+            .text(label);
 
         const chart = this.svg;
 
@@ -785,7 +318,7 @@ export class CalendarChartComponent implements OnInit {
                 .text(index.name + ' - ' + index.timePeriod);
             d3.select('#calendarBase-tooltip')
                 .select('#roi')
-                .text('ROI: ' + index.roi);
+                .text(label+': ' + index[key]);
         }
 
         function mouseleave(datum: any, index: any, nodes: any) {
@@ -866,7 +399,7 @@ export class CalendarChartComponent implements OnInit {
                 .text(index.name + ' - ' + index.timePeriod);
             d3.select('#calendarBase-tooltip')
                 .select('#roi')
-                .text('ROI: ' + index.roi);
+                .text(label+': ' + index[key]);
         }
 
         function mouseleavePoint(datum: any, index: any, nodes: any) {
