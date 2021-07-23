@@ -22,6 +22,7 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
         for (let property in changes) {
             if (property === 'baselineliftdata') {
               this.baselineliftdata = changes[property].currentValue
+              this.createSvg();
               this.drawBars(this.baselineliftdata);
             } 
         }
@@ -32,9 +33,10 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
     }
 
     private createSvg(): void {
+        d3.select('#baselineLiftSVG').remove();
         this.svg = d3
             .select('#baselineLiftChart')
-            .append('svg')
+            .append('svg').attr("id","baselineLiftSVG")
             // Wrapper
             .attr('width', this.boundingWidth + this.margin.left + this.margin.right)
             .attr('height', this.boundingHeight + this.margin.top + this.margin.bottom)

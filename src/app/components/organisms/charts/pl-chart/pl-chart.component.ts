@@ -22,6 +22,7 @@ export class PlChartComponent implements OnInit,OnChanges {
         for (let property in changes) {
             if (property === 'plchartdata') {
               this.plchartdata = changes[property].currentValue
+              this.createSvg();
               this.drawBars(this.plchartdata);
             } 
         }
@@ -32,9 +33,10 @@ export class PlChartComponent implements OnInit,OnChanges {
     }
 
     private createSvg(): void {
+        d3.select('#plChartSVG').remove();
         this.svg = d3
             .select('#marsCustomerMetrics')
-            .append('svg')
+            .append('svg').attr("id","plChartSVG")
             // Wrapper
             .attr('width', this.boundingWidth + this.margin.left + this.margin.right)
             .attr('height', this.boundingHeight + this.margin.top + this.margin.bottom)

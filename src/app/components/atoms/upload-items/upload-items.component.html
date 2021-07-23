@@ -8,7 +8,7 @@
             or <span class="text-marsblue-500">browse</span> to choose a file
         </p>
     </div>
-    <input type="file" class="w-full h-full opacity-0 absolute top-0 left-0 right-0 cursor-pointer" />
+    <input type="file" accept=".xlsx, .xls, .csv" (change)="onFileSelected();" #fileInput type="file" id="simulatorInputFile" class="w-full h-full opacity-0 absolute top-0 left-0 right-0 cursor-pointer" />
 </div>
 <div class="flex flex-row py-2 items-center justify-between" [ngClass]="{ hidden: showLoadUpload == false }">
     <p class="text-marsgray-500 text-body-standard">Uploading...</p>
