@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
 import { SimulatorService } from 'src/app/core/services/simulator.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { SimulatorService } from 'src/app/core/services/simulator.service';
     styleUrls: ['./upload-items.component.css'],
 })
 export class UploadItemsComponent implements OnChanges {
+    @ViewChild('fileInput',{static : false}) fileInput: any
     @Input()
     isUploadClicked: boolean = false;
     @Input()
@@ -15,6 +16,7 @@ export class UploadItemsComponent implements OnChanges {
     modalEvent = new EventEmitter<string>();
     
     reqData:any
+    fileName:any = 'Uploading...'
     constructor(public restApi:SimulatorService){}
 
     sendMessage(modalType: string): void {
@@ -22,6 +24,8 @@ export class UploadItemsComponent implements OnChanges {
     }
 
     onFileSelected() {
+        this.fileName = 'Uploading...'
+        this.showLoadUpload = true
         const inputNode: any = document.querySelector('#simulatorInputFile');
         console.log(inputNode.files[0])
         let filename = inputNode.files[0].name
@@ -29,18 +33,27 @@ export class UploadItemsComponent implements OnChanges {
         if((extension.toLowerCase() == ".xlsx") || (extension.toLowerCase() == ".xls") || (extension.toLowerCase() == ".csv")){
           console.log("good to go")
           this.sendMessage('file-selected')
+          this.fileName = inputNode.files[0].name
         //   this.toastr.success('File Uploaded Successfully!');
         }
         else{
+            this.showLoadUpload = false
             this.sendMessage('invalid-file')
+            this.fileInput.nativeElement.value = ''
         //   this.toastr.warning('Invalid File Format');
             return
         }
-    
         const formdata = new FormData();
         formdata.append('simulator_input',inputNode.files[0])
         this.reqData = formdata
+        this.fileInput.nativeElement.value = ''
         // this.uploadFile(formdata)
+      }
+
+      removeFile(){
+        this.showLoadUpload = false
+        this.sendMessage('invalid-file')
+        this.fileInput.nativeElement.value = ''
       }
 
       uploadFile(){
