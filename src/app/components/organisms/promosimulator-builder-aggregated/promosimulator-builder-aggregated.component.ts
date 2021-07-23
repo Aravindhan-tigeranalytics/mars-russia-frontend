@@ -91,7 +91,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     { group: 'LSV', base: data['base']['total']['lsv'], simulated: data['simulated']['total']['lsv'] },
                     { group: 'Trade Expense', base: data['base']['total']['te'], simulated: data['simulated']['total']['te'] },
                     { group: 'NSV', base: data['base']['total']['nsv'], simulated: data['simulated']['total']['nsv'] },
-                    { group: 'COGS', base: data['base']['total']['mac'], simulated: data['simulated']['total']['mac'] },
+                    { group: 'COGS', base: data['base']['total']['cogs'], simulated: data['simulated']['total']['cogs'] },
                     { group: 'MAC', base: data['base']['total']['mac'], simulated: data['simulated']['total']['mac'] },
                     { group: 'RSV v/o VAT', base: data['base']['total']['total_rsv_w_o_vat'], simulated: data['simulated']['total']['total_rsv_w_o_vat'] },
                     { group: 'Customer Margin', base: data['base']['total']['rp'], simulated: data['simulated']['total']['rp'] },
@@ -141,12 +141,12 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 }
 
                 this.cogs = {
-                    "converted_base": this.formatNumber(data['base']['total']['mac'],true,false),
-                    "converted_simulated": this.formatNumber(data['simulated']['total']['mac'],true,false),
-                    "arrow": data['base']['total']['mac'] > data['simulated']['total']['mac'] ? 'carret-down' : 'carret-up',
-                    "percent": "(" + this.percentageDiffrence(data['base']['total']['mac'],data['simulated']['total']['mac']) + "%)",
-                    "converted_difference": "(" + this.formatNumber(data['base']['total']['mac']-data['simulated']['total']['mac'],true,false) + ")",
-                    "color":  data['base']['total']['mac'] > data['simulated']['total']['mac'] ? 'red' : 'green',
+                    "converted_base": this.formatNumber(data['base']['total']['cogs'],true,false),
+                    "converted_simulated": this.formatNumber(data['simulated']['total']['cogs'],true,false),
+                    "arrow": data['base']['total']['cogs'] > data['simulated']['total']['cogs'] ? 'carret-down' : 'carret-up',
+                    "percent": "(" + this.percentageDiffrence(data['base']['total']['cogs'],data['simulated']['total']['cogs']) + "%)",
+                    "converted_difference": "(" + this.formatNumber(data['base']['total']['cogs']-data['simulated']['total']['cogs'],true,false) + ")",
+                    "color":  data['base']['total']['cogs'] > data['simulated']['total']['cogs'] ? 'red' : 'green',
                 }
 
                 this.mac = {
@@ -182,6 +182,11 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                         'duration': {
                             'week':"Week "+(i+1),
                             'date': data['simulated']['weekly'][i].date
+                        },
+                        'promotions': {
+                            'tpr' : data['base']['weekly'][i]['promo_mech'],
+                            'trp' : data['base']['weekly'][i]['promo_depth'],
+                            'coinvestment': data['base']['weekly'][i]['co_investment']
                         },
                         'predicted_units': {
                             "converted_base": this.formatNumber(data['base']['weekly'][i]['predicted_units'],true,false),
@@ -256,12 +261,12 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                             "converted_difference": "(" + this.formatNumber(data['base']['weekly'][i]['te_percent_of_lsv']-data['simulated']['weekly'][i]['te_percent_of_lsv'],true,false) + ")"
                         },
                         'lift_percent': {
-                            "converted_base": this.formatNumber(data['base']['weekly'][i]['te_per_units'],true,false),
-                            "converted_simulated": this.formatNumber(data['simulated']['weekly'][i]['te_per_units'],true,false),
-                            "arrow": data['base']['weekly'][i]['te_per_units'] > data['simulated']['weekly'][i]['te_per_units'] ? 'carret-down' : 'carret-up',
-                            "color":  data['base']['weekly'][i]['te_per_units'] > data['simulated']['weekly'][i]['te_per_units'] ? 'red' : 'green',
-                            "percent": "(" + this.percentageDiffrence(data['base']['weekly'][i]['te_per_units'],data['simulated']['weekly'][i]['te_per_units']) + "%)",
-                            "converted_difference": "(" + this.formatNumber(data['base']['weekly'][i]['te_per_units']-data['simulated']['weekly'][i]['te_per_units'],true,false) + ")"
+                            "converted_base": this.formatNumber(data['base']['weekly'][i]['lift'],true,false),
+                            "converted_simulated": this.formatNumber(data['simulated']['weekly'][i]['lift'],true,false),
+                            "arrow": data['base']['weekly'][i]['lift'] > data['simulated']['weekly'][i]['lift'] ? 'carret-down' : 'carret-up',
+                            "color":  data['base']['weekly'][i]['lift'] > data['simulated']['weekly'][i]['lift'] ? 'red' : 'green',
+                            "percent": "(" + this.percentageDiffrence(data['base']['weekly'][i]['lift'],data['simulated']['weekly'][i]['lift']) + "%)",
+                            "converted_difference": "(" + this.formatNumber(data['base']['weekly'][i]['lift']-data['simulated']['weekly'][i]['lift'],true,false) + ")"
                         },
                         'roi': {
                             "converted_base": this.formatNumber(data['base']['weekly'][i]['roi'],true,false),

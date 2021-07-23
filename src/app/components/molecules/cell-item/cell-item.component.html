@@ -64,8 +64,8 @@
             </p>
         </div>
     </ng-container> -->
-        <ng-container *ngIf="nwnCellItem === 'promo'">
-        <p class="text-caption text-marsgray-500">$88.60 M</p>
+    <ng-container *ngIf="nwnCellItem === 'promo'">
+        <p class="text-caption text-marsgray-500"></p>
         <div class="flex flex-row items-center space-x-1">
             <p
                 class="text-body text-marsgray-700"
@@ -74,8 +74,8 @@
                     'text-size-lg': size === 'textsize-lg'
                 }"
             >
-                TPR - 10%
-                <span class="inline-flex items-center justify-center space-x-1 text-gray-700"> TRP- 20% (Co-5%) </span>
+                TPR - {{nwnCellData.tpr}}%
+                <span class="inline-flex items-center justify-center space-x-1 text-gray-700"> TRP- {{nwnCellData.trp}}% (Co-{{nwnCellData.coinvestment}}%) </span>
             </p>
         </div>
     </ng-container>

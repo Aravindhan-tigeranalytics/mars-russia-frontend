@@ -331,7 +331,7 @@
                         <th scope="row" class="sticked freeze_horizontal">
                             <nwn-cell-week-item type="lowholidayweek" [inWeek]="week.duration"></nwn-cell-week-item>
                         </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
+                        <td><nwn-cell-item nwnCellItem="promo" [nwnCellData]="week.promotions"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.predicted_units"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.base_unit"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.incremental_unit"></nwn-cell-item></td>
