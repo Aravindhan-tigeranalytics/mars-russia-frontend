@@ -10,6 +10,4 @@ export class CellWeekItemComponent {
     type: string | 'lowholidayweek' | 'meediumholidayweek' | 'highholidayweek' = 'lowholidayweek';
     @Input()
     active: boolean = false;
-    @Input()
-    inWeek: any = {};
 }

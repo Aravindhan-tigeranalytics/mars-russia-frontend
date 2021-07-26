@@ -9,20 +9,17 @@
         <div class="border border-gray-200 px-2 bg-gray-100">
             <nwn-cell-header type="headersm">Sales matrics</nwn-cell-header>
         </div>
-        <div *ngFor="let sales of sales_metrics">
-            <nwn-command-multiselect (valueChangeSelect) = "changeMetrics($event)" [leftBorder]="false" [value] = "sales.value" [checked] = "sales.checked" [hideClose]="true">{{sales.value}}</nwn-command-multiselect>
-            <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Base Units</nwn-command-multiselect>
+        <div>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Units</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Base Units</nwn-command-multiselect>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Inc. Units</nwn-command-multiselect>
-            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Volume</nwn-command-multiselect> -->
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Volume</nwn-command-multiselect>
         </div>
         <div class="border border-gray-200 px-2 bg-gray-100">
             <nwn-cell-header type="headersm">Mars matrics</nwn-cell-header>
         </div>
         <div>
-            <div *ngFor="let mars of mars_metrics">
-                <nwn-command-multiselect (valueChangeSelect) = "changeMetrics($event)" [leftBorder]="false" [value] = "mars.value" [checked] = "mars.checked" [hideClose]="true">{{mars.value}}</nwn-command-multiselect>
-            </div>
-            <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">LSV</nwn-command-multiselect>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">LSV</nwn-command-multiselect>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">NSV</nwn-command-multiselect>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">MAC</nwn-command-multiselect>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">MAC, %NSV</nwn-command-multiselect>
@@ -36,8 +33,8 @@
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Customer Margin</nwn-command-multiselect>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true"
                 >Customer Margin, %RSV</nwn-command-multiselect
-            > -->
+            >
         </div>
     </div>
-    <nwn-search-footer (click)="closeModal()" [showKeyBoardCtrl]="true" [showApply]="true"></nwn-search-footer>
+    <nwn-search-footer [showKeyBoardCtrl]="true" [showApply]="true"></nwn-search-footer>
 </div>

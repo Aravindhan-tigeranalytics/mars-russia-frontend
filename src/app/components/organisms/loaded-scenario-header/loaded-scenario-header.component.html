@@ -4,13 +4,13 @@
             <div class="mr-2 mb-2">
                 <nwn-button type="nostyle" size="nosize">
                     <nwn-filter-item type="stroke" nwnSvgIcon="retailers" (click)="sendMessage('filter-retailer')"
-                        >retailers</nwn-filter-item
+                        >223 retailers</nwn-filter-item
                     >
                 </nwn-button>
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item type="stroke" nwnSvgIcon="categories" (click)="sendMessage('filter-categories')"
-                    >categories</nwn-filter-item
+                    >223 categories</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -18,17 +18,17 @@
                     type="stroke"
                     nwnSvgIcon="strategic-cells"
                     (click)="sendMessage('filter-stragetic-cells')"
-                    >strategic cells</nwn-filter-item
+                    >223 strategic cells</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item type="stroke" nwnSvgIcon="brands" (click)="sendMessage('filter-brands')"
-                    > brands</nwn-filter-item
+                    >223 brands</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item type="stroke" nwnSvgIcon="brand-formats" (click)="sendMessage('filter-brand-formats')"
-                    > brand formats</nwn-filter-item
+                    >223 brand formats</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -36,7 +36,7 @@
                     type="stroke"
                     nwnSvgIcon="product-groups"
                     (click)="sendMessage('filter-product-groups')"
-                    > product groups</nwn-filter-item
+                    >232 product groups</nwn-filter-item
                 >
             </div>
         </div>
@@ -67,11 +67,11 @@
                             [options]="optionsNormal"
                         ></ngx-select-dropdown>
                     </div>
-                    <div *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center justify-start">
-                        <div  class="mr-2 mb-2" *ngFor="let key of quarter_year; let first = first;">
-                            <nwn-simulated-filter-item (click)="changeQuarter(key)" [selected_quarter]="selected_quarter" [key]="key" type="default" size="sfi">{{key}}</nwn-simulated-filter-item>
+                    <div class="flex flex-row flex-wrap items-center justify-start">
+                        <div class="mr-2 mb-2">
+                            <nwn-simulated-filter-item type="default" size="sfi">Y1 Q1</nwn-simulated-filter-item>
                         </div>
-                        <!-- <div class="mr-2 mb-2">
+                        <div class="mr-2 mb-2">
                             <nwn-simulated-filter-item type="default" size="sfi">Y1 Q2</nwn-simulated-filter-item>
                         </div>
                         <div class="mr-2 mb-2">
@@ -103,7 +103,7 @@
                         </div>
                         <div class="mr-2 mb-2">
                             <nwn-simulated-filter-item type="default" size="sfi">Y3 Q4</nwn-simulated-filter-item>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
                 <div class="flex flex-row flex-wrap items-center">
@@ -117,19 +117,16 @@
                     </nwn-button>
                 </div>
             </div>
-            <div *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center">
-                <div class="mr-2 mb-2" *ngFor="let product_week of selected_product_week">
-                    <nwn-weekly-promotion [product_week] = "product_week" [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
+            <div class="flex flex-row flex-wrap items-center">
+                <div class="mr-2 mb-2">
+                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
                 </div>
-                <!-- <div class="mr-2 mb-2">
+                <div class="mr-2 mb-2">
                     <nwn-weekly-promotion [optionsWeeklyPromotion]="options2"></nwn-weekly-promotion>
                 </div>
                 <div class="mr-2 mb-2">
                     <nwn-weekly-promotion [optionsWeeklyPromotion]="options3"></nwn-weekly-promotion>
                 </div>
-                <div class="mr-2 mb-2"> 
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
                 <div class="mr-2 mb-2">
                     <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
                 </div>
@@ -153,7 +150,10 @@
                 </div>
                 <div class="mr-2 mb-2">
                     <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div> -->
+                </div>
+                <div class="mr-2 mb-2">
+                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
+                </div>
             </div>
         </div>
         <div class="flex flex-row flex-wrap items-center justify-between space-x-2 border-b border-gray-300">
@@ -201,8 +201,8 @@
         </div>
         <div class="flex flex-row">
             <div class="flex flex-row space-x-4 items-center">
-             <nwn-button type="link" size="sm" (click)="sendMessage('Reset')"> Reset </nwn-button>
-                <nwn-button type="primary" size="sm" (click)="sendMessage('Simulate')"> Simulate </nwn-button>
+                <nwn-button type="link" size="sm"> Reset </nwn-button>
+                <nwn-button type="primary" size="sm"> Simulate </nwn-button>
                 <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                     <p tooltipContent>Save scenario</p>
@@ -239,7 +239,7 @@
                                     type="sideBorder"
                                     size="sideBorderSize"
                                     class="w-full"
-                                    (click)="sendMessage('compare-promo-scenario')"
+                                    (click)="sendMessage('compare-scenario-popup')"
                                 >
                                     <nwn-svg-icon
                                         class="mr-0.5"

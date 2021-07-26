@@ -1,7 +1,6 @@
 <div class="px-3 py-2 space-y-1 bg-white" nwnCellItem="nwnCellItem">
-
-    <ng-container *ngIf="nwnCellItem === 'carret-up' && nwnCellData">
-        <p class="text-caption text-marsgray-500">{{nwnCellData.converted_base}}</p>
+    <ng-container *ngIf="nwnCellItem === 'carret-up'">
+        <p class="text-caption text-marsgray-500">$88.60 M</p>
         <div class="flex flex-row items-center space-x-1">
             <p
                 class="text-body text-marsgray-700"
@@ -10,40 +9,7 @@
                     'text-size-lg': size === 'textsize-lg'
                 }"
             >
-            {{nwnCellData.converted_simulated}}
-                <span
-                    class="inline-flex items-center justify-center space-x-1"
-                    [ngClass]="{
-                        'text-marsgreen-accent': nwnCellData.color === 'green',
-                        'text-marsred-600': nwnCellData.color === 'red',
-                        'text-marsgray-500': nwnCellData.color === 'neutral'
-                    }"
-                >
-                <ng-container *ngIf="differenceFormat == 'absolute'">
-                    {{nwnCellData.converted_difference}}
-                </ng-container>
-                <ng-container *ngIf="differenceFormat == 'percent'">
-                    {{nwnCellData.percent}}
-                </ng-container>
-
-                    <nwn-svg-icon type="fill" *ngIf="nwnCellData.converted_base != nwnCellData.converted_simulated" nwnSvgIcon="{{nwnCellData.arrow}}"></nwn-svg-icon>
-                </span>
-            </p>
-        </div>
-    </ng-container>
-
-
-    <!-- <ng-container *ngIf="nwnCellItem === 'carret-up'">
-        <p class="text-caption text-marsgray-500">{{nwnCellData.converted_base}}</p>
-        <div class="flex flex-row items-center space-x-1">
-            <p
-                class="text-body text-marsgray-700"
-                [ngClass]="{
-                    'text-size-md': size === 'textsize-md',
-                    'text-size-lg': size === 'textsize-lg'
-                }"
-            >
-            {{nwnCellData.converted_simulated}}
+                $88.60 M
                 <span
                     class="inline-flex items-center justify-center space-x-1"
                     [ngClass]="{
@@ -52,19 +18,40 @@
                         'text-marsgray-500': color === 'neutral'
                     }"
                 >
-                <ng-container *ngIf="differenceFormat == 'absolute'">
-                    {{nwnCellData.converted_difference}}
-                </ng-container>
-                <ng-container *ngIf="differenceFormat == 'percent'">
-                    {{nwnCellData.percent}}
-                </ng-container>
+                    ($0.20 M)
 
-                    <nwn-svg-icon type="fill"  nwnSvgIcon="carret-up"></nwn-svg-icon>
+                    <nwn-svg-icon type="fill" nwnSvgIcon="carret-up"></nwn-svg-icon>
                 </span>
             </p>
         </div>
-    </ng-container> -->
-        <ng-container *ngIf="nwnCellItem === 'promo'">
+    </ng-container>
+    <ng-container *ngIf="nwnCellItem === 'carret-down'">
+        <p class="text-caption text-marsgray-500">$88.60 M</p>
+        <div class="flex flex-row items-center space-x-1">
+            <p
+                class="text-body text-marsgray-700"
+                [ngClass]="{
+                    'text-size-md': size === 'textsize-md',
+                    'text-size-lg': size === 'textsize-lg'
+                }"
+            >
+                $88.60 M
+                <span
+                    class="inline-flex items-center justify-center space-x-1"
+                    [ngClass]="{
+                        'text-marsgreen-accent': color === 'green',
+                        'text-marsred-600': color === 'red',
+                        'text-marsgray-500': color === 'neutral'
+                    }"
+                >
+                    ($0.20 M)
+
+                    <nwn-svg-icon type="fill" nwnSvgIcon="carret-down"></nwn-svg-icon>
+                </span>
+            </p>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="nwnCellItem === 'promo'">
         <p class="text-caption text-marsgray-500">$88.60 M</p>
         <div class="flex flex-row items-center space-x-1">
             <p

@@ -1,7 +1,4 @@
-import { Component,OnInit } from '@angular/core';
-import {OptimizerService} from '../../../core/services/optimizer.service'
-import { ListPromotion} from "../../../core/models"
-import { ModalService } from '@molecules/modal/modal.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'nwn-load-scenario-promosimulator',
@@ -10,6 +7,10 @@ import { ModalService } from '@molecules/modal/modal.service';
 })
 export class LoadScenarioPromosimulatorComponent implements OnInit {
     selectedIndex!: number;
+    constructor() {}
+
+    ngOnInit() {}
+
     loadPromoSimulatorItems: any[] = [
         {
             slcHead: 'Promo scenario name',
@@ -23,29 +24,7 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
         },
     ];
 
-
-    list_promotion:Array<ListPromotion> = []
-
-    constructor(private optimize : OptimizerService,private modal : ModalService){
-
-    }
-    ngOnInit(): void {
-        // this.optimize.fetch_load_scenario().subscribe(data=>{
-        //     this.list_promotion = data
-        // })
-
-    }
     select(index: number) {
         this.selectedIndex = index;
     }
-    loadScenario(){
-        this.modal.close('load-scenario-promosimulator')
-
-        // load-scenario-promosimulator
-   
-    }  
-
-   
-
-    
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {SharedModule} from "../shared/shared.module"
 
 // Custom Components
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -118,7 +117,15 @@ import { CalendarSimulatedChartComponent } from '@organisms/charts/calendar-simu
 import { PromotionDetailsComponent } from './organisms/promotion-details/promotion-details.component';
 
 @NgModule({
-    imports: [SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule,DragDropModule],
+    imports: [
+        CommonModule,
+        NgxSliderModule,
+        NgSelectModule,
+        FormsModule,
+        ChartsModule,
+        SelectDropDownModule,
+        DragDropModule,
+    ],
     declarations: [
         ButtonComponent,
         LinkComponent,
@@ -293,7 +300,6 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         AddCompareScenarioComponent,
         ComparePromoOptimizerComponent,
         ComparePromoScenarioComponent,
-        ManageMetricsComponent,
         TextInputComponent,
         TextInputDirective,
         UploadItemsDirective,

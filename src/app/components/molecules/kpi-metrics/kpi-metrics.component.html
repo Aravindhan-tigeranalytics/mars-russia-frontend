@@ -3,10 +3,10 @@
         <div class="flex flex-row items-center space-x-3">
             <div class="flex flex-row flex-wrap border border-marsgray-300">
                 <div class="p-3">
-                    <nwn-toggle-cta (click)="toggleAbsolute('abs')" [type]="abs_selected">Absolute change</nwn-toggle-cta>
+                    <nwn-toggle-cta>Absolute change</nwn-toggle-cta>
                 </div>
                 <div class="p-3">
-                    <nwn-toggle-cta (click)="toggleAbsolute('per')" [type]="per_selected">Percentage change</nwn-toggle-cta>
+                    <nwn-toggle-cta type="selected">Percentage change</nwn-toggle-cta>
                 </div>
             </div>
             <div class="tableheaddrop">
@@ -16,14 +16,12 @@
                     [(ngModel)]="singleSelect"
                     [config]="config"
                     [options]="totalValue"
-                    (change)="selectionChanged($event)"
                 ></ngx-select-dropdown>
             </div>
             <div class="tableheaddrop">
                 <nwn-button type="tertiary" size="lg">
-                    <!-- nwn-manage-metrics -->
                     <span class="mr-20">Metrics</span>
-                    <nwn-svg-icon (click) = "openModal()" nwnSvgIcon="chevron-down" size="lg" class="relative left-2"></nwn-svg-icon>
+                    <nwn-svg-icon nwnSvgIcon="chevron-down" size="lg" class="relative left-2"></nwn-svg-icon>
                 </nwn-button>
             </div>
         </div>
@@ -54,22 +52,12 @@
         class="kpiTableScroll scrolly_table scrollbar"
         [ngStyle]="{ 'width.px': kpiTableWidth, 'height.px': kpiTableHeight }"
     >
-        <table *ngIf="scenario_names.length > 0" class="border border-marsgray-200 text-left">
+        <table class="border border-marsgray-200 text-left">
             <thead class="bg-white">
                 <tr class="bg-white whitespace-nowrap">
                     <td class="sticked freeze whitespace-nowrap bg-white" rowspan="1" colspan="1">
                         <nwn-cell-header type="subheaderlg" color="bgwhite">Metrics</nwn-cell-header>
                     </td>
-                    <th  *ngFor="let name of scenario_names;" colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >{{name}}</nwn-comparescenario-cell-header
-                        >
-                    </th>
-                    <!-- <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >Galaxy promo</nwn-comparescenario-cell-header
-                        >
-                    </th>
                     <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
                         <nwn-comparescenario-cell-header [showCHClose]="true"
                             >Galaxy promo</nwn-comparescenario-cell-header
@@ -99,7 +87,17 @@
                         <nwn-comparescenario-cell-header [showCHClose]="true"
                             >Galaxy promo</nwn-comparescenario-cell-header
                         >
-                    </th> -->
+                    </th>
+                    <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
+                        <nwn-comparescenario-cell-header [showCHClose]="true"
+                            >Galaxy promo</nwn-comparescenario-cell-header
+                        >
+                    </th>
+                    <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
+                        <nwn-comparescenario-cell-header [showCHClose]="true"
+                            >Galaxy promo</nwn-comparescenario-cell-header
+                        >
+                    </th>
                 </tr>
             </thead>
             <tbody class="bg-white">
@@ -108,281 +106,253 @@
                         <nwn-cell-header type="headersm" color="bggray-100">SalesMetrics</nwn-cell-header>
                     </th>
                 </tr>
-                <tr *ngIf="units.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">Units</nwn-cell-header>
                     </th>
-                    <td *ngFor="let unit of units.value"><nwn-cell-item [nwnCellData] = "unit" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- 
-                         <tr *ngIf="units_compare.visible"
-                        <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="base_units.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">Base units</nwn-cell-header>
                     </th>
-                    <td *ngFor="let base_unit of base_units.value;"><nwn-cell-item [nwnCellData] = "base_unit" [differenceFormat] = "format"></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="base_units.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">Inc units</nwn-cell-header>
                     </th>
-                    <td *ngFor="let base_unit of base_units.value;"><nwn-cell-item [nwnCellData] = "base_unit" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="volume.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">Volume</nwn-cell-header>
                     </th>
-                    <td *ngFor="let vol of volume.value;"><nwn-cell-item [nwnCellData] = "vol" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                 </tr>
                 <tr class="whitespace-nowrap bg-marsgray-100">
                     <th scope="row" colspan="100%" class="sticked freeze_horizontal">
                         <nwn-cell-header type="headersm" color="bggray-100">Mars Metrics</nwn-cell-header>
                     </th>
                 </tr>
-                <tr *ngIf="lsv.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
-                        <nwn-cell-header type="subheaderlg" color="bg-transparent">LSV 
-                            <ng-container *ngIf="singleSelect._id == 'perton'">(per ton)</ng-container>
-                            <ng-container *ngIf="singleSelect._id == 'perunit'">(per unit)</ng-container>
-
-
-
-                        </nwn-cell-header>
+                        <nwn-cell-header type="subheaderlg" color="bg-transparent">LSV</nwn-cell-header>
                     </th>
-                    <td *ngFor="let l of lsv.value;"><nwn-cell-item [nwnCellData] = "l" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="nsv.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
-                        <nwn-cell-header type="subheaderlg" color="bg-transparent">NSV
-
-                            <ng-container *ngIf="singleSelect._id == 'perton'">(per ton)</ng-container>
-                            <ng-container *ngIf="singleSelect._id == 'perunit'">(per unit)</ng-container>
-                        </nwn-cell-header>
+                        <nwn-cell-header type="subheaderlg" color="bg-transparent">NSV</nwn-cell-header>
                     </th>
-                    <td *ngFor="let n of nsv.value;"><nwn-cell-item [nwnCellData] = "n" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="mac.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
-                        <nwn-cell-header type="subheaderlg" color="bg-transparent">MAC
-                            <ng-container *ngIf="singleSelect._id == 'perton'">(per ton)</ng-container>
-                            <ng-container *ngIf="singleSelect._id == 'perunit'">(per unit)</ng-container>
-                        </nwn-cell-header>
+                        <nwn-cell-header type="subheaderlg" color="bg-transparent">MAC</nwn-cell-header>
                     </th>
-                    <td *ngFor="let mc of mac.value;"><nwn-cell-item  [nwnCellData] = "mc" [differenceFormat] = "format"  ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="mac_per_nsv.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">MAC, %NSV</nwn-cell-header>
                     </th>
-                    <td *ngFor="let mpn of mac_per_nsv.value;"><nwn-cell-item  [nwnCellData] = "mpn" [differenceFormat] = "format"  ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="te.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
-                        <nwn-cell-header type="subheaderlg" color="bg-transparent">Trade expense
-                            <ng-container *ngIf="singleSelect._id == 'perton'">(per ton)</ng-container>
-                            <ng-container *ngIf="singleSelect._id == 'perunit'">(per unit)</ng-container>
-                        </nwn-cell-header>
+                        <nwn-cell-header type="subheaderlg" color="bg-transparent">Trade expense</nwn-cell-header>
                     </th>
-                    <td *ngFor="let t of te.value;" ><nwn-cell-item [nwnCellData] = "t" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="te_per_lsv.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">TE, % LSV</nwn-cell-header>
                     </th>
-                    <td *ngFor="let tpl of te_per_lsv.value;" ><nwn-cell-item [nwnCellData] = "tpl" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="te_per_unit.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">TE / Unit</nwn-cell-header>
                     </th>
-                    <td *ngFor="let tpu of te_per_unit.value;" ><nwn-cell-item [nwnCellData] = "tpu" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="roi.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">ROI</nwn-cell-header>
                     </th>
-                    <td *ngFor="let ri of roi.value;"><nwn-cell-item [nwnCellData] = "ri" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="lift.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">Lift %</nwn-cell-header>
                     </th>
-                    <td *ngFor="let lt of lift.value;"><nwn-cell-item [nwnCellData] = "lt" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
                 <tr class="whitespace-nowrap bg-marsgray-100">
                     <th scope="row" colspan="100%" class="sticked freeze_horizontal">
                         <nwn-cell-header type="headersm" color="bggray-100">Retailer Metrics</nwn-cell-header>
                     </th>
                 </tr>
-                <tr *ngIf="asp.visible" class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">ASP</nwn-cell-header>
                     </th>
-                    <td *ngFor="let ap of asp.value;"><nwn-cell-item [nwnCellData] = "ap" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="promo_asp.visible"  class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">Promo ASP</nwn-cell-header>
                     </th>
-                    <td *ngFor="let pap of promo_asp.value;"><nwn-cell-item [nwnCellData] = "pap" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="rsv_w_o_vat.visible"  class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
-                        <nwn-cell-header type="subheaderlg" color="bg-transparent">RSV w/o VAT
-                            <ng-container *ngIf="singleSelect._id == 'perton'">(per ton)</ng-container>
-                            <ng-container *ngIf="singleSelect._id == 'perunit'">(per unit)</ng-container>
-                        </nwn-cell-header>
+                        <nwn-cell-header type="subheaderlg" color="bg-transparent">RSV w/o VAT</nwn-cell-header>
                     </th>
-                    <td *ngFor="let rsv of rsv_w_o_vat.value;"><nwn-cell-item [nwnCellData] = "rsv" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="customer_margin.visible"  class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
-                        <nwn-cell-header type="subheaderlg" color="bg-transparent">Customer 
-                            <ng-container *ngIf="singleSelect._id == 'perton'">(per ton)</ng-container>
-                            <ng-container *ngIf="singleSelect._id == 'perunit'">(per unit)</ng-container>
-                        </nwn-cell-header>
+                        <nwn-cell-header type="subheaderlg" color="bg-transparent">Customer Margin</nwn-cell-header>
                     </th>
-                    <td *ngFor="let cm of customer_margin.value;"><nwn-cell-item [nwnCellData] = "cm" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
-                <tr *ngIf="rp_percent.visible"  class="whitespace-nowrap">
+                <tr class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent"
                             >Customer Margin,%RSV</nwn-cell-header
                         >
                     </th>
-                    <td *ngFor="let rpp of rp_percent.value;"><nwn-cell-item [nwnCellData] = "rpp" [differenceFormat] = "format" ></nwn-cell-item></td>
-                    <!-- <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td>
-                    <td><nwn-cell-item ></nwn-cell-item></td> -->
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                    <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-<nwn-modal id="manage-metrics" class="hidden">
-    <nwn-manage-metrics (metricChanges) = "metricChanges($event)"></nwn-manage-metrics>
-</nwn-modal>

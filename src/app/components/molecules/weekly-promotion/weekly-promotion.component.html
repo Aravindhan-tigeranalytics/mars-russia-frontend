@@ -1,5 +1,5 @@
-<div *ngIf="product_week"  class="weeklyPromo flex flex-col p-4 hover:bg-marsgray-200">
-    <p class="text-marsyellow-800 text-caption font-normal mb-1">TRP-{{product_week.promo_depth | number:'1.0-3'}}% (Co-{{product_week.co_investment | number:'1.0-3'}}%)</p>
+<div class="weeklyPromo flex flex-col p-4 hover:bg-marsgray-200">
+    <p class="text-marsyellow-800 text-caption font-normal mb-1">TRP-10% (Co-20%)</p>
     <div class="weeklyPromoDropdown">
         <ngx-select-dropdown
             tabindex="0"
@@ -9,5 +9,5 @@
             [options]="optionsWeeklyPromotion"
         ></ngx-select-dropdown>
     </div>
-    <p class="text-marsgray-400 text-caption font-normal mt-1">Week {{product_week.week}}</p>
+    <p class="text-marsgray-400 text-caption font-normal mt-1">Week 1</p>
 </div>

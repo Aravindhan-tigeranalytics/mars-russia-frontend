@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {SharedModule} from "../shared/shared.module"
 
 import { AppRoutingModule } from '../app-routing.module';
 
@@ -14,11 +12,8 @@ import { PricingToolComponent } from './pricing-tool/pricing-tool.component';
 import { PromoToolComponent } from './promo-tool/promo-tool.component';
 
 @NgModule({
-    imports: [CommonModule,ComponentModule,SharedModule,AppRoutingModule],
+    imports: [ComponentModule, AppRoutingModule],
     declarations: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent, PromoToolComponent],
     exports: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent],
-    // imports: [ComponentModule, ],
-    // declarations: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent, PromoToolComponent],
-    // exports: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent],
 })
 export class PagesModule {}

@@ -19,30 +19,15 @@
         <!-- [ngClass]="{ 'bg-marsgray-100': active }" -->
         <div
             class="border border-marsgray-300 cursor-pointer"
-            *ngFor="let promotion of list_promotion;let i = index"
+            *ngFor="let loadPromoSimulatorItem of loadPromoSimulatorItems; let i = index"
             (click)="select(i)"
             [ngClass]="{ active: selectedIndex == i }"
         >
             <nwn-scenario-load-card [showInfo]="true">
-                <p slcHead>{{promotion.name}}</p>
-                <p slcContent>{{promotion.comments}}</p>
+                <p slcHead>{{ loadPromoSimulatorItem.slcHead }}</p>
+                <p slcContent>{{ loadPromoSimulatorItem.slcContent }}</p>
             </nwn-scenario-load-card>
         </div>
     </div>
-    <nwn-search-footer [showKeyBoardCtrl]="true" (click) = "loadScenario()" [showLoad]="true"></nwn-search-footer>
+    <nwn-search-footer [showKeyBoardCtrl]="true" [showLoad]="true"></nwn-search-footer>
 </div>
-
-<nwn-modal id="promo-simulator-popup" class="hidden">
-    <nwn-promo-simulator-scenario></nwn-promo-simulator-scenario>
-</nwn-modal>
-
-<nwn-modal id="pricing-scenario-popup" class="hidden">
-    <nwn-loaded-pricing-scenario></nwn-loaded-pricing-scenario>
-</nwn-modal>
-<nwn-modal id="pricing-scenario-popup-2" class="hidden">
-    <nwn-pricing-scenario></nwn-pricing-scenario>
-</nwn-modal>
-<nwn-modal id="optimize-fn" class="hidden">
-<nwn-optimize-function></nwn-optimize-function>
-</nwn-modal>
-

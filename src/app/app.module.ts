@@ -9,11 +9,10 @@ import { ComponentModule } from '@components/components.module';
 
 // Pages
 import { PagesModule } from '@pages/pages.module';
-import {CoreModule} from "./core/core.module"
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, ComponentModule, PagesModule,CoreModule],
+    imports: [BrowserModule, AppRoutingModule, ComponentModule, PagesModule],
     providers: [],
     bootstrap: [AppComponent],
 })
