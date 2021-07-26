@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup,FormArray,FormControl,ValidatorFn} from '@angular
 import {OptimizerService} from '../../core/services/optimizer.service'
 import {ProductWeek , Product, CheckboxModel} from "../../core/models"
 // import { ThisReceiver } from '@angular/compiler';
-
+import { SimulatorService } from "../../core/services/simulator.service";
 @Component({
     selector: 'nwn-promo-scenario-builder',
     templateUrl: './promo-scenario-builder.component.html',
@@ -39,7 +39,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         return this.form.controls.orders as FormArray;
       }
 
-    constructor(private modalService: ModalService,
+    constructor(private modalService: ModalService,public restApi: SimulatorService,
         private optimize : OptimizerService,private formBuilder: FormBuilder) {
 
             this.form = this.formBuilder.group({
@@ -49,6 +49,14 @@ export class PromoScenarioBuilderComponent implements OnInit {
     
 
     ngOnInit() {
+        this.restApi.uploadedSimulatorDataObservable.asObservable().subscribe(data=>{
+            if(data != ''){
+                console.log(data,"observable data")
+                this.isFilterApplied = true
+                this.hideFilter = 'viewless'
+                this.closeModal('upload-weekly-promotions')
+            }
+        })
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)
