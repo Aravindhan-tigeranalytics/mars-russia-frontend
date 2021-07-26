@@ -85,6 +85,18 @@ export class CalendarSimulatedChartComponent implements OnInit {
             return Math.max(...data.map((d) => d[key]));
         }
 
+        function getMinmumData(){
+            var z = Math.min(...data.map((d) => d.roi))
+            if(z > 0){
+                return 0
+            }
+            else {
+                return z - 2
+            }
+         }
+ 
+         const minYaxisValue = getMinmumData()
+
         // List of groups
         const groups = data.map((d) => d.timePeriod);
 
@@ -143,7 +155,7 @@ export class CalendarSimulatedChartComponent implements OnInit {
         // Add Y Right Axis - ROI
         const yRightScale = d3
             .scaleLinear()
-            .domain([0, maximumROIInData + maximumROIInData / 10])
+            .domain([minYaxisValue, maximumROIInData + maximumROIInData / 10])
             .range([this.boundingHeight, 0])
             // To make sure the axis starts and ends on round numbers
             .nice();
@@ -239,7 +251,8 @@ export class CalendarSimulatedChartComponent implements OnInit {
             .text('Discount depth');
 
         // ROI axis label
-        this.svg
+        if(label.length >= 10){
+            this.svg
             .append('text')
             .attr('class', 'label')
             .attr('id', 'rightAxisLabel')
@@ -247,7 +260,19 @@ export class CalendarSimulatedChartComponent implements OnInit {
             // .attr('x', this.boundingWidth) // Programatically change this value based on the selection for ROI
             .attr('y', -25)
             .attr('text-anchor', 'start')
-            .text('Seasonality Index'); // Programatically change this value based on the selection for Seasonality Index
+            .text(label); // Programatically change this value based on the selection for Seasonality Index
+        }
+        else {
+            this.svg
+            .append('text')
+            .attr('class', 'label')
+            .attr('id', 'rightAxisLabel')
+            .attr('x', this.boundingWidth) // Programatically change this value based on the selection for ROI
+            .attr('y', -25)
+            .attr('text-anchor', 'start')
+            .text(label); // Programatically change this value based on the selection for Seasonality Index
+        }
+
 
         const chart = this.svg;
 

@@ -83,6 +83,17 @@ export class CalendarChartComponent implements OnInit {
         function getMaxROI() {
             return Math.max(...data.map((d) => d[key]));
         }
+        function getMinmumData(){
+            var z = Math.min(...data.map((d) => d.roi))
+            if(z > 0){
+                return 0
+            }
+            else {
+                return z - 2
+            }
+         }
+ 
+         const minYaxisValue = getMinmumData()
 
         // List of groups
         const groups = data.map((d) => d.timePeriod);
@@ -142,7 +153,7 @@ export class CalendarChartComponent implements OnInit {
         // Add Y Right Axis - ROI
         const yRightScale = d3
             .scaleLinear()
-            .domain([0, maximumROIInData + maximumROIInData / 10])
+            .domain([minYaxisValue, maximumROIInData + maximumROIInData / 10])
             .range([this.boundingHeight, 0])
             // To make sure the axis starts and ends on round numbers
             .nice();
@@ -235,14 +246,29 @@ export class CalendarChartComponent implements OnInit {
             .attr('y', -25)
             .attr('text-anchor', 'start')
             .text('Discount depth');
-        // Discount Depth axis label
-        this.svg
+
+        // ROI axis label
+        if(label.length >= 10){
+            this.svg
             .append('text')
             .attr('class', 'label')
+            .attr('id', 'rightAxisLabel')
+            .attr('x', this.boundingWidth - 65)
+            .attr('y', -25)
+            .attr('text-anchor', 'start')
+            .text(label);
+        }
+        else{
+            this.svg
+            .append('text')
+            .attr('class', 'label')
+            .attr('id', 'rightAxisLabel')
             .attr('x', this.boundingWidth)
             .attr('y', -25)
             .attr('text-anchor', 'start')
             .text(label);
+        }
+
 
         const chart = this.svg;
 
