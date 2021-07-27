@@ -34,5 +34,41 @@ export function convertCurrency(value:any , per?:any , is_curr = true){
     }
     return 0
   }
+
+  export function  percentageDifference(a: number, b: number){
+    if (a == 0 && b == 0){
+        return (0).toFixed(2)
+    }
+    if (a > 0 && b == 0){
+        return (100).toFixed(2)
+    }
+    return  (100 * Math.abs( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
+}
+
+export function formatNumber(number: any,currency: boolean,percentage: boolean){
+    var SI_SYMBOL = ["", "K", "M", "G", "T", "P", "E"];
+    // what tier? (determines SI symbol)
+    var tier = Math.log10(Math.abs(number)) / 3 | 0;
+
+    // if zero, we don't need a suffix
+    if(tier == 0) return number.toFixed(2);
+
+    // get suffix and determine scale
+    var suffix = SI_SYMBOL[tier];
+    var scale = Math.pow(10, tier * 3);
+
+    // scale the number
+    var scaled = number / scale;
+
+    if(currency && percentage){
+        return scaled.toFixed(1) + '%';
+    }
+
+    if(currency && !percentage){
+        return scaled.toFixed(1) + suffix + ' ₽';
+    }
+    // format number and add suffix
+    return scaled.toFixed(1) + suffix;
+}
   
   

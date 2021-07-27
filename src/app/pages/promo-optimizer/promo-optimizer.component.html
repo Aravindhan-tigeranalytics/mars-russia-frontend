@@ -1,7 +1,8 @@
 <nwn-loaded-optimizer-header (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
 
 <div>
-    <nwn-promo-optimizer-aggregated (modalEvent)="receiveMessage($event)"></nwn-promo-optimizer-aggregated>
+    <nwn-summary-placeholder *ngIf="!isOptimiserFilterApplied"></nwn-summary-placeholder>
+    <nwn-promo-optimizer-aggregated *ngIf="isOptimiserFilterApplied" (modalEvent)="receiveMessage($event)"></nwn-promo-optimizer-aggregated>
 </div>
 
 <!-- Modals -->

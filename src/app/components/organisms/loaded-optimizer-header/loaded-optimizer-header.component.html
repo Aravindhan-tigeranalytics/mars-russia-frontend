@@ -187,8 +187,8 @@
         </div>
         <div class="flex flex-row">
             <div class="flex flex-row space-x-4 items-center">
-                <nwn-button type="link" size="sm"> Reset </nwn-button>
-                <nwn-button type="primary" size="sm"> Optimize </nwn-button>
+                <nwn-button type="link" size="sm" (click)="sendMessage('OptimizerFilterReset')"> Reset </nwn-button>
+                <nwn-button type="primary" size="sm" (click)="sendMessage('Optimize')"> Optimize </nwn-button>
                 <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                     <p tooltipContent>Save scenario</p>

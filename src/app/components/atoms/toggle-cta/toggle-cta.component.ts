@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class ToggleCtaComponent {
     @Input()
-    type: 'unselected' | 'selected' = 'unselected';
+    type: string | 'unselected' | 'selected' = 'unselected';
 }

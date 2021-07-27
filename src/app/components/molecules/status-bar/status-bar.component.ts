@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class StatusBarComponent {
     @Input()
-    nwnStatusBar: 'yettobesimulated' | 'viewmore' | 'viewless' = 'yettobesimulated';
+    nwnStatusBar: string |'yettobesimulated' | 'viewmore' | 'viewless' = 'yettobesimulated';
 }
