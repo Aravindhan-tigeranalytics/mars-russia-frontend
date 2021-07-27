@@ -34,10 +34,36 @@ export class ApiService {
     ).pipe(catchError(this.formatErrors));
   }
 
-  post(path: string, body: Object = {}): Observable<any> {
+  post<T>(path: string, body: Object = {}): Observable<any> {
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ' + this.token
+   });
+   let obj={}
+   
+    return this.http.post<T>(
+      `${this.api_path}${path}`,
+      JSON.stringify(body),
+      { headers: reqHeader},
+  
+    ).pipe(catchError(this.formatErrors));
+  }
+
+  postd(path: string, body: Object = {}): Observable<any> {
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ' + this.token
+   });
+   
+   
     return this.http.post(
       `${this.api_path}${path}`,
-      JSON.stringify(body)
+      JSON.stringify(body),
+      { headers: reqHeader,
+      responseType:'blob',
+       
+    },
+  
     ).pipe(catchError(this.formatErrors));
   }
 

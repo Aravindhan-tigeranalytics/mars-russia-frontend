@@ -46,7 +46,7 @@
                     <h1 class="text-title-medium text-gray-700 font-medium">Mars & Customer P&L Metrics</h1>
                     <div class="flex flex-row space-x-2">
                         <div class="w-20 h-auto border border-marsgray-100">
-                            <img class="w-full h-auto" src="/assets/subbrand-img/galaxysmooth.png" alt="" />
+                            <img class="w-full h-auto" src="/assets/subbrand-img/orbit-otc.png" alt="" />
                         </div>
                         <!-- <div class="w-20 h-auto border border-marsgray-100">
                             <img class="w-full h-auto" src="/assets/subbrand-img/twix.png" alt="" />
@@ -329,9 +329,9 @@
                 <tbody class="bg-white">
                     <tr class="whitespace-nowrap" *ngFor="let week of weeklyData">
                         <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [inWeek]="week.duration"></nwn-cell-week-item>
+                            <nwn-cell-week-item [type]="week.duration | siFilter" [inWeek]="week.duration"></nwn-cell-week-item>
                         </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
+                        <td><nwn-cell-item nwnCellItem="promo" [nwnCellData]="week.duration"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.predicted_units"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.base_unit"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.incremental_unit"></nwn-cell-item></td>

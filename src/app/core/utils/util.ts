@@ -1,6 +1,11 @@
-export function convertCurrency(value:any , per?:any){
+export function convertCurrency(value:any , per?:any , is_curr = true){
     if(value){
-      let symbol = " ₽"
+      let symbol = ""
+      if(is_curr){
+        symbol  = " ₽"
+
+      }
+      
       let str = value.toFixed(2).split(".")[0]
       let strlen = str.length
       let final = value

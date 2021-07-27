@@ -1,12 +1,25 @@
 import { Component, OnInit, Input,EventEmitter, Output  } from '@angular/core';
 import {CheckboxModel} from "../../../core/models"
+import {ModalApply} from "../../../shared/modal-apply.component"
+
+// export class ModalApply{
+//   @Output()
+//   closeModal = new EventEmitter()
+
+//   apply(){
+//     // debugger
+//     this.closeModal.emit({"class" : this})
+//   }
+
+// }
+
 @Component({
   selector: 'nwn-filter-retailer',
   templateUrl: './filter-retailer.component.html',
   styleUrls: ['./filter-retailer.component.css']
 })
-export class FilterRetailerComponent implements OnInit {
-  // checked = false
+export class FilterRetailerComponent extends ModalApply implements OnInit  {
+  // checked = fals searchText = "";
 
   @Input()
   retailers:Array<CheckboxModel> = []
@@ -14,8 +27,11 @@ export class FilterRetailerComponent implements OnInit {
   cont:Array<any> = []
   @Output()
   retailerChange = new EventEmitter()
+  
 
-  constructor() { }
+  constructor() {
+    super()
+   }
 
   ngOnInit(): void {
     
@@ -24,6 +40,9 @@ export class FilterRetailerComponent implements OnInit {
   valueChangeSelect(event:any){
     this.retailerChange.emit(event)
   }
+  // inputChangeEvent(event:any){
+  //   this.searchText = event
+  // }
   
 
 }

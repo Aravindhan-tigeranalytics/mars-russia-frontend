@@ -1,12 +1,13 @@
 import { Component, OnInit,Input,EventEmitter, Output  } from '@angular/core';
 import {CheckboxModel} from "../../../core/models"
+import {ModalApply} from "../../../shared/modal-apply.component"
 
 @Component({
   selector: 'nwn-filter-categories',
   templateUrl: './filter-categories.component.html',
   styleUrls: ['./filter-categories.component.css']
 })
-export class FilterCategoriesComponent implements OnInit {
+export class FilterCategoriesComponent extends ModalApply  implements OnInit {
 
   @Input()
   categories:Array<CheckboxModel> = []
@@ -14,7 +15,9 @@ export class FilterCategoriesComponent implements OnInit {
   @Output()
   categoryChange = new EventEmitter()
 
-  constructor() { }
+  constructor() { 
+    super()
+  }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { SimulatorService } from "../../../core/services/simulator.service";
+import { OptimizerService } from "../../../core/services/optimizer.service";
 
 @Component({
     selector: 'nwn-promosimulator-builder-aggregated',
@@ -9,7 +10,7 @@ import { SimulatorService } from "../../../core/services/simulator.service";
 export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterViewInit {
     translate_y: string = '';
     currentTranslateRate: string = '';
-    constructor(private elRef: ElementRef,public restApi: SimulatorService) {}
+    constructor(private elRef: ElementRef,public restApi: SimulatorService,public optimize:OptimizerService) {}
 
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
@@ -85,7 +86,9 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
 
     // Get simulated data
     loadStimulatedData() {
-        return this.restApi.getPromoSimulateData(this.restApi.requestData).subscribe((data: any) => {
+        // this.restApi.getPromoSimulateData(this.restApi.requestData).subscribe((data: any) 
+        return this.optimize.getSimulatedDataObservable().subscribe((data: any) => {
+            console.log(data , "optimiser graph data")
             if(data){
                 this.plChartData = [
                     { group: 'LSV', base: data['base']['total']['lsv'], simulated: data['simulated']['total']['lsv'] },
@@ -99,8 +102,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 this.baselineLiftChartData = [
                     {
                         group: 'Baseline vs Lift',
-                        baseline1: [data['base']['total']['units'], '200000'],
-                        baseline2: [data['simulated']['total']['units'],  '200000'],
+                        baseline1: [data['base']['total']['units'], data['base']['total']['increment_units']],
+                        baseline2: [data['simulated']['total']['units'],  data['simulated']['total']['increment_units']],
                     },
                 ];
                 
@@ -181,7 +184,10 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     let weekObj = {
                         'duration': {
                             'week':"Week "+(i+1),
-                            'date': data['simulated']['weekly'][i].date
+                            'date': data['simulated']['weekly'][i].date,
+                            "si" : data['simulated']['weekly'][i].si,
+                            "tpr" : data['simulated']['weekly'][i].promo_depth,
+                            "co_inv" : data['simulated']['weekly'][i].co_nvestment
                         },
                         'predicted_units': {
                             "converted_base": this.formatNumber(data['base']['weekly'][i]['predicted_units'],true,false),
@@ -322,7 +328,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     }
                     this.weeklyData.push(weekObj)
                 }
-                console.log(this.weeklyData)
+                console.log(this.weeklyData , "weekly data value")
             }
         })
     }

@@ -5,7 +5,7 @@
     <form [formGroup]="form" >
     <div class="h-auto bg-white">
         <div class="px-6 py-3 space-y-2">
-            <label for="promoname">Label</label>
+            <label for="promoname">Promo Mechanic</label>
             <div class="relative">
                 <select (change)="changePromotion($event)" formControlName="promo"
                     name="promoname"
@@ -44,7 +44,7 @@
         </div>
         <div class="px-6 py-2">
             <nwn-text-input nwnTextInput="text" [placeholder]="promo_generated" [error]="true"
-                ><p label>Label</p></nwn-text-input
+                ><p label>Name</p></nwn-text-input
             >
         </div>
         <nwn-search-footer (click) = "addPromotions()" [showAdd]="true" type="secondary"></nwn-search-footer>
@@ -53,7 +53,7 @@
         </div>
 
         <div *ngFor="let promo of input_promotions">
-            <nwn-command-multiselect (valueChangeSelect)="valueChangePromo($event)" [value] = "promo.value" [checked]="promo.checked" [leftBorder]="false" [hideClose]="false">{{promo.value}}</nwn-command-multiselect>
+            <nwn-command-multiselect (clickClosedEvent)="clickClosedEvent($event)" (valueChangeSelect)="valueChangePromo($event)" [value] = "promo.value" [checked]="promo.checked" [leftBorder]="false" [hideClose]="false">{{promo.value}}</nwn-command-multiselect>
             <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="false">N + 1 - 20%</nwn-command-multiselect> -->
         </div>
         <div class="border border-gray-200 px-2 bg-gray-100">

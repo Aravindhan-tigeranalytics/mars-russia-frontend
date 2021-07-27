@@ -1,17 +1,19 @@
 import { Component, OnInit, Input ,EventEmitter, Output} from '@angular/core';
-
+import {ModalApply} from "../../../shared/modal-apply.component"
 @Component({
   selector: 'nwn-filter-stragetic-cells',
   templateUrl: './filter-stragetic-cells.component.html',
   styleUrls: ['./filter-stragetic-cells.component.css']
 })
-export class FilterStrageticCellsComponent implements OnInit {
+export class FilterStrageticCellsComponent extends ModalApply implements OnInit {
   @Input()
   stragetic_cells:Array<string> = []
   @Output()
   strategicCellChange = new EventEmitter()
 
-  constructor() { }
+  constructor() { 
+    super()
+  }
 
   ngOnInit(): void {
   }

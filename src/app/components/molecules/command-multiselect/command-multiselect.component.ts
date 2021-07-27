@@ -15,6 +15,11 @@ export class CommandMultiselectComponent {
     @Input()
     checked:boolean = false
     @Output() valueChangeSelect = new EventEmitter();
+    @Output() clickClosedEvent = new EventEmitter();
+    clickClosed(value){
+        this.clickClosedEvent.emit(value)
+
+    }
 
     valueChange(e:any){
         this.valueChangeSelect.emit(e)

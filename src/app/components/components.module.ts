@@ -320,6 +320,7 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         CalendarSimulatedChartComponent,
         NumberPromoWavesComponent,
         PromotionDetailsComponent,
+        SaveScenarioComponent
     ],
 })
 export class ComponentModule {}
