@@ -221,16 +221,16 @@
                     </thead>
                     <tbody class="bg-white">
                         <tr class="whitespace-nowrap">
-                            <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="promo" color="neutral"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
-                            <td><nwn-cell-item nwnCellItem="carret-up" color="green"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="units"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="base_units"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="incremental_units"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="volume"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="lsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="nsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac_per_nsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="trade_expense"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="customer_margin"></nwn-cell-item></td>
                         </tr>
                     </tbody>
                 </table>
@@ -294,11 +294,11 @@
     <div id="weekly" class="weekly" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
         <div class="flex flex-row items-center justify-between py-5">
             <div class="flex flex-row flex-wrap border border-marsgray-300">
-                <div class="p-3">
-                    <nwn-toggle-cta>Absolute change</nwn-toggle-cta>
+                <div class="p-3" (click)="weeklySubTabClick('Absolute')">
+                    <nwn-toggle-cta type="{{weeklyTab.absolute}}">Absolute change</nwn-toggle-cta>
                 </div>
-                <div class="p-3">
-                    <nwn-toggle-cta type="selected">Percentage change</nwn-toggle-cta>
+                <div class="p-3" (click)="weeklySubTabClick('Percentage')">
+                    <nwn-toggle-cta type="{{weeklyTab.percent}}">Percentage change</nwn-toggle-cta>
                 </div>
             </div>
             <div class="flex flex-row flex-wrap space-x-4 justify-end">
@@ -431,53 +431,30 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    <tr class="whitespace-nowrap">
+                    <tr class="whitespace-nowrap" *ngFor="let week of weeklyData">
                         <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek"></nwn-cell-week-item>
+                            <nwn-cell-week-item [active]="week.duration.holiday" [type]="week.duration.seasonality" [inWeek]="week.duration"></nwn-cell-week-item>
                         </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item nwnCellItem="promo" [nwnCellData]="week.promotions"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.predicted_units"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.base_unit"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.incremental_unit"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_weight_in_tons"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_lsv"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_nsv"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.mars_mac_percent_of_nsv"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.trade_expense"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.te_percent_of_lsv"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.lift_percent"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.roi"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_uplift_cost"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.asp"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.te_per_units"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_rsv_w_o_vat"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.retailer_margin"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.retailer_margin_percent_of_rsp"></nwn-cell-item></td>
                     </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
+                    <!-- <tr class="whitespace-nowrap">
                         <th scope="row" class="sticked freeze_horizontal">
                             <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
                         </th>
@@ -937,6 +914,29 @@
                         <td><nwn-cell-item></nwn-cell-item></td>
                         <td><nwn-cell-item></nwn-cell-item></td>
                     </tr>
+                    <tr class="whitespace-nowrap">
+                        <th scope="row" class="sticked freeze_horizontal">
+                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
+                        </th>
+                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item></nwn-cell-item></td>
+                    </tr> -->
                 </tbody>
             </table>
         </div>

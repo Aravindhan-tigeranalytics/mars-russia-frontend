@@ -106,8 +106,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
             this.baselineLiftChartData = [
                 {
                     group: 'Baseline vs Lift',
-                    baseline1: [data['base']['total']['units'], '200000'],
-                    baseline2: [data['simulated']['total']['units'],  '200000'],
+                    baseline1: [data['base']['total']['units'], data['base']['total']['increment_units']],
+                    baseline2: [data['simulated']['total']['units'],  data['simulated']['total']['increment_units']],
                 },
             ];
             
