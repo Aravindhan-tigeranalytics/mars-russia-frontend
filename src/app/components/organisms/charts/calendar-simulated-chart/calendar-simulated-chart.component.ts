@@ -698,18 +698,22 @@ export class CalendarSimulatedChartComponent implements OnInit {
         this.svg
             .append('text')
             .attr('class', 'label')
+            .attr('id', 'leftAxisLabel')
             .attr('x', -50)
             .attr('y', -25)
             .attr('text-anchor', 'start')
             .text('Discount depth');
-        // Discount Depth axis label
+
+        // ROI axis label
         this.svg
             .append('text')
             .attr('class', 'label')
-            .attr('x', this.boundingWidth)
+            .attr('id', 'rightAxisLabel')
+            .attr('x', this.boundingWidth - 45) // Programatically change this value based on the selection for Seasonality Index
+            // .attr('x', this.boundingWidth) // Programatically change this value based on the selection for ROI
             .attr('y', -25)
             .attr('text-anchor', 'start')
-            .text('ROI');
+            .text('Seasonality Index'); // Programatically change this value based on the selection for Seasonality Index
 
         const chart = this.svg;
 
@@ -785,7 +789,7 @@ export class CalendarSimulatedChartComponent implements OnInit {
                 .text(index.name + ' - ' + index.timePeriod);
             d3.select('#calendarSimulated-tooltip')
                 .select('#roi')
-                .text('ROI: ' + index.roi);
+                .text('Seasonality Index: ' + index.roi);
         }
 
         function mouseleave(datum: any, index: any, nodes: any) {
@@ -866,7 +870,7 @@ export class CalendarSimulatedChartComponent implements OnInit {
                 .text(index.name + ' - ' + index.timePeriod);
             d3.select('#calendarSimulated-tooltip')
                 .select('#roi')
-                .text('ROI: ' + index.roi);
+                .text('Seasonality Index: ' + index.roi);
         }
 
         function mouseleavePoint(datum: any, index: any, nodes: any) {
