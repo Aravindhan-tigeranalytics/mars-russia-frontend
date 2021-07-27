@@ -200,7 +200,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 let weekObj = {
                     'duration': {
                         'week':"Week "+(i+1),
-                        'date': data['simulated']['weekly'][i].date
+                        'date': data['simulated']['weekly'][i].date,
+                        "si" : data['simulated']['weekly'][i].si
                     },
                     'promotions': {
                         'promotion_value' : promotion_value,

@@ -76,10 +76,10 @@
             >
                 <!-- TPR - 10% -->
                 <span class="inline-flex items-center justify-center space-x-1 text-gray-700">
-                    <ng-container *ngIf="nwnCellData.tpr">TPR- {{nwnCellData.tpr}}%</ng-container>
-                    <ng-container *ngIf="!nwnCellData.tpr">No Promotion</ng-container>
+                    <ng-container *ngIf="nwnCellData.promotion_value">{{nwnCellData.promotion_value}}</ng-container>
+                    <ng-container *ngIf="!nwnCellData.promotion_value">No Promotion</ng-container>
                      
-                      <ng-container *ngIf="nwnCellData.co_inv">(Co-{{nwnCellData.co_inv}}%)</ng-container> 
+                      <ng-container *ngIf="nwnCellData.coinvestment">(Co-{{nwnCellData.coinvestment}}%)</ng-container> 
                     </span>
             </p>
         </div>
