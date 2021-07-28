@@ -13,6 +13,8 @@ export class FilterBrandsFormatsComponent extends ModalApply  implements OnInit 
   @Output()
   brandFormatChange = new EventEmitter()
 
+  placeholder:any = 'Search brand formats'
+
   constructor() { 
     super()
   }

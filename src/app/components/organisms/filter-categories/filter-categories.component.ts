@@ -14,7 +14,8 @@ export class FilterCategoriesComponent extends ModalApply  implements OnInit {
 
   @Output()
   categoryChange = new EventEmitter()
-
+  	
+  placeholder:any = 'Search categories'
   constructor() { 
     super()
   }

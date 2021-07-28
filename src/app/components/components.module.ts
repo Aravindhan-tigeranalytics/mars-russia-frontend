@@ -119,6 +119,7 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
 import { OptimizeFunctionComponent } from '@organisms/optimize-function/optimize-function.component';
 
 
+
 @NgModule({
     imports: [SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule,DragDropModule],
     declarations: [

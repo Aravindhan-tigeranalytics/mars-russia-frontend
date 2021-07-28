@@ -14,6 +14,7 @@ export class FilterProductGroupsComponent extends ModalApply implements OnInit {
   @Output()
   productChange = new EventEmitter()
 
+  placeholder:any = 'Search product groups'
   constructor() { 
     super()
   }
