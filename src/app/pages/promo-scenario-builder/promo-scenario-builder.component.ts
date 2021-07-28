@@ -4,7 +4,10 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@molecules/modal/modal.service';
 import {FormBuilder, FormGroup,FormArray,FormControl,ValidatorFn} from '@angular/forms';
 import {OptimizerService} from '../../core/services/optimizer.service'
-import {ProductWeek , Product, CheckboxModel} from "../../core/models"
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel} from "../../core/models"
+// import {} from 'file-saver'
+import * as FileSaver from 'file-saver';
+// import weeklyPromotionStories from '@molecules/weekly-promotion/weekly-promotion.stories';
 // import { ThisReceiver } from '@angular/compiler';
 import { SimulatorService } from "../../core/services/simulator.service";
 @Component({
@@ -34,6 +37,10 @@ export class PromoScenarioBuilderComponent implements OnInit {
     selected_strategic_cell:string = null as any
     selected_brand:string = null as any
     selected_brand_format:string = null as any
+    promotion_map:Array<any> = []
+    loaded_scenario:LoadedScenarioModel = null as any
+    scenario_comment=''
+    scenario_name = ''
 
     get ordersFormArray() {
         return this.form.controls.orders as FormArray;
@@ -64,33 +71,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
           },error=>{
             console.log(error , "error")
           })
-        this.optimize.fetch_week_value(358).subscribe(data=>{
-            console.log(data , "weekly data")
-            this.product_week = data
-            this.product_week.forEach(data=>{
-                // this.quarter_year.push('')
-                let str = "Y" + 1 + " Q"+data.quater as string
-                if(str in this.genobj){
-                    this.genobj[str].push(data)
-                    // append(data)
-                }
-                else{
-                    this.quarter_year.unshift(str);
-                    this.genobj[str] = [data]
-                }
-
-            })
-            this.selected_quarter = this.quarter_year[0]
-            this.selected_product_week  = this.product_week.filter(data=>data.quater == parseInt(
-                this.selected_quarter.split("Q")[1]
-                )
-                ).sort((a,b)=>(a.week > b.week) ? 1 : ((b.week > a.week) ? -1 : 0))
-            console.log(this.genobj , "gen obj")
-           
-          },error=>{
-            console.log(error , "error")
-          })
-
+      
     }
     retailerChange(event:CheckboxModel){
        
@@ -109,6 +90,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     }
     categoryChange(event:CheckboxModel){
         console.log(event)
+        console.log(this.selected_retailer , "selected reatilser")
         this.categories.filter(val=>val.value != event.value).forEach(val=>val.checked = false)
         if(event.checked){
 
@@ -201,18 +183,156 @@ export class PromoScenarioBuilderComponent implements OnInit {
     openModal(id: string) {
         this.modalService.open(id);
     }
-    changeQuarter(key:string){
-        
-        // debugger
-        this.selected_quarter = key
-        this.selected_product_week  = this.product_week.filter(data=>data.quater == parseInt(
-            this.selected_quarter.split("Q")[1]
-            )
-            ).sort((a,b)=>(a.week > b.week) ? 1 : ((b.week > a.week) ? -1 : 0))
-    }
+   
 
     closeModal(id: string) {
         this.modalService.close(id);
+    }
+    close($event){
+        if($event=="filter-product-groups"){
+            let p = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
+            if(p){
+                this.optimize.fetch_week_value(p.id)
+            }
+           
+        }
+        this.closeModal($event)
+        // console.log($event)
+
+    }
+    reset(){
+        this.promotion_map = []
+        this.selected_brand = null as any
+        this.selected_brand_format = null as any
+        this.selected_category= null as any
+        this.selected_product= null as any
+        this.selected_product= null as any
+        this._populateFilters(this.product)
+        this.optimize.setProductWeekObservable([])
+        // this.selected_product_week
+        // t
+    }
+    simulateResetEvent($event){
+        console.log($event , "event passed")
+        this.promotion_map = $event.promotion_map
+        let form = {
+            "account_name" : this.selected_retailer ,
+             "corporate_segment" : this.selected_category,
+            "product_group" : this.selected_product,
+        "param_depth_all" : false,
+    "promo_elasticity" : 0}
+        console.log($event.promotion_map , "promotion maps available")
+    
+        $event.promotion_map.forEach(element => {
+            let key = "week-" + element.week.week
+            // var thenum = thestring.replace(/[^0-9]/g,'')
+            // debugger
+            let obj = {
+                "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
+                "promo_mechanics":"",
+                "co_investment":parseInt(element.week.co_investment)
+            }
+            form[key] = obj
+            
+        });
+        if($event.action == 'Reset'){
+            this.isFilterApplied = false
+            this.hideFilter = 'yettobesimulated'
+            this.reset()
+        }
+        
+        console.log(form , "form data")
+        this.optimize.getPromoSimulateData(form).subscribe(data=>{
+           this.optimize.setSimulatedDataObservable(data)
+           if($event.action == 'Simulate'){
+            this.isFilterApplied = true
+            this.hideFilter = 'viewmore'
+            // this.hideFilter = 'yettobesimulated'
+        }
+       
+        })
+       
+    }
+    downloadEvent($event){
+        let form = {
+            "account_name" : this.selected_retailer ,
+             "corporate_segment" : this.selected_category,
+            "product_group" : this.selected_product,
+        "param_depth_all" : false,
+    "promo_elasticity" : 0}
+    this.promotion_map.forEach(element => {
+        let key = "week-" + element.week.week
+        let obj = {
+            "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
+            "promo_mechanics":"",
+            "co_investment":parseInt(element.week.co_investment)
+        }
+        form[key] = obj
+        
+        
+    });
+    this.optimize.downloadPromo(form).subscribe(data=>{
+            
+            const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+            // const file = new File([blob], 'report.xlsx',
+        // { type: 'application/vnd.ms-excel' });
+        // debugger
+    //     var url= window.URL.createObjectURL(blob);
+    // window.open(url);
+        FileSaver.saveAs(
+            blob,
+            'promo' + '_export_' + new Date().getTime() + 'xlsx'
+          );
+
+         
+        })
+    
+
+    }
+    loadPromotionEvent($event){
+        this.optimize.fetch_load_scenario_by_id($event.id).subscribe(data=>{
+            this.loaded_scenario = data
+            this.scenario_name = this.loaded_scenario.scenario_name
+            this.scenario_comment = this.loaded_scenario.scenario_comment
+            this.productChange({"value" : data.product_group , "checked" : true})
+            this.retailerChange({"value" : data.corporate_segment , "checked" : true}) 
+            this.optimize.setLoadedScenarioModel(this.loaded_scenario)  
+
+            console.log(this.loaded_scenario , "loaded sceanrio")
+        })
+        console.log($event.id , "id of saved promotion")
+    }
+    
+    populatePromotionMap(){
+        // this.promotion_map.push({"selected_promotion":"TPR-"+val+"%","week" : data})
+    }
+    saveScenario($event){
+        console.log($event , "save scenario event")
+        let weekly = {
+            "name" : $event['name'],
+            "comments" : $event["comments"],
+            "account_name" : this.selected_retailer ,
+            "corporate_segment" : this.selected_category,
+           "product_group" : this.selected_product,
+       "param_depth_all" : false,
+   "promo_elasticity" : 0
+        }
+        this.promotion_map.forEach(element => {
+            let key = "week-" + element.week.week
+            let obj = {
+                "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
+                "promo_mechanics":"",
+                "co_investment":parseInt(element.week.co_investment)
+            }
+            weekly[key] = obj
+            
+        });
+        
+this.optimize.savePromoScenario(weekly).subscribe(data=>{
+    console.log("saved data")
+})
+this.modalService.close("save-scenario-popup")
+    // debugger
     }
 
     receiveMessage($event: any) {

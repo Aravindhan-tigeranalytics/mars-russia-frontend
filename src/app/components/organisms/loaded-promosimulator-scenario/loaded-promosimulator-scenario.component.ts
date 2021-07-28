@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input } from '@angular/core';
 
 @Component({
   selector: 'nwn-loaded-promosimulator-scenario',
@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loaded-promosimulator-scenario.component.css']
 })
 export class LoadedPromosimulatorScenarioComponent implements OnInit {
+
+  @Input()
+  scenario_name:string = ''
+  @Input()
+  scenario_comment:string = ''
 
   constructor() { }
 

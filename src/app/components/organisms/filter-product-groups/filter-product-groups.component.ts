@@ -1,12 +1,12 @@
 import { Component, OnInit,Input,EventEmitter, Output } from '@angular/core';
 import { CheckboxModel } from 'src/app/core/models';
-
+import {ModalApply} from "../../../shared/modal-apply.component"
 @Component({
   selector: 'nwn-filter-product-groups',
   templateUrl: './filter-product-groups.component.html',
   styleUrls: ['./filter-product-groups.component.css']
 })
-export class FilterProductGroupsComponent implements OnInit {
+export class FilterProductGroupsComponent extends ModalApply implements OnInit {
 
   @Input()
   product_groups:Array<CheckboxModel> = []
@@ -14,7 +14,9 @@ export class FilterProductGroupsComponent implements OnInit {
   @Output()
   productChange = new EventEmitter()
 
-  constructor() { }
+  constructor() { 
+    super()
+  }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { SimulatorService } from "../../../core/services/simulator.service";
+import { OptimizerService } from "../../../core/services/optimizer.service";
 import * as Utils from "../../../core/utils/util"
 
 @Component({
@@ -10,9 +11,7 @@ import * as Utils from "../../../core/utils/util"
 export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterViewInit {
     translate_y: string = '';
     currentTranslateRate: string = '';
-    constructor(private elRef: ElementRef,public restApi: SimulatorService) {
-
-    }
+    constructor(private elRef: ElementRef,public restApi: SimulatorService,public optimize:OptimizerService) {}
 
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
@@ -46,12 +45,12 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     activeAggregatedTab: string = 'absolute'
 
     ngOnInit() {
-        this.restApi.uploadedSimulatorDataObservable.asObservable().subscribe(data=>{
-            if(data != ''){
-                console.log(data,"observable data")
-                this.convertToGraphNTableData(data)
-            }
-        })
+        // this.restApi.uploadedSimulatorDataObservable.asObservable().subscribe(data=>{
+        //     if(data != ''){
+        //         console.log(data,"observable data")
+        //         this.convertToGraphNTableData(data)
+        //     }
+        // })
         this.weeklyTableWidth = window.innerWidth - 155;
         this.weeklyTableHeight = window.innerHeight - 150;
         this.aggregatedGraphWidth = window.innerWidth - 155;
@@ -201,7 +200,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 let weekObj = {
                     'duration': {
                         'week':"Week "+(i+1),
-                        'date': data['simulated']['weekly'][i].date
+                        'date': data['simulated']['weekly'][i].date,
+                        "si" : data['simulated']['weekly'][i].si
                     },
                     'promotions': {
                         'promotion_value' : promotion_value,
@@ -352,7 +352,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
 
     // Get simulated data
     loadStimulatedData() {
-        this.restApi.getPromoSimulateData(this.restApi.requestData).subscribe((data: any) => {
+        this.optimize.getSimulatedDataObservable().subscribe((data: any) => {
             this.convertToGraphNTableData(data)
         })
     }

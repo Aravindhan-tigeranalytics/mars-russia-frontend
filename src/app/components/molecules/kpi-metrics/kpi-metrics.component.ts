@@ -82,7 +82,7 @@ this.format = "percent"
 
     }
 
-    _generate_obj(element:LoadedScenarioModel , key:keyof PromoSimulatedTotalModel,per:boolean = false ){
+    _generate_obj(element:LoadedScenarioModel , key:keyof PromoSimulatedTotalModel,per:boolean = false ,is_curr:boolean = true){
         let base = element.base.total[key]
                 let simulated = element.simulated.total[key]
                 let difference = simulated - base
@@ -108,9 +108,9 @@ this.format = "percent"
             "simulated_petunit" : simulated,
             "difference" : difference,
             "percent" : Utils.convertCurrency(percent , true),
-            "converted_base" : Utils.convertCurrency(base , per),
-            "converted_simulated" : Utils.convertCurrency(simulated , per),
-            "converted_difference" : Utils.convertCurrency(difference,per),
+            "converted_base" : Utils.convertCurrency(base , per,is_curr),
+            "converted_simulated" : Utils.convertCurrency(simulated , per,is_curr),
+            "converted_difference" : Utils.convertCurrency(difference,per,is_curr),
             "arrow" : difference < 0 ? "carret-down" : "carret-up",
             "color" : difference < 0 ? "red" : "green"
 
@@ -190,13 +190,13 @@ this.format = "percent"
                 // this.base_units.push(this._generate_obj(element , "base_units"))
                 // this.units.push(this._generate_obj(element , "units"))
                 
-                this.units.value.push(this._generate_obj(element , "units"))
+                this.units.value.push(this._generate_obj(element , "units", false,false))
                 this.units.visible = true
-                this.base_units.value.push(this._generate_obj(element , "base_units"))
+                this.base_units.value.push(this._generate_obj(element , "base_units",false,false))
                 this.base_units.visible = true
-                this.increment_units.value.push(this._generate_obj(element , "increment_units"))
+                this.increment_units.value.push(this._generate_obj(element , "increment_units",false,false))
                 this.increment_units.visible = true
-                this.volume.value.push(this._generate_obj(element , "volume"))
+                this.volume.value.push(this._generate_obj(element , "volume",false,false))
                 this.volume.visible = true
                 this.lsv.value.push(this._generate_obj(element , "lsv"))
                 this.lsv.visible = true

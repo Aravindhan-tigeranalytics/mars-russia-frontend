@@ -23,13 +23,13 @@ export class ManageMetricsComponent implements OnInit {
     {"value":"TE, % LSV","checked":true},
     {"value":"TE / Unit","checked":true},
     {"value":"ROI","checked":true},
-    {"value":"Lift %","checked":true},
+    {"value":"Lift %","checked":true},  
     {"value":"ASP","checked":true},
     {"value":"Promo ASP","checked":true},
     {"value":"RSV w/o VAT","checked":true},
     {"value":"Customer Margin","checked":true}
   ]
-  selected_metrics : Array<string> = [...this.mars_metrics.map(val=>val.value),...this.mars_metrics.map(val=>val.value)]
+  selected_metrics : Array<string> = [...this.sales_metrics.map(val=>val.value),...this.mars_metrics.map(val=>val.value)]
   @Output()
   metricChanges = new EventEmitter();
 

@@ -32,6 +32,7 @@
     "bluebird": "^3.7.2",
     "chart.js": "^3.4.1",
     "d3": "^7.0.0",
+    "file-saver": "^2.0.5",
     "moment": "^2.29.1",
     "ng2-charts": "^3.0.0-rc.4",
     "ngx-select-dropdown": "^2.1.0",

@@ -11,9 +11,11 @@ import { ComponentModule } from '@components/components.module';
 import { PagesModule } from '@pages/pages.module';
 import {CoreModule} from "./core/core.module"
 
+import {SharedModule} from "./shared/shared.module"
+
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, ComponentModule, PagesModule,CoreModule],
+    imports: [BrowserModule, AppRoutingModule, ComponentModule, PagesModule,CoreModule , SharedModule],
     providers: [],
     bootstrap: [AppComponent],
 })

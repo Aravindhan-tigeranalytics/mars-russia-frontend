@@ -3,7 +3,14 @@ export interface PromoSimulatedWeeklyModel{
     promo_depth:number;
     co_investment:number;
 base_unit: number;
-date: string
+date: string;
+year:string;
+quater : any;
+month : any;
+period : any;
+flag_promotype_motivation : number;
+flag_promotype_n_pls_1 : number;
+flag_promotype_traffic: number;
 incremental_unit: number;
 mars_cogs_per_unit: number;
 mars_mac: number;

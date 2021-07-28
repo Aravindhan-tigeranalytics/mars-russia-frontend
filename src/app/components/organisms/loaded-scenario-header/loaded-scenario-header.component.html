@@ -4,13 +4,13 @@
             <div class="mr-2 mb-2">
                 <nwn-button type="nostyle" size="nosize">
                     <nwn-filter-item type="stroke" nwnSvgIcon="retailers" (click)="sendMessage('filter-retailer')"
-                        >retailers</nwn-filter-item
+                        >Retailers</nwn-filter-item
                     >
                 </nwn-button>
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item type="stroke" nwnSvgIcon="categories" (click)="sendMessage('filter-categories')"
-                    >categories</nwn-filter-item
+                    >Categories</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -18,17 +18,17 @@
                     type="stroke"
                     nwnSvgIcon="strategic-cells"
                     (click)="sendMessage('filter-stragetic-cells')"
-                    >strategic cells</nwn-filter-item
+                    >Strategic Cells</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item type="stroke" nwnSvgIcon="brands" (click)="sendMessage('filter-brands')"
-                    > brands</nwn-filter-item
+                    > Brands</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item type="stroke" nwnSvgIcon="brand-formats" (click)="sendMessage('filter-brand-formats')"
-                    > brand formats</nwn-filter-item
+                    > Brand Formats</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -36,13 +36,13 @@
                     type="stroke"
                     nwnSvgIcon="product-groups"
                     (click)="sendMessage('filter-product-groups')"
-                    > product groups</nwn-filter-item
+                    > Product Groups</nwn-filter-item
                 >
             </div>
         </div>
 
         <div>
-            <div class="bg-transparent p-4 flex flex-col space-y-2 w-60">
+            <div *ngIf="title" class="bg-transparent p-4 flex flex-col space-y-2 w-60">
                 <h2 class="text-title-medium text-marsgray-700">{{ title }}</h2>
                 <p class="text-body text-marsgray-500 flex items-center">
                     <span class="mr-2">Promo scenario</span>
@@ -54,56 +54,24 @@
         </div>
     </div>
 
-    <div class="flex flex-col">
+    <div *ngIf="product_week.length > 0" class="flex flex-col">
         <div class="flex flex-col border-b border-gray-300">
             <div class="flex flex-row items-center justify-between py-4">
                 <div class="flex flex-row flex-wrap items-center">
-                    <div class="smallDropdown mr-3">
+                    <div class="smallDropdown mr-3" *ngIf="available_year.length > 0">
                         <ngx-select-dropdown
                             tabindex="0"
                             [multiple]="false"
                             [(ngModel)]="singleSelect"
                             [config]="config"
-                            [options]="optionsNormal"
+                            [options]="available_year"
                         ></ngx-select-dropdown>
                     </div>
                     <div *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center justify-start">
                         <div  class="mr-2 mb-2" *ngFor="let key of quarter_year; let first = first;">
                             <nwn-simulated-filter-item (click)="changeQuarter(key)" [selected_quarter]="selected_quarter" [key]="key" type="default" size="sfi">{{key}}</nwn-simulated-filter-item>
                         </div>
-                        <!-- <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="default" size="sfi">Y1 Q2</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="default" size="sfi">Y1 Q3</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="active" size="sfi">Y1 Q4</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="default" size="sfi">Y2 Q1</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="filled" size="sfi">Y2 Q2</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="default" size="sfi">Y2 Q3</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="default" size="sfi">Y2 Q4</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="filled-active" size="sfi">Y3 Q1</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="default" size="sfi">Y3 Q2</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="default" size="sfi">Y3 Q3</nwn-simulated-filter-item>
-                        </div>
-                        <div class="mr-2 mb-2">
-                            <nwn-simulated-filter-item type="default" size="sfi">Y3 Q4</nwn-simulated-filter-item>
-                        </div> -->
+                       
                     </div>
                 </div>
                 <div class="flex flex-row flex-wrap items-center">
@@ -111,50 +79,19 @@
                         <nwn-svg-icon class="mr-1" type="stroke" nwnSvgIcon="plus" size="md"></nwn-svg-icon>
                         Add promo
                     </nwn-button>
-                    <nwn-button type="secondary" size="sm" class="mr-1 mb-1">
+                    <nwn-button (click)="copyBaseline()" type="secondary" size="sm" class="mr-1 mb-1">
                         <nwn-svg-icon class="mr-1" type="stroke" nwnSvgIcon="copy" size="md"></nwn-svg-icon>
-                        Copy base scenario
+                        Copy base scenarios
                     </nwn-button>
                 </div>
             </div>
             <div *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center">
                 <div class="mr-2 mb-2" *ngFor="let product_week of selected_product_week">
-                    <nwn-weekly-promotion [product_week] = "product_week" [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
+                    <nwn-weekly-promotion [product_week] = "product_week" [optionsWeeklyPromotion]="options1" 
+                    [promotion_map] = "promotion_map"
+                    (promotionChange)="promotionChange($event)"></nwn-weekly-promotion>
                 </div>
-                <!-- <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options2"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options3"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2"> 
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div>
-                <div class="mr-2 mb-2">
-                    <nwn-weekly-promotion [optionsWeeklyPromotion]="options1"></nwn-weekly-promotion>
-                </div> -->
-            </div>
+                            </div>
         </div>
         <div class="flex flex-row flex-wrap items-center justify-between space-x-2 border-b border-gray-300">
             <nwn-promo-elasticity>Promo elasticity</nwn-promo-elasticity>
@@ -165,7 +102,7 @@
                 </div>
                 <div class="flex flex-row items-center">
                     <div class="bg-marsyellow-800 w-5 h-5 mr-2"></div>
-                    <p class="text-body text-marsgray-500">Baseline metric</p>
+                    <p class="text-body text-marsgray-500">Base metric</p>
                 </div>
             </div>
         </div>
@@ -201,14 +138,17 @@
         </div>
         <div class="flex flex-row">
             <div class="flex flex-row space-x-4 items-center">
-             <nwn-button type="link" size="sm" (click)="sendMessage('Reset')"> Reset </nwn-button>
-                <nwn-button type="primary" size="sm" (click)="sendMessage('Simulate')"> Simulate </nwn-button>
+             <nwn-button type="link" size="sm" (click)="simulateAndReset('Reset')"> Reset </nwn-button>
+                <nwn-button type="primary" size="sm" (click)="simulateAndReset('Simulate')"> Simulate </nwn-button>
                 <nwn-button type="icon" size="iconsm" [showTooltip]="true">
-                    <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
+                    <nwn-svg-icon
+                    (click)="sendMessage('save-scenario-popup')"
+                    type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
+                    
                     <p tooltipContent>Save scenario</p>
                 </nwn-button>
                 <nwn-button type="icon" size="iconsm" [showTooltip]="true">
-                    <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
+                    <nwn-svg-icon type="stroke" (click)="download()" nwnSvgIcon="save-download"></nwn-svg-icon>
                     <p tooltipContent>Download scenario</p>
                 </nwn-button>
                 <div class="relative">
@@ -223,7 +163,7 @@
                                     type="sideBorder"
                                     size="sideBorderSize"
                                     class="w-full"
-                                    (click)="sendMessage('pricing-scenario')"
+                                    (click)="sendMessage('load-scenario-promosimulator')"
                                 >
                                     <nwn-svg-icon
                                         class="mr-0.5"

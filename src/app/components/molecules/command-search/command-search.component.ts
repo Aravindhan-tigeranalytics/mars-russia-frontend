@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input , Output , EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'nwn-command-search',
@@ -12,4 +12,10 @@ export class CommandSearchComponent {
     closesvgClass = 'absolute right-4 top-6 text-black stroke-current';
     @Input()
     hideClose: boolean = false;
+    @Output()
+    inputChangeEvent = new EventEmitter()
+
+    changeInput(value){
+         this.inputChangeEvent.emit(value)
+    }
 }

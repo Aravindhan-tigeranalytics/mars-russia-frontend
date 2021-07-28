@@ -1,18 +1,21 @@
 import { Component, OnInit,Input,EventEmitter, Output  } from '@angular/core';
+import {ModalApply} from "../../../shared/modal-apply.component"
 
 @Component({
   selector: 'nwn-filter-brands-formats',
   templateUrl: './filter-brands-formats.component.html',
   styleUrls: ['./filter-brands-formats.component.css']
 })
-export class FilterBrandsFormatsComponent implements OnInit {
+export class FilterBrandsFormatsComponent extends ModalApply  implements OnInit {
   @Input()
   brand_formats:Array<string> = []
 
   @Output()
   brandFormatChange = new EventEmitter()
 
-  constructor() { }
+  constructor() { 
+    super()
+  }
 
   ngOnInit(): void {
   }

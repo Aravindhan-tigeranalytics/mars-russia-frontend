@@ -137,11 +137,11 @@
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td> -->
                 </tr>
-                <tr *ngIf="base_units.visible" class="whitespace-nowrap">
+                <tr *ngIf="increment_units.visible" class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
                         <nwn-cell-header type="subheaderlg" color="bg-transparent">Inc units</nwn-cell-header>
                     </th>
-                    <td *ngFor="let base_unit of base_units.value;"><nwn-cell-item [nwnCellData] = "base_unit" [differenceFormat] = "format" ></nwn-cell-item></td>
+                    <td *ngFor="let base_unit of increment_units.value;"><nwn-cell-item [nwnCellData] = "base_unit" [differenceFormat] = "format" ></nwn-cell-item></td>
                     <!-- <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
                     <td><nwn-cell-item nwnCellItem="carret-down" color="red"></nwn-cell-item></td>
@@ -350,7 +350,7 @@
                 </tr>
                 <tr *ngIf="customer_margin.visible"  class="whitespace-nowrap">
                     <th scope="row" class="sticked freeze_horizontal">
-                        <nwn-cell-header type="subheaderlg" color="bg-transparent">Customer 
+                        <nwn-cell-header type="subheaderlg" color="bg-transparent">Customer Margin
                             <ng-container *ngIf="singleSelect._id == 'perton'">(per ton)</ng-container>
                             <ng-container *ngIf="singleSelect._id == 'perunit'">(per unit)</ng-container>
                         </nwn-cell-header>

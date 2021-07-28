@@ -55,7 +55,7 @@ export class PromotionDetailsComponent implements OnInit {
         {
             _id: 'trp',
             index: 0,
-            name: 'TRP',
+            name: 'TPR',
         },
         {
             _id: 'n1',

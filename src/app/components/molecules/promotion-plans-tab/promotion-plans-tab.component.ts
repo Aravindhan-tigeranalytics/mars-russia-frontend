@@ -1,13 +1,17 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Input } from '@angular/core';
+import { LoadedScenarioModel , PromoCompareModel} from 'src/app/core/models';
 @Component({
     selector: 'nwn-promotion-plans-tab',
     templateUrl: './promotion-plans-tab.component.html',
     styleUrls: ['./promotion-plans-tab.component.css'],
 })
 export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
+    scenario_names:Array<string> = []
     translate_y: string = '';
     currentTranslateRate: string = '';
+    @Input()
+    loaded_scenario:Array<LoadedScenarioModel> = []
+    promotions :PromoCompareModel[] = []
     constructor(private elRef: ElementRef) {}
 
     public ppTableWidth: any;
@@ -16,7 +20,42 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.ppTableWidth = window.innerWidth - 155;
         this.ppTableHeight = window.innerHeight - 250;
+        this.generate_metrics(this.loaded_scenario)
     }
+    generate_metrics(loaded_scenario : Array<LoadedScenarioModel>){
+        
+       
+        loaded_scenario.forEach(element => {
+            
+           
+            this.scenario_names.push(element.scenario_name)
+            element.simulated.weekly.forEach(data=>{
+                let promo = this.promotions.find(d=>d.week == data.week)
+                if(promo){
+                    promo.discount.push( {"tpr":data.promo_depth , "co_inv" : data.promo_depth})
+
+                }
+                else{
+                    this.promotions.push(
+                        {"week" : data.week,
+                        "date":data.date , 
+                        discount:[
+                            {"tpr":data.promo_depth , "co_inv" : data.promo_depth}
+                        ]})
+                     
+
+                }
+               
+                
+            })
+      
+        });
+        console.log(this.promotions , "promotions data in promo plans")
+       
+       
+
+    }
+
 
     @ViewChild('promoplanTableScroll', { static: false }) promoplanTableScroll: any;
     scrolling_table: any;
