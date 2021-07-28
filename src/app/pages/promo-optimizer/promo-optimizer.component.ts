@@ -14,6 +14,7 @@ export class PromoOptimizerComponent implements OnInit {
 
     ngOnInit(): void {}
     openModal(id: string) {
+        console.log(id)
         this.modalService.open(id);
     }
 

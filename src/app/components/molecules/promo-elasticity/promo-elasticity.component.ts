@@ -11,10 +11,10 @@ export class PromoElasticityComponent {
     counter = 0;
 
     increment() {
-        this.counter++;
+        this.counter = Number((this.counter + 0.1).toFixed(1));
     }
 
     decrement() {
-        this.counter--;
+        this.counter = Number((this.counter - 0.1).toFixed(1));
     }
 }

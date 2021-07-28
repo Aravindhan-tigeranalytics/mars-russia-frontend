@@ -116,6 +116,8 @@ import { PromoOptimizerAggregatedComponent } from '@organisms/promo-optimizer-ag
 import { CalendarChartComponent } from '@organisms/charts/calendar-chart/calendar-chart.component';
 import { CalendarSimulatedChartComponent } from '@organisms/charts/calendar-simulated-chart/calendar-simulated-chart.component';
 import { PromotionDetailsComponent } from './organisms/promotion-details/promotion-details.component';
+import { OptimizeFunctionComponent } from '@organisms/optimize-function/optimize-function.component';
+
 
 @NgModule({
     imports: [SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule,DragDropModule],
@@ -221,6 +223,7 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         CalendarChartComponent,
         CalendarSimulatedChartComponent,
         PromotionDetailsComponent,
+        OptimizeFunctionComponent
     ],
     exports: [
         ButtonComponent,
@@ -320,6 +323,12 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         CalendarSimulatedChartComponent,
         NumberPromoWavesComponent,
         PromotionDetailsComponent,
+        OptimizeFunctionComponent,
+        DurationPromoWavesComponent,
+        MinimumGapWavesComponent,
+        CompulsoryWeeksPopupComponent,
+        WeeksIgnoredComponent,
+        MacPopupComponent,
         SaveScenarioComponent
     ],
 })
