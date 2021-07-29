@@ -1,3 +1,88 @@
+export function decodePromotion(promo_name:string){
+  let obj ={
+    "promo_mechanics" : "",
+    "promo_depth" : 0,
+    "co_investment":0
+
+  }
+  if(promo_name.includes("N+1")){
+    obj["promo_mechanics"] = "N+1"
+    let arr:Array<any>|null = promo_name.match(/\d+/g) 
+    if(arr?.length ==3){
+      obj["promo_depth"] = parseInt(arr[1])
+      obj["co_investment"] = parseInt(arr[2])
+    }
+    if(arr?.length ==2){
+      obj["promo_depth"] = parseInt(arr[1])
+      obj["co_investment"] = 0
+    }
+  }
+  else if(promo_name.includes("Motivation")){
+    let arr:Array<any>|null = promo_name.match(/\d+/g) 
+    obj["promo_mechanics"] = "Motivation"
+    if(arr?.length ==2){
+      obj["promo_depth"] = parseInt(arr[0])
+      obj["co_investment"] = parseInt(arr[1])
+    }
+    if(arr?.length ==1){
+      obj["promo_depth"] = parseInt(arr[0])
+      obj["co_investment"] = 0
+    }
+  }
+  else if(promo_name.includes("Traffic")){
+    let arr:Array<any>|null = promo_name.match(/\d+/g)
+    obj["promo_mechanics"] = "Traffic"
+    if(arr?.length ==2){
+      obj["promo_depth"] = parseInt(arr[0])
+      obj["co_investment"] = parseInt(arr[1])
+    }
+    if(arr?.length ==1){
+      obj["promo_depth"] = parseInt(arr[0])
+      obj["co_investment"] = 0
+    }
+  }
+  else if(promo_name.includes("TPR")){
+    let arr:Array<any>|null = promo_name.match(/\d+/g)
+    if(arr?.length ==2){
+      obj["promo_depth"] = parseInt(arr[0])
+      obj["co_investment"] = parseInt(arr[1])
+    }
+    if(arr?.length ==1){
+      obj["promo_depth"] = parseInt(arr[0])
+      obj["co_investment"] = 0
+    }
+  }
+  return obj
+  // "N+1-25% (Co-8%)"
+}
+
+
+export function genratePromotion(motivation , n_plus_1, traffic , promo_depth , co_inv ){
+  let promo_name = "TPR"
+  let promo_string = ""
+  // debugger
+  // console.log(motivation , n_plus_1, traffic , promo_depth , co_inv , "generate promotion details")
+  if(motivation){
+    promo_name = "Motivation"
+
+  }
+  else if(n_plus_1){
+    promo_name = "N+1"
+  }
+  else if(traffic){
+    promo_name = "Traffic"
+  }
+  if(promo_depth){
+promo_string+=promo_name + "-" + promo_depth + "%"
+  }
+  if(co_inv){
+    promo_string+= " (Co-"+co_inv+"%)"
+  }
+  // console.log(promo_string , "generate promotion details promo-string")
+  return promo_string
+}
+
+
 export function convertCurrency(value:any , per?:any , is_curr = true){
     if(value){
       let symbol = ""

@@ -3,13 +3,15 @@ import { Component, OnInit } from '@angular/core';
 
 import { ModalService } from '@molecules/modal/modal.service';
 import {FormBuilder, FormGroup,FormArray,FormControl,ValidatorFn} from '@angular/forms';
-import {OptimizerService} from '../../core/services/optimizer.service'
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel} from "../../core/models"
+import {OptimizerService} from '@core/services'
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel} from "@core/models"
+import * as utils from "@core/utils"
 // import {} from 'file-saver'
 import * as FileSaver from 'file-saver';
 // import weeklyPromotionStories from '@molecules/weekly-promotion/weekly-promotion.stories';
 // import { ThisReceiver } from '@angular/compiler';
-import { SimulatorService } from "../../core/services/simulator.service";
+import { SimulatorService } from "@core/services";
+import { tickStep } from 'd3';
 @Component({
     selector: 'nwn-promo-scenario-builder',
     templateUrl: './promo-scenario-builder.component.html',
@@ -41,6 +43,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     loaded_scenario:LoadedScenarioModel = null as any
     scenario_comment=''
     scenario_name = ''
+    uploaded_file:any = null
 
     get ordersFormArray() {
         return this.form.controls.orders as FormArray;
@@ -56,14 +59,14 @@ export class PromoScenarioBuilderComponent implements OnInit {
     
 
     ngOnInit() {
-        this.restApi.uploadedSimulatorDataObservable.asObservable().subscribe(data=>{
-            if(data != ''){
-                console.log(data,"observable data")
-                this.isFilterApplied = true
-                this.hideFilter = 'viewless'
-                this.closeModal('upload-weekly-promotions')
-            }
-        })
+        // this.restApi.uploadedSimulatorDataObservable.asObservable().subscribe(data=>{
+        //     if(data != ''){
+        //         console.log(data,"observable data")
+        //         this.isFilterApplied = true
+        //         this.hideFilter = 'viewless'
+        //         this.closeModal('upload-weekly-promotions')
+        //     }
+        // })
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)
@@ -196,6 +199,10 @@ export class PromoScenarioBuilderComponent implements OnInit {
             }
            
         }
+        if($event=="upload-weekly-promotions"){
+            this.uploadFile()
+
+        }
         this.closeModal($event)
         // console.log($event)
 
@@ -227,11 +234,12 @@ export class PromoScenarioBuilderComponent implements OnInit {
             let key = "week-" + element.week.week
             // var thenum = thestring.replace(/[^0-9]/g,'')
             // debugger
-            let obj = {
-                "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
-                "promo_mechanics":"",
-                "co_investment":parseInt(element.week.co_investment)
-            }
+            let obj = utils.decodePromotion(element.selected_promotion)
+            // {
+            //     "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
+            //     "promo_mechanics":"",
+            //     "co_investment":parseInt(element.week.co_investment)
+            // }
             form[key] = obj
             
         });
@@ -242,6 +250,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         }
         
         console.log(form , "form data")
+        // debugger
         this.optimize.getPromoSimulateData(form).subscribe(data=>{
            this.optimize.setSimulatedDataObservable(data)
            if($event.action == 'Simulate'){
@@ -274,11 +283,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     this.optimize.downloadPromo(form).subscribe(data=>{
             
             const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-            // const file = new File([blob], 'report.xlsx',
-        // { type: 'application/vnd.ms-excel' });
-        // debugger
-    //     var url= window.URL.createObjectURL(blob);
-    // window.open(url);
+            
         FileSaver.saveAs(
             blob,
             'promo' + '_export_' + new Date().getTime() + 'xlsx'
@@ -288,6 +293,21 @@ export class PromoScenarioBuilderComponent implements OnInit {
         })
     
 
+    }
+    uploadFile(){
+           this.restApi.uploadPromoSimulateInput(this.uploaded_file).subscribe((data: UploadModel) => {
+            //    this.optimize.setProductWeekObservable(data.base)
+            this.optimize.setUploadedScanarioObservable(data)
+            //    this.isFilterApplied = true
+               this.hideFilter = 'viewmore'
+            
+            
+           
+        })
+    }
+    fileUpload($event){
+        this.uploaded_file = $event
+        
     }
     loadPromotionEvent($event){
         this.optimize.fetch_load_scenario_by_id($event.id).subscribe(data=>{

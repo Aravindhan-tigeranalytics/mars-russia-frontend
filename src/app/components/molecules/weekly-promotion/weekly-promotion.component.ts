@@ -25,6 +25,7 @@ export class WeeklyPromotionComponent implements OnInit {
 
     ngOnInit(){
         console.log(this.product_week , "product_weekproduct_weekproduct_weekproduct_weekproduct_week map")
+        console.log(this.promotion_map , "product_weekproduct_weekproduct_weekproduct_weekproduct_week this.promotion_map")
         // debugger
         let mp = this.promotion_map.filter(pr=>pr.week.week == this.product_week.week)
         if(mp.length > 0){
