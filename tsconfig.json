@@ -10,7 +10,8 @@
             "@organisms/*": ["src/app/components/organisms/*"],
             "@templates/*": ["src/app/components/templates/*"],
             "@components/*": ["src/app/components/*"],
-            "@pages/*": ["src/app/pages/*"]
+            "@pages/*": ["src/app/pages/*"],
+            "@core/*": ["src/app/core/*"]
         },
         "outDir": "./dist/out-tsc",
         "forceConsistentCasingInFileNames": true,

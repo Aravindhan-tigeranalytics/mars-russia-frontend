@@ -1,15 +1,19 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import {OptimizerService} from '../../../core/services/optimizer.service'
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel} from "../../../core/models"
-import { Observable, of, from, BehaviorSubject, combineLatest } from 'rxjs';
-import { ThemeService } from 'ng2-charts';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+// import {OptimizerService} from '../../../core/services/optimizer.service'
+import {OptimizerService , SimulatorService} from "@core/services"
+// import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel} from "../../../core/models"
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel , UploadModel} from "@core/models"
+import { Observable, of, from, BehaviorSubject, combineLatest , Subject } from 'rxjs';
+import {takeUntil} from "rxjs/operators"
+import * as utils from "@core/utils"
 
 @Component({
     selector: 'nwn-loaded-scenario-header',
     templateUrl: './loaded-scenario-header.component.html',
     styleUrls: ['./loaded-scenario-header.component.css'],
 })
-export class LoadedScenarioHeaderComponent implements OnInit {
+export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
+    private unsubscribe$: Subject<any> = new Subject<any>();
     @Input()
     title: string = '';
     @Output()
@@ -28,11 +32,46 @@ export class LoadedScenarioHeaderComponent implements OnInit {
     promotion_map:Array<any> = [] //{"selected_promotion" : $event.value , "week" : this.product_week }
     available_year:any[] = ["year 1" , "year 2" , "year 3"]
     loaded_scenario:LoadedScenarioModel = null as any
-    constructor(private optimize : OptimizerService,){
+    constructor(private optimize : OptimizerService,private simulatorService : SimulatorService){
 
     }
     ngOnInit(){
-        this.optimize.getLoadedScenarioModel().subscribe(data=>{
+        this.optimize.getUploadedScenarioObservable().subscribe((uploadData:UploadModel)=>{
+            if(uploadData){
+                console.log(uploadData , "get uploaded data ")
+                uploadData.simulated.weekly.forEach((data,index)=>{
+                    // this.promotion_map
+                    let motivation = data.promo_mechanics == 'Motivation'? 1 : 0
+                    let n_plus_1 = data.promo_mechanics == 'N+1'? 1 : 0
+                    let traffic =  data.promo_mechanics == 'Traffic'? 1 : 0
+                    let gen_promo = utils.genratePromotion(
+                        motivation,n_plus_1,traffic,
+                        data.promo_depth , data.co_investment)
+                        if(gen_promo){
+                            this.optimize.insert_base_line_promotion(gen_promo)
+                        }
+                       
+                    this.promotion_map.push({
+                       
+                        "selected_promotion" : gen_promo ,
+                         "week" : uploadData.base[index]
+                    })
+    
+                })
+                console.log(this.promotion_map , "promotion map")
+                // debugger
+                this.optimize.setProductWeekObservable(uploadData.base)
+
+            }
+           
+    // 
+
+        })
+        
+        
+        this.optimize.getLoadedScenarioModel().pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe(data=>{
             console.log(data ,"get loaded model")
             if(data){
                 this.populatePromotionWeek(data)
@@ -41,7 +80,9 @@ export class LoadedScenarioHeaderComponent implements OnInit {
            
             
         })
-       this.optimize.getPromotionObservable().subscribe(data=>{
+       this.optimize.getPromotionObservable().pipe(
+        takeUntil(this.unsubscribe$)
+       ).subscribe(data=>{
            if (data.length > 0){
                console.log(data , "get promotion data")
                this.options1 = data
@@ -51,10 +92,12 @@ export class LoadedScenarioHeaderComponent implements OnInit {
           
        })
 
-        this.optimize.getProductWeekObservable().subscribe(data=>{
-            if(data.length == 0){
+        this.optimize.getProductWeekObservable().pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe(weekdata=>{
+            if(weekdata.length == 0){
                 this.product_week = []
-                this.optimize.set_base_line_promotion([])
+                this.optimize.set_baseline_null()
                 this.available_year =["year 1" , "year 2" , "year 3"]
                 this.quarter_year = []
                 this.selected_quarter = ''
@@ -63,41 +106,40 @@ export class LoadedScenarioHeaderComponent implements OnInit {
 
             }
             else{
-                let promo_depth : Array<number> = []
-                this.product_week = data
-                this.product_week.forEach(data=>{
-                    // if(!this.available_year.includes(data.year)){
-                    //     this.available_year.push(data.year)
-    
-                    // }
-                    
-                // debugger
-                    let val = (parseFloat((data.promo_depth).toString()))
-                    if(!promo_depth.includes(val)){
-                        if(val){
-                            promo_depth.push(val)
-                        }
-    
+                let promo_depth : Array<string> = []
+                
+                weekdata.forEach(data=>{
+                    let gen_promo = utils.genratePromotion(
+                        parseFloat(data.flag_promotype_motivation) , 
+                        parseFloat(data.flag_promotype_n_pls_1),
+                        parseFloat(data.flag_promotype_traffic),
+                        parseFloat(data.promo_depth) , 
+                        parseFloat(data.co_investment)
+                    )
+                    data.promotion_name = gen_promo
+                    if(gen_promo && !promo_depth.includes(gen_promo)){
+                      
+                        promo_depth.push(gen_promo)
                     }
-    
-                    console.log(data , " DATA from product wweeke")
-                    // this.quarter_year.push('')
                     let str = "Y" + 1 + " Q"+data.quater as string
                     if(str in this.genobj){
                         this.genobj[str].push(data)
                         // append(data)
                     }
                     else{
-                        this.quarter_year.unshift(str);
+                        this.quarter_year.push(str);
                         this.genobj[str] = [data]
                     }
-                    data.promo_depth = val
-                    data.co_investment = (parseFloat((data.co_investment).toString()))
+                    data.promo_depth = parseInt(data.promo_depth)
+                    data.co_investment = (data.co_investment)
     
                 })
                 console.log(this.available_year , "Available year")
-                this.options1 = promo_depth.map(val=>"TPR-"+val+"%")
+                // this.options1 = promo_depth
                 this.optimize.set_base_line_promotion(promo_depth)
+                this.options1 = this.optimize.get_base_line_promotions()
+                console.log(this.options1 , "options for drop down promotion")
+                this.product_week = weekdata
                 this.selected_quarter = this.quarter_year[0]
                 this.selected_product_week  = this.product_week.filter(data=>data.quater == parseInt(
                     this.selected_quarter.split("Q")[1]
@@ -193,6 +235,7 @@ export class LoadedScenarioHeaderComponent implements OnInit {
     }
 
     simulateAndReset(type){
+        
         this.simulateResetEvent.emit({
             "action" : type,
             "promotion_map" : this.promotion_map
@@ -295,4 +338,10 @@ export class LoadedScenarioHeaderComponent implements OnInit {
             name: 'N+2-30% (Co-30%)3',
         },
     ];
+
+    ngOnDestroy(){
+        console.log("destroying sceario header")
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    }
 }

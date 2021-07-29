@@ -14,6 +14,8 @@ export class UploadItemsComponent implements OnChanges {
     showLoadUpload: boolean = false;
     @Output()
     modalEvent = new EventEmitter<string>();
+    @Output()
+    fileUploadEvent = new EventEmitter<any>();
     
     reqData:any
     fileName:any = 'Uploading...'
@@ -47,7 +49,8 @@ export class UploadItemsComponent implements OnChanges {
         formdata.append('simulator_input',inputNode.files[0])
         this.reqData = formdata
         this.fileInput.nativeElement.value = ''
-        // this.uploadFile(formdata)
+        // debugger
+        this.fileUploadEvent.emit(this.reqData)
       }
 
       removeFile(){
@@ -56,20 +59,20 @@ export class UploadItemsComponent implements OnChanges {
         this.fileInput.nativeElement.value = ''
       }
 
-      uploadFile(){
-        this.restApi.uploadPromoSimulateInput(this.reqData).subscribe((data: any) => {
-            console.log(data)
-            this.restApi.setSimulatorDataObservable(data)
-        })
-      }
+      // uploadFile(){
+      //   this.restApi.uploadPromoSimulateInput(this.reqData).subscribe((data: any) => {
+      //       console.log(data)
+      //       this.restApi.setSimulatorDataObservable(data)
+      //   })
+      // }
 
       ngOnChanges(changes: SimpleChanges) {
         for (let property in changes) {
             if (property === 'isUploadClicked') {
-              this.isUploadClicked = changes[property].currentValue
-              if(this.isUploadClicked == true){
-                  this.uploadFile()
-              }
+              // this.isUploadClicked = changes[property].currentValue
+              // if(this.isUploadClicked == true){
+              //     this.uploadFile()
+              // }
             }
         }
     }

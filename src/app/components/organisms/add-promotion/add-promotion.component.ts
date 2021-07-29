@@ -66,7 +66,7 @@ export class AddPromotionComponent implements OnInit {
     get f(){
         return this.form.controls;
       }
-    promo_name = ['motivation' , 'N+1' , 'TPR']
+    promo_name = ['Motivation' , 'N+1' , 'TPR']
     ngOnInit(){
 this.form.valueChanges.subscribe(data=>{
     // console.log(data , "form changes subscription")

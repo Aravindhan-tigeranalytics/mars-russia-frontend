@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import {ApiService} from './api.service'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Product , ProductWeek , ListPromotion , LoadedScenarioModel} from "../models"
+import {Product , ProductWeek , ListPromotion , LoadedScenarioModel, UploadModel} from "../models"
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class OptimizerService {
+  private uploadedScenarioObservable = new BehaviorSubject<UploadModel>(null as any)
   private loadedScenarioObservable = new BehaviorSubject<LoadedScenarioModel>(null as any)
   private simulatedDataObservable = new BehaviorSubject<any>(null)
   public optimizerMetricsData = new BehaviorSubject<any>(null)
@@ -6660,7 +6661,7 @@ export class OptimizerService {
 
   private compareScenarioIdObservable = new BehaviorSubject<Array<number>>([])
   private productWeekObservable = new BehaviorSubject<Array<ProductWeek>>([])
-  base_line_promotion = []
+  base_line_promotion:Array<string> = []
   private promotionObservable = new BehaviorSubject<string[]>([]);
   token = 'd3bdbb418856f47f56adeaec1dc86478abd29f96';
   apiURL = 'http://localhost:8000/api/';
@@ -6690,6 +6691,13 @@ export class OptimizerService {
         })
       }  
 
+  public setUploadedScanarioObservable(data : UploadModel){
+      this.uploadedScenarioObservable.next(data)
+
+  }
+  public getUploadedScenarioObservable():Observable<UploadModel>{
+      return this.uploadedScenarioObservable.asObservable()
+  }
   public setCompareScenarioIdObservable(id:Array<number>){
     this.compareScenarioIdObservable.next(id)
 
@@ -6759,14 +6767,20 @@ export class OptimizerService {
       // http://localhost:8000/api/scenario/list-saved-promo/39/
   }
   set_base_line_promotion(promotions:any){
-    this.base_line_promotion = promotions
+    this.base_line_promotion = [...this.base_line_promotion , ...promotions]
+    this.base_line_promotion = [...new Set(this.base_line_promotion)]
     console.log(this.base_line_promotion , "Base line promotion set")
 
+  }
+  insert_base_line_promotion(promotions:string){
+      this.base_line_promotion.push(promotions)
+  }
+  set_baseline_null(){
+      this.base_line_promotion = []
   }
   get_base_line_promotions(){
     return this.base_line_promotion
   }
-
 
   getOptimizerMetrics(requestData: any): Observable<any> {
     return this.http.post<any>(this.apiURL + 'optimiser/calculate/', JSON.stringify(requestData), this.httpOptions)
