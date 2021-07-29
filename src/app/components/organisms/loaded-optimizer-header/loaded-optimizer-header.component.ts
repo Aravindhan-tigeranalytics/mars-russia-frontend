@@ -32,26 +32,31 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     // drag and drop
     checkboxMetrices = [
         {
+            id:"mac-popup",
             checkHeadValue: 'x0.50',
             checkboxLabel: 'MAC',
             disabled: false,
         },
         {
+            id:"retailer-popup",
             checkHeadValue: 'x0.75',
             checkboxLabel: 'Retailer profit',
             disabled: false,
         },
         {
+            id:"te-popup",
             checkHeadValue: 'x1.50',
             checkboxLabel: 'Trade expense',
             disabled: false,
         },
         {
+            id:"mac-per-popup",
             checkHeadValue: 'x1.25',
             checkboxLabel: 'MAC, % NSV',
             disabled: false,
         },
         {
+            id:"rp-per-popup",
             checkHeadValue: 'x1.00',
             checkboxLabel: 'RP, % RSV',
             disabled: false,

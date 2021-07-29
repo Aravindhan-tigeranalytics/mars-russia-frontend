@@ -18,7 +18,7 @@ export class KpiMetricsComponent implements OnInit, AfterViewInit {
     units:CompareMetricModel = {"value" : [],"visible": false , key:"Units"}
     // units_compare:CompareMetricModel = {"value" : [],"visible": false}
     base_units:CompareMetricModel = {"value" : [],"visible": false , key:"Base Units"}
-    increment_units :CompareMetricModel = {"value" : [],"visible": false,key:"Inc. Units"}
+    increment_units :CompareMetricModel = {"value" : [],"visible": false,key:"Incremental Units"}
     volume:CompareMetricModel = {"value" : [],"visible": false,key:"Volume"}
     lsv:CompareMetricModel = {"value" : [],"visible": false,key:"LSV"}
     nsv:CompareMetricModel = {"value" : [],"visible": false,key:"NSV Units"}

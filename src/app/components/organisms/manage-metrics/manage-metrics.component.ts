@@ -12,7 +12,7 @@ export class ManageMetricsComponent implements OnInit {
   sales_metrics:Array<CheckboxModel> = [
     {"value":"Units","checked":true},
     {"value":"Base Units","checked":true},
-    {"value":"Inc. Units","checked":true},
+    {"value":"Incremental Units","checked":true},
     {"value":"Volume","checked":true}
   ]
   mars_metrics:Array<CheckboxModel> = [
