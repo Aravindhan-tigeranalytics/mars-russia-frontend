@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@molecules/modal/modal.service';
 import { CheckboxModel,Product } from "../../core/models"
 import {OptimizerService} from '../../core/services/optimizer.service'
+import * as $ from 'jquery';
+
 @Component({
     selector: 'nwn-promo-optimizer',
     templateUrl: './promo-optimizer.component.html',
@@ -32,6 +34,17 @@ export class PromoOptimizerComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        var self = this;
+        $(document).keydown(function(event) { 
+            if (event.keyCode == 27) {
+                var modal_id = self.modalService.opened_modal
+                if(modal_id.length > 0){
+                    modal_id = modal_id[modal_id.length-1]
+                    $('#'+modal_id).hide(); 
+                    self.modalService.remove_last_modal()
+                }
+            }
+        });
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)

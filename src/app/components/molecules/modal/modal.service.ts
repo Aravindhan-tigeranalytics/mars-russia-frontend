@@ -3,14 +3,13 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class ModalService {
     private modals: any[] = [];
-    private opened_modal:any[] = []
+    public opened_modal:any[] = []
 
     get_opened_modal(){
         return this.opened_modal
     }
     remove_last_modal(){
         this.opened_modal.pop()
-
     }
 
     add(modal: any) {

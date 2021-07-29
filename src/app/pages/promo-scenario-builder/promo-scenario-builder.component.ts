@@ -12,6 +12,7 @@ import * as FileSaver from 'file-saver';
 // import { ThisReceiver } from '@angular/compiler';
 import { SimulatorService } from "@core/services";
 import { tickStep } from 'd3';
+import * as $ from 'jquery';
 @Component({
     selector: 'nwn-promo-scenario-builder',
     templateUrl: './promo-scenario-builder.component.html',
@@ -67,6 +68,17 @@ export class PromoScenarioBuilderComponent implements OnInit {
         //         this.closeModal('upload-weekly-promotions')
         //     }
         // })
+        var self = this;
+        $(document).keydown(function(event) { 
+            if (event.keyCode == 27) {
+                var modal_id = self.modalService.opened_modal
+                if(modal_id.length > 0){
+                    modal_id = modal_id[modal_id.length-1]
+                    $('#'+modal_id).hide(); 
+                    self.modalService.remove_last_modal()
+                }
+            }
+        });
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)
