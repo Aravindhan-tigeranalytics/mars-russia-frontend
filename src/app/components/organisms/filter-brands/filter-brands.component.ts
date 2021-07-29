@@ -14,6 +14,7 @@ export class FilterBrandsComponent extends ModalApply implements OnInit {
   @Output()
   brandChange = new EventEmitter()
 
+  placeholder:any = 'Search brands'
   constructor() {
     super()
    }

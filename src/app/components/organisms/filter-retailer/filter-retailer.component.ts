@@ -28,6 +28,7 @@ export class FilterRetailerComponent extends ModalApply implements OnInit  {
   @Output()
   retailerChange = new EventEmitter()
   
+  placeholder:any = 'Search retailers'
 
   constructor() {
     super()

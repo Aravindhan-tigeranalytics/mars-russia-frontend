@@ -91,8 +91,7 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
             // To make sure the axis starts and ends on round numbers
             .nice();
         const yAxisGenerator = d3.axisLeft(yScale);
-        // var dollarFormat = function(d: any) { return  d3.format('0.2s')(d)};
-        var dollarFormat = function dollarFormat(d: any) { 
+        function dollarFormat(d: any) { 
             var num :any = d
             if(num == 0){
                 num = 0

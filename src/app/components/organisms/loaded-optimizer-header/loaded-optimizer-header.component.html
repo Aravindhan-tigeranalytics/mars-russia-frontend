@@ -7,7 +7,7 @@
                     nwnSvgIcon="retailers"
                     [hideClose]="true"
                     (click)="sendMessage('filter-retailer')"
-                    >223 retailers</nwn-filter-item
+                    >Retailers</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -16,7 +16,7 @@
                     nwnSvgIcon="categories"
                     [hideClose]="true"
                     (click)="sendMessage('filter-categories')"
-                    >223 categories</nwn-filter-item
+                    >Categories</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -25,7 +25,7 @@
                     nwnSvgIcon="strategic-cells"
                     [hideClose]="true"
                     (click)="sendMessage('filter-stragetic-cells')"
-                    >223 strategic cells</nwn-filter-item
+                    >Strategic Cells</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -34,7 +34,7 @@
                     nwnSvgIcon="brands"
                     [hideClose]="true"
                     (click)="sendMessage('filter-brands')"
-                    >223 brands</nwn-filter-item
+                    >Brands</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -43,7 +43,7 @@
                     nwnSvgIcon="brand-formats"
                     [hideClose]="true"
                     (click)="sendMessage('filter-brand-formats')"
-                    >223 brand formats</nwn-filter-item
+                    >Brand Formats</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -52,7 +52,7 @@
                     nwnSvgIcon="product-groups"
                     [hideClose]="true"
                     (click)="sendMessage('filter-product-groups')"
-                    >232 product groups</nwn-filter-item
+                    >Product Groups</nwn-filter-item
                 >
             </div>
         </div>
@@ -67,7 +67,7 @@
         <div class="flex flex-col border-b border-gray-300">
             <div class="flex flex-row flex-wrap items-center border-b border-marsgray-300">
                 <div class="mr-2">
-                    <nwn-metric-item (click)="sendMessage('optimize-funtion')" nwnMetricItem="defaultRight" [showRightValue]="false">
+                    <nwn-metric-item nwnMetricItem="defaultRight" [showRightValue]="false" (click)="sendMessage('objective-function')">
                         <p rightHeadValue>Maximize MAC</p>
                         <p rightMetricContent>Objective function</p>
                     </nwn-metric-item>
@@ -80,14 +80,14 @@
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
-                    <nwn-metric-item nwnMetricItem="defaultTop">
+                    <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('duration-of-waves')">
                         <p topValue>5</p>
                         <p topHeadValue>3 - 7</p>
                         <p topMetricContent>Duration of waves</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
-                    <nwn-metric-item nwnMetricItem="defaultTop">
+                    <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('minimum-gap-waves')">
                         <p topValue>5</p>
                         <p topHeadValue>3 - 7</p>
                         <p topMetricContent>Minimum gap</p>
@@ -96,21 +96,21 @@
             </div>
             <div class="flex flex-row flex-wrap items-center">
                 <div class="mr-2">
-                    <nwn-metric-item nwnMetricItem="defaultTop">
+                    <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
                         <p topValue>25</p>
                         <p topHeadValue>20 - 30</p>
                         <p topMetricContent>Number of weeks</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
-                    <nwn-metric-item nwnMetricItem="defaultTop">
+                    <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('compulsory-weeks-popup')">
                         <p topValue>5</p>
                         <p topHeadValue>7</p>
                         <p topMetricContent>Compulsory week</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
-                    <nwn-metric-item nwnMetricItem="defaultTop">
+                    <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('weeks-ignored')">
                         <p topValue>5</p>
                         <p topHeadValue>6</p>
                         <p topMetricContent>Ignored weeks</p>
@@ -148,6 +148,7 @@
                     [cdkDragDisabled]="checkboxMetric.disabled"
                 >
                     <nwn-metric-item
+                        (click)="sendMessage('mac-popup')"
                         nwnMetricItem="checkboxMetric"
                         [disabled]="checkboxMetric.disabled"
                         [checkboxValue]="!checkboxMetric.disabled"

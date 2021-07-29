@@ -11,6 +11,7 @@ export class FilterStrageticCellsComponent extends ModalApply implements OnInit 
   @Output()
   strategicCellChange = new EventEmitter()
 
+  placeholder:any = 'Search strategic cells'
   constructor() { 
     super()
   }
