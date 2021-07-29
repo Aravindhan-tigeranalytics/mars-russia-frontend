@@ -9,6 +9,7 @@ import {OptimizerService} from '../../core/services/optimizer.service'
     styleUrls: ['./promo-optimizer.component.css'],
 })
 export class PromoOptimizerComponent implements OnInit {
+    status: any = 'yettobesimulated' 
     isOptimiserFilterApplied: boolean = false
     retailers:Array<CheckboxModel> = []
     categories:Array<CheckboxModel> = [] 
@@ -157,9 +158,22 @@ export class PromoOptimizerComponent implements OnInit {
 
     close($event){
         if($event=="filter-product-groups"){
-            let p = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
-            if(p){
-                this.optimize.fetch_week_value(p.id)
+            let temp = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
+            if(temp){
+                let reqObj: any = {
+                    'account_name': this.selected_retailer,
+                    'corporate_segment': '',
+                    'product_group': this.selected_product,
+                    'brand_filter': '',
+                    'brand_format_filter': '',
+                    'strategic_cell_filter': ''
+                }
+                this.optimize.getOptimizerMetrics(reqObj).subscribe((data: any) => {
+                    console.log(data)
+                    if(data){
+                        this.optimize.setOptimizerMetricsObservable(data)
+                    }
+                })
             }
         }
         this.closeModal($event)

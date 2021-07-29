@@ -1,4 +1,4 @@
-<nwn-loaded-optimizer-header (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
+<nwn-loaded-optimizer-header [simulated]="status" (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
 
 <div>
     <nwn-summary-placeholder *ngIf="!isOptimiserFilterApplied"></nwn-summary-placeholder>
@@ -60,9 +60,9 @@
 </nwn-modal>
 
 <!-- optimizer function-->
-<nwm-modal id="objective-function" class="hidden">
+<nwn-modal id="optimize-function" class="hidden">
     <nwn-optimize-function></nwn-optimize-function>
-</nwm-modal>
+</nwn-modal>
 <!-- Duration of waves -->
 <nwn-modal id="duration-of-waves" class="hidden">
     <nwn-duration-promo-waves></nwn-duration-promo-waves>

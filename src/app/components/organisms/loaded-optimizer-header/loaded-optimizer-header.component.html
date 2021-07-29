@@ -56,7 +56,7 @@
                 >
             </div>
         </div>
-        <div>
+        <div *ngIf="title">
             <nwn-loaded-scenarioitem></nwn-loaded-scenarioitem>
         </div>
     </div>
@@ -67,7 +67,7 @@
         <div class="flex flex-col border-b border-gray-300">
             <div class="flex flex-row flex-wrap items-center border-b border-marsgray-300">
                 <div class="mr-2">
-                    <nwn-metric-item nwnMetricItem="defaultRight" [showRightValue]="false" (click)="sendMessage('objective-function')">
+                    <nwn-metric-item (click)="sendMessage('optimize-function')" nwnMetricItem="defaultRight" [showRightValue]="false">
                         <p rightHeadValue>Maximize MAC</p>
                         <p rightMetricContent>Objective function</p>
                     </nwn-metric-item>
@@ -248,9 +248,16 @@
         </div>
     </div>
 </div>
-<div *ngIf="isExpand">
-    <nwn-status-bar nwnStatusBar="viewmore" (click)="expandHeader()">View More</nwn-status-bar>
-</div>
-<div *ngIf="!isExpand">
-    <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
-</div>
+
+<ng-container>
+    <div *ngIf="status == yettobesimulated">
+        <nwn-status-bar nwnStatusBar="yettobesimulated">YET TO BE SIMULATED</nwn-status-bar>
+    </div>
+    <div *ngIf="isExpand">
+        <nwn-status-bar nwnStatusBar="viewmore" (click)="expandHeader()">View More</nwn-status-bar>
+    </div>
+    <div *ngIf="!isExpand">
+        <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
+    </div>
+</ng-container>
+

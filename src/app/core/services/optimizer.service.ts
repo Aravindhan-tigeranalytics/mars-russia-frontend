@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core'
-import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';;
 import {ApiService} from './api.service'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Product , ProductWeek , ListPromotion , LoadedScenarioModel} from "../models"
+import { retry, catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class OptimizerService {
   private loadedScenarioObservable = new BehaviorSubject<LoadedScenarioModel>(null as any)
   private simulatedDataObservable = new BehaviorSubject<any>(null)
+  public optimizerMetricsData = new BehaviorSubject<any>(null)
   responseData = {
       "holiday": [
           "flag_russian_day"
@@ -6658,10 +6662,34 @@ export class OptimizerService {
   private productWeekObservable = new BehaviorSubject<Array<ProductWeek>>([])
   base_line_promotion = []
   private promotionObservable = new BehaviorSubject<string[]>([]);
-
+  token = 'd3bdbb418856f47f56adeaec1dc86478abd29f96';
+  apiURL = 'http://localhost:8000/api/';
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,private http: HttpClient
   ) { }
+
+    // Error handling 
+    handleError(error: any) {
+        let errorMessage = '';
+        if(error.error instanceof ErrorEvent) {
+          // Get client-side error
+          errorMessage = error.error.message;
+        } else {
+          // Get server-side error
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+        window.alert(errorMessage);
+        return throwError(errorMessage);
+     }
+
+    // Http Options
+    httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Token ' + this.token
+        })
+      }  
+
   public setCompareScenarioIdObservable(id:Array<number>){
     this.compareScenarioIdObservable.next(id)
 
@@ -6739,5 +6767,20 @@ export class OptimizerService {
     return this.base_line_promotion
   }
 
+
+  getOptimizerMetrics(requestData: any): Observable<any> {
+    return this.http.post<any>(this.apiURL + 'optimiser/calculate/', JSON.stringify(requestData), this.httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
+  public getOptimizerMetricsObservable():Observable<any>{
+    return this.optimizerMetricsData.asObservable()
+  }
+  public setOptimizerMetricsObservable(val:any){
+     this.optimizerMetricsData.next(val)
+  }
 
 }
