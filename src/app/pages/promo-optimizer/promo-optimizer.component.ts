@@ -8,6 +8,7 @@ import {OptimizerService} from '../../core/services/optimizer.service'
     templateUrl: './promo-optimizer.component.html',
     styleUrls: ['./promo-optimizer.component.css'],
 })
+
 export class PromoOptimizerComponent implements OnInit {
     status: any = 'yettobesimulated' 
     isOptimiserFilterApplied: boolean = false
@@ -26,7 +27,9 @@ export class PromoOptimizerComponent implements OnInit {
     selected_brand_format:string = null as any
 
     product:Product[] = []
-    constructor(private modalService: ModalService,private optimize : OptimizerService,) {}
+    constructor(private modalService: ModalService,private optimize : OptimizerService,) {
+
+    }
 
     ngOnInit(): void {
         this.optimize.fetchVal().subscribe(data=>{
