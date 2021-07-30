@@ -330,6 +330,7 @@ import { OptimizeFunctionComponent } from '@organisms/optimize-function/optimize
         CompulsoryWeeksPopupComponent,
         WeeksIgnoredComponent,
         MacPopupComponent,
+        NumberPromoWeeksComponent,
         SaveScenarioComponent
     ],
 })

@@ -1,4 +1,4 @@
-<nwn-loaded-optimizer-header (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
+<nwn-loaded-optimizer-header [simulated]="status" (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
 
 <div>
     <nwn-summary-placeholder *ngIf="!isOptimiserFilterApplied"></nwn-summary-placeholder>
@@ -51,8 +51,8 @@
     <nwn-pricing-scenario></nwn-pricing-scenario>
 </nwn-modal>
 <!-- number promo waves -->
-<nwn-modal id="number-promo-waves" class="hidden">
-    <nwn-number-promo-waves></nwn-number-promo-waves>
+<nwn-modal id="number-promo-weeks" class="hidden">
+    <nwn-number-promo-weeks></nwn-number-promo-weeks>
 </nwn-modal>
 <!-- promotion details -->
 <nwn-modal id="promotion-details" class="hidden">
@@ -60,7 +60,7 @@
 </nwn-modal>
 
 <!-- optimizer function-->
-<nwn-modal id="objective-function" class="hidden">
+<nwn-modal id="optimize-function" class="hidden">
     <nwn-optimize-function></nwn-optimize-function>
 </nwn-modal>
 <!-- Duration of waves -->
@@ -104,3 +104,5 @@
 <nwn-modal id="rp-per-popup" class="hidden">
     <nwn-mac-popup [label] = "'RP,% RSV'"></nwn-mac-popup>
 </nwn-modal>
+
+

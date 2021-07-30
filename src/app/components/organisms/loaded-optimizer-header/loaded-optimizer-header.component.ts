@@ -1,10 +1,13 @@
-import { Component, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, OnInit,Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {OptimizerService} from "@core/services"
 import {OptimizerModel , ProductWeek , OptimizerConfigModel} from "@core/models"
 import * as Utils from "@core/utils"
+// import { Component, Output, EventEmitter, ViewChild, OnInit,Input } from '@angular/core';
+// import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+// import {OptimizerService} from '../../../core/services/optimizer.service'
 @Component({
     selector: 'nwn-loaded-optimizer-header',
     templateUrl: './loaded-optimizer-header.component.html',
@@ -30,8 +33,18 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         })
         
     }
+    @Input()
+    title: string = '';
+    @Input()
+    status: 'string' | 'yettobesimulated' | 'viewmore' | 'viewless' = 'yettobesimulated';
     @Output()
     modalEvent = new EventEmitter<string>();
+
+    optimizerMetrics:any = ''
+
+    // constructor(private optimize : OptimizerService){
+
+    // }
 
     sendMessage(modalType: string): void {
         this.modalEvent.emit(modalType);
@@ -112,6 +125,18 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     }
 
    
+    // ngOnInit() {
+    //     this.optimize.optimizerMetricsData.asObservable().subscribe(data=>{
+    //         console.log(data)
+    //         if(data == null){
+    //             this.optimizerMetrics = ''
+    //         }
+    //         else{
+    //             this.optimizerMetrics = data
+    //             this.expandHeader()
+    //         }
+    //     })
+    // }
 
     // drag and drop
     checkboxMetrices = [
