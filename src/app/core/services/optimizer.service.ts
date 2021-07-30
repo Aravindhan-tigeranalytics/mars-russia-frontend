@@ -79,6 +79,9 @@ export class OptimizerService {
     return this.apiService.post<any>('api/scenario/save/' , requestData)
 
   }
+  deletePromoScenario(id){
+      return this.apiService.delete('api/scenario/savedscenario/'+id)
+  }
   downloadPromo(requestData: any):Observable<any>{
     // promo-download/
     return this.apiService.postd('api/scenario/promo-download/' , requestData 

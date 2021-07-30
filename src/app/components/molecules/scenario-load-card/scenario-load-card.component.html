@@ -8,6 +8,7 @@
         </div>
         <div class="">
             <nwn-button
+            (click)="infoClicked()"
                 type="icon"
                 size="iconsm"
                 [ngClass]="{
@@ -17,6 +18,7 @@
                 <nwn-svg-icon type="stroke" nwnSvgIcon="info" size="md" class="text-gray-700"></nwn-svg-icon>
             </nwn-button>
             <nwn-button
+            (click)="deleteClicked()"
                 type="icon"
                 size="iconsm"
                 [ngClass]="{

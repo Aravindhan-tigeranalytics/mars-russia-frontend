@@ -1,6 +1,6 @@
-import { Component, Input , OnInit } from '@angular/core';
-import {OptimizerService} from '../../../core/services/optimizer.service'
-import { ListPromotion} from "../../../core/models"
+import { Component, Input , OnInit , Output ,EventEmitter } from '@angular/core';
+// import {OptimizerService} from '../../../core/services/optimizer.service'
+// import { ListPromotion} from "../../../core/models"
 @Component({
     selector: 'nwn-scenario-load-card',
     templateUrl: './scenario-load-card.component.html',
@@ -8,15 +8,13 @@ import { ListPromotion} from "../../../core/models"
 })
 export class ScenarioLoadCardComponent  implements OnInit{
 
-    list_promotion:Array<ListPromotion> = []
+     
 
-    constructor(private optimize : OptimizerService,){
+    constructor(){
 
     }
     ngOnInit(): void {
-        // this.optimize.fetch_load_scenario().subscribe(data=>{
-        //     this.list_promotion = data
-        // })
+        
 
     }
     @Input()
@@ -29,4 +27,19 @@ export class ScenarioLoadCardComponent  implements OnInit{
     showSubHead: boolean = false;
     @Input()
     focus: boolean = false;
+    @Input()
+    id: any = null;
+    @Output()
+    infoClickedEvent = new EventEmitter()
+    @Output()
+    deleteClickedEvent = new EventEmitter()
+
+    infoClicked(){
+        this.infoClickedEvent.emit(this.id)
+
+    }
+    deleteClicked(){
+        
+        this.deleteClickedEvent.emit()
+    }
 }

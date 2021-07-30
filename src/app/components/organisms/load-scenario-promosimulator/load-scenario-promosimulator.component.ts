@@ -1,6 +1,6 @@
 import { Component,OnInit,Output , EventEmitter } from '@angular/core';
-import {OptimizerService} from '../../../core/services/optimizer.service'
-import { ListPromotion} from "../../../core/models"
+import {OptimizerService} from '@core/services'
+import { ListPromotion} from "@core/models"
 import { ModalService } from '@molecules/modal/modal.service';
 
 @Component({
@@ -12,6 +12,8 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
     selectedIndex!: number;
     openTab = 2;
     selected_promotion:any = null;
+    promotion_viewed:ListPromotion = null as any
+    searchText = ''
     @Output()
     loadPromotionEvent = new EventEmitter()
 
@@ -32,8 +34,25 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
         })
 
     }
+    deleteClickedEvent($event){
+        console.log($event , "delete event")
+        this.optimize.deletePromoScenario($event.id).subscribe(data=>{
+            console.log(data)
+        },err=>{
+            console.log(err , "error")
+        })
+
+    }
+    infoClickedEvent($event){
+        this.promotion_viewed = $event
+        console.log($event , "id of promotion ")
+        this.modal.open("promo-simulator-popup")
+    }
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;
+    }
+    inputChangeEvent($event){
+        this.searchText = $event
     }
     select(index: number,promotion:any) {
         this.selectedIndex = index;

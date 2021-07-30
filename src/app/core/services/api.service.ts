@@ -68,8 +68,14 @@ export class ApiService {
   }
 
   delete(path:string): Observable<any> {
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ' + this.token
+   });
+   
     return this.http.delete(
-      `${this.api_path}${path}`
+      `${this.api_path}${path}`,
+      { headers: reqHeader},
     ).pipe(catchError(this.formatErrors));
   }
 }

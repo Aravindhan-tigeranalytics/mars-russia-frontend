@@ -337,13 +337,15 @@ export class PromoScenarioBuilderComponent implements OnInit {
        "param_depth_all" : false,
    "promo_elasticity" : 0
         }
+        // debugger
         this.promotion_map.forEach(element => {
             let key = "week-" + element.week.week
-            let obj = {
-                "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
-                "promo_mechanics":"",
-                "co_investment":parseInt(element.week.co_investment)
-            }
+            let obj = utils.decodePromotion(element.selected_promotion)
+            // {
+            //     "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
+            //     "promo_mechanics":"",
+            //     "co_investment":parseInt(element.week.co_investment)
+            // }
             weekly[key] = obj
             
         });

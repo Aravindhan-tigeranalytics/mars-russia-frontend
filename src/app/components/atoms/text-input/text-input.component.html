@@ -16,7 +16,9 @@
                 "
                 [ngClass]="{ 'border-marsred-600': error == false }"
                 placeholder="{{ placeholder }}"
-                value="{{ placeholder }}"
+                value="{{ value }}"
+                [(ngModel)]='name'
+
             />
         </div>
     </ng-container>
@@ -39,6 +41,8 @@
                 "
                 [ngClass]="{ 'border-marsred-600': error == true }"
                 placeholder="{{ placeholder }}"
+                value = "{{value}}"
+                [(ngModel)]='name'
             ></textarea>
         </div>
     </ng-container>

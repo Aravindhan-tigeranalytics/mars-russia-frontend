@@ -41,19 +41,7 @@ export class CompareScenarioPopupComponent implements OnInit {
             // })
            
         })
-        // this.optimizer.fetch_load_scenario_by_id(16).subscribe(data=>{
-        //     console.log(data , "loaded scenario data raw")
-            
-        //     if(data){
-        //         console.log(data , "loaded scenario data raw pushing")
-                
-        //         this.loaded_scenario.push(data)
-        //         this.loaded_scenario.push(data)
-        //     }
-        //     console.log(this.loaded_scenario , "loaded scenario data")
-        //     // console.log(this.loaded_scenario.base.total , "loaded scenario data base total  ")
-
-        // })
+       
         this.screenWidth = window.innerWidth - 2;
         this.screenHeight = window.innerHeight;
     }
