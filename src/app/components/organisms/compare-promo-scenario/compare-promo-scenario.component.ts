@@ -15,6 +15,7 @@ export class ComparePromoScenarioComponent implements OnInit {
     list_promotion_optimizer:Array<ListPromotion> = []
     selected_id:Array<number> = []
     openTab = 2;
+    searchText = ''
 
     constructor(private modal : ModalService,private optimize : OptimizerService,){
 
@@ -40,6 +41,9 @@ export class ComparePromoScenarioComponent implements OnInit {
         }
         console.log(this.selected_id , "selected id selecting")
 
+    }
+    inputChangeEvent($event){
+        this.searchText = $event
     }
     openComparePopup(){
         this.optimize.setCompareScenarioIdObservable(this.selected_id)

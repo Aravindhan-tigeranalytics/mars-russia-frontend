@@ -16,10 +16,10 @@
         </div>
     </div>
     <div class="border-b border-marsgray-200">
-        <nwn-command-search [hideClose]="true"></nwn-command-search>
+        <nwn-command-search [placeholder] = "'Search saved scenarios'" (inputChangeEvent) = "inputChangeEvent($event)" [hideClose]="true"></nwn-command-search>
     </div>
     <div class="h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
-        <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion_promo;">
+        <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion_promo | appFilter: searchText : 'promo';">
             <nwn-scenario-load-card (click)="toggleId(promotion.id)" [showCheckbox]="true" [showSubHead]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
-        <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion;">
+        <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion | appFilter: searchText : 'promo';">
             <nwn-scenario-load-card (click)="toggleId(promotion.id)" [showCheckbox]="true" [showSubHead]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>

@@ -160,11 +160,19 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
         this.title = scenario.scenario_name
         scenario.base.weekly.forEach((data,index)=>{
             let simulated_depth = scenario.simulated.weekly[index].promo_depth
+            let simulated_coinv = scenario.simulated.weekly[index].co_investment
+            let simulated_n_plus_1 = scenario.simulated.weekly[index].flag_promotype_n_pls_1
+            let simulated_motivation = scenario.simulated.weekly[index].flag_promotype_motivation
+            let simulated_traffic = scenario.simulated.weekly[index].flag_promotype_traffic
             console.log(simulated_depth , "simulated depth")
             if(simulated_depth){
                 //{"selected_promotion" : $event.value , "week" : this.product_week }
                 this.promotion_map.push({
-                    "selected_promotion" : "TPR-"+simulated_depth+"%" ,
+                    "selected_promotion" : utils.genratePromotion(
+                        simulated_motivation,simulated_n_plus_1,simulated_traffic,simulated_depth,
+                        simulated_coinv
+
+                    ) ,
                      "week" : data
                 })
             }
@@ -210,7 +218,14 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
             
             let val = (parseFloat((data.promo_depth).toString()))
             if(val){
-                this.promotion_map.push({"selected_promotion":"TPR-"+val+"%","week" : data})
+                this.promotion_map.push({
+                    "selected_promotion": utils.genratePromotion(
+                        parseFloat(data.flag_promotype_motivation)
+                        ,parseFloat(data.flag_promotype_n_pls_1),parseFloat(data.flag_promotype_traffic),
+                        parseFloat(data.promo_depth),parseFloat(data.promo_depth)
+                    ),
+                    // "TPR-"+val+"%",
+                    "week" : data})
             
                 // console.log(val , "values fro ", data.week , " discont " ,  "TPR-"+val+"%")
             }
