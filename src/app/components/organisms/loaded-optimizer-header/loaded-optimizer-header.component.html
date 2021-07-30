@@ -74,21 +74,21 @@
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
-                        <p topValue>5</p>
+                        <p topValue>{{optimizer_data?.data.param_no_of_waves}}</p>
                         <p topHeadValue>3 - 7</p>
                         <p topMetricContent>Number of waves</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('duration-of-waves')">
-                        <p topValue>5</p>
+                        <p topValue>{{optimizer_data?.data.param_max_consecutive_promo}}</p>
                         <p topHeadValue>3 - 7</p>
                         <p topMetricContent>Duration of waves</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('minimum-gap-waves')">
-                        <p topValue>5</p>
+                        <p topValue>{{optimizer_data?.data.param_promo_gap}}</p>
                         <p topHeadValue>3 - 7</p>
                         <p topMetricContent>Minimum gap</p>
                     </nwn-metric-item>
@@ -97,21 +97,21 @@
             <div class="flex flex-row flex-wrap items-center">
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
-                        <p topValue>25</p>
+                        <p topValue>{{optimizer_data?.data.param_no_of_promo}}</p>
                         <p topHeadValue>20 - 30</p>
                         <p topMetricContent>Number of weeks</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('compulsory-weeks-popup')">
-                        <p topValue>5</p>
+                        <p topValue>-</p>
                         <p topHeadValue>7</p>
                         <p topMetricContent>Compulsory week</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('weeks-ignored')">
-                        <p topValue>5</p>
+                        <p topValue>-</p>
                         <p topHeadValue>6</p>
                         <p topMetricContent>Ignored weeks</p>
                     </nwn-metric-item>
@@ -119,15 +119,16 @@
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="multipleValues" (click)="sendMessage('promotion-details')">
                         <div multipleValue class="flex flex-row">
-                            <p>TPR-10% (Co-12%), 15% ,20%</p>
-                            <p>N+1-10% (Co-10%)</p>
+                            <p *ngFor="let promotion of promotions">{{promotion}},</p>
+                            <!-- <p>N+1-10% (Co-10%)</p>
                             <p>N+1-10%, 20%, 32%</p>
-                            <p>N+3-10%</p>
+                            <p>N+3-10%</p> -->
                         </div>
                         <div multipleHeadValue class="flex flex-row">
-                            <p>TPR - 10%,15% (Co-10%)</p>
+                            <!-- <p *ngFor="let promotion of promotions | slice:4">{{promotion}},</p> -->
+                            <!-- <p>TPR - 10%,15% (Co-10%)</p>
                             <p>N+1-10%</p>
-                            <p>N+2-10%, 20%, 30%</p>
+                            <p>N+2-10%, 20%, 30%</p> -->
                         </div>
                         <p multipleMetricContent>Promotions</p>
                     </nwn-metric-item>

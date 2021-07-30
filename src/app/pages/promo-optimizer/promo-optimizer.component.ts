@@ -156,10 +156,19 @@ export class PromoOptimizerComponent implements OnInit {
     }
 
     close($event){
+        
         if($event=="filter-product-groups"){
             let p = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
+            // debugger
             if(p){
-                this.optimize.fetch_week_value(p.id)
+                this.optimize.fetch_optimizer_data({
+                    "account_name" : p.account_name,
+                    "product_group" : p.product_group,
+                    "corporate_segment" : p.corporate_segment
+                }).subscribe(data=>{
+                    console.log(data , "response")
+                   this.optimize.setoptimizerDataObservable(data)
+                })
             }
         }
         this.closeModal($event)

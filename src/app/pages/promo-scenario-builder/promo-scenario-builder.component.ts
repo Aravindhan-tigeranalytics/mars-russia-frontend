@@ -296,6 +296,9 @@ export class PromoScenarioBuilderComponent implements OnInit {
     }
     uploadFile(){
            this.restApi.uploadPromoSimulateInput(this.uploaded_file).subscribe((data: UploadModel) => {
+               console.log(data , "data uploaded")
+            this.productChange({"value" : data.simulated.product_group , "checked" : true})
+            this.retailerChange({"value" : data.simulated.account_name , "checked" : true})
             //    this.optimize.setProductWeekObservable(data.base)
             this.optimize.setUploadedScanarioObservable(data)
             //    this.isFilterApplied = true

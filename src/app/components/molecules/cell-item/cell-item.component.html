@@ -65,7 +65,8 @@
         </div>
     </ng-container> -->
     <ng-container *ngIf="nwnCellItem === 'promo'">
-        <p class="text-caption text-marsgray-500"></p>
+        <p  *ngIf="nwnCellData.promotion_value" class="text-caption text-marsgray-500">  {{nwnCellData.promotion_value}}</p>
+        <p  *ngIf="!nwnCellData.promotion_value" class="text-caption text-marsgray-500">  --</p>
         <div class="flex flex-row items-center space-x-1">
             <p
                 class="text-body text-marsgray-700"
@@ -74,12 +75,12 @@
                     'text-size-lg': size === 'textsize-lg'
                 }"
             >
-                <!-- TPR - 10% -->
+              
                 <span class="inline-flex items-center justify-center space-x-1 text-gray-700">
-                    <ng-container *ngIf="nwnCellData.promotion_value">{{nwnCellData.promotion_value}}</ng-container>
-                    <ng-container *ngIf="!nwnCellData.promotion_value">No Promotion</ng-container>
+                    <ng-container *ngIf="nwnCellData.promotion_value_simulated">{{nwnCellData.promotion_value_simulated}}</ng-container>
+                    <ng-container *ngIf="!nwnCellData.promotion_value_simulated">--</ng-container>
                      
-                      <ng-container *ngIf="nwnCellData.coinvestment">(Co-{{nwnCellData.coinvestment}}%)</ng-container> 
+                      <!-- <ng-container *ngIf="nwnCellData.coinvestment">(Co-{{nwnCellData.coinvestment}}%)</ng-container>  -->
                     </span>
             </p>
         </div>

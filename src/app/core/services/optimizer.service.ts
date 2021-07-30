@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core'
 import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';;
 import {ApiService} from './api.service'
-import {Product , ProductWeek , ListPromotion , LoadedScenarioModel,UploadModel} from "../models"
+import {Product , ProductWeek , ListPromotion , LoadedScenarioModel,UploadModel,OptimizerModel} from "../models"
 @Injectable({
   providedIn: 'root'
 })
 export class OptimizerService {
+  private optimizerDataObservable = new BehaviorSubject<OptimizerModel>(null as any)
   private uploadedScenarioObservable = new BehaviorSubject<UploadModel>(null as any)
   private loadedScenarioObservable = new BehaviorSubject<LoadedScenarioModel>(null as any)
   private simulatedDataObservable = new BehaviorSubject<any>(null)
@@ -17,6 +18,12 @@ export class OptimizerService {
   constructor(
     private apiService: ApiService
   ) { }
+  public setoptimizerDataObservable(data:OptimizerModel){
+      this.optimizerDataObservable.next(data)
+  }
+  public getoptimizerDataObservable():Observable<OptimizerModel>{
+    return this.optimizerDataObservable.asObservable()
+  }
   public setUploadedScanarioObservable(data : UploadModel){
       this.uploadedScenarioObservable.next(data)
 
@@ -63,6 +70,10 @@ export class OptimizerService {
 
   fetchVal(){  
     return this.apiService.get<Product[]>('api/scenario/promo-simulate-test/')
+  }
+  fetch_optimizer_data(formdata):Observable<OptimizerModel>{
+     return this.apiService.post<OptimizerModel>('api/optimiser/calculate/' , formdata)
+
   }
   fetch_week_value(id:number){
    

@@ -1,12 +1,35 @@
 import { Component, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import {takeUntil} from "rxjs/operators"
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-
+import {OptimizerService} from "@core/services"
+import {OptimizerModel , ProductWeek , OptimizerConfigModel} from "@core/models"
+import * as Utils from "@core/utils"
 @Component({
     selector: 'nwn-loaded-optimizer-header',
     templateUrl: './loaded-optimizer-header.component.html',
     styleUrls: ['./loaded-optimizer-header.component.css'],
 })
 export class LoadedOptimizerHeaderComponent implements OnInit {
+    private unsubscribe$: Subject<any> = new Subject<any>();
+    optimizer_data : OptimizerModel = null as any
+    quarter_year:any[] = []
+    promotions : any[] = []
+    constructor(public optimize:OptimizerService){}
+    ngOnInit() {
+        this.optimize.getoptimizerDataObservable().pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe(data=>{
+            if(data){
+                this.optimizer_data = data
+                this.populatePromotion(this.optimizer_data.weekly)
+                this.populateConfig(this.optimizer_data.data)
+
+            }
+            
+        })
+        
+    }
     @Output()
     modalEvent = new EventEmitter<string>();
 
@@ -26,8 +49,69 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     expandHeader() {
         this.isExpand = !this.isExpand;
     }
+    populateConfig(configData :OptimizerConfigModel ){
+        // configData.param_mac
 
-    ngOnInit() {}
+        this.checkboxMetrices.filter(d=>{
+            if(d.id == "mac-popup"){
+                d.disabled = configData.config_mac
+                d.checkHeadValue = "x" + configData.param_mac
+
+            }
+            if(d.id == "te-popup"){
+            
+                d.checkHeadValue = "x" + configData.param_trade_expense
+
+            }
+            if(d.id == "retailer-popup"){
+
+                d.checkHeadValue = "x" + configData.param_rp
+
+            }
+            if(d.id == "mac-per-popup"){
+                d.disabled = configData.config_mac_perc
+                d.checkHeadValue = "x" + configData.param_mac_perc
+
+            }
+            if(d.id == "rp-per-popup"){
+                d.disabled = configData.config_rp_perc
+                d.checkHeadValue = "x" + configData.param_rp_perc
+
+            }
+             
+        })
+    }
+    populatePromotion(weekdata : ProductWeek[]){
+        
+                
+                weekdata.forEach(data=>{
+                    let gen_promo = Utils.genratePromotion(
+                        parseFloat(data.flag_promotype_motivation) , 
+                        parseFloat(data.flag_promotype_n_pls_1),
+                        parseFloat(data.flag_promotype_traffic),
+                        parseFloat(data.promo_depth) , 
+                        parseFloat(data.co_investment)
+                    )
+                    data.promotion_name = gen_promo
+                    if(gen_promo && !this.promotions.includes(gen_promo)){
+                      
+                        this.promotions.push(gen_promo)
+                    }
+                    let str = "Y" + 1 + " Q"+data.quater as string
+                    if(!this.quarter_year.includes(str)){
+                        this.quarter_year.push(str);
+                    }
+                    
+                    data.promo_depth = parseInt(data.promo_depth)
+                    data.co_investment = (data.co_investment)
+    
+                })
+
+                console.log(this.promotions , "generated promotions for optimizer")
+
+    }
+
+   
 
     // drag and drop
     checkboxMetrices = [
@@ -153,4 +237,10 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
             name: 'N+2-30% (Co-30%)3',
         },
     ];
+
+    ngOnDestroy(){
+        console.log("destroying optimizer header")
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    }
 }

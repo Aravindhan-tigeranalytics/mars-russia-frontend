@@ -2,6 +2,7 @@ import { Component , OnInit } from '@angular/core';
 import { ModalService } from '@molecules/modal/modal.service';
 import {OptimizerService} from '../../../core/services/optimizer.service'
 import { ListPromotion} from "../../../core/models"
+import { tickStep } from 'd3';
 
 @Component({
     selector: 'nwn-compare-promo-scenario',
@@ -16,6 +17,7 @@ export class ComparePromoScenarioComponent implements OnInit {
     selected_id:Array<number> = []
     openTab = 2;
     searchText = ''
+    promotion_viewed:ListPromotion = null as any
 
     constructor(private modal : ModalService,private optimize : OptimizerService,){
 
@@ -44,6 +46,11 @@ export class ComparePromoScenarioComponent implements OnInit {
     }
     inputChangeEvent($event){
         this.searchText = $event
+    }
+    infoClicked($event){
+    this.promotion_viewed = $event
+    this.modal.open('promo-simulator-popup-compare')
+        console.log($event , "Event")
     }
     openComparePopup(){
         this.optimize.setCompareScenarioIdObservable(this.selected_id)

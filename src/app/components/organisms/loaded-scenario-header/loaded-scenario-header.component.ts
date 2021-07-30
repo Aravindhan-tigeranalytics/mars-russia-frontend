@@ -15,7 +15,7 @@ import * as utils from "@core/utils"
 export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     private unsubscribe$: Subject<any> = new Subject<any>();
     @Input()
-    title: string = '';
+    title: string = 'Untitled';
     @Output()
     modalEvent = new EventEmitter<string>();
     @Output()
