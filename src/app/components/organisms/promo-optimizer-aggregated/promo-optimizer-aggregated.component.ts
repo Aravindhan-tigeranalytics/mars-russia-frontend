@@ -365,13 +365,13 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                         "percent": "(" + Utils.percentageDifference(data['base']['weekly'][i]['roi'],data['simulated']['weekly'][i]['roi']) + "%)",
                         "converted_difference": "(" + Utils.formatNumber(data['base']['weekly'][i]['roi']-data['simulated']['weekly'][i]['roi'],true,false) + ")"
                     },
-                    'total_uplift_cost': {
-                        "converted_base": Utils.formatNumber(data['base']['weekly'][i]['total_uplift_cost'],true,false),
-                        "converted_simulated": Utils.formatNumber(data['simulated']['weekly'][i]['total_uplift_cost'],true,false),
-                        "arrow": data['base']['weekly'][i]['total_uplift_cost'] > data['simulated']['weekly'][i]['total_uplift_cost'] ?  'carret-up' : 'carret-down' ,
-                        "color":  this.colorForDifference(data['base']['weekly'][i]['total_uplift_cost'] , data['simulated']['weekly'][i]['total_uplift_cost']),
-                        "percent": "(" + Utils.percentageDifference(data['base']['weekly'][i]['total_uplift_cost'],data['simulated']['weekly'][i]['total_uplift_cost']) + "%)",
-                        "converted_difference": "(" + Utils.formatNumber(data['base']['weekly'][i]['total_uplift_cost']-data['simulated']['weekly'][i]['total_uplift_cost'],true,false) + ")"
+                    'promo_asp': {
+                        "converted_base": Utils.formatNumber(data['base']['weekly'][i]['promo_asp'],true,false),
+                        "converted_simulated": Utils.formatNumber(data['simulated']['weekly'][i]['promo_asp'],true,false),
+                        "arrow": data['base']['weekly'][i]['promo_asp'] > data['simulated']['weekly'][i]['promo_asp'] ?  'carret-up' : 'carret-down' ,
+                        "color": this.colorForDifference(data['base']['weekly'][i]['promo_asp'] , data['simulated']['weekly'][i]['promo_asp']),
+                        "percent": "(" + Utils.percentageDifference(data['base']['weekly'][i]['promo_asp'],data['simulated']['weekly'][i]['promo_asp']) + "%)",
+                        "converted_difference": "(" + Utils.formatNumber(data['base']['weekly'][i]['promo_asp']-data['simulated']['weekly'][i]['promo_asp'],true,false) + ")"
                     },
                     'asp': {
                         "converted_base": Utils.formatNumber(data['base']['weekly'][i]['asp'],true,false),
