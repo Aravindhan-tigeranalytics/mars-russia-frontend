@@ -60,7 +60,7 @@
             <nwn-cell-header type="headersm">Baseline promotions</nwn-cell-header>
         </div>
         <div *ngFor="let base_promo of base_line_promotions">
-            <nwn-command-multiselect (valueChangeSelect)="valueChangeBaseline($event)" [value] = "base_promo.value" [checked]="base_promo.checked" [leftBorder]="false" [hideClose]="true">TPR - {{base_promo.value}}%</nwn-command-multiselect>
+            <nwn-command-multiselect (valueChangeSelect)="valueChangeBaseline($event)" [value] = "base_promo.value" [checked]="base_promo.checked" [leftBorder]="false" [hideClose]="true">{{base_promo.value}}</nwn-command-multiselect>
             <!--[value] = "brand.value" [checked]="brand.checked" 
                 <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">TPR - 10%</nwn-command-multiselect>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">TPR - 20%</nwn-command-multiselect>

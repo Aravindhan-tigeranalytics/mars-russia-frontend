@@ -60,46 +60,11 @@
                     <td class="sticked freeze whitespace-nowrap bg-white" rowspan="1" colspan="1">
                         <nwn-cell-header type="subheaderlg" color="bgwhite">Metrics</nwn-cell-header>
                     </td>
-                    <th  *ngFor="let name of scenario_names;" colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >{{name}}</nwn-comparescenario-cell-header
+                    <th  *ngFor="let scenario of scenario_names;" colspan="1" scope="colgroup" class="sticked freeze_vertical">
+                        <nwn-comparescenario-cell-header (removeCompareEvent) = "removeCompareEvent($event)" [scenario] = "scenario" [showCHClose]="true"
+                            >{{scenario.name}}</nwn-comparescenario-cell-header
                         >
                     </th>
-                    <!-- <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >Galaxy promo</nwn-comparescenario-cell-header
-                        >
-                    </th>
-                    <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >Galaxy promo</nwn-comparescenario-cell-header
-                        >
-                    </th>
-                    <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >Galaxy promo</nwn-comparescenario-cell-header
-                        >
-                    </th>
-                    <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >Galaxy promo</nwn-comparescenario-cell-header
-                        >
-                    </th>
-                    <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >Galaxy promo</nwn-comparescenario-cell-header
-                        >
-                    </th>
-                    <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >Galaxy promo</nwn-comparescenario-cell-header
-                        >
-                    </th>
-                    <th colspan="1" scope="colgroup" class="sticked freeze_vertical">
-                        <nwn-comparescenario-cell-header [showCHClose]="true"
-                            >Galaxy promo</nwn-comparescenario-cell-header
-                        >
-                    </th> -->
                 </tr>
             </thead>
             <tbody class="bg-white">

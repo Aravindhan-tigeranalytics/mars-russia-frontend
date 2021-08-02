@@ -1,7 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Input } from '@angular/core';
-import { LoadedScenarioModel , PromoSimulatedTotalModel , CompareMetricModel } from 'src/app/core/models';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Input,SimpleChanges, Output,
+EventEmitter } from '@angular/core';
+import { LoadedScenarioModel , PromoSimulatedTotalModel , CompareMetricModel } from '@core/models';
 import { ModalService } from '@molecules/modal/modal.service';
-import * as Utils from "../../../core/utils/util"
+import * as Utils from "@core/utils"
+// import { EventEmitter } from 'stream';
 @Component({
     selector: 'nwn-kpi-metrics',
     templateUrl: './kpi-metrics.component.html',
@@ -15,6 +17,8 @@ export class KpiMetricsComponent implements OnInit, AfterViewInit {
     currentTranslateRate: string = '';
     @Input()
     loaded_scenario:Array<LoadedScenarioModel> = []
+    @Output()
+    deleteCompareEvent  = new EventEmitter()
     units:CompareMetricModel = {"value" : [],"visible": false , key:"Units"}
     // units_compare:CompareMetricModel = {"value" : [],"visible": false}
     base_units:CompareMetricModel = {"value" : [],"visible": false , key:"Base Units"}
@@ -29,7 +33,7 @@ export class KpiMetricsComponent implements OnInit, AfterViewInit {
     te_per_unit:CompareMetricModel = {"value" : [],"visible": false,key:"TE / Unit"}
     roi:CompareMetricModel = {"value" : [],"visible": false,key:"ROI"}
     lift:CompareMetricModel = {"value" : [],"visible": false,key:"Lift %"}
-    scenario_names:Array<string> = []
+    scenario_names:Array<any> = []
     asp:CompareMetricModel = {"value" : [],"visible": false,key:"ASP"}
     promo_asp:CompareMetricModel = {"value" : [],"visible": false,key:"Promo ASP"}
     rsv_w_o_vat:CompareMetricModel = {"value" : [],"visible": false,key:"RSV w/o VAT"}
@@ -56,12 +60,28 @@ export class KpiMetricsComponent implements OnInit, AfterViewInit {
         this.kpiTableWidth = window.innerWidth - 155;
         this.kpiTableHeight = window.innerHeight - 250;
         console.log(this.loaded_scenario , "loaded scenario data in kpy metic child component")
-        this.generate_metrics(this.loaded_scenario)
+        // this.generate_metrics(this.loaded_scenario)
 
         // this.loaded_scenario[0].base.weekly[0].predicted_units
         // this.loaded_scenario[0].base.weekly[0].incremental_unit
         // this.loaded_scenario[0].base.weekly[0].base_unit
         // debugger
+    }
+    removeMetrics(id){
+        this.scenario_names = this.scenario_names.filter(val=>val.id!=id)
+        this.all_metrics.forEach(data=>{
+            data.value = data.value.filter(d=>d.id!=id)
+        }
+
+        )
+        
+    }
+    removeCompareEvent($event){
+        this.removeMetrics($event.id)
+        // this.loaded_scenario = this.loaded_scenario.filter(data=>data.scenario_id != $event.id)
+        this.deleteCompareEvent.emit($event)
+        // console.log($event)
+        
     }
     openModal(){
         this.modal.open('manage-metrics')
@@ -184,9 +204,23 @@ this.format = "percent"
         
     }
     generate_metrics(loaded_scenario : Array<LoadedScenarioModel>){
-        let o:Array<any> = []
+        // this.scenario_names = []
+         
         loaded_scenario.forEach(element => {
-            this.scenario_names.push(element.scenario_name)
+            if(this.scenario_names.find(d=>d.id == element.scenario_id)){
+                return
+            }
+
+            let ele = {
+                "id" : element.scenario_id,
+                "name" : element.scenario_name,
+                "comment" : element.scenario_comment,
+                "retailer" : {
+                    "account_name" : element.account_name,
+                    "product_group" : element.product_group
+                }
+            }
+            this.scenario_names.push(ele)
                 // this.base_units.push(this._generate_obj(element , "base_units"))
                 // this.units.push(this._generate_obj(element , "units"))
                 
@@ -360,4 +394,16 @@ this.format = "percent"
             name: 'Per unit',
         },
     ];
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'loaded_scenario') {
+                
+                this.loaded_scenario = changes[property].currentValue
+                console.log(this.loaded_scenario , "after delete loaded scenario")
+                this.generate_metrics(this.loaded_scenario)
+               
+            } 
+        }
+    }
 }

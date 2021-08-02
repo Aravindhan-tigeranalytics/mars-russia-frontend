@@ -91,6 +91,26 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
         }
     }
 
+    get_holiday_information(holiday , data){
+        let ret : string = null as any
+        if(holiday){
+            // debugger
+            data.forEach(element => {
+                console.log(element , "retttttttttttttttttt element")
+                // coefficient_old: "flag_russian_day", coefficient_new: "Holiday_Flag1"
+                if(element['coefficient_new'].split("_").join("").toLowerCase() == holiday.split("_").join("").toLowerCase()){
+                    console.log("retttttttttttttttttttttttttttttttttt",element['coefficient_old'])
+                    console.log("retttttttttttttttttttttttttttttttttt",typeof(element['coefficient_old']))
+                   ret = String(element['coefficient_old']).replace("flag_" , "").split("_").join(" ")
+
+                }
+                
+            });
+        }
+        return ret
+
+    }
+
     convertToGraphNTableData(data: any){
         if(data){
             this.plChartData = [
@@ -183,6 +203,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
             }
 
             let weeks: number = data['base']['weekly'].length
+            // debugger;
             for(let i = 0; i < 52; i++){
                 let promotion_value = ''
                 let promotion_value_simulated = ''
@@ -215,11 +236,17 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 // else{
                 //     promotion_value = 'TPR - '+data['base']['weekly'][i]['promo_depth']+'%';
                 // }
+                // debugger;
+                 
                 let weekObj = {
                     'duration': {
                         'week':"Week "+(i+1),
                         'date': data['simulated']['weekly'][i].date,
-                        "si" : data['simulated']['weekly'][i].si
+                        "si" : data['simulated']['weekly'][i].si,
+                        "holiday" : this.get_holiday_information(data['base']['weekly'][i].holiday , 
+                        data['holiday_array']
+                        )
+                          , 
                     },
                     'promotions': {
                         'promotion_value' : promotion_value,
@@ -229,9 +256,9 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     'predicted_units': {
                         "converted_base": Utils.formatNumber(data['base']['weekly'][i]['predicted_units'],true,false),
                         "converted_simulated": Utils.formatNumber(data['simulated']['weekly'][i]['predicted_units'],true,false),
-                        "arrow": data['base']['weekly'][i]['predicted_units'] > data['simulated']['weekly'][i]['predicted_units'] ?  'carret-up' : 'carret-down' ,
+                        "arrow": data['simulated']['weekly'][i]['predicted_units'] > data['base']['weekly'][i]['predicted_units'] ?  'carret-up' : 'carret-down' ,
                         "percent": "(" + Utils.percentageDifference(data['base']['weekly'][i]['predicted_units'],data['simulated']['weekly'][i]['predicted_units']) + "%)",
-                        "converted_difference": "(" + Utils.formatNumber(data['base']['weekly'][i]['predicted_units']-data['simulated']['weekly'][i]['predicted_units'],true,false) + ")",
+                        "converted_difference": "(" + Utils.formatNumber(data['simulated']['weekly'][i]['predicted_units']-data['base']['weekly'][i]['predicted_units'],true,false) + ")",
                         "color":  this.colorForDifference(data['base']['weekly'][i]['predicted_units'] , data['simulated']['weekly'][i]['predicted_units']),
                     },
                     'base_unit': {
@@ -372,15 +399,16 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     // Get simulated data
     loadStimulatedData() {
         this.optimize.getSimulatedDataObservable().subscribe((data: any) => {
+            console.log(data , "holiday information with data")
             this.convertToGraphNTableData(data)
         })
     }
 
     colorForDifference(base:any, simulated:any){
-        if(base > simulated){
+        if(simulated > base){
             return 'green'
         }
-        else if(base < simulated){
+        else if(simulated < base){
             return 'red'
         }
         else if(base == simulated){

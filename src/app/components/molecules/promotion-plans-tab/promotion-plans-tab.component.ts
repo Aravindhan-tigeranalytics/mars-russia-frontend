@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Input,SimpleChanges } from '@angular/core';
 import { LoadedScenarioModel , PromoCompareModel} from 'src/app/core/models';
 @Component({
     selector: 'nwn-promotion-plans-tab',
@@ -20,7 +20,7 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.ppTableWidth = window.innerWidth - 155;
         this.ppTableHeight = window.innerHeight - 250;
-        this.generate_metrics(this.loaded_scenario)
+        // this.generate_metrics(this.loaded_scenario)
     }
     generate_metrics(loaded_scenario : Array<LoadedScenarioModel>){
         
@@ -122,4 +122,15 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
             name: '3 Year',
         },
     ];
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'loaded_scenario') {
+                
+                this.loaded_scenario = changes[property].currentValue
+                this.generate_metrics(this.loaded_scenario)
+               
+            } 
+        }
+    }
 }

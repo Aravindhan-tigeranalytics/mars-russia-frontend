@@ -239,7 +239,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
              "corporate_segment" : this.selected_category,
             "product_group" : this.selected_product,
         "param_depth_all" : false,
-    "promo_elasticity" : 0}
+    "promo_elasticity" : $event.promo_elasticity}
         console.log($event.promotion_map , "promotion maps available")
     
         $event.promotion_map.forEach(element => {

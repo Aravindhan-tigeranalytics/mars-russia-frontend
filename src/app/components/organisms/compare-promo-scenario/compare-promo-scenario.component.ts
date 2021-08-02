@@ -20,18 +20,24 @@ export class ComparePromoScenarioComponent implements OnInit {
     promotion_viewed:ListPromotion = null as any
 
     constructor(private modal : ModalService,private optimize : OptimizerService,){
+        this.optimize.fetch_load_scenario()
 
     }
     ngOnInit(): void {
-        this.optimize.fetch_load_scenario().subscribe(data=>{
-            this.list_promotion = data
-            this.list_promotion_promo = this.list_promotion.filter(data=>data.scenario_type == "promo")
-            this.list_promotion_optimizer = this.list_promotion.filter(data=>data.scenario_type == "optimizer")
+        this.optimize.getListObservation().subscribe(data=>{
+            if(data){
+                console.log(data , "list promotions")
+                this.list_promotion = data
+                this.list_promotion_promo = this.list_promotion.filter(data=>data.scenario_type == "promo")
+                this.list_promotion_optimizer = this.list_promotion.filter(data=>data.scenario_type == "optimizer")
+
+            }
+           
         })
 
     }
     toggleTabs($tabNumber: number): void {
-        this.openTab = $tabNumber;
+        this.openTab = $tabNumber;0
     }
     toggleId(id:number){
         console.log(id)

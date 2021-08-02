@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input ,SimpleChanges} from '@angular/core';
 
 @Component({
     selector: 'nwn-button',
@@ -24,4 +24,20 @@ export class ButtonComponent {
 
     @Input()
     showTooltip: boolean = false;
+
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'disabled') {
+                console.log(changes[property].currentValue , "current value")
+                this.disabled = changes[property].currentValue
+                if(this.disabled){
+                    this.type ="transparent"
+
+                }
+                
+               
+            } 
+        }
+    }
 }

@@ -26,18 +26,24 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
 
     }
     ngOnInit(): void {
-        this.optimize.fetch_load_scenario().subscribe(data=>{
-            this.list_promotion = data
+        this.optimize.getListObservation().subscribe(data=>{
+            if(data){
+                console.log(data , "get list promotions")
+                this.list_promotion = data
             this.list_promotion_promo = this.list_promotion.filter(data=>data.scenario_type == "promo")
             this.list_promotion_optimizer = this.list_promotion.filter(data=>data.scenario_type == "optimizer")
             this.list_promotion_pricing = this.list_promotion.filter(data=>data.scenario_type == "pricing")
-        })
+
+
+            }
+                    })
 
     }
     deleteClickedEvent($event){
         console.log($event , "delete event")
         this.optimize.deletePromoScenario($event.id).subscribe(data=>{
-            console.log(data)
+            this.optimize.deleteListPromotion($event.id)
+            this.modal.close("promo-simulator-popup")
         },err=>{
             console.log(err , "error")
         })
