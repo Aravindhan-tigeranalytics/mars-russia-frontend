@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy,SimpleChanges } from '@angular/core';
 // import {OptimizerService} from '../../../core/services/optimizer.service'
 import {OptimizerService , SimulatorService} from "@core/services"
 // import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel} from "../../../core/models"
@@ -14,6 +14,8 @@ import * as utils from "@core/utils"
 })
 export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     private unsubscribe$: Subject<any> = new Subject<any>();
+    @Input()
+    hidepanel = true
     @Input()
     title: string = 'Untitled';
     @Output()
@@ -97,6 +99,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
             takeUntil(this.unsubscribe$)
         ).subscribe(weekdata=>{
             if(weekdata.length == 0){
+                // this.hidepanel = true
                 this.product_week = []
                 this.optimize.set_baseline_null()
                 this.available_year =["1 year" , "2 years" , "3 years"]
@@ -141,6 +144,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
                 this.options1 = this.optimize.get_base_line_promotions()
                 console.log(this.options1 , "options for drop down promotion")
                 this.product_week = weekdata
+                // this.hidepanel = false
                 this.selected_quarter = this.quarter_year[0]
                 this.selected_product_week  = this.product_week.filter(data=>data.quater == parseInt(
                     this.selected_quarter.split("Q")[1]
@@ -361,5 +365,17 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
         console.log("destroying sceario header")
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
+    }
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'hidepanel') {
+                console.log(changes[property].currentValue , "current value")
+                this.hidepanel = changes[property].currentValue
+                
+                
+               
+            } 
+        }
     }
 }

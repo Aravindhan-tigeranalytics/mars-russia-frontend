@@ -24,12 +24,3 @@ export class SIPipe implements PipeTransform {
   }
 }
 
-// if(optimizerResponse[i].SI < 0.95){
-//     seasonality = 'low'
-// }
-// else if(optimizerResponse[i].SI < 1.05){
-//     seasonality = 'med'
-// }
-// else{
-//     seasonality = 'high'
-// }

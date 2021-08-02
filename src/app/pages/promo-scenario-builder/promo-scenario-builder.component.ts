@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@molecules/modal/modal.service';
 import {FormBuilder, FormGroup,FormArray,FormControl,ValidatorFn} from '@angular/forms';
 import {OptimizerService} from '@core/services'
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel} from "@core/models"
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel, ListPromotion} from "@core/models"
 import * as utils from "@core/utils"
 // import {} from 'file-saver'
 import * as FileSaver from 'file-saver';
@@ -19,6 +19,7 @@ import * as $ from 'jquery';
     styleUrls: ['./promo-scenario-builder.component.css'],
 })
 export class PromoScenarioBuilderComponent implements OnInit {
+    hidepanel = true
     isFilterApplied: boolean = false
     hideFilter: string = 'yettobesimulated'
     form: FormGroup = null as any;
@@ -209,7 +210,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             if(p){
                 this.optimize.fetch_week_value(p.id)
             }
-           
+           this.hidepanel = false
         }
         if($event=="upload-weekly-promotions"){
             this.uploadFile()
@@ -230,6 +231,17 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.optimize.setProductWeekObservable([])
         // this.selected_product_week
         // t
+    }
+    hidePanel(){
+       
+        this.hidepanel = !this.hidepanel
+        if(this.hidepanel){
+            this.hideFilter = "viewmore"
+        }
+        else{
+            this.hideFilter = "viewless"
+        }
+
     }
     simulateResetEvent($event){
         console.log($event , "event passed")
@@ -268,6 +280,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
            if($event.action == 'Simulate'){
             this.isFilterApplied = true
             this.hideFilter = 'viewmore'
+            this.hidepanel = true
             // this.hideFilter = 'yettobesimulated'
         }
        
@@ -366,7 +379,22 @@ export class PromoScenarioBuilderComponent implements OnInit {
         });
         
 this.optimize.savePromoScenario(weekly).subscribe(data=>{
-    console.log("saved data")
+    let promotion : ListPromotion = {
+        "id" : data["saved_id"],
+        "name" : weekly["name"],
+        "comments" : weekly["comments"],
+        "scenario_type" : "promo",
+        "meta" : {
+            "retailer" : weekly["account_name"],
+            "product_group" : weekly["product_group"],
+            "pricing" : false
+        }
+
+
+    }
+    this.optimize.addPromotionList(promotion)
+
+    console.log("saved data" , data)
 })
 this.modalService.close("save-scenario-popup")
     // debugger
@@ -376,11 +404,11 @@ this.modalService.close("save-scenario-popup")
         console.log('recieved');
         if($event == 'Simulate'){
             this.isFilterApplied = true
-            this.hideFilter = 'viewmore'
+            this.hideFilter = 'viewless'
         }
         else if($event == 'Reset'){
             this.isFilterApplied = false
-            this.hideFilter = 'viewless'
+            this.hideFilter = 'viewmore'
         }
         else{
             this.openModal($event);

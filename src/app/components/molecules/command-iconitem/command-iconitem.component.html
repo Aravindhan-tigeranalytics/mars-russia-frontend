@@ -12,7 +12,10 @@
         hover:text-marsblue-600
         cursor-pointer
     "
-    [ngClass]="{ 'command-iconItem-borderLeft': borderLeft == true }"
+    [ngClass]="{ 'command-iconItem-borderLeft': borderLeft == true,
+    'active' : active == true
+
+                    }"
 >
     <div class="flex flex-row items-center space-x-4">
         <div class="text-marsgray-700">

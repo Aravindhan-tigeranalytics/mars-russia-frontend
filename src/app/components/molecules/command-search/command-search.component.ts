@@ -14,6 +14,8 @@ export class CommandSearchComponent {
     hideClose: boolean = false;
     @Output()
     inputChangeEvent = new EventEmitter()
+    @Input()
+    value = ""
 
     changeInput(value){
          this.inputChangeEvent.emit(value)

@@ -99,8 +99,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 console.log(element , "retttttttttttttttttt element")
                 // coefficient_old: "flag_russian_day", coefficient_new: "Holiday_Flag1"
                 if(element['coefficient_new'].split("_").join("").toLowerCase() == holiday.split("_").join("").toLowerCase()){
-                    console.log("retttttttttttttttttttttttttttttttttt",element['coefficient_old'])
-                    console.log("retttttttttttttttttttttttttttttttttt",typeof(element['coefficient_old']))
+                    // console.log("retttttttttttttttttttttttttttttttttt",element['coefficient_old'])
+                    // console.log("retttttttttttttttttttttttttttttttttt",typeof(element['coefficient_old']))
                    ret = String(element['coefficient_old']).replace("flag_" , "").split("_").join(" ")
 
                 }

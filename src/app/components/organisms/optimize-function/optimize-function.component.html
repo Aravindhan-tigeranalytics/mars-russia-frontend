@@ -6,10 +6,10 @@
         <nwn-command-search [hideClose]="true"></nwn-command-search>
     </div>
     <div>
-        <nwn-command-iconitem type="stroke" nwnSvgIcon="trending-up" [hideTick]="true"
-            >Maximize MAC</nwn-command-iconitem
+        <nwn-command-iconitem (click) = "selectObjective(objective)" *ngFor = "let objective of objective_function" type="stroke" nwnSvgIcon="trending-up" [hideTick]="true"
+            >{{objective}}</nwn-command-iconitem
         >
-        <nwn-command-iconitem type="stroke" nwnSvgIcon="trending-up" [hideTick]="true"
+        <!-- <nwn-command-iconitem type="stroke" nwnSvgIcon="trending-up" [hideTick]="true"
             >Maximize RP</nwn-command-iconitem
         >
         <nwn-command-iconitem type="stroke" nwnSvgIcon="trending-up" [hideTick]="true"
@@ -20,7 +20,7 @@
         >
         <nwn-command-iconitem type="stroke" nwnSvgIcon="trending-down" [hideTick]="true"
             >Minimize TE</nwn-command-iconitem
-        >
+        > -->
     </div>
     <nwn-search-footer [showKeyBoardCtrl]="true" [showApply]="true"></nwn-search-footer>
 </div>

@@ -1,9 +1,10 @@
 <nwn-loaded-scenario-header  
+[hidepanel] = "hidepanel"
 (downloadEvent)="downloadEvent($event)" 
 (modalEvent)="receiveMessage($event)" 
 (simulateResetEvent)="simulateResetEvent($event)">
 </nwn-loaded-scenario-header>
-<nwn-status-bar [nwnStatusBar]="hideFilter">YET TO BE SIMULATED</nwn-status-bar>
+<nwn-status-bar (click)="hidePanel()"  [nwnStatusBar]="hideFilter">YET TO BE SIMULATED</nwn-status-bar>
 <div>
     <nwn-summary-placeholder *ngIf="!isFilterApplied"></nwn-summary-placeholder>
     <nwn-promosimulator-builder-aggregated *ngIf="isFilterApplied"></nwn-promosimulator-builder-aggregated>

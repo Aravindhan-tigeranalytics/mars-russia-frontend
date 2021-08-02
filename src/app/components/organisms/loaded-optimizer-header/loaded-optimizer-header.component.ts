@@ -18,6 +18,10 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     optimizer_data : OptimizerModel = null as any
     quarter_year:any[] = []
     promotions : any[] = []
+    selected_objective:string = ''
+    duration_min = 0
+    duration_max = 0
+    product_week : ProductWeek[] = []
     constructor(public optimize:OptimizerService){}
     ngOnInit() {
         this.optimize.getoptimizerDataObservable().pipe(
@@ -45,6 +49,21 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     // constructor(private optimize : OptimizerService){
 
     // }
+
+    durationWavesEvent($event){
+        this.duration_min = $event["min_val"]
+        this.duration_max = $event["max_val"]
+        console.log($event , "slider change event")
+    }
+    configChangeEvent($event){
+        console.log($event , "event congfig change")
+    }
+
+    objectiveEvent($event){
+        this.selected_objective = $event
+        console.log(this.selected_objective , "selected objective  selected")
+
+    }
 
     sendMessage(modalType: string): void {
         this.modalEvent.emit(modalType);
@@ -95,6 +114,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         })
     }
     populatePromotion(weekdata : ProductWeek[]){
+        this.product_week = this.optimizer_data.weekly
         
                 
                 weekdata.forEach(data=>{

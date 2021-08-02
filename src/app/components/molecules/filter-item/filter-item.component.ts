@@ -13,7 +13,7 @@ export class FilterItemComponent {
     @Input()
     size: string | 'smallValue' | 'largeValue' = 'largeValue';
     @Input()
-    hideClose: boolean = false;
+    hideClose: boolean = true;
     @Input()
     hideFilterIcon: boolean = false;
 }

@@ -47,6 +47,13 @@ export class OptimizerService {
       list_promotions = list_promotions.filter(promo=>promo.id != id)
       this.setListPromotionObservable(list_promotions)
   }
+  public addPromotionList(promotion : ListPromotion){
+    let list_promotions = this.listPromotionObservable.getValue()
+    list_promotions.push(promotion)
+    this.setListPromotionObservable(list_promotions)
+
+
+  }
   public setoptimizerDataObservable(data:OptimizerModel){
       this.optimizerDataObservable.next(data)
   }

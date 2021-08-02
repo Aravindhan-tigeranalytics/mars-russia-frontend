@@ -79,21 +79,7 @@ this.form.valueChanges.subscribe(data=>{
      data.tpr,
      data.co_inv
     )
-    // if(data.promo){
-    //     final = final +  data.promo
-
-    // }
-    // if(data.tpr){
-    //     final+="-"+data.tpr +"%"
-         
-
-    // }
-    // if(data.co_inv){
-    //     final+="CoInv-"+ data.co_inv + "%"
-
-    // }
-    // let name  = data.promo + " " + "TPR-" + data.tpr + "% " + "CoInv-" + data.co_inv + "%"
-    setTimeout(()=>{
+         setTimeout(()=>{
         this.promo_generated = final
 
     },500)
