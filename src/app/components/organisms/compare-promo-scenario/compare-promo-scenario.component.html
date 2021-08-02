@@ -16,11 +16,11 @@
         </div>
     </div>
     <div class="border-b border-marsgray-200">
-        <nwn-command-search [placeholder] = "'Search saved scenarios'" (inputChangeEvent) = "inputChangeEvent($event)" [hideClose]="true"></nwn-command-search>
+        <nwn-command-search [placeholder] = "'Search saved scenario'" (inputChangeEvent) = "inputChangeEvent($event)" [hideClose]="true"></nwn-command-search>
     </div>
     <div class="h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
         <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion_promo | appFilter: searchText : 'promo';">
-            <nwn-scenario-load-card (click)="toggleId(promotion.id)" [showCheckbox]="true" [showSubHead]="true">
+            <nwn-scenario-load-card (click)="toggleId(promotion.id)" [id] = "promotion" [showInfo]="true" [showCheckbox]="true" (infoClickedEvent)="infoClicked($event)" [showSubHead]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>
                     {{promotion.comments}}
@@ -51,3 +51,6 @@
     
     <nwn-search-footer (click) = "openComparePopup()" [showKeyBoardCtrl]="true" [showCompare]="true"></nwn-search-footer>
 </div>
+<nwn-modal id="promo-simulator-popup-compare" class="hidden">
+    <nwn-promo-simulator-scenario (deleteClicked) = "deleteClickedEvent($event)" [promotion_viewed] = "promotion_viewed" ></nwn-promo-simulator-scenario>
+</nwn-modal>

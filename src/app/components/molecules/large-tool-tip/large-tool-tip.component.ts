@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input } from '@angular/core';
 
 @Component({
   selector: 'nwn-large-tool-tip',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./large-tool-tip.component.css']
 })
 export class LargeToolTipComponent implements OnInit {
+
+  @Input()
+  scenario : any = null
 
   constructor() { }
 

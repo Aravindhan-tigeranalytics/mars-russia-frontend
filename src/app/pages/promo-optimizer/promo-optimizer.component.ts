@@ -173,22 +173,18 @@ export class PromoOptimizerComponent implements OnInit {
     }
 
     close($event){
+        
         if($event=="filter-product-groups"){
-            let temp = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
-            if(temp){
-                let reqObj: any = {
-                    'account_name': this.selected_retailer,
-                    'corporate_segment': '',
-                    'product_group': this.selected_product,
-                    'brand_filter': '',
-                    'brand_format_filter': '',
-                    'strategic_cell_filter': ''
-                }
-                this.optimize.getOptimizerMetrics(reqObj).subscribe((data: any) => {
-                    console.log(data)
-                    if(data){
-                        this.optimize.setOptimizerMetricsObservable(data)
-                    }
+            let p = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
+            // debugger
+            if(p){
+                this.optimize.fetch_optimizer_data({
+                    "account_name" : p.account_name,
+                    "product_group" : p.product_group,
+                    "corporate_segment" : p.corporate_segment
+                }).subscribe(data=>{
+                    console.log(data , "response")
+                   this.optimize.setoptimizerDataObservable(data)
                 })
             }
         }

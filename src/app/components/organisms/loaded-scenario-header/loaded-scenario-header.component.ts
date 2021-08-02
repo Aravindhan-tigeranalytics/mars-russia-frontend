@@ -15,13 +15,13 @@ import * as utils from "@core/utils"
 export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     private unsubscribe$: Subject<any> = new Subject<any>();
     @Input()
-    title: string = '';
+    title: string = 'Untitled';
     @Output()
     modalEvent = new EventEmitter<string>();
     @Output()
     downloadEvent = new EventEmitter<any>();
     @Output()
-    simulateResetEvent = new EventEmitter<{"action" : string,"promotion_map" : Array<any>}>();
+    simulateResetEvent = new EventEmitter<{"action" : string,"promotion_map" : Array<any> , "promo_elasticity" : number}>();
     options1:Array<any> = [];
     promotions$: Observable<string[]> = null as any;
     product_week:ProductWeek[] = [];
@@ -30,8 +30,9 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     selected_quarter:string = ''
     selected_product_week : ProductWeek[] = []
     promotion_map:Array<any> = [] //{"selected_promotion" : $event.value , "week" : this.product_week }
-    available_year:any[] = ["year 1" , "year 2" , "year 3"]
+    available_year:any[] = ["1 year" , "2 years" , "3 years"]
     loaded_scenario:LoadedScenarioModel = null as any
+    promo_elasticity = 0
     constructor(private optimize : OptimizerService,private simulatorService : SimulatorService){
 
     }
@@ -98,7 +99,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
             if(weekdata.length == 0){
                 this.product_week = []
                 this.optimize.set_baseline_null()
-                this.available_year =["year 1" , "year 2" , "year 3"]
+                this.available_year =["1 year" , "2 years" , "3 years"]
                 this.quarter_year = []
                 this.selected_quarter = ''
                 this.selected_product_week  = []
@@ -250,10 +251,12 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     }
 
     simulateAndReset(type){
+        console.log(this.promo_elasticity , "promo elasticity")
         
         this.simulateResetEvent.emit({
             "action" : type,
-            "promotion_map" : this.promotion_map
+            "promotion_map" : this.promotion_map,
+            "promo_elasticity" : this.promo_elasticity
         })
     }
 

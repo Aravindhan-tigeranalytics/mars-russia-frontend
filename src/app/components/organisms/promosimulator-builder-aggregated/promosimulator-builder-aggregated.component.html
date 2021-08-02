@@ -329,7 +329,7 @@
                 <tbody class="bg-white">
                     <tr class="whitespace-nowrap" *ngFor="let week of weeklyData">
                         <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item [type]="week.duration | siFilter" [inWeek]="week.duration"></nwn-cell-week-item>
+                            <nwn-cell-week-item [type]="week.duration | siFilter" [inWeek]="week.duration" ></nwn-cell-week-item>
                         </th>
                         <!-- <td><nwn-cell-item nwnCellItem="promo" [nwnCellData]="week.duration"></nwn-cell-item></td> -->
                         <td><nwn-cell-item nwnCellItem="promo" [nwnCellData]="week.promotions"></nwn-cell-item></td>

@@ -12,4 +12,6 @@ export class CellWeekItemComponent {
     active: boolean = false;
     @Input()
     inWeek: any = {};
+    @Input()
+    holiday_flag : string = ''
 }

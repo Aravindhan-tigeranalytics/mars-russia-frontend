@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import {OptimizerService} from '../../../core/services/optimizer.service'
-import {CheckboxModel} from '../../../core/models'
+import {OptimizerService} from '@core/services'
+import {CheckboxModel} from '@core/models'
+import * as Utils from "@core/utils"
 // import { tickStep } from 'd3-array';
 @Component({
     selector: 'nwn-add-promotion',
@@ -70,21 +71,27 @@ export class AddPromotionComponent implements OnInit {
     ngOnInit(){
 this.form.valueChanges.subscribe(data=>{
     // console.log(data , "form changes subscription")
-    let promo = null
-    let final = ''
-    if(data.promo){
-        final = final +  data.promo
+    // let promo = null
+    let final = Utils.genratePromotion(
+        data.promo == "Motivation" ? 1 : 0,
+        data.promo == "N+1" ? 1 : 0,
+        data.promo == "Traffic" ? 1 : 0,
+     data.tpr,
+     data.co_inv
+    )
+    // if(data.promo){
+    //     final = final +  data.promo
 
-    }
-    if(data.tpr){
-        final+="-"+data.tpr +"%"
+    // }
+    // if(data.tpr){
+    //     final+="-"+data.tpr +"%"
          
 
-    }
-    if(data.co_inv){
-        final+="CoInv-"+ data.co_inv + "%"
+    // }
+    // if(data.co_inv){
+    //     final+="CoInv-"+ data.co_inv + "%"
 
-    }
+    // }
     // let name  = data.promo + " " + "TPR-" + data.tpr + "% " + "CoInv-" + data.co_inv + "%"
     setTimeout(()=>{
         this.promo_generated = final
@@ -103,7 +110,7 @@ this.form.valueChanges.subscribe(data=>{
     }
     valueChangeBaseline(e:any){
         this.history_baseline.push(e.value)
-        this.input_promotions.push({"value" : "TPR-"+e.value+"%" , "checked" : e.checked})
+        this.input_promotions.push({"value" : e.value, "checked" : e.checked})
         console.log(this.input_promotions , "input promotions ")
         // debugger
         this.base_line_promotions = this.base_line_promotions.filter(val=>val.value!=e.value)
@@ -135,11 +142,13 @@ this.form.valueChanges.subscribe(data=>{
         // console.log(this.promo_generated , "promotion generated")
     }
     clickClosedEvent($event){
-        let val = parseInt($event.replace(/[^0-9]/g,''))
+        console.log($event , "click closed event")
+        // debugger
+        // let val = parseInt($event.replace(/[^0-9]/g,''))
         console.log($event , "click closed")
         console.log(this.history_baseline , "history baseline")
-        if(this.history_baseline.includes(val)){
-            this.base_line_promotions.push({"value" : val.toString(),"checked" : false})
+        if(this.history_baseline.includes($event)){
+            this.base_line_promotions.push({"value" : $event,"checked" : false})
             this.input_promotions = this.input_promotions.filter(val=>val.value!=$event)
         }
         else{

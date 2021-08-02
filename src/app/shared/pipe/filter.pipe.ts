@@ -4,8 +4,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
    
   transform(items: any[], searchText: string,args?:any): any[] {
-    console.log(args , "args any extra")
-      console.log(items ,"items in pipe ")
+    // console.log(args , "args any extra")
+      // console.log(items ,"items in pipe ")
     if (!items) {
       return [];
     }
@@ -25,4 +25,4 @@ export class FilterPipe implements PipeTransform {
       return it.value.toLocaleLowerCase().includes(searchText);
     });
   }
-}
+} 

@@ -138,8 +138,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['units'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['units'],false,false),
             "percent": "(" + Utils.percentageDifference(financial_metrics['base']['total']['units'],financial_metrics['simulated']['total']['units']) + "%)",
-            "converted_difference": "(" + Utils.formatNumber(financial_metrics['base']['total']['units']-financial_metrics['simulated']['total']['units'],false,false) + ")",
-            "arrow": financial_metrics['base']['total']['units'] > financial_metrics['simulated']['total']['units'] ?  'carret-up' : 'carret-down' ,
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['units']-financial_metrics['base']['total']['units'],false,false) + ")",
+            "arrow": financial_metrics['simulated']['total']['units'] > financial_metrics['base']['total']['units'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['units'] , financial_metrics['simulated']['total']['units']) 
         }
 
@@ -473,10 +473,10 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     }
 
     colorForDifference(base:any, simulated:any){
-        if(base > simulated){
+        if(simulated > base){
             return 'green'
         }
-        else if(base < simulated){
+        else if(simulated < base){
             return 'red'
         }
         else if(base == simulated){

@@ -18,16 +18,13 @@ export class CompareScenarioPopupComponent implements OnInit {
     loaded_scenario : Array<LoadedScenarioModel> = []
 
     ngOnInit(): void {
-        this.optimizer.getCompareScenarioIdObservable().subscribe(data=>{
-            let obs$:Array<any>=[]
-            console.log(data ," data to compare")
+        this.optimizer.getCompareScenarioObservable().subscribe(data=>{
+            
             if(data.length > 0){
-                obs$ = data.map(v=> this.optimizer.fetch_load_scenario_by_id(v))
-                combineLatest(obs$).subscribe((data:any)=>{
-                    console.log(data, "data")
+                console.log(data , "comparescenario datas")
 
-                    this.loaded_scenario = [...this.loaded_scenario , ...data]
-                })
+                    this.loaded_scenario = data
+                
             }
             // data.forEach(n=>{
             //     this.optimizer.fetch_load_scenario_by_id(n).subscribe(data=>{
@@ -46,6 +43,10 @@ export class CompareScenarioPopupComponent implements OnInit {
         this.screenHeight = window.innerHeight;
     }
     openTab = 1;
+    deleteCompareEvent($event){
+        console.log("deleting event " , $event.id)
+        this.optimizer.deleteCompareScenario($event.id)
+    }
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;
     }

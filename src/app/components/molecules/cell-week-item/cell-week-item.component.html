@@ -8,9 +8,9 @@
 >
     <p class="text-caption text-marsgray-500 font-normal">{{inWeek.date}}</p>
     <p class="text-body text-marsgray-700 font-medium">Y1 {{inWeek.week}}</p>
-    <div class="absolute -top-1 right-0" [ngClass]="{ 'triangle-tr': active == true }"></div>
+    <div class="absolute -top-1 right-0" [ngClass]="{ 'triangle-tr': inWeek.holiday!=null }"></div>
     <div class="holiday-popover border-l-3 border-marsgray-600 shadow-xl bg-white px-4 py-2 w-[106]">
-        <p class="text-caption font-normal text-marsgray-700">Holiday week</p>
+        <p class="text-caption font-normal text-marsgray-700">{{inWeek.holiday}}</p>
         <p class="text-body font-medium text-marsgray-700">{{inWeek.holiday_name}}</p>
     </div>
 </div>

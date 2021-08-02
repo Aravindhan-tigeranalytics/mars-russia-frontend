@@ -8,6 +8,7 @@ import {CheckboxModel} from "../../../core/models"
   styleUrls: ['./manage-metrics.component.css']
 })
 export class ManageMetricsComponent implements OnInit {
+  searchText : string = ""
  
   sales_metrics:Array<CheckboxModel> = [
     {"value":"Units","checked":true},
@@ -34,6 +35,11 @@ export class ManageMetricsComponent implements OnInit {
   metricChanges = new EventEmitter();
 
   constructor(private modal : ModalService ,) {}
+
+
+  inputChangeEvent($event){
+    this.searchText = $event
+  }
 
   changeMetrics(e:CheckboxModel){
     console.log(e , "change metric on checkbox change")

@@ -18,11 +18,11 @@
             "
             type="number"
             (input)="onInputChange($event.target.value)"
-            value="{{ counter }}"
+            [(ngModel)]='name'
         />
         <nwn-button type="icon" size="iconsm" (click)="increment()">
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
         </nwn-button>
     </div>
-    <p class="text-body text-marsgray-500 ml-1"><ng-content></ng-content></p>
+    <p class="text-body text-center text-marsgray-500 ml-1"><ng-content></ng-content></p>
 </div>

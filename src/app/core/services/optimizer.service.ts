@@ -1,18 +1,210 @@
 import { Injectable } from '@angular/core'
 import {ApiService} from './api.service'
+import {Product , ProductWeek , ListPromotion , LoadedScenarioModel,UploadModel,OptimizerModel} from "../models"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Product , ProductWeek , ListPromotion , LoadedScenarioModel, UploadModel} from "../models"
+// import {Product , ProductWeek , ListPromotion , LoadedScenarioModel, UploadModel} from "../models"
 import { retry, catchError } from 'rxjs/operators';
-import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, throwError,combineLatest } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OptimizerService {
+  private compareScenarioObservable = new BehaviorSubject<LoadedScenarioModel[]>([])
+  private optimizerDataObservable = new BehaviorSubject<OptimizerModel>(null as any)
   private uploadedScenarioObservable = new BehaviorSubject<UploadModel>(null as any)
   private loadedScenarioObservable = new BehaviorSubject<LoadedScenarioModel>(null as any)
   private simulatedDataObservable = new BehaviorSubject<any>(null)
   public optimizerMetricsData = new BehaviorSubject<any>(null)
+  private listPromotionObservable = new BehaviorSubject<ListPromotion[]>(null as any)
+  
+  private compareScenarioIdObservable = new BehaviorSubject<Array<number>>([])
+  private productWeekObservable = new BehaviorSubject<Array<ProductWeek>>([])
+  base_line_promotion:Array<string> = []
+  private promotionObservable = new BehaviorSubject<string[]>([]);
+  token = 'd3bdbb418856f47f56adeaec1dc86478abd29f96';
+  apiURL = 'http://localhost:8000/api/';
+  constructor(
+    private apiService: ApiService,private http: HttpClient
+  ) { }
+  public setCompareScenarioObservable(scenario : LoadedScenarioModel[]){
+      let compare_scenario = this.compareScenarioObservable.getValue()
+      compare_scenario = [...compare_scenario , ...scenario]
+      this.compareScenarioObservable.next(compare_scenario)
+
+  }
+  public getCompareScenarioObservable():Observable<LoadedScenarioModel[]>{
+      return this.compareScenarioObservable.asObservable()
+  }
+  public setListPromotionObservable(promotion:ListPromotion[]){
+      this.listPromotionObservable.next(promotion)
+  }
+  public getListObservation():Observable<ListPromotion[]>{
+      return this.listPromotionObservable.asObservable()
+  }
+  public deleteListPromotion(id){
+      let list_promotions = this.listPromotionObservable.getValue()
+      list_promotions = list_promotions.filter(promo=>promo.id != id)
+      this.setListPromotionObservable(list_promotions)
+  }
+  public setoptimizerDataObservable(data:OptimizerModel){
+      this.optimizerDataObservable.next(data)
+  }
+  public getoptimizerDataObservable():Observable<OptimizerModel>{
+    return this.optimizerDataObservable.asObservable()
+  }
+
+    // Error handling 
+    handleError(error: any) {
+        let errorMessage = '';
+        if(error.error instanceof ErrorEvent) {
+          // Get client-side error
+          errorMessage = error.error.message;
+        } else {
+          // Get server-side error
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+        window.alert(errorMessage);
+        return throwError(errorMessage);
+     }
+
+    // Http Options
+    httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Token ' + this.token
+        })
+      }  
+
+  public setUploadedScanarioObservable(data : UploadModel){
+      this.uploadedScenarioObservable.next(data)
+
+  }
+  public getUploadedScenarioObservable():Observable<UploadModel>{
+      return this.uploadedScenarioObservable.asObservable()
+  }
+  public setCompareScenarioIdObservable(id:Array<number>){
+     let available_ids =  this.compareScenarioObservable.getValue().map(s=>s.scenario_id)
+     id = id.filter(i=>!available_ids.includes(i))
+    let obs$:Array<any>=[]
+    if(id.length > 0){
+        obs$ = id.map(v=> this.fetch_load_scenario_by_id(v))
+        combineLatest(obs$).subscribe((data:any)=>{
+            this.setCompareScenarioObservable(data)
+                  
+        })
+    }
+  }
+  public deleteCompareScenario(id){
+      let scenarios = this.compareScenarioObservable.getValue()
+      scenarios = scenarios.filter(data=>data.scenario_id != id)
+      this.compareScenarioObservable.next(scenarios)
+
+
+  }
+  public setSimulatedDataObservable(data:any){
+    this.simulatedDataObservable.next(data)
+
+  }
+  public getSimulatedDataObservable():Observable<any>{
+    return this.simulatedDataObservable.asObservable()
+  }
+  public getProductWeekObservable():Observable<ProductWeek[]>{
+    return this.productWeekObservable.asObservable()
+  }
+  public setProductWeekObservable(val:any[]){
+     this.productWeekObservable.next(val)
+  }
+  public getCompareScenarioIdObservable(){
+    return this.compareScenarioIdObservable.asObservable()
+
+  }
+  public setLoadedScenarioModel(loaded:LoadedScenarioModel){
+    this.loadedScenarioObservable.next(loaded)
+
+  }
+  public getLoadedScenarioModel():Observable<LoadedScenarioModel>{
+    return this.loadedScenarioObservable.asObservable()
+  }
+  
+
+  public getPromotionObservable(): Observable<string[]> {
+    return this.promotionObservable.asObservable();
+  }
+  public setPromotionObservable(val:string[]) {
+    this.promotionObservable.next(val);
+  }
+
+  fetchVal(){  
+    return this.apiService.get<Product[]>('api/scenario/promo-simulate-test/')
+  }
+  fetch_optimizer_data(formdata):Observable<OptimizerModel>{
+     return this.apiService.post<OptimizerModel>('api/optimiser/calculate/' , formdata)
+
+  }
+  fetch_week_value(id:number){
+   
+    this.apiService.get<ProductWeek[]>('api/scenario/promo-simulate-test/'+id).subscribe(
+      data=>this.productWeekObservable.next(data)
+      )
+
+  }
+  getPromoSimulateData(requestData: any): Observable<any> {
+    return this.apiService.post<any>('api/scenario/promo-simulate/', requestData)
+    
+  }  
+  savePromoScenario(requestData: any):Observable<any>{
+    return this.apiService.post<any>('api/scenario/save/' , requestData)
+
+  }
+  deletePromoScenario(id){
+      return this.apiService.delete('api/scenario/savedscenario/'+id)
+  }
+  downloadPromo(requestData: any):Observable<any>{
+    // promo-download/
+    return this.apiService.postd('api/scenario/promo-download/' , requestData 
+      )
+  }
+  fetch_load_scenario(){
+    this.apiService.get<ListPromotion[]>('api/scenario/list-saved-promo/').subscribe(data=>{
+        this.setListPromotionObservable(data)
+    })
+      // http://localhost:8000/api/scenario/list-saved-promo/39/
+  }
+  fetch_load_scenario_by_id(id:number){
+    return this.apiService.get<LoadedScenarioModel>('api/scenario/list-saved-promo/' + id)
+      // http://localhost:8000/api/scenario/list-saved-promo/39/
+  }
+  set_base_line_promotion(promotions:any){
+    this.base_line_promotion = [...this.base_line_promotion , ...promotions]
+    this.base_line_promotion = [...new Set(this.base_line_promotion)]
+    console.log(this.base_line_promotion , "Base line promotion set")
+
+  }
+  insert_base_line_promotion(promotions:string){
+      this.base_line_promotion.push(promotions)
+  }
+  set_baseline_null(){
+      this.base_line_promotion = []
+  }
+  get_base_line_promotions(){
+    return this.base_line_promotion
+  }
+
+  getOptimizerMetrics(requestData: any): Observable<any> {
+    return this.http.post<any>(this.apiURL + 'optimiser/calculate/', JSON.stringify(requestData), this.httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
+  public getOptimizerMetricsObservable():Observable<any>{
+    return this.optimizerMetricsData.asObservable()
+  }
+  public setOptimizerMetricsObservable(val:any){
+     this.optimizerMetricsData.next(val)
+  }
   responseData = {
       "holiday": [
           "flag_russian_day"
@@ -6659,145 +6851,5 @@ export class OptimizerService {
       }
   }
 
-  private compareScenarioIdObservable = new BehaviorSubject<Array<number>>([])
-  private productWeekObservable = new BehaviorSubject<Array<ProductWeek>>([])
-  base_line_promotion:Array<string> = []
-  private promotionObservable = new BehaviorSubject<string[]>([]);
-  token = 'd3bdbb418856f47f56adeaec1dc86478abd29f96';
-  apiURL = 'http://localhost:8000/api/';
-  constructor(
-    private apiService: ApiService,private http: HttpClient
-  ) { }
-
-    // Error handling 
-    handleError(error: any) {
-        let errorMessage = '';
-        if(error.error instanceof ErrorEvent) {
-          // Get client-side error
-          errorMessage = error.error.message;
-        } else {
-          // Get server-side error
-          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-        }
-        window.alert(errorMessage);
-        return throwError(errorMessage);
-     }
-
-    // Http Options
-    httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': 'Token ' + this.token
-        })
-      }  
-
-  public setUploadedScanarioObservable(data : UploadModel){
-      this.uploadedScenarioObservable.next(data)
-
-  }
-  public getUploadedScenarioObservable():Observable<UploadModel>{
-      return this.uploadedScenarioObservable.asObservable()
-  }
-  public setCompareScenarioIdObservable(id:Array<number>){
-    this.compareScenarioIdObservable.next(id)
-
-  }
-  public setSimulatedDataObservable(data:any){
-    this.simulatedDataObservable.next(data)
-
-  }
-  public getSimulatedDataObservable():Observable<any>{
-    return this.simulatedDataObservable.asObservable()
-  }
-  public getProductWeekObservable():Observable<ProductWeek[]>{
-    return this.productWeekObservable.asObservable()
-  }
-  public setProductWeekObservable(val:any[]){
-     this.productWeekObservable.next(val)
-  }
-  public getCompareScenarioIdObservable(){
-    return this.compareScenarioIdObservable.asObservable()
-
-  }
-  public setLoadedScenarioModel(loaded:LoadedScenarioModel){
-    this.loadedScenarioObservable.next(loaded)
-
-  }
-  public getLoadedScenarioModel():Observable<LoadedScenarioModel>{
-    return this.loadedScenarioObservable.asObservable()
-  }
-  
-
-  public getPromotionObservable(): Observable<string[]> {
-    return this.promotionObservable.asObservable();
-  }
-  public setPromotionObservable(val:string[]) {
-    this.promotionObservable.next(val);
-  }
-
-  fetchVal(){  
-    return this.apiService.get<Product[]>('api/scenario/promo-simulate-test/')
-  }
-  fetch_week_value(id:number){
-   
-    this.apiService.get<ProductWeek[]>('api/scenario/promo-simulate-test/'+id).subscribe(
-      data=>this.productWeekObservable.next(data)
-      )
-
-  }
-  getPromoSimulateData(requestData: any): Observable<any> {
-    return this.apiService.post<any>('api/scenario/promo-simulate/', requestData)
-    
-  }  
-  savePromoScenario(requestData: any):Observable<any>{
-    return this.apiService.post<any>('api/scenario/save/' , requestData)
-
-  }
-  deletePromoScenario(id){
-      return this.apiService.delete('api/scenario/savedscenario/'+id)
-  }
-  downloadPromo(requestData: any):Observable<any>{
-    // promo-download/
-    return this.apiService.postd('api/scenario/promo-download/' , requestData 
-      )
-  }
-  fetch_load_scenario(){
-    return this.apiService.get<ListPromotion[]>('api/scenario/list-saved-promo/')
-      // http://localhost:8000/api/scenario/list-saved-promo/39/
-  }
-  fetch_load_scenario_by_id(id:number){
-    return this.apiService.get<LoadedScenarioModel>('api/scenario/list-saved-promo/' + id)
-      // http://localhost:8000/api/scenario/list-saved-promo/39/
-  }
-  set_base_line_promotion(promotions:any){
-    this.base_line_promotion = [...this.base_line_promotion , ...promotions]
-    this.base_line_promotion = [...new Set(this.base_line_promotion)]
-    console.log(this.base_line_promotion , "Base line promotion set")
-
-  }
-  insert_base_line_promotion(promotions:string){
-      this.base_line_promotion.push(promotions)
-  }
-  set_baseline_null(){
-      this.base_line_promotion = []
-  }
-  get_base_line_promotions(){
-    return this.base_line_promotion
-  }
-
-  getOptimizerMetrics(requestData: any): Observable<any> {
-    return this.http.post<any>(this.apiURL + 'optimiser/calculate/', JSON.stringify(requestData), this.httpOptions)
-    .pipe(
-      retry(1),
-      catchError(this.handleError)
-    )
-  }
-
-  public getOptimizerMetricsObservable():Observable<any>{
-    return this.optimizerMetricsData.asObservable()
-  }
-  public setOptimizerMetricsObservable(val:any){
-     this.optimizerMetricsData.next(val)
-  }
 
 }
