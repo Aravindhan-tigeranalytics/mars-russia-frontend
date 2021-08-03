@@ -199,6 +199,11 @@ export class OptimizerService {
     )
   }
 
+  downloadCompareScenarioExcel(requestData: any): Observable<any> {
+        return this.apiService.postd('api/scenario/compare-scenario-download/' , requestData 
+          )
+  }
+
   public getOptimizerMetricsObservable():Observable<any>{
     return this.optimizerMetricsData.asObservable()
   }

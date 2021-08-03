@@ -248,7 +248,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                     for(let j = 0; j < this.restApi.responseData.holiday.length; j++){
                         if(this.restApi.responseData.optimal[i][this.restApi.responseData.holiday[j]] == 1){
                             holiday = true
-                            holidayName = this.restApi.responseData.holiday[j].split('_').map(capitalize).join(' ');
+                            holidayName = this.restApi.responseData.holiday[j].split('_').map(capitalize).join(' ').replace("Flag ","");
                         }
                     }
                 }

@@ -214,7 +214,6 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     data['base']['weekly'][i]['flag_promotype_traffic'],
                     data['base']['weekly'][i]['promo_depth'],
                     data['base']['weekly'][i]['co_investment']
-
                 )
                 promotion_value_simulated =  Utils.genratePromotion(
                     data['simulated']['weekly'][i]['flag_promotype_motivation'],
@@ -222,7 +221,6 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     data['simulated']['weekly'][i]['flag_promotype_traffic'],
                     data['simulated']['weekly'][i]['promo_depth'],
                     data['simulated']['weekly'][i]['co_investment']
-
                 )
                 // if(data['base']['weekly'][i]['flag_promotype_motivation'] == 1){
                 //     promotion_value = 'Motivation - '+data['base']['weekly'][i]['promo_depth']+'%';
