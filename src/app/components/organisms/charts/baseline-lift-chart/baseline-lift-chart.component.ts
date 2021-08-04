@@ -171,7 +171,7 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
             .attr('height', (d: any) => this.boundingHeight - yScale(d.value2))
             .attr('fill', '#E0F2FE')
             .on('mouseover', mouseover)
-            .on('mouseleave', mouseleave);
+            // .on('mouseleave', mouseleave);
 
         const chart = this.svg;
         // Event handlers
@@ -231,11 +231,11 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
                 //     d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value2) + '</div><br/><div style="background-color:#0284C7;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value1)+'</div>');
                 // }
             }
- 
-
-                d3.select('#baseline-tooltip')
-                .select('#baseColor')
-                .style('background-color', d3.select(datum.target).attr('fill'));
+            
+                d3.select('#baseColor').remove();
+                // d3.select('#baseline-tooltip')
+                // .select('#baseColor')
+                // .style('background-color', d3.select(datum.target).attr('fill'));
             
             d3.select('#baseline-tooltip').select('#group').text(d3.select(datum.target.parentNode).attr('groupType'));
         }
