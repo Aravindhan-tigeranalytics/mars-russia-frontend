@@ -18,7 +18,6 @@ export class ComparePromoScenarioComponent implements OnInit {
     openTab = 2;
     searchText = ''
     promotion_viewed:ListPromotion = null as any
-
     constructor(private modal : ModalService,private optimize : OptimizerService,){
         this.optimize.fetch_load_scenario()
 
@@ -30,11 +29,8 @@ export class ComparePromoScenarioComponent implements OnInit {
                 this.list_promotion = data
                 this.list_promotion_promo = this.list_promotion.filter(data=>data.scenario_type == "promo")
                 this.list_promotion_optimizer = this.list_promotion.filter(data=>data.scenario_type == "optimizer")
-
             }
-           
         })
-
     }
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;0

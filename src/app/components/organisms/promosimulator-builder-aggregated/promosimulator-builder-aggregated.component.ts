@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { SimulatorService } from "../../../core/services/simulator.service";
 import { OptimizerService } from "../../../core/services/optimizer.service";
 import * as Utils from "../../../core/utils/util"
+import * as $ from 'jquery';
 
 @Component({
     selector: 'nwn-promosimulator-builder-aggregated',
@@ -9,6 +10,8 @@ import * as Utils from "../../../core/utils/util"
     styleUrls: ['./promosimulator-builder-aggregated.component.css'],
 })
 export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterViewInit {
+    @ViewChild('scrollOne') scrollOne: ElementRef;
+    @ViewChild('scrollTwo') scrollTwo: ElementRef;
     translate_y: string = '';
     currentTranslateRate: string = '';
     constructor(private elRef: ElementRef,public restApi: SimulatorService,public optimize:OptimizerService) {}
@@ -44,7 +47,27 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     activeWeeklyTab: string = 'absolute'
     activeAggregatedTab: string = 'absolute'
 
+    updateScroll(value:any){
+        if(value == 'Graph'){
+            const scrollOne = this.scrollOne.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwo.nativeElement as HTMLElement;
+
+            scrollTwo.scrollLeft = scrollOne.scrollLeft;
+        }
+        else if(value == 'Table'){
+            const scrollOne = this.scrollOne.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwo.nativeElement as HTMLElement;
+
+            scrollOne.scrollLeft = scrollTwo.scrollLeft;
+        }
+      }
+
     ngOnInit() {
+        // $(document).ready(function() {
+        //     $('#div2').on('scroll', function () {
+        //       $('#div1').scrollLeft($(this).scrollLeft());
+        //     });
+        // });
         // this.restApi.uploadedSimulatorDataObservable.asObservable().subscribe(data=>{
         //     if(data != ''){
         //         console.log(data,"observable data")
@@ -214,7 +237,6 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     data['base']['weekly'][i]['flag_promotype_traffic'],
                     data['base']['weekly'][i]['promo_depth'],
                     data['base']['weekly'][i]['co_investment']
-
                 )
                 promotion_value_simulated =  Utils.genratePromotion(
                     data['simulated']['weekly'][i]['flag_promotype_motivation'],
@@ -222,7 +244,6 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     data['simulated']['weekly'][i]['flag_promotype_traffic'],
                     data['simulated']['weekly'][i]['promo_depth'],
                     data['simulated']['weekly'][i]['co_investment']
-
                 )
                 // if(data['base']['weekly'][i]['flag_promotype_motivation'] == 1){
                 //     promotion_value = 'Motivation - '+data['base']['weekly'][i]['promo_depth']+'%';

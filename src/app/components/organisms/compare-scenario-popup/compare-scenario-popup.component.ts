@@ -4,6 +4,8 @@ import { ModalService } from '@molecules/modal/modal.service';
 import {OptimizerService} from '../../../core/services/optimizer.service'
 import { LoadedScenarioModel } from 'src/app/core/models';
 import { Observable, of, from, BehaviorSubject, combineLatest } from 'rxjs';
+import * as FileSaver from 'file-saver';
+
 @Component({
     selector: 'nwn-compare-scenario-popup',
     templateUrl: './compare-scenario-popup.component.html',
@@ -16,7 +18,7 @@ export class CompareScenarioPopupComponent implements OnInit {
     public screenWidth: any;
     public screenHeight: any;
     loaded_scenario : Array<LoadedScenarioModel> = []
-
+    compare_scenario_data:any = []
     ngOnInit(): void {
         this.optimizer.getCompareScenarioObservable().subscribe(data=>{
             
@@ -38,9 +40,28 @@ export class CompareScenarioPopupComponent implements OnInit {
             // })
            
         })
+
+        
+        this.optimizer.getCompareScenarioObservable().subscribe(data=>{
+            if(data.length > 0){
+                this.compare_scenario_data = data
+            }
+        })
        
         this.screenWidth = window.innerWidth - 2;
         this.screenHeight = window.innerHeight;
+    }
+    downloadExcel(){
+        if(this.compare_scenario_data.length > 0){
+            this.optimizer.downloadCompareScenarioExcel(this.compare_scenario_data).subscribe((data: any) => {
+                const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+            
+                FileSaver.saveAs(
+                    blob,
+                    'CompareScenario' + '_Export_' + new Date().getTime() + 'xlsx'
+                  );
+            })
+        }
     }
     openTab = 1;
     deleteCompareEvent($event){

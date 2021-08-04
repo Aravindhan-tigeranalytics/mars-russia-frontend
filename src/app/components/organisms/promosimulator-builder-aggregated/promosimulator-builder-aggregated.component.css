@@ -63,3 +63,9 @@
     right: 8px;
     z-index: 12;
 }
+
+.img-height{
+    width: 80px;
+    height: 80px;
+    border: unset;
+}
