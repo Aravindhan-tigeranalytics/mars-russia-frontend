@@ -21,6 +21,11 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     selected_objective:string = ''
     duration_min = 0
     duration_max = 0
+    param_gap_min = 0
+    param_gap_max = 0
+    min_week= 0
+    max_week = 0
+
     product_week : ProductWeek[] = []
     constructor(public optimize:OptimizerService){}
     ngOnInit() {
@@ -28,6 +33,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
             takeUntil(this.unsubscribe$)
         ).subscribe(data=>{
             if(data){
+                this.isExpand = false
                 this.optimizer_data = data
                 this.populatePromotion(this.optimizer_data.weekly)
                 this.populateConfig(this.optimizer_data.data)
@@ -55,7 +61,28 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         this.duration_max = $event["max_val"]
         console.log($event , "slider change event")
     }
+    paramGapEvent($event){
+        this.param_gap_min = $event["min_val"]
+        this.param_gap_max = $event["max_val"]
+        console.log($event , "slider change event param gap")
+
+    }
+    promoWaveEvent($event){
+        this.min_week = $event["min_val"]
+        this.max_week = $event["max_val"]
+
+    }
+    promoEvent($event){
+
+    }
     configChangeEvent($event){
+        // label: "MAC", event:max_val: 0.4
+// min_val: 0
+let check = this.checkboxMetrices.find(d=>{
+    if(d.id=="mac-popup"){
+        d.checkHeadValue = "X" +  $event['event']['max_val']
+    }
+})
         console.log($event , "event congfig change")
     }
 
@@ -66,6 +93,11 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     }
 
     sendMessage(modalType: string): void {
+        // this.isExpand = true
+        if(modalType == 'Optimize'){
+            this.isExpand = true
+
+        }
         this.modalEvent.emit(modalType);
     }
 

@@ -4,10 +4,10 @@
     </div>
     <div class="border-b border-marsgray-200">
         <div class="flex flex-row flex-wrap px-6 pt-6 pb-3 bg-white">
-            <div class="mr-2 mb-2">
-                <nwn-simulated-filter-item type="active" size="sfi">Quater 1</nwn-simulated-filter-item>
+            <div *ngFor="let year of quarter_year" class="mr-2 mb-2">
+                <nwn-simulated-filter-item (click) = "changeQuarter(year)" [selected_quarter]="selected_quarter" [key]="year" type="default" size="sfi">{{year}}</nwn-simulated-filter-item>
             </div>
-            <div class="mr-2 mb-2">
+            <!-- <div class="mr-2 mb-2">
                 <nwn-simulated-filter-item size="sfi">Quater 2</nwn-simulated-filter-item>
             </div>
             <div class="mr-2 mb-2">
@@ -15,16 +15,16 @@
             </div>
             <div class="mr-2 mb-2">
                 <nwn-simulated-filter-item size="sfi">Quater 4</nwn-simulated-filter-item>
-            </div>
+            </div> -->
         </div>
         <div class="flex flex-row flex-wrap px-6 pt-4 pb-3 bg-white">
-            <div class="mr-1 mb-1">
-                <nwn-week-item type="defaultWeek">
-                    <p weekValue>Week 1</p>
-                    <p dateValue>01-01-2021</p>
+            <div *ngFor="let product of selected_product_week" class="mr-1 mb-1">
+                <nwn-week-item (click) = "clickWeekly(product)" [type]="getWeek(product , weekly_map)" [weekly_product] = "product" [weekly_map] = "weekly_map" >
+                    <p weekValue>Week {{product.week}}</p>
+                    <p dateValue>{{product.date}}</p>
                 </nwn-week-item>
             </div>
-            <div class="mr-1 mb-1">
+            <!-- <div class="mr-1 mb-1">
                 <nwn-week-item type="compulsoryWeek">
                     <p weekValue>Week 1</p>
                     <p dateValue>01-01-2021</p>
@@ -95,7 +95,7 @@
                     <p weekValue>Week 1</p>
                     <p dateValue>01-01-2021</p>
                 </nwn-week-item>
-            </div>
+            </div> -->
         </div>
         <div class="flex flex-row space-x-3 px-6 py-4 bg-white">
             <div>

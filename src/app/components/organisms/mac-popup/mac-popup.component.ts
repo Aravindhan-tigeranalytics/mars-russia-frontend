@@ -20,9 +20,10 @@ export class MacPopupComponent {
 
     @Input()
     label = ""
-    @Input()
+   
     @Output()
     configChangeEvent = new EventEmitter()
+    @Input()
     options: Options = {
         floor: this.floor,
         ceil: this.ceil,

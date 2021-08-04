@@ -11,6 +11,7 @@ export function decodePromotion(promo_name:string){
     if(arr?.length ==3){
       obj["promo_depth"] = parseInt(arr[1])
       obj["co_investment"] = parseInt(arr[2])
+      
     }
     if(arr?.length ==2){
       obj["promo_depth"] = parseInt(arr[1])
@@ -42,6 +43,7 @@ export function decodePromotion(promo_name:string){
     }
   }
   else if(promo_name.includes("TPR")){
+    obj["promo_mechanics"] = "TPR"
     let arr:Array<any>|null = promo_name.match(/\d+/g)
     if(arr?.length ==2){
       obj["promo_depth"] = parseInt(arr[0])

@@ -50,13 +50,23 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     customer_margin:any
 
     weeklyData:any = []
+    optimizer_response : any = null
 
     ngOnInit(): void {
         this.weeklyTableWidth = window.innerWidth - 155;
         this.weeklyTableHeight = window.innerHeight - 150;
         this.aggregatedGraphWidth = (window.innerWidth - 155) / 2;
+        this.restApi.getOptimizerResponseObservabe().subscribe(data=>{
+            if(data){
+                console.log(data , "response data")
+                this.optimizer_response = data
+                this.getChartData()
+
+            }
+            
+        })
         // setTimeout(()=>{
-            this.getChartData()
+            // 
             // },2000)
     }
 
@@ -78,15 +88,15 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     }
 
     getChartData(){
-        let optimizerResponse = this.restApi.responseData.optimal
+        let optimizerResponse = this.optimizer_response.optimal
         let metrics: any = []
         for(let i=0; i < optimizerResponse.length; i++){
             let durationObj = this.convertToFormat(optimizerResponse[i].Date) 
             let week = optimizerResponse[i].week
             let holiday = false
-            if(this.restApi.responseData.holiday.length > 0){
-                for(let j = 0; j < this.restApi.responseData.holiday.length; j++){
-                    if(optimizerResponse[i][this.restApi.responseData.holiday[j]] == 1){
+            if(this.optimizer_response.holiday.length > 0){
+                for(let j = 0; j < this.optimizer_response.holiday.length; j++){
+                    if(optimizerResponse[i][this.optimizer_response.holiday[j]] == 1){
                         holiday = true
                     }
                 }
@@ -115,7 +125,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 si : (optimizerResponse[i].SI).toFixed(2),
                 roi: (optimizerResponse[i].Baseline_ROI).toFixed(2),
                 lift : (optimizerResponse[i].Baseline_Lift).toFixed(2),
-                holidayNames : this.restApi.responseData.holiday
+                holidayNames : this.optimizer_response.holiday
             })
             this.stimulatedCalendar.push({
                 date: durationObj.date,
@@ -129,11 +139,11 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 si : (optimizerResponse[i].SI).toFixed(2), 
                 roi: (optimizerResponse[i].Optimum_ROI).toFixed(2),
                 lift : (optimizerResponse[i].Optimum_Lift).toFixed(2) ,
-                holidayNames : this.restApi.responseData.holiday
+                holidayNames : this.optimizer_response.holiday
             })
         }
 
-        let financial_metrics:any = this.restApi.responseData.financial_metrics
+        let financial_metrics:any = this.optimizer_response.financial_metrics
         this.units = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['units'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['units'],false,false),
@@ -244,20 +254,20 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
 
                 let holiday = false
                 let holidayName: any = ''
-                if(this.restApi.responseData.holiday.length > 0){
-                    for(let j = 0; j < this.restApi.responseData.holiday.length; j++){
-                        if(this.restApi.responseData.optimal[i][this.restApi.responseData.holiday[j]] == 1){
+                if(this.optimizer_response.holiday.length > 0){
+                    for(let j = 0; j < this.optimizer_response.holiday.length; j++){
+                        if(this.optimizer_response.optimal[i][this.optimizer_response.holiday[j]] == 1){
                             holiday = true
-                            holidayName = this.restApi.responseData.holiday[j].split('_').map(capitalize).join(' ');
+                            holidayName = this.optimizer_response.holiday[j].split('_').map(capitalize).join(' ');
                         }
                     }
                 }
                 let seasonality = ''
-                if(this.restApi.responseData.optimal[i].SI){
-                    if(this.restApi.responseData.optimal[i].SI < 0.95){
+                if(this.optimizer_response.optimal[i].SI){
+                    if(this.optimizer_response.optimal[i].SI < 0.95){
                         seasonality = 'lowholidayweek'
                     }
-                    else if(this.restApi.responseData.optimal[i].SI < 1.05){
+                    else if(this.optimizer_response.optimal[i].SI < 1.05){
                         seasonality = 'mediumholidayweek'
                     }
                     else{

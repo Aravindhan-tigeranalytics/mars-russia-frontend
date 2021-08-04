@@ -16,6 +16,7 @@ export class OptimizerService {
   private loadedScenarioObservable = new BehaviorSubject<LoadedScenarioModel>(null as any)
   private simulatedDataObservable = new BehaviorSubject<any>(null)
   public optimizerMetricsData = new BehaviorSubject<any>(null)
+  public optimizerResponseObservable = new BehaviorSubject<any>(null)
   private listPromotionObservable = new BehaviorSubject<ListPromotion[]>(null as any)
   
   private compareScenarioIdObservable = new BehaviorSubject<Array<number>>([])
@@ -141,6 +142,13 @@ export class OptimizerService {
   public setPromotionObservable(val:string[]) {
     this.promotionObservable.next(val);
   }
+  public setOptimizerResponseObservable(data : any){
+      this.optimizerResponseObservable.next(data)
+
+  }
+  public getOptimizerResponseObservabe() : Observable<any>{
+      return this.optimizerResponseObservable.asObservable()
+  }
 
   fetchVal(){  
     return this.apiService.get<Product[]>('api/scenario/promo-simulate-test/')
@@ -196,6 +204,9 @@ export class OptimizerService {
   }
   get_base_line_promotions(){
     return this.base_line_promotion
+  }
+  optimizeResult(data){
+      return this.apiService.post("api/optimiser/calculate/" , data)
   }
 
   getOptimizerMetrics(requestData: any): Observable<any> {

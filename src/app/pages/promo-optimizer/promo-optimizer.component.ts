@@ -162,7 +162,13 @@ export class PromoOptimizerComponent implements OnInit {
     receiveMessage($event: any) {
         console.log('recieved');
         if($event == 'Optimize'){
-            this.isOptimiserFilterApplied = true
+            this.optimize.optimizeResult(this.get_optimizer_form()).subscribe(data=>{
+                this.optimize.setOptimizerResponseObservable(data)
+                this.isOptimiserFilterApplied = true
+               
+            })
+           
+        
         }
         else if($event == 'OptimizerFilterReset'){
             this.isOptimiserFilterApplied = false
@@ -170,6 +176,46 @@ export class PromoOptimizerComponent implements OnInit {
         else{
             this.openModal($event);
         }
+    }
+    get_optimizer_form(){
+        let obj = {
+            "account_name" : "Pyaterochka",
+            "brand":"",
+            "brand_format" : "",
+            "corporate_segment":"GUM",
+            "strategic_cell" : "",
+            "product_group" : "Orbit OTC",
+            "objective_function" : "MAC",
+            "mars_tpr" : "",
+            "co_investment" : 0,
+            "config_gsv": false,
+            "config_mac": false,
+            "config_mac_perc": false,
+            "config_max_consecutive_promo": false,
+            "config_min_consecutive_promo": false,
+            "config_nsv": false,
+            "config_promo_gap": false,
+            "config_rp": false,
+            "config_rp_perc": false,
+            "config_sales": false,
+            "config_trade_expense": false,
+            "config_units": false,
+            "param_gsv": 5,
+            "param_mac": 5,
+            "param_mac_perc": 5,
+            "param_max_consecutive_promo": 5,
+            "param_min_consecutive_promo": 5,
+            "param_nsv": 5,
+            "param_promo_gap": 5,
+            "param_rp": 5,
+            "param_rp_perc": 5,
+            "param_sales": 5,
+            "param_trade_expense": 5,
+            "param_units": 5,
+            "param_no_of_waves":5,
+            "param_no_of_promo" : 5
+        }
+        return obj
     }
 
     close($event){

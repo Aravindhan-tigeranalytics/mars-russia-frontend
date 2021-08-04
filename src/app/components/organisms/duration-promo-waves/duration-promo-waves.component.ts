@@ -1,4 +1,5 @@
 import { Component , Output , EventEmitter, Input } from '@angular/core';
+import { Options, LabelType } from '@angular-slider/ngx-slider';
 
 @Component({
     selector: 'nwn-duration-promo-waves',
@@ -6,10 +7,38 @@ import { Component , Output , EventEmitter, Input } from '@angular/core';
     styleUrls: ['./duration-promo-waves.component.css'],
 })
 export class DurationPromoWavesComponent {
+    @Input()
+    floor = 0
+    @Input()
+    ceil = 52
+    @Input()
+    steps = 1
+
     @Output()
     durationWavesEvent = new EventEmitter()
     @Input()
     basepromo = 0
+    @Input()
+    options: Options = {
+        floor: this.floor,
+        ceil: this.ceil,
+        step : this.steps,
+        showSelectionBar: true,
+        translate: (value: number, label: LabelType): string => {
+            console.log("value" , value)
+            
+            
+            switch (label) {
+                case LabelType.Ceil:
+                    return value + ' weeks';
+                case LabelType.Floor:
+                    return value + ' weeks';
+                default:
+                    return '' + value;
+            }
+        },
+    }
+
 
     duration_min = 0
     duration_max = 0

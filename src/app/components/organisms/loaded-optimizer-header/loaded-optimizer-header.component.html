@@ -72,13 +72,13 @@
                         <p rightMetricContent>Objective function</p>
                     </nwn-metric-item>
                 </div>
-                <div class="mr-2">
+                <!-- <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
                         <p topValue>{{optimizer_data?.data.param_no_of_waves}}</p>
                         <p topHeadValue>3 - 7</p>
                         <p topMetricContent>Number of waves</p>
                     </nwn-metric-item>
-                </div>
+                </div> -->
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('duration-of-waves')">
                         <p topValue>{{optimizer_data?.data.param_max_consecutive_promo}}</p>
@@ -89,7 +89,7 @@
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('minimum-gap-waves')">
                         <p topValue>{{optimizer_data?.data.param_promo_gap}}</p>
-                        <p topHeadValue>3 - 7</p>
+                        <p topHeadValue>{{param_gap_min}} - {{param_gap_max}}</p>
                         <p topMetricContent>Minimum gap</p>
                     </nwn-metric-item>
                 </div>
@@ -98,7 +98,7 @@
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
                         <p topValue>{{optimizer_data?.data.param_no_of_promo}}</p>
-                        <p topHeadValue>20 - 30</p>
+                        <p topHeadValue>{{min_week}} - {{max_week}}</p>
                         <p topMetricContent>Number of weeks</p>
                     </nwn-metric-item>
                 </div>
@@ -270,7 +270,7 @@
 
 <!-- number promo waves -->
 <nwn-modal id="number-promo-weeks" class="hidden">
-    <nwn-number-promo-weeks></nwn-number-promo-weeks>
+    <nwn-number-promo-weeks ></nwn-number-promo-weeks>
 </nwn-modal>
 <!-- Duration of waves -->
 <nwn-modal id="duration-of-waves" class="hidden">
@@ -278,7 +278,12 @@
 </nwn-modal>
 <!-- Min gap between waves -->
 <nwn-modal id="minimum-gap-waves" class="hidden">
-    <nwn-minimum-gap-waves></nwn-minimum-gap-waves>
+    <nwn-minimum-gap-waves [basepromo] = "optimizer_data?.data.param_promo_gap" (paramGapEvent)="paramGapEvent($event)"></nwn-minimum-gap-waves>
+</nwn-modal>
+
+<!-- Number of promo weeks -->
+<nwn-modal id="number-promo-waves" class="hidden">
+    <nwn-number-promo-waves [basepromo] = "optimizer_data?.data.param_no_of_promo" (promoWaveEvent)="promoWaveEvent($event)"></nwn-number-promo-waves>
 </nwn-modal>
 
 <!-- nwn-mac-popup -->
@@ -306,21 +311,18 @@
 
 <!-- promotion details -->
 <nwn-modal id="promotion-details" class="hidden">
-    <nwn-promotion-details></nwn-promotion-details>
+    <nwn-promotion-details *ngIf="promotions.length>0" [base_promotions]="promotions"></nwn-promotion-details>
 </nwn-modal>
 
 
-<!-- Number of promo weeks -->
-<nwn-modal id="number-promo-waves" class="hidden">
-    <nwn-number-promo-waves></nwn-number-promo-waves>
-</nwn-modal>
+
 <!-- Compulsory Weeks -->
 <nwn-modal id="compulsory-weeks-popup" class="hidden">
     <nwn-compulsory-weeks-popup *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-compulsory-weeks-popup>
 </nwn-modal>
 <!-- Weeks Ignored-->
 <nwn-modal id="weeks-ignored" class="hidden">
-    <nwn-weeks-ignored></nwn-weeks-ignored>
+    <nwn-weeks-ignored *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-weeks-ignored>
 </nwn-modal>
 
 
