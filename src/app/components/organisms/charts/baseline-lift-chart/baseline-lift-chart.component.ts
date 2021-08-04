@@ -210,19 +210,33 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
                 .attr('stroke-width', '1')
                 .attr('fill', '#E4E4E7');
 
+            console.log(d3.select(datum.target).attr('id'))
             // Update the tooltip
             d3.select('#baseline-tooltip')
                 .style('opacity', '1')
                 .style('left', xPositionForTooltip + 'px')
                 .style('top', yPositionForTooltip + 'px');
-            if (d3.select(datum.target).attr('id') === 'base') {
-                d3.select('#baseline-tooltip').select('#base').text(dollarFormat(index.value1));
-            } else {
-                d3.select('#baseline-tooltip').select('#base').text(dollarFormat(index.value2));
+
+            if(index.key == "baseline1"){
+                // if (d3.select(datum.target).attr('id') === 'base') {
+                    d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#7DD3FC;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value1) + '</div><br/><div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value2)+'</div>');
+                // } else {
+                //     d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value2) + '</div><br/><div style="background-color:#7DD3FC;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value1)+'</div>');
+                // }
             }
-            d3.select('#baseline-tooltip')
+            else {
+                // if (d3.select(datum.target).attr('id') === 'base') {
+                    d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#0284C7;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value1) + '</div><br/><div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value2)+'</div>');
+                // } else {
+                //     d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value2) + '</div><br/><div style="background-color:#0284C7;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value1)+'</div>');
+                // }
+            }
+ 
+
+                d3.select('#baseline-tooltip')
                 .select('#baseColor')
                 .style('background-color', d3.select(datum.target).attr('fill'));
+            
             d3.select('#baseline-tooltip').select('#group').text(d3.select(datum.target.parentNode).attr('groupType'));
         }
 
