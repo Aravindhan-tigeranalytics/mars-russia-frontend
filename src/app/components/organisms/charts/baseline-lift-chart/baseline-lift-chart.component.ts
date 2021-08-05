@@ -171,7 +171,7 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
             .attr('height', (d: any) => this.boundingHeight - yScale(d.value2))
             .attr('fill', '#E0F2FE')
             .on('mouseover', mouseover)
-            // .on('mouseleave', mouseleave);
+            .on('mouseleave', mouseleave);
 
         const chart = this.svg;
         // Event handlers
