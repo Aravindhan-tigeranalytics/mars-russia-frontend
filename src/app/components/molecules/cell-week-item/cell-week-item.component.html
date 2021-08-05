@@ -1,9 +1,17 @@
-<div
+<!-- <div
     class="holiday pl-4 pr-9 py-2.5 space-y-1 text-left relative"
     [ngClass]="{
         'bg-marslblue-100': type === 'lowholidayweek',
         'bg-marslblue-200': type === 'meediumholidayweek',
         'bg-marslblue-300': type === 'highholidayweek'
+    }"
+> -->
+<div
+    class="holiday pl-4 pr-9 py-2.5 space-y-1 text-left relative"
+    [ngClass]="{
+        'light-gradient': type === 'lowholidayweek',
+        'medium-gradient': type === 'meediumholidayweek',
+        'high-gradient': type === 'highholidayweek'
     }"
 >
     <p class="text-caption text-marsgray-500 font-normal">{{inWeek.date}}</p>

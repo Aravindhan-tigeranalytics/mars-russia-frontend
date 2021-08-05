@@ -25,8 +25,24 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     param_gap_max = 0
     min_week= 0
     max_week = 0
+    selected_promotions = []
 
     product_week : ProductWeek[] = []
+    @Input()
+    title: string = '';
+    @Input()
+    status: 'string' | 'yettobesimulated' | 'viewmore' | 'viewless' = 'yettobesimulated';
+    @Output()
+    modalEvent = new EventEmitter<string>();
+    @Output()
+    modalClose = new EventEmitter()
+    cumpulsory_week = 0
+    ignored_week = 0
+    @Output()
+    optimizeAndResetEvent = new EventEmitter()
+
+
+    optimizerMetrics:any = ''
     constructor(public optimize:OptimizerService){}
     ngOnInit() {
         this.optimize.getoptimizerDataObservable().pipe(
@@ -43,18 +59,28 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         })
         
     }
-    @Input()
-    title: string = '';
-    @Input()
-    status: 'string' | 'yettobesimulated' | 'viewmore' | 'viewless' = 'yettobesimulated';
-    @Output()
-    modalEvent = new EventEmitter<string>();
-
-    optimizerMetrics:any = ''
+  
 
     // constructor(private optimize : OptimizerService){
 
     // }
+    cumpulsoryWeekEvent($event){
+        // {
+        //     "id" : "compulsory-weeks-popup",
+        //     "value" : this.weekly_map
+        // }
+        this.cumpulsory_week = $event["value"].length
+        this.modalClose.emit($event["id"])
+    }
+    ignoredWeekEvent($event){
+        this.ignored_week =  $event["value"].length
+        this.modalClose.emit($event["id"])
+
+    }
+    promotionAddEvent($event){
+        this.selected_promotions = $event["value"]
+        this.modalClose.emit($event["id"])
+    }
 
     durationWavesEvent($event){
         this.duration_min = $event["min_val"]
@@ -76,20 +102,72 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
 
     }
     configChangeEvent($event){
+        console.log($event)
         // label: "MAC", event:max_val: 0.4
 // min_val: 0
-let check = this.checkboxMetrices.find(d=>{
-    if(d.id=="mac-popup"){
-        d.checkHeadValue = "X" +  $event['event']['max_val']
+this.checkboxMetrices.find(d=>{
+    console.log($event["label"] , "label from config")
+    console.log(d.checkboxLabel , "check box label availalbe")
+    if(d.checkboxLabel==$event["label"]){
+
+        d.checkHeadValue = "x" +  $event['event']['max_val']
     }
+    // if(d.id=="retailer-popup"){
+    //     d.checkHeadValue = "x" +  $event['event']['max_val']
+    // }
+    // if(d.id=="te-popup"){
+    //     d.checkHeadValue = "x" +  $event['event']['max_val']
+    // }
+    // if(d.id=="mac-per-popup"){
+    //     d.checkHeadValue = "x" +  $event['event']['max_val']
+    // }
+    // if(d.id=="rp-per-popup"){
+    //     d.checkHeadValue = "x" +  $event['event']['max_val']
+    // }
 })
-        console.log($event , "event congfig change")
+         
     }
 
     objectiveEvent($event){
         this.selected_objective = $event
         console.log(this.selected_objective , "selected objective  selected")
 
+    }
+    optimizeReset(type){
+        if(type=="optimize"){
+            this.optimizeAndResetEvent.emit({
+                "type" : 'optimize',
+                'data' : this.optimizerData()
+            })
+            // this.isExpand = true
+            // this.modalEvent.emit('Optimize');
+            // if(modalType == 'Optimize'){
+            //     this.isExpand = true
+    
+            // }
+            // this.modalEvent.emit(modalType);
+        }
+
+    }
+    optimizerData(){
+       let decoded =  this.selected_promotions.map(d=>Utils.decodePromotion(d))
+    //    console.log(decoded)
+    //    debugger
+        // Utils.decodePromotion()
+        return {
+
+           "objective_function" : this.selected_objective,
+    "param_max_consecutive_promo" : this.duration_max,
+    "param_min_consecutive_promo" : this.duration_min,
+    "param_promo_gap" : this.param_gap_max,
+    "param_total_promo_min" : this.min_week,
+    "param_total_promo_max":this.max_week,
+   "mars_tpr": decoded.map(d=>d.promo_depth),
+   "co_investment" : decoded.map(d=>d.co_investment),
+   "mechanics" : decoded.map(d=>d.promo_mechanics),
+
+
+        }
     }
 
     sendMessage(modalType: string): void {

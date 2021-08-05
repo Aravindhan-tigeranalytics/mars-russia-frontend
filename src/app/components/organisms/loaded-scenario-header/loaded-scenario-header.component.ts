@@ -98,6 +98,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
         this.optimize.getProductWeekObservable().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe(weekdata=>{
+            console.log(weekdata , "week data errors")
             if(weekdata.length == 0){
                 // this.hidepanel = true
                 this.product_week = []
@@ -126,14 +127,18 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
                         promo_depth.push(gen_promo)
                     }
                     let str = "Y" + 1 + " Q"+data.quater as string
-                    if(str in this.genobj){
-                        this.genobj[str].push(data)
-                        // append(data)
-                    }
-                    else{
+                    if(!this.quarter_year.includes(str)){
                         this.quarter_year.push(str);
-                        this.genobj[str] = [data]
+
                     }
+                    // if(str in this.genobj){
+                    //     this.genobj[str].push(data)
+                    //     // append(data)
+                    // }
+                    // else{
+                    //     this.quarter_year.push(str);
+                    //     this.genobj[str] = [data]
+                    // }
                     data.promo_depth = parseInt(data.promo_depth)
                     data.co_investment = (data.co_investment)
     
@@ -282,6 +287,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     config = {
         displayKey: 'name', // if objects array passed which key to be displayed defaults to description
         search: false,
+        placeholder:'Time period'
     };
     optionsNormal = [
         {

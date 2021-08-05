@@ -229,6 +229,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.selected_product= null as any
         this._populateFilters(this.product)
         this.optimize.setProductWeekObservable([])
+        this.hidepanel = true
         // this.selected_product_week
         // t
     }
@@ -272,19 +273,22 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.hideFilter = 'yettobesimulated'
             this.reset()
         }
-        
-        console.log(form , "form data")
-        // debugger
-        this.optimize.getPromoSimulateData(form).subscribe(data=>{
-           this.optimize.setSimulatedDataObservable(data)
-           if($event.action == 'Simulate'){
-            this.isFilterApplied = true
-            this.hideFilter = 'viewmore'
-            this.hidepanel = true
-            // this.hideFilter = 'yettobesimulated'
+        else{
+            this.optimize.getPromoSimulateData(form).subscribe(data=>{
+                this.optimize.setSimulatedDataObservable(data)
+                if($event.action == 'Simulate'){
+                 this.isFilterApplied = true
+                 this.hideFilter = 'viewmore'
+                 this.hidepanel = true
+                 // this.hideFilter = 'yettobesimulated'
+             }
+            
+             })
+
         }
+    
+         
        
-        })
        
     }
     downloadEvent($event){

@@ -5,7 +5,9 @@ export class ModalApply{
   closeModal = new EventEmitter()
 
   apply(id){
+    // this.searchText = ''
     this.closeModal.emit(id)
+    this.searchText = ""
   }
   inputChangeEvent(event:any){
     this.searchText = event

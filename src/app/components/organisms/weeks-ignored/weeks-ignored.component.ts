@@ -1,4 +1,4 @@
-import { Component,Input, OnInit,SimpleChanges } from '@angular/core';
+import { Component,EventEmitter,Input, OnInit,Output,SimpleChanges } from '@angular/core';
 import { ProductWeek } from '@core/models';
 
 @Component({
@@ -12,6 +12,8 @@ export class WeeksIgnoredComponent {
     quarter_year = []
     @Input()
     product_week:ProductWeek[] = []
+    @Output()
+    ignoredWeekEvent = new EventEmitter()
     selected_product_week:ProductWeek[] = []
     selected_quarter:string = ''
     weekly_map:Array<any> = [] //{"selected_promotion" : $event.value , "week" : this.product_week 
@@ -19,15 +21,28 @@ export class WeeksIgnoredComponent {
         
        
     }
+    apply(){
+        this.ignoredWeekEvent.emit({
+            "id" : "weeks-ignored",
+            "value" : this.weekly_map
+        })
+
+    }
     getWeek(p,weekly_m){
         if(weekly_m.find(d=>d.week == p.week)){
             return 'disabledWeek'
         }
-        return "compulsoryWeek"
+        return "defaultWeek"
     }
     clickWeekly(product){
-        this.weekly_map.push(product)
-        console.log(this.weekly_map , "week ly map")
+        if(this.weekly_map.find(d=>d.week == product.week)){
+            this.weekly_map = this.weekly_map.filter(d=>d.week!=product.week)
+        }
+        else{
+            this.weekly_map.push(product)
+
+        }
+        
     }
     filter_product_week(){
         this.selected_product_week  = this.product_week.filter(data=>data.quater == parseInt(

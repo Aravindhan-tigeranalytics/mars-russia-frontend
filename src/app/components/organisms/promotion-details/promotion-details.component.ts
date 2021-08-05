@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit,Output,SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 import * as Utils from "@core/utils"
@@ -12,8 +12,11 @@ import { CheckboxModel } from '@core/models';
 })
 export class PromotionDetailsComponent implements OnInit {
     input_promotions:Array<CheckboxModel> = []
+    @Output()
+    promotionAddEvent = new EventEmitter()
     @Input()
     base_promotions:any[] = []
+    selected_promotions:any[] = []
 
     form = new FormGroup({
         promo: new FormControl('', []),
@@ -93,6 +96,37 @@ export class PromotionDetailsComponent implements OnInit {
             // console.log(name , "name of label")
              
         })
+    }
+    valueChangePromo($event){
+        if($event['checked']){
+            this.selected_promotions.push($event['value'])
+        }
+        else{
+            this.selected_promotions = this.selected_promotions.filter(d=>d!=$event['value'])
+
+        }
+        // value: "TPR-15%", checked: false
+        // console.log($event , "value change event")
+        // let promo = this.input_promotions.find(d=>d.value == $event['value'])
+
+        // let checked = promo?.checked
+        // if(checked){
+        //     // promo.checked = !checked
+        // }
+       
+        // console.log(this.input_promotions , "input prmotions ")
+    }
+    clickClosedEvent($event){
+        // TPR-15% close event
+        console.log($event , "close event")
+    }
+    apply(){
+        this.promotionAddEvent.emit({
+            "id" : "promotion-details",
+            "value" : this.selected_promotions
+        })
+
+
     }
     addPromotions(){
         if(this.promo_generated){

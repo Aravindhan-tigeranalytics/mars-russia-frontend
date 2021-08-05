@@ -159,6 +159,12 @@ export class PromoOptimizerComponent implements OnInit {
     closeModal(id: string) {
         this.modalService.close(id);
     }
+    closeModalEvent($event){
+        this.closeModal($event)
+    }
+    optimizeAndReset($event){
+        console.log($event , "event otimize")
+    }
     receiveMessage($event: any) {
         console.log('recieved');
         if($event == 'Optimize'){
@@ -213,7 +219,9 @@ export class PromoOptimizerComponent implements OnInit {
             "param_trade_expense": 5,
             "param_units": 5,
             "param_no_of_waves":5,
-            "param_no_of_promo" : 5
+            "param_no_of_promo" : 5,
+            "param_total_promo_min" : 0,
+            "param_total_promo_max" : 0
         }
         return obj
     }
