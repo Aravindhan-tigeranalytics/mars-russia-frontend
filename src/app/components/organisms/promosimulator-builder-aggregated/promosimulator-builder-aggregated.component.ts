@@ -145,6 +145,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 { group: 'RSV v/o VAT', base: data['base']['total']['total_rsv_w_o_vat'], simulated: data['simulated']['total']['total_rsv_w_o_vat'] },
                 { group: 'Customer Margin', base: data['base']['total']['rp'], simulated: data['simulated']['total']['rp'] },
             ]
+            console.log(this.plChartData,"checkhere")
             this.baselineLiftChartData = [
                 {
                     group: 'Baseline vs Incremental',
