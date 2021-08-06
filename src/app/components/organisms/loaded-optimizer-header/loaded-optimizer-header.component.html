@@ -68,28 +68,28 @@
             <div class="flex flex-row flex-wrap items-center border-b border-marsgray-300">
                 <div class="mr-2">
                     <nwn-metric-item (click)="sendMessage('optimize-function')" nwnMetricItem="defaultRight" [showRightValue]="false">
-                        <p rightHeadValue>Maximize MAC</p>
+                        <p rightHeadValue>{{selected_objective}}</p>
                         <p rightMetricContent>Objective function</p>
                     </nwn-metric-item>
                 </div>
-                <div class="mr-2">
+                <!-- <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
                         <p topValue>{{optimizer_data?.data.param_no_of_waves}}</p>
                         <p topHeadValue>3 - 7</p>
                         <p topMetricContent>Number of waves</p>
                     </nwn-metric-item>
-                </div>
+                </div> -->
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('duration-of-waves')">
                         <p topValue>{{optimizer_data?.data.param_max_consecutive_promo}}</p>
-                        <p topHeadValue>3 - 7</p>
+                        <p topHeadValue>{{duration_min}} - {{duration_max}}</p>
                         <p topMetricContent>Duration of waves</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('minimum-gap-waves')">
                         <p topValue>{{optimizer_data?.data.param_promo_gap}}</p>
-                        <p topHeadValue>3 - 7</p>
+                        <p topHeadValue>{{param_gap_min}} - {{param_gap_max}}</p>
                         <p topMetricContent>Minimum gap</p>
                     </nwn-metric-item>
                 </div>
@@ -98,21 +98,21 @@
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
                         <p topValue>{{optimizer_data?.data.param_no_of_promo}}</p>
-                        <p topHeadValue>20 - 30</p>
+                        <p topHeadValue>{{min_week}} - {{max_week}}</p>
                         <p topMetricContent>Number of weeks</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('compulsory-weeks-popup')">
                         <p topValue>-</p>
-                        <p topHeadValue>7</p>
+                        <p topHeadValue>{{cumpulsory_week}}</p>
                         <p topMetricContent>Compulsory week</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('weeks-ignored')">
                         <p topValue>-</p>
-                        <p topHeadValue>6</p>
+                        <p topHeadValue>{{ignored_week}}</p>
                         <p topMetricContent>Ignored weeks</p>
                     </nwn-metric-item>
                 </div>
@@ -125,7 +125,7 @@
                             <p>N+3-10%</p> -->
                         </div>
                         <div multipleHeadValue class="flex flex-row">
-                            <!-- <p *ngFor="let promotion of promotions | slice:4">{{promotion}},</p> -->
+                            <p *ngFor="let promotion of selected_promotions">{{promotion}},</p>
                             <!-- <p>TPR - 10%,15% (Co-10%)</p>
                             <p>N+1-10%</p>
                             <p>N+2-10%, 20%, 30%</p> -->
@@ -144,6 +144,9 @@
             >
                 <div
                     class="checkbox-metric-item"
+                    [ngClass]="{
+                        'disabled-div' : checkboxMetric.disabled
+                    }"
                     *ngFor="let checkboxMetric of checkboxMetrices; let i = index"
                     cdkDrag
                     [cdkDragDisabled]="checkboxMetric.disabled"
@@ -192,7 +195,7 @@
         <div class="flex flex-row">
             <div class="flex flex-row space-x-4 items-center">
                 <nwn-button type="link" size="sm" (click)="sendMessage('OptimizerFilterReset')"> Reset </nwn-button>
-                <nwn-button type="primary" size="sm" (click)="sendMessage('Optimize')"> Optimize </nwn-button>
+                <nwn-button type="primary" size="sm" (click)="optimizeReset('optimize')"> Optimize </nwn-button>
                 <nwn-button type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                     <p tooltipContent>Save scenario</p>
@@ -260,5 +263,69 @@
 <div *ngIf="!isExpand">
     <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
 </div>
+
+
+
+<!-- optimizer function-->
+<nwn-modal id="optimize-function" class="hidden">
+    <nwn-optimize-function (objectiveEvent) = "objectiveEvent($event)"></nwn-optimize-function>
+</nwn-modal>
+
+<!-- number promo waves -->
+<nwn-modal id="number-promo-weeks" class="hidden">
+    <nwn-number-promo-weeks ></nwn-number-promo-weeks>
+</nwn-modal>
+<!-- Duration of waves -->
+<nwn-modal id="duration-of-waves" class="hidden">
+    <nwn-duration-promo-waves [basepromo] = "optimizer_data?.data.param_max_consecutive_promo" (durationWavesEvent)="durationWavesEvent($event)"></nwn-duration-promo-waves>
+</nwn-modal>
+<!-- Min gap between waves -->
+<nwn-modal id="minimum-gap-waves" class="hidden">
+    <nwn-minimum-gap-waves [basepromo] = "optimizer_data?.data.param_promo_gap" (paramGapEvent)="paramGapEvent($event)"></nwn-minimum-gap-waves>
+</nwn-modal>
+
+<!-- Number of promo weeks -->
+<nwn-modal id="number-promo-waves" class="hidden">
+    <nwn-number-promo-waves [basepromo] = "optimizer_data?.data.param_no_of_promo" (promoWaveEvent)="promoWaveEvent($event)"></nwn-number-promo-waves>
+</nwn-modal>
+
+<!-- nwn-mac-popup -->
+<nwn-modal id="mac-popup" class="hidden">
+    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'MAC'"></nwn-mac-popup>
+</nwn-modal>
+
+<!-- nwn-mac-popup -->
+<nwn-modal id="retailer-popup" class="hidden">
+    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'Retailer profit'"></nwn-mac-popup>
+</nwn-modal>
+
+<nwn-modal id="te-popup" class="hidden">
+    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'Trade expense'"></nwn-mac-popup>
+</nwn-modal>
+
+<nwn-modal id="mac-per-popup" class="hidden">
+    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'MAC, % NSV'"></nwn-mac-popup>
+</nwn-modal>
+
+<nwn-modal id="rp-per-popup" class="hidden">
+    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'RP, % RSV'"></nwn-mac-popup>
+</nwn-modal>
+<!--  -->
+
+<!-- promotion details -->
+<nwn-modal id="promotion-details" class="hidden">
+    <nwn-promotion-details (promotionAddEvent) = "promotionAddEvent($event)" *ngIf="promotions.length>0" [base_promotions]="promotions"></nwn-promotion-details>
+</nwn-modal>
+
+
+
+<!-- Compulsory Weeks -->
+<nwn-modal id="compulsory-weeks-popup" class="hidden">
+    <nwn-compulsory-weeks-popup (cumpulsoryWeekEvent) = "cumpulsoryWeekEvent($event)" *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-compulsory-weeks-popup>
+</nwn-modal>
+<!-- Weeks Ignored-->
+<nwn-modal id="weeks-ignored" class="hidden">
+    <nwn-weeks-ignored (ignoredWeekEvent) = "ignoredWeekEvent($event)" *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-weeks-ignored>
+</nwn-modal>
 
 

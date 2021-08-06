@@ -34,6 +34,11 @@
 .tertiary-btn {
     @apply text-marsgray-700 border border-marsgray-300 hover:bg-marsgray-100 font-normal;
 }
+.danger-btn {
+    
+    @apply text-white bg-marsblue-500 ;
+    background-color: red;
+}
 .link-btn {
     @apply text-marsblue-500 bg-transparent hover:bg-marsgray-200;
 }

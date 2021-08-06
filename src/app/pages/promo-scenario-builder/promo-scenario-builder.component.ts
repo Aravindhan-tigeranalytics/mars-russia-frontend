@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@molecules/modal/modal.service';
 import {FormBuilder, FormGroup,FormArray,FormControl,ValidatorFn} from '@angular/forms';
 import {OptimizerService} from '@core/services'
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel} from "@core/models"
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel, ListPromotion, FilterModel} from "@core/models"
 import * as utils from "@core/utils"
 // import {} from 'file-saver'
 import * as FileSaver from 'file-saver';
@@ -19,6 +19,7 @@ import * as $ from 'jquery';
     styleUrls: ['./promo-scenario-builder.component.css'],
 })
 export class PromoScenarioBuilderComponent implements OnInit {
+    hidepanel = true
     isFilterApplied: boolean = false
     hideFilter: string = 'yettobesimulated'
     form: FormGroup = null as any;
@@ -34,6 +35,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
     brands_format:Array<CheckboxModel> = []
     brands:Array<CheckboxModel> = []
     product_group:Array<CheckboxModel> = []
+    filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
+"category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
     selected_retailer:string = null as any
     selected_product:string = null as any
     selected_category:string = null as any
@@ -94,6 +97,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.retailers.filter(val=>val.value != event.value).forEach(val=>val.checked = false)
         if(event.checked){
             this.selected_retailer = event.value
+            this.filter_model.retailer = this.selected_retailer
             this.retailers.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
 
         }
@@ -210,6 +214,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             if(p){
                 this.optimize.fetch_week_value(p.id)
             }
+           this.hidepanel = false
             this.restApi.setAccAndPPGFilteredFlagObservable(true)
         }
         if($event=="upload-weekly-promotions"){
@@ -229,9 +234,21 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.selected_product= null as any
         this._populateFilters(this.product)
         this.optimize.setProductWeekObservable([])
+        this.hidepanel = true
         this.restApi.setAccAndPPGFilteredFlagObservable(true)
         // this.selected_product_week
         // t
+    }
+    hidePanel(){
+       
+        this.hidepanel = !this.hidepanel
+        if(this.hidepanel){
+            this.hideFilter = "viewmore"
+        }
+        else{
+            this.hideFilter = "viewless"
+        }
+
     }
     simulateResetEvent($event){
         console.log($event , "event passed")
@@ -263,19 +280,23 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.reset()
             this.restApi.setAccAndPPGFilteredFlagObservable(false)
         }
-        
-        console.log(form , "form data")
-        // debugger
-        this.optimize.getPromoSimulateData(form).subscribe(data=>{
-           this.optimize.setSimulatedDataObservable(data)
-           if($event.action == 'Simulate'){
-            this.isFilterApplied = true
-            this.hideFilter = 'viewmore'
-            this.restApi.setAccAndPPGFilteredFlagObservable(true)
-            // this.hideFilter = 'yettobesimulated'
+        else{
+            this.optimize.getPromoSimulateData(form).subscribe(data=>{
+                this.optimize.setSimulatedDataObservable(data)
+                if($event.action == 'Simulate'){
+                 this.isFilterApplied = true
+                 this.hideFilter = 'viewmore'
+                 this.hidepanel = true
+                 this.restApi.setAccAndPPGFilteredFlagObservable(true)
+                 // this.hideFilter = 'yettobesimulated'
+             }
+            
+             })
+
         }
+    
+         
        
-        })
        
     }
     downloadEvent($event){
@@ -370,7 +391,22 @@ export class PromoScenarioBuilderComponent implements OnInit {
         });
         
 this.optimize.savePromoScenario(weekly).subscribe(data=>{
-    console.log("saved data")
+    let promotion : ListPromotion = {
+        "id" : data["saved_id"],
+        "name" : weekly["name"],
+        "comments" : weekly["comments"],
+        "scenario_type" : "promo",
+        "meta" : {
+            "retailer" : weekly["account_name"],
+            "product_group" : weekly["product_group"],
+            "pricing" : false
+        }
+
+
+    }
+    this.optimize.addPromotionList(promotion)
+
+    console.log("saved data" , data)
 })
 this.modalService.close("save-scenario-popup")
     // debugger
@@ -380,11 +416,11 @@ this.modalService.close("save-scenario-popup")
         console.log('recieved');
         if($event == 'Simulate'){
             this.isFilterApplied = true
-            this.hideFilter = 'viewmore'
+            this.hideFilter = 'viewless'
         }
         else if($event == 'Reset'){
             this.isFilterApplied = false
-            this.hideFilter = 'viewless'
+            this.hideFilter = 'viewmore'
         }
         else{
             this.openModal($event);

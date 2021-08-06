@@ -1,9 +1,11 @@
-<nwn-loaded-scenario-header  
+<nwn-loaded-scenario-header 
+[filter_model] = "filter_model" 
+[hidepanel] = "hidepanel"
 (downloadEvent)="downloadEvent($event)" 
 (modalEvent)="receiveMessage($event)" 
 (simulateResetEvent)="simulateResetEvent($event)">
 </nwn-loaded-scenario-header>
-<nwn-status-bar [nwnStatusBar]="hideFilter">YET TO BE SIMULATED</nwn-status-bar>
+<nwn-status-bar (click)="hidePanel()"  [nwnStatusBar]="hideFilter">YET TO BE SIMULATED</nwn-status-bar>
 <div>
     <nwn-summary-placeholder *ngIf="!isFilterApplied"></nwn-summary-placeholder>
     <nwn-promosimulator-builder-aggregated *ngIf="isFilterApplied"></nwn-promosimulator-builder-aggregated>
@@ -70,6 +72,9 @@
     <nwn-loaded-promosimulator-scenario [scenario_name] = 'scenario_name' [scenario_comment]='scenario_comment'></nwn-loaded-promosimulator-scenario>
 </nwn-modal>
 
+<nwn-modal id="delete-scenario" class="hidden">
+    <nwn-delete-alert></nwn-delete-alert>
+</nwn-modal>
 <!-- Command Interface filter -->
 <nwn-modal id="filter-basic" class="hidden">
     <nwn-filter-basic></nwn-filter-basic>

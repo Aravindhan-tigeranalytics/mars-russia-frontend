@@ -17,7 +17,7 @@
     @apply p-0 rounded-none !important;
 }
 ::ng-deep .smallDropdown .ngx-dropdown-container .ngx-dropdown-button .display-text {
-    width: calc(100% - 30px) !important;
+    width: calc(100% - 20px) !important;
 }
 ::ng-deep .smallDropdown .ngx-dropdown-container .ngx-dropdown-list-container hr {
     @apply hidden !important;

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 
 @Component({
@@ -6,27 +6,53 @@ import { Options, LabelType } from '@angular-slider/ngx-slider';
     templateUrl: './slider.component.html',
     styleUrls: ['./slider.component.css'],
 })
-export class SliderComponent {
+export class SliderComponent  implements OnInit{
+    @Input()
+    floor = 0
+    @Input()
+    ceil = 52
+    @Input()
+    steps = 1
     @Input()
     minValue = 0;
 
     @Input()
-    maxValue = 52;
+    maxValue = 0;
+
+    @Output()
+    sliderChangeEvent = new EventEmitter()
 
     @Input()
-    options: Options = {
-        floor: 0,
-        ceil: 52,
-        showSelectionBar: true,
-        translate: (value: number, label: LabelType): string => {
-            switch (label) {
-                case LabelType.Ceil:
-                    return value + ' weeks';
-                case LabelType.Floor:
-                    return value + ' weeks';
-                default:
-                    return '' + value;
-            }
-        },
-    };
+    options:Options = null as any
+        // customValueToPosition : (val:number , minVal : number ,maxVal : number)=>{
+        //     console.log(val , "customvaluetoposition")
+        //     console.log(minVal , "minVal customvaluetoposition")
+        //     console.log(maxVal , " maxVal customvaluetoposition")
+        //     return val
+
+        // } 
+    // };
+    changeSlider($event){
+        console.log($event , "$event")
+        console.log(this.minValue , "min value")
+        console.log(this.maxValue , "max value")
+         setTimeout(()=>{
+                this.sliderChangeEvent.emit({
+                    "min_val" : this.minValue,
+                    "max_val" : this.maxValue
+                })
+    
+
+            },500)
+    }
+    ngOnInit(){
+        // setTimeout(()=>{
+        //     this.options.floor = 0
+        //     this.options.ceil = 1
+        //     this.options.step = 0.1
+
+        // },5000)
+    }
+
+
 }

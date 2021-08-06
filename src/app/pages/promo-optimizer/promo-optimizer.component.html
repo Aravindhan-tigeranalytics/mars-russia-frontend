@@ -1,5 +1,5 @@
-<nwn-loaded-optimizer-header [simulated]="status" (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
-
+<nwn-loaded-optimizer-header (optimizeAndResetEvent) = "optimizeAndReset($event)" (modalClose) = "closeModalEvent($event)" (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
+<!-- [simulated]="status" -->
 <div>
     <nwn-summary-placeholder *ngIf="!isOptimiserFilterApplied"></nwn-summary-placeholder>
     <nwn-promo-optimizer-aggregated *ngIf="isOptimiserFilterApplied" (modalEvent)="receiveMessage($event)"></nwn-promo-optimizer-aggregated>
@@ -50,59 +50,3 @@
 <nwn-modal id="pricing-scenario" class="hidden">
     <nwn-pricing-scenario></nwn-pricing-scenario>
 </nwn-modal>
-<!-- number promo waves -->
-<nwn-modal id="number-promo-weeks" class="hidden">
-    <nwn-number-promo-weeks></nwn-number-promo-weeks>
-</nwn-modal>
-<!-- promotion details -->
-<nwn-modal id="promotion-details" class="hidden">
-    <nwn-promotion-details></nwn-promotion-details>
-</nwn-modal>
-
-<!-- optimizer function-->
-<nwn-modal id="optimize-function" class="hidden">
-    <nwn-optimize-function></nwn-optimize-function>
-</nwn-modal>
-<!-- Duration of waves -->
-<nwn-modal id="duration-of-waves" class="hidden">
-    <nwn-duration-promo-waves></nwn-duration-promo-waves>
-</nwn-modal>
-<!-- Min gap between waves -->
-<nwn-modal id="minimum-gap-waves" class="hidden">
-    <nwn-minimum-gap-waves></nwn-minimum-gap-waves>
-</nwn-modal>
-<!-- Number of promo weeks -->
-<nwn-modal id="number-promo-waves" class="hidden">
-    <nwn-number-promo-waves></nwn-number-promo-waves>
-</nwn-modal>
-<!-- Compulsory Weeks -->
-<nwn-modal id="compulsory-weeks-popup" class="hidden">
-    <nwn-compulsory-weeks-popup></nwn-compulsory-weeks-popup>
-</nwn-modal>
-<!-- Weeks Ignored-->
-<nwn-modal id="weeks-ignored" class="hidden">
-    <nwn-weeks-ignored></nwn-weeks-ignored>
-</nwn-modal>
-<!-- nwn-mac-popup -->
-<nwn-modal id="mac-popup" class="hidden">
-    <nwn-mac-popup [label] = "'MAC'"></nwn-mac-popup>
-</nwn-modal>
-
-<!-- nwn-mac-popup -->
-<nwn-modal id="retailer-popup" class="hidden">
-    <nwn-mac-popup [label] = "'Retailer Profit'"></nwn-mac-popup>
-</nwn-modal>
-
-<nwn-modal id="te-popup" class="hidden">
-    <nwn-mac-popup [label] = "'Trade Expense'"></nwn-mac-popup>
-</nwn-modal>
-
-<nwn-modal id="mac-per-popup" class="hidden">
-    <nwn-mac-popup [label] = "'MAC,% NSV'"></nwn-mac-popup>
-</nwn-modal>
-
-<nwn-modal id="rp-per-popup" class="hidden">
-    <nwn-mac-popup [label] = "'RP,% RSV'"></nwn-mac-popup>
-</nwn-modal>
-
-

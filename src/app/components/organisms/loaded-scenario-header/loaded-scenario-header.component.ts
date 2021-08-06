@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy,SimpleChanges } from '@angular/core';
 // import {OptimizerService} from '../../../core/services/optimizer.service'
 import {OptimizerService , SimulatorService} from "@core/services"
 // import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel} from "../../../core/models"
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel , UploadModel} from "@core/models"
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel , UploadModel, FilterModel} from "@core/models"
 import { Observable, of, from, BehaviorSubject, combineLatest , Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import * as utils from "@core/utils"
@@ -16,6 +16,8 @@ import * as FileSaver from 'file-saver';
 export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     private unsubscribe$: Subject<any> = new Subject<any>();
     @Input()
+    hidepanel = true
+    @Input()
     title: string = 'Untitled';
     @Output()
     modalEvent = new EventEmitter<string>();
@@ -23,6 +25,8 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     downloadEvent = new EventEmitter<any>();
     @Output()
     simulateResetEvent = new EventEmitter<{"action" : string,"promotion_map" : Array<any> , "promo_elasticity" : number}>();
+    @Input()
+    filter_model : FilterModel
     options1:Array<any> = [];
     promotions$: Observable<string[]> = null as any;
     product_week:ProductWeek[] = [];
@@ -97,7 +101,9 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
         this.optimize.getProductWeekObservable().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe(weekdata=>{
+            console.log(weekdata , "week data errors")
             if(weekdata.length == 0){
+                // this.hidepanel = true
                 this.product_week = []
                 this.optimize.set_baseline_null()
                 this.available_year =["1 year" , "2 years" , "3 years"]
@@ -124,14 +130,18 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
                         promo_depth.push(gen_promo)
                     }
                     let str = "Y" + 1 + " Q"+data.quater as string
-                    if(str in this.genobj){
-                        this.genobj[str].push(data)
-                        // append(data)
-                    }
-                    else{
+                    if(!this.quarter_year.includes(str)){
                         this.quarter_year.push(str);
-                        this.genobj[str] = [data]
+
                     }
+                    // if(str in this.genobj){
+                    //     this.genobj[str].push(data)
+                    //     // append(data)
+                    // }
+                    // else{
+                    //     this.quarter_year.push(str);
+                    //     this.genobj[str] = [data]
+                    // }
                     data.promo_depth = parseInt(data.promo_depth)
                     data.co_investment = (data.co_investment)
     
@@ -142,6 +152,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
                 this.options1 = this.optimize.get_base_line_promotions()
                 console.log(this.options1 , "options for drop down promotion")
                 this.product_week = weekdata
+                // this.hidepanel = false
                 this.selected_quarter = this.quarter_year[0]
                 this.selected_product_week  = this.product_week.filter(data=>data.quater == parseInt(
                     this.selected_quarter.split("Q")[1]
@@ -157,6 +168,11 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
             console.log(error , "error")
           })
     }
+
+    closeClicked($event){
+        console.log("close clicked" , $event)
+    }
+
     downloadWeeklyInput(){
         this.simulatorService.downloadWeeklyInputTemplate().subscribe(data=>{
         const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });    
@@ -292,6 +308,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     config = {
         displayKey: 'name', // if objects array passed which key to be displayed defaults to description
         search: false,
+        placeholder:'Time period'
     };
     optionsNormal = [
         {
@@ -375,5 +392,17 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
         console.log("destroying sceario header")
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
+    }
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'hidepanel') {
+                console.log(changes[property].currentValue , "current value")
+                this.hidepanel = changes[property].currentValue
+                
+                
+               
+            } 
+        }
     }
 }

@@ -4,6 +4,9 @@
 
 export const environment = {
     production: false,
+    token : '810cb754eaef90fe8c49dee9510be98234c5401f',
+    api_url : 'http://localhost:8000/'
+
 };
 
 /*

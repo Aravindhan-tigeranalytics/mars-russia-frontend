@@ -8,5 +8,8 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "prettier.requireConfig": true,
-    "cSpell.words": ["systemjs"]
+    "cSpell.words": [
+        "systemjs"
+    ],
+    "appService.showBuildDuringDeployPrompt": false
 }

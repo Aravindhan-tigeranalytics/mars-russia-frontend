@@ -118,7 +118,7 @@ import { CalendarChartComponent } from '@organisms/charts/calendar-chart/calenda
 import { CalendarSimulatedChartComponent } from '@organisms/charts/calendar-simulated-chart/calendar-simulated-chart.component';
 import { PromotionDetailsComponent } from './organisms/promotion-details/promotion-details.component';
 import { OptimizeFunctionComponent } from '@organisms/optimize-function/optimize-function.component';
-
+import {DeleteAlertComponent} from "@organisms/delete-alert/delete-alert.component"
 
 
 @NgModule({
@@ -226,7 +226,8 @@ import { OptimizeFunctionComponent } from '@organisms/optimize-function/optimize
         CalendarChartComponent,
         CalendarSimulatedChartComponent,
         PromotionDetailsComponent,
-        OptimizeFunctionComponent
+        OptimizeFunctionComponent,
+        DeleteAlertComponent
     ],
     exports: [
         ButtonComponent,
@@ -334,7 +335,8 @@ import { OptimizeFunctionComponent } from '@organisms/optimize-function/optimize
         WeeksIgnoredComponent,
         MacPopupComponent,
         NumberPromoWeeksComponent,
-        SaveScenarioComponent
+        SaveScenarioComponent,
+        DeleteAlertComponent
     ],
 })
 export class ComponentModule {}

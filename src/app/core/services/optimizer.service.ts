@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import {Product , ProductWeek , ListPromotion , LoadedScenarioModel, UploadModel} from "../models"
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, BehaviorSubject, Subject, throwError,combineLatest } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,15 @@ export class OptimizerService {
   private loadedScenarioObservable = new BehaviorSubject<LoadedScenarioModel>(null as any)
   private simulatedDataObservable = new BehaviorSubject<any>(null)
   public optimizerMetricsData = new BehaviorSubject<any>(null)
+  public optimizerResponseObservable = new BehaviorSubject<any>(null)
   private listPromotionObservable = new BehaviorSubject<ListPromotion[]>(null as any)
   
   private compareScenarioIdObservable = new BehaviorSubject<Array<number>>([])
   private productWeekObservable = new BehaviorSubject<Array<ProductWeek>>([])
   base_line_promotion:Array<string> = []
   private promotionObservable = new BehaviorSubject<string[]>([]);
-  token = 'd3bdbb418856f47f56adeaec1dc86478abd29f96';
-  apiURL = 'http://localhost:8000/api/';
+  token = environment.token;
+  apiURL = environment.api_url;
   constructor(
     private apiService: ApiService,private http: HttpClient
   ) { }
@@ -46,6 +48,13 @@ export class OptimizerService {
       let list_promotions = this.listPromotionObservable.getValue()
       list_promotions = list_promotions.filter(promo=>promo.id != id)
       this.setListPromotionObservable(list_promotions)
+  }
+  public addPromotionList(promotion : ListPromotion){
+    let list_promotions = this.listPromotionObservable.getValue()
+    list_promotions.push(promotion)
+    this.setListPromotionObservable(list_promotions)
+
+
   }
   public setoptimizerDataObservable(data:OptimizerModel){
       this.optimizerDataObservable.next(data)
@@ -134,6 +143,13 @@ export class OptimizerService {
   public setPromotionObservable(val:string[]) {
     this.promotionObservable.next(val);
   }
+  public setOptimizerResponseObservable(data : any){
+      this.optimizerResponseObservable.next(data)
+
+  }
+  public getOptimizerResponseObservabe() : Observable<any>{
+      return this.optimizerResponseObservable.asObservable()
+  }
 
   fetchVal(){  
     return this.apiService.get<Product[]>('api/scenario/promo-simulate-test/')
@@ -189,6 +205,9 @@ export class OptimizerService {
   }
   get_base_line_promotions(){
     return this.base_line_promotion
+  }
+  optimizeResult(data){
+      return this.apiService.post("api/optimiser/calculate/" , data)
   }
 
   getOptimizerMetrics(requestData: any): Observable<any> {

@@ -13,6 +13,8 @@ export class CommandIconitemComponent {
     nwnSvgIcon = '';
     @Input()
     type = '';
+    @Input()
+    active = false
 
     @Input()
     hideTick: boolean = false;
