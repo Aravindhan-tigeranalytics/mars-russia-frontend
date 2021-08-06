@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import { Employee } from '../shared/employee';
+import { ApiService } from './api.service'
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -12005,17 +12005,42 @@ export class SimulatorService {
  }]
 
   public uploadedSimulatorDataObservable = new BehaviorSubject<any>('')
+  public openCommandInterfaceModal = new BehaviorSubject<any>('')
+  public promoElasticityValue = new BehaviorSubject<any>('')
+  public isAccAndProductFiltered = new BehaviorSubject<boolean>(false)
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private apiService: ApiService) { }
 
+  // Set and Get Uploaded Simulator Data
   public setSimulatorDataObservable(value:any){
     this.uploadedSimulatorDataObservable.next(value)
-    console.log("value setted",this.uploadedSimulatorDataObservable.asObservable())
   }
-  
   public getSimulatorDataObservable(){
-    console.log("getter called")
     return this.uploadedSimulatorDataObservable.asObservable()
+  }
+
+  // Set and Get Command Interface Modal
+  public setCommandInterfaceModalObservable(value:any){
+    this.openCommandInterfaceModal.next(value)
+  }
+  public getCommandInterfaceModalObservable(){
+    return this.openCommandInterfaceModal.asObservable()
+  }
+
+  // Set and Get Promo Elasticity Value
+  public setPromoElasticityValueObservable(value:any){
+    this.promoElasticityValue.next(value)
+  }
+  public getPromoElasticityValueObservable(){
+    return this.promoElasticityValue.asObservable()
+  }
+
+  // Set and Get Account and Product Filtered Flag
+  public setAccAndPPGFilteredFlagObservable(value:any){
+    this.isAccAndProductFiltered.next(value)
+  }
+  public getAccAndPPGFilteredFlagObservable(){
+    return this.isAccAndProductFiltered.asObservable()
   }
 
   /*========================================
@@ -12029,25 +12054,6 @@ export class SimulatorService {
       'Authorization': 'Token ' + this.token
     })
   }  
-
-  // // HttpClient API get() method => Fetch employees list
-  // getEmployees(): Observable<any> {
-  //   return this.http.get<any>(this.apiURL + '/employees')
-  //   .pipe(
-  //     retry(1),
-  //     catchError(this.handleError)
-  //   )
-  // }
-
-  // // HttpClient API get() method => Fetch employee
-  // getEmployee(id: any): Observable<any> {
-  //   return this.http.get<any>(this.apiURL + '/employees/' + id)
-  //   .pipe(
-  //     retry(1),
-  //     catchError(this.handleError)
-  //   )
-  // }  
-
 
   getPromoSimulateData(requestData: any): Observable<any> {
     return this.http.post<any>(this.apiURL + 'scenario/promo-simulate/', JSON.stringify(requestData), this.httpOptions)
@@ -12068,25 +12074,21 @@ export class SimulatorService {
       retry(1),
       catchError(this.handleError)
     )
-  } 
+  }
 
-  // // HttpClient API put() method => Update employee
-  // updateEmployee(id: any, employee: any): Observable<any> {
-  //   return this.http.put<any>(this.apiURL + '/employees/' + id, JSON.stringify(employee), this.httpOptions)
-  //   .pipe(
-  //     retry(1),
-  //     catchError(this.handleError)
-  //   )
-  // }
-
-  // // HttpClient API delete() method => Delete employee
-  // deleteEmployee(id: any){
-  //   return this.http.delete<any>(this.apiURL + '/employees/' + id, this.httpOptions)
-  //   .pipe(
-  //     retry(1),
-  //     catchError(this.handleError)
-  //   )
-  // }
+  downloadWeeklyInputTemplate(): Observable<any> {
+   let httpOptions:any = {
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + this.token
+      }),
+      responseType: 'blob',
+    } 
+    return this.http.get<any>(this.apiURL + 'scenario/weekly-input-template-download/',httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
 
   // Error handling 
   handleError(error: any) {
@@ -12098,7 +12100,7 @@ export class SimulatorService {
        // Get server-side error
        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
      }
-     window.alert(errorMessage);
+   //   window.alert(errorMessage);
      return throwError(errorMessage);
   }
 

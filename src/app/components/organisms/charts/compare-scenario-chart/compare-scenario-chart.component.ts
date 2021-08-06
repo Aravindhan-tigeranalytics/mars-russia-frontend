@@ -1,40 +1,43 @@
-import { Component, OnInit,Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
-    selector: 'nwn-baseline-lift-chart',
-    templateUrl: './baseline-lift-chart.component.html',
-    styleUrls: ['./baseline-lift-chart.component.css'],
+    selector: 'nwn-cm-sc-chart',
+    templateUrl: './compare-scenario-chart.component.html',
+    styleUrls: ['./compare-scenario-chart.component.css'],
 })
-export class BaselineLiftChartComponent implements OnInit,OnChanges {
-    @Input() baselineliftdata: any[];
+export class CompareScenarioChartComponent implements OnInit,OnChanges {
+    @Input() cschartdata: any[];
+    @Input() legenddata: any[];
 
     private svg: any;
     private margin = { top: 10, right: 0, bottom: 20, left: 60 };
-    private boundingWidth = 186 - this.margin.left - this.margin.right;
+    private boundingWidth = 1200 - this.margin.left - this.margin.right;
     private boundingHeight = 400 - this.margin.top - this.margin.bottom;
     constructor() { 
         // Initialization inside the constructor
-        this.baselineliftdata = [];
+        this.cschartdata = [];
+        this.legenddata = []
      }
     ngOnChanges(changes: SimpleChanges) {
  
         for (let property in changes) {
-            if (property === 'baselineliftdata') {
-              this.baselineliftdata = changes[property].currentValue
+            if (property === 'cschartdata') {
+              this.cschartdata = changes[property].currentValue
+              this.legenddata = changes['legenddata'].currentValue
               this.createSvg()
-              this.drawBars(this.baselineliftdata);
+              this.drawBars(this.cschartdata);
             } 
         }
     }
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.createSvg();
-        this.drawBars(this.baselineliftdata);
+        this.drawBars(this.cschartdata);
     }
 
     // private createSvg(): void {
     //     this.svg = d3
-    //         .select('#baselineLiftChart')
+    //         .select('#marsCustomerMetrics')
     //         .append('svg')
     //         // Wrapper
     //         .attr('width', this.boundingWidth + this.margin.left + this.margin.right)
@@ -44,10 +47,10 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
     //         .attr('transform', `translate(${this.margin.left},${this.margin.top})`);
     // }
     private createSvg(): void {
-        d3.select('#baselineLiftSVG').remove();
+        d3.select('#plChartSVG').remove();
         this.svg = d3
-            .select('#baselineLiftChart')
-            .append('svg').attr("id","baselineLiftSVG")
+            .select('#marsCustomerMetrics')
+            .append('svg').attr("id","plChartSVG")
             // Wrapper
             .attr('width', this.boundingWidth + this.margin.left + this.margin.right)
             .attr('height', this.boundingHeight + this.margin.top + this.margin.bottom)
@@ -58,22 +61,29 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
     }
 
     private drawBars(data: any[]): void {
+        console.log(data)
+
         const boundingHeight = this.boundingHeight;
         // Maxim value in the data to find the maximum bound dynamically
-        const maximumValueInData = Math.max(
-            ...data.map((d) => {
-                const v1 = parseInt(d.baseline1[0]) + parseInt(d.baseline1[1]);
-                const v2 = parseInt(d.baseline2[0]) + parseInt(d.baseline2[1]);
-                return v1 >= v2 ? v1 : v2;
-            }),
-        );
+        const maximumValueInData = getMaxvalue();
+        function getMaxvalue() {
+            const maxBase = Math.max(...data.map((d) => d.base));
+            const maxSimulated = Math.max(...data.map((d) => d.simulated_1));
+            return maxBase >= maxSimulated ? maxBase : maxSimulated;
+        }
 
         // List of groups
         const groups = data.map((d) => d.group);
-        // List of subgroups
-        const subGroups = ['baseline1', 'baseline2'];
 
-        // Add X Axis
+        // List of subgroups
+        const subGroups:any = [];
+        if(data.length > 0){
+            for(let i = 0; i < data.length; i++){
+                subGroups.push('simulated_'+JSON.stringify(i+1))
+            }
+        }
+
+        // Add X Axis - Groups
         const xScale = d3.scaleBand().domain(groups).range([0, this.boundingWidth]).padding(0.2);
         const xAxisGenerator = d3.axisBottom(xScale);
         this.svg
@@ -98,10 +108,11 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
                 return num
             } 
             if(num.toString()[1] != undefined && num.toString()[1] == "0"){
-                return d3.format('.1s')(d)
+                return d3.format('.1s')(d) + ' ₽'
             }
-            return  d3.format('.2s')(d)
+            return  d3.format('.2s')(d) + ' ₽'
         };
+
         this.svg
             .append('g')
             .attr('class', 'yAxis')
@@ -114,10 +125,13 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
             .domain(subGroups)
             .range([0, xScale.bandwidth()])
             .paddingInner(0.2)
-            .paddingOuter(2.3);
+            .paddingOuter(4.6);
+        
+        const legendColors = this.legenddata.map(value => value.color);
+
 
         // color palette = one color per subgroup
-        const color = d3.scaleOrdinal().domain(subGroups).range(['#7DD3FC', '#0284C7']);
+        const color = d3.scaleOrdinal().domain(subGroups).range(legendColors);
 
         // Show the bars
         this.svg
@@ -133,53 +147,26 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
             .selectAll('rect')
             .data(function (d: any) {
                 return subGroups.map(function (key) {
-                    return { key: key, value1: d[key][0], value2: d[key][1] };
+                    return { key: key, value: d[key] };
                 });
             })
             .join('rect')
-            .attr('id', 'base')
             .attr('x', (d: any) => xSubgroup(d.key))
-            .attr('y', (d: any) => yScale(d.value1))
+            .attr('y', (d: any) => yScale(d.value))
             .attr('width', xSubgroup.bandwidth())
-            .attr('height', (d: any) => this.boundingHeight - yScale(d.value1))
+            .attr('height', (d: any) => this.boundingHeight - yScale(d.value))
             .attr('fill', (d: any) => color(d.key))
-            .on('mouseover', mouseover)
-            .on('mouseleave', mouseleave);
-
-        // Stacked
-        this.svg
-            .append('g')
-            .selectAll('g')
-            // Enter in data = loop group per group
-            .data(data)
-            .join('g')
-            .attr('class', 'group')
-            .attr('transform', (d: any) => `translate(${xScale(d.group)}, 0)`)
-            .attr('groupType', (d: any) => `${d.group}`)
-            .attr('mainX', (d: any) => `${xScale(d.group)}`)
-            .selectAll('rect')
-            .data(function (d: any) {
-                return subGroups.map(function (key) {
-                    return { key: key, value1: d[key][0], value2: d[key][1] };
-                });
-            })
-            .join('rect')
-            .attr('id', 'lift')
-            .attr('x', (d: any) => xSubgroup(d.key))
-            .attr('y', (d: any) => yScale(d.value2) + yScale(d.value1) - this.boundingHeight)
-            .attr('width', xSubgroup.bandwidth())
-            .attr('height', (d: any) => this.boundingHeight - yScale(d.value2))
-            .attr('fill', '#E0F2FE')
             .on('mouseover', mouseover)
             .on('mouseleave', mouseleave);
 
         const chart = this.svg;
         // Event handlers
         function mouseover(datum: any, index: any, nodes: any) {
-            console.log({ datum, index, nodes });
-
+            // Get the bar's X and Y Co-ordinates & then augment for tooltip
+            // const xPos = parseFloat(d3.select(datum.target).attr('y'));
+            // const xGroupPos = xScale(d3.select(datum.target.parentNode).attr('groupType'));
             const xGroupPosition = parseFloat(d3.select(datum.target.parentNode).attr('mainX'));
-
+            // const xSubGroupPos = xSubgroup(index.key);
             const xSubGroupPosition = parseFloat(d3.select(datum.target).attr('x'));
             const midPoint = xSubgroup.bandwidth() / 2;
 
@@ -210,39 +197,25 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
                 .attr('stroke-width', '1')
                 .attr('fill', '#E4E4E7');
 
-            console.log(d3.select(datum.target).attr('id'))
             // Update the tooltip
-            d3.select('#baseline-tooltip')
+            d3.select('#pl-chart-tooltip')
                 .style('opacity', '1')
                 .style('left', xPositionForTooltip + 'px')
                 .style('top', yPositionForTooltip + 'px');
-
-            if(index.key == "baseline1"){
-                // if (d3.select(datum.target).attr('id') === 'base') {
-                    d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#7DD3FC;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value1) + '</div><br/><div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value2)+'</div>');
-                // } else {
-                //     d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value2) + '</div><br/><div style="background-color:#7DD3FC;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value1)+'</div>');
-                // }
-            }
-            else {
-                // if (d3.select(datum.target).attr('id') === 'base') {
-                    d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#0284C7;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value1) + '</div><br/><div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value2)+'</div>');
-                // } else {
-                //     d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value2) + '</div><br/><div style="background-color:#0284C7;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value1)+'</div>');
-                // }
-            }
-            
-                d3.select('#baseColor').remove();
-                // d3.select('#baseline-tooltip')
-                // .select('#baseColor')
-                // .style('background-color', d3.select(datum.target).attr('fill'));
-            
-            d3.select('#baseline-tooltip').select('#group').text(d3.select(datum.target.parentNode).attr('groupType'));
+            d3.select('#pl-chart-tooltip').select('#base').text(dollarFormat(index.value));
+            d3.select('#pl-chart-tooltip')
+                .select('#baseColor')
+                .style('background-color', d3.select(datum.target).attr('fill'));
+            d3.select('#pl-chart-tooltip').select('#group').text(d3.select(datum.target.parentNode).attr('groupType'));
+            // console.log(yScale(index.value));
+            // const subgroupName = d3.select(this.parentNode).datum().key;
+            // const subgroupValue = d.data[subgroupName];
+            // tooltip.html('subgroup: ' + subgroupName + '<br>' + 'Value: ' + subgroupValue).style('opacity', 1);
         }
 
         function mouseleave(datum: any, index: any, nodes: any) {
             // Update the tooltip
-            d3.select('#baseline-tooltip').style('opacity', '0');
+            d3.select('#pl-chart-tooltip').style('opacity', '0');
             chart.selectAll('#indicatorLine').remove();
             chart.selectAll('#indicatorBlip').remove();
         }

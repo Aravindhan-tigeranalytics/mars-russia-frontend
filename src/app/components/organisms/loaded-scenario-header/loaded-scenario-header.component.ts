@@ -6,6 +6,7 @@ import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel , UploadModel, 
 import { Observable, of, from, BehaviorSubject, combineLatest , Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import * as utils from "@core/utils"
+import * as FileSaver from 'file-saver';
 
 @Component({
     selector: 'nwn-loaded-scenario-header',
@@ -170,7 +171,20 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
 
     closeClicked($event){
         console.log("close clicked" , $event)
+    }
 
+    downloadWeeklyInput(){
+        this.simulatorService.downloadWeeklyInputTemplate().subscribe(data=>{
+        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });    
+        FileSaver.saveAs(
+            blob,
+            'WeeklyInput' + '_Template_' + new Date().getTime() + 'xlsx'
+          );
+        })
+        //     if(data){
+        //         window.open('file:///' + data.download_url)
+        //     }
+        // })
     }
     populatePromotionWeek(scenario : LoadedScenarioModel){
         let pw:ProductWeek[]=[];

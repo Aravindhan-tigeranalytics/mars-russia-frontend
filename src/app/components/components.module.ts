@@ -105,6 +105,7 @@ import { BaselineLiftComponent } from './molecules/baseline-lift/baseline-lift.c
 import { PromosimulatorBuilderAggregatedComponent } from './organisms/promosimulator-builder-aggregated/promosimulator-builder-aggregated.component';
 import { MarsCustomerPlMetricsComponent } from './molecules/mars-customer-pl-metrics/mars-customer-pl-metrics.component';
 import { PlChartComponent } from '@organisms/charts/pl-chart/pl-chart.component';
+import { CompareScenarioChartComponent } from '@organisms/charts/compare-scenario-chart/compare-scenario-chart.component';
 import { BaselineLiftChartComponent } from '@organisms/charts/baseline-lift-chart/baseline-lift-chart.component';
 import { KpiMetricsComponent } from '@molecules/kpi-metrics/kpi-metrics.component';
 import { CompareScenarioPopupComponent } from '@organisms/compare-scenario-popup/compare-scenario-popup.component';
@@ -213,6 +214,7 @@ import {DeleteAlertComponent} from "@organisms/delete-alert/delete-alert.compone
         SelectOptionComponent,
         D3ChartComponent,
         PlChartComponent,
+        CompareScenarioChartComponent,
         BaselineLiftChartComponent,
         KpiMetricsComponent,
         CompareScenarioPopupComponent,
@@ -316,6 +318,7 @@ import {DeleteAlertComponent} from "@organisms/delete-alert/delete-alert.compone
         SelectDropDownModule,
         D3ChartComponent,
         PlChartComponent,
+        CompareScenarioChartComponent,
         BaselineLiftChartComponent,
         KpiMetricsComponent,
         CompareScenarioPopupComponent,
