@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { Employee } from '../shared/employee';
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
 export class SimulatorService {
   
   // Define API
-  apiURL = 'http://localhost:8000/api/';
-  token = 'd3bdbb418856f47f56adeaec1dc86478abd29f96';
+  apiURL = environment.api_url;
+  token = environment.token;
   requestDataForCompare :any = [
     {
     "scenario_id":52,

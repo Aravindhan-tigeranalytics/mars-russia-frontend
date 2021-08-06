@@ -8,8 +8,8 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  api_path = 'http://localhost:8000/'
-  token = '810cb754eaef90fe8c49dee9510be98234c5401f'
+  api_path = environment.api_url
+  token = environment.token
 
   constructor(private http: HttpClient) {
     console.log('SERVICE CONSTRUCTOR');

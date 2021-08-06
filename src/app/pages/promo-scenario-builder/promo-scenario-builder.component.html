@@ -1,4 +1,5 @@
-<nwn-loaded-scenario-header  
+<nwn-loaded-scenario-header 
+[filter_model] = "filter_model" 
 [hidepanel] = "hidepanel"
 (downloadEvent)="downloadEvent($event)" 
 (modalEvent)="receiveMessage($event)" 
@@ -69,4 +70,8 @@
 <!-- loaded-promosimulator-scenario -->
 <nwn-modal id="loaded-promosimulator-scenario" class="hidden">
     <nwn-loaded-promosimulator-scenario [scenario_name] = 'scenario_name' [scenario_comment]='scenario_comment'></nwn-loaded-promosimulator-scenario>
+</nwn-modal>
+
+<nwn-modal id="delete-scenario" class="hidden">
+    <nwn-delete-alert></nwn-delete-alert>
 </nwn-modal>

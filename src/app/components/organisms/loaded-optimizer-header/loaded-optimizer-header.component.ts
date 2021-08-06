@@ -127,10 +127,60 @@ this.checkboxMetrices.find(d=>{
 })
          
     }
+    toggle_disable(objective){
+        if(this.selected_objective.includes("MAC")){
+            this.checkboxMetrices.find(d=>{
+                if(d.checkboxLabel == "MAC"){
+                    d.disabled = true
+
+                }
+               
+            })
+            this.checkboxMetrices.filter(d=>{
+                if(d.checkboxLabel!="MAC"){
+                    d.disabled = false
+                }
+            })
+        }
+        else if(this.selected_objective.includes("RP")){
+            this.checkboxMetrices.find(d=>{
+                if(d.checkboxLabel == "Retailer profit"){
+                    d.disabled = true
+
+                }
+               
+            })
+            this.checkboxMetrices.filter(d=>{
+                if(d.checkboxLabel!="Retailer profit"){
+                    d.disabled = false
+                }
+            })
+
+        }
+        else if(this.selected_objective.includes("TE")){
+            this.checkboxMetrices.find(d=>{
+                if(d.checkboxLabel == "Trade expense"){
+                    d.disabled = true
+
+                }
+               
+            })
+            this.checkboxMetrices.filter(d=>{
+                if(d.checkboxLabel!="Trade expense"){
+                    d.disabled = false
+                }
+            })
+
+        }
+
+    }
 
     objectiveEvent($event){
         this.selected_objective = $event
+        this.toggle_disable(this.selected_objective)
+        
         console.log(this.selected_objective , "selected objective  selected")
+        console.log(this.checkboxMetrices , "check box modified ")
 
     }
     optimizeReset(type){
@@ -196,7 +246,7 @@ this.checkboxMetrices.find(d=>{
 
         this.checkboxMetrices.filter(d=>{
             if(d.id == "mac-popup"){
-                d.disabled = configData.config_mac
+                d.disabled = true
                 d.checkHeadValue = "x" + configData.param_mac
 
             }

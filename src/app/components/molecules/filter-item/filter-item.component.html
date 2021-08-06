@@ -8,7 +8,7 @@
     >
         <ng-content></ng-content>
     </div>
-    <nwn-button type="icon" size="iconsm" [ngClass]="{ hidden: hideClose == true }">
+    <nwn-button (click)="closeClicked($event)" type="icon" size="iconsm" [ngClass]="{ hidden: hideClose == true }">
         <nwn-svg-icon size="md" nwnSvgIcon="close"></nwn-svg-icon>
     </nwn-button>
 </div>

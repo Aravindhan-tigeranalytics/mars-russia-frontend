@@ -144,6 +144,9 @@
             >
                 <div
                     class="checkbox-metric-item"
+                    [ngClass]="{
+                        'disabled-div' : checkboxMetric.disabled
+                    }"
                     *ngFor="let checkboxMetric of checkboxMetrices; let i = index"
                     cdkDrag
                     [cdkDragDisabled]="checkboxMetric.disabled"

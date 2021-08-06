@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy,SimpleChanges
 // import {OptimizerService} from '../../../core/services/optimizer.service'
 import {OptimizerService , SimulatorService} from "@core/services"
 // import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel} from "../../../core/models"
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel , UploadModel} from "@core/models"
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel , UploadModel, FilterModel} from "@core/models"
 import { Observable, of, from, BehaviorSubject, combineLatest , Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import * as utils from "@core/utils"
@@ -24,6 +24,8 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     downloadEvent = new EventEmitter<any>();
     @Output()
     simulateResetEvent = new EventEmitter<{"action" : string,"promotion_map" : Array<any> , "promo_elasticity" : number}>();
+    @Input()
+    filter_model : FilterModel
     options1:Array<any> = [];
     promotions$: Observable<string[]> = null as any;
     product_week:ProductWeek[] = [];
@@ -164,6 +166,11 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
            error=>{
             console.log(error , "error")
           })
+    }
+
+    closeClicked($event){
+        console.log("close clicked" , $event)
+
     }
     populatePromotionWeek(scenario : LoadedScenarioModel){
         let pw:ProductWeek[]=[];

@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import {Product , ProductWeek , ListPromotion , LoadedScenarioModel, UploadModel} from "../models"
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, BehaviorSubject, Subject, throwError,combineLatest } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class OptimizerService {
   private productWeekObservable = new BehaviorSubject<Array<ProductWeek>>([])
   base_line_promotion:Array<string> = []
   private promotionObservable = new BehaviorSubject<string[]>([]);
-  token = 'd3bdbb418856f47f56adeaec1dc86478abd29f96';
-  apiURL = 'http://localhost:8000/api/';
+  token = environment.token;
+  apiURL = environment.api_url;
   constructor(
     private apiService: ApiService,private http: HttpClient
   ) { }

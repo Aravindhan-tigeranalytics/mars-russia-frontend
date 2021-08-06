@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+// import { EventEmitter } from 'stream';
 
 @Component({
     selector: 'nwn-filter-item',
@@ -16,4 +17,12 @@ export class FilterItemComponent {
     hideClose: boolean = true;
     @Input()
     hideFilterIcon: boolean = false;
+    @Output()
+    closeClickedEvent = new EventEmitter()
+
+    closeClicked($event){
+        console.log($event , "event in filter items")
+        this.closeClickedEvent.emit($event)
+
+    }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Input,SimpleChanges } from '@angular/core';
 import { LoadedScenarioModel , PromoCompareModel} from 'src/app/core/models';
+import * as Utils from "@core/utils"
 @Component({
     selector: 'nwn-promotion-plans-tab',
     templateUrl: './promotion-plans-tab.component.html',
@@ -29,7 +30,11 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
             
            
             this.scenario_names.push(element.scenario_name)
-            element.simulated.weekly.forEach(data=>{
+            element.simulated.weekly.forEach((data,index)=>{
+                console.log(data , "promotion plans tabs value")
+//                 flag_promotype_motivation: 0
+// flag_promotype_n_pls_1: 0
+// flag_promotype_traffic: 0 , co_investment
                 let promo = this.promotions.find(d=>d.week == data.week)
                 if(promo){
                     promo.discount.push( {"tpr":data.promo_depth , "co_inv" : data.promo_depth})

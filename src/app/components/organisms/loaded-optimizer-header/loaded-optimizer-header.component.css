@@ -1,3 +1,9 @@
+.disabled-div{
+    cursor: not-allowed;
+    pointer-events: none;
+   
+}
+
 .checkbox-metric-list {
     overflow: hidden;
 }

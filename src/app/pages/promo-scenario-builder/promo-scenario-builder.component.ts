@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@molecules/modal/modal.service';
 import {FormBuilder, FormGroup,FormArray,FormControl,ValidatorFn} from '@angular/forms';
 import {OptimizerService} from '@core/services'
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel, ListPromotion} from "@core/models"
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel, ListPromotion, FilterModel} from "@core/models"
 import * as utils from "@core/utils"
 // import {} from 'file-saver'
 import * as FileSaver from 'file-saver';
@@ -35,6 +35,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
     brands_format:Array<CheckboxModel> = []
     brands:Array<CheckboxModel> = []
     product_group:Array<CheckboxModel> = []
+    filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
+"category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
     selected_retailer:string = null as any
     selected_product:string = null as any
     selected_category:string = null as any
@@ -94,6 +96,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.retailers.filter(val=>val.value != event.value).forEach(val=>val.checked = false)
         if(event.checked){
             this.selected_retailer = event.value
+            this.filter_model.retailer = this.selected_retailer
             this.retailers.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
 
         }
