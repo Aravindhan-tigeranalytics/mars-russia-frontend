@@ -1,5 +1,6 @@
 import { Component,forwardRef} from '@angular/core';
 import { ControlValueAccessor,NG_VALUE_ACCESSOR,FormGroup, FormControl, Validators } from '@angular/forms'
+import { SimulatorService } from '@core/services';
 
 @Component({
     selector: 'nwn-promo-elasticity',
@@ -14,7 +15,13 @@ import { ControlValueAccessor,NG_VALUE_ACCESSOR,FormGroup, FormControl, Validato
       ]
 })
 export class PromoElasticityComponent {
-    constructor() {}
+    constructor(public simulatorService: SimulatorService) {
+      this.simulatorService.promoElasticityValue.asObservable().subscribe(data=>{
+        if(data != ''){
+          this.name = Number((data).toFixed(1));  
+        }
+      })
+    }
     disable = true
     counter = 0;
     _name = 0;
@@ -58,6 +65,7 @@ export class PromoElasticityComponent {
             this.disable = false
         }
         this.name = Number((this.name + 0.1).toFixed(1));
+        this.simulatorService.setPromoElasticityValueObservable(this.name)
     }
 
     decrement() {
@@ -67,6 +75,8 @@ export class PromoElasticityComponent {
             return 
         }
         this.name = Number((this.name - 0.1).toFixed(1));
-       
+        this.simulatorService.setPromoElasticityValueObservable(this.name)
     }
+
+
 }

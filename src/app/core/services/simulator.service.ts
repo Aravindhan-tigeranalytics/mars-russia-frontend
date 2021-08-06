@@ -15,17 +15,42 @@ export class SimulatorService {
   token = 'd3bdbb418856f47f56adeaec1dc86478abd29f96';
 
   public uploadedSimulatorDataObservable = new BehaviorSubject<any>('')
+  public openCommandInterfaceModal = new BehaviorSubject<any>('')
+  public promoElasticityValue = new BehaviorSubject<any>('')
+  public isAccAndProductFiltered = new BehaviorSubject<boolean>(false)
 
   constructor(private http: HttpClient,private apiService: ApiService) { }
 
+  // Set and Get Uploaded Simulator Data
   public setSimulatorDataObservable(value:any){
     this.uploadedSimulatorDataObservable.next(value)
-    console.log("value setted",this.uploadedSimulatorDataObservable.asObservable())
   }
-  
   public getSimulatorDataObservable(){
-    console.log("getter called")
     return this.uploadedSimulatorDataObservable.asObservable()
+  }
+
+  // Set and Get Command Interface Modal
+  public setCommandInterfaceModalObservable(value:any){
+    this.openCommandInterfaceModal.next(value)
+  }
+  public getCommandInterfaceModalObservable(){
+    return this.openCommandInterfaceModal.asObservable()
+  }
+
+  // Set and Get Promo Elasticity Value
+  public setPromoElasticityValueObservable(value:any){
+    this.promoElasticityValue.next(value)
+  }
+  public getPromoElasticityValueObservable(){
+    return this.promoElasticityValue.asObservable()
+  }
+
+  // Set and Get Account and Product Filtered Flag
+  public setAccAndPPGFilteredFlagObservable(value:any){
+    this.isAccAndProductFiltered.next(value)
+  }
+  public getAccAndPPGFilteredFlagObservable(){
+    return this.isAccAndProductFiltered.asObservable()
   }
 
   /*========================================

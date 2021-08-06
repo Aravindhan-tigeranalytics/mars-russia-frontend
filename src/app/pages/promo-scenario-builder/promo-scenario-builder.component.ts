@@ -60,14 +60,15 @@ export class PromoScenarioBuilderComponent implements OnInit {
     
 
     ngOnInit() {
-        // this.restApi.uploadedSimulatorDataObservable.asObservable().subscribe(data=>{
-        //     if(data != ''){
-        //         console.log(data,"observable data")
-        //         this.isFilterApplied = true
-        //         this.hideFilter = 'viewless'
-        //         this.closeModal('upload-weekly-promotions')
-        //     }
-        // })
+        this.restApi.openCommandInterfaceModal.asObservable().subscribe(data=>{
+            if(data != ''){
+                console.log(data)
+                // this.isFilterApplied = true
+                // this.hideFilter = 'viewless'
+                this.closeModal(data.close)
+                this.openModal(data.open)
+            }
+        })
         var self = this;
         $(document).keydown(function(event) { 
             if (event.keyCode == 27) {
@@ -209,7 +210,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             if(p){
                 this.optimize.fetch_week_value(p.id)
             }
-           
+            this.restApi.setAccAndPPGFilteredFlagObservable(true)
         }
         if($event=="upload-weekly-promotions"){
             this.uploadFile()
@@ -228,6 +229,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.selected_product= null as any
         this._populateFilters(this.product)
         this.optimize.setProductWeekObservable([])
+        this.restApi.setAccAndPPGFilteredFlagObservable(true)
         // this.selected_product_week
         // t
     }
@@ -259,6 +261,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.isFilterApplied = false
             this.hideFilter = 'yettobesimulated'
             this.reset()
+            this.restApi.setAccAndPPGFilteredFlagObservable(false)
         }
         
         console.log(form , "form data")
@@ -268,6 +271,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
            if($event.action == 'Simulate'){
             this.isFilterApplied = true
             this.hideFilter = 'viewmore'
+            this.restApi.setAccAndPPGFilteredFlagObservable(true)
             // this.hideFilter = 'yettobesimulated'
         }
        
