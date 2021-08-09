@@ -31,10 +31,11 @@ export class ButtonComponent {
             if (property === 'disabled') {
                 console.log(changes[property].currentValue , "current value")
                 this.disabled = changes[property].currentValue
-                if(this.disabled){
-                    this.type ="transparent"
+                console.log(this.disabled , this.type , "disabled icon and type")
+                // if(this.disabled){
+                //     this.type ="transparent"
 
-                }
+                // }
                 
                
             } 

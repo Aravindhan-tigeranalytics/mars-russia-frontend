@@ -12006,7 +12006,7 @@ export class SimulatorService {
 
   public uploadedSimulatorDataObservable = new BehaviorSubject<any>('')
   public openCommandInterfaceModal = new BehaviorSubject<any>('')
-  public promoElasticityValue = new BehaviorSubject<any>('')
+//   public promoElasticityValue = new BehaviorSubject<any>('')
   public isAccAndProductFiltered = new BehaviorSubject<boolean>(false)
 
   constructor(private http: HttpClient,private apiService: ApiService) { }
@@ -12028,12 +12028,12 @@ export class SimulatorService {
   }
 
   // Set and Get Promo Elasticity Value
-  public setPromoElasticityValueObservable(value:any){
-    this.promoElasticityValue.next(value)
-  }
-  public getPromoElasticityValueObservable(){
-    return this.promoElasticityValue.asObservable()
-  }
+//   public setPromoElasticityValueObservable(value:any){
+//     this.promoElasticityValue.next(value)
+//   }
+//   public getPromoElasticityValueObservable(){
+//     return this.promoElasticityValue.asObservable()
+//   }
 
   // Set and Get Account and Product Filtered Flag
   public setAccAndPPGFilteredFlagObservable(value:any){
@@ -12076,14 +12076,15 @@ export class SimulatorService {
     )
   }
 
-  downloadWeeklyInputTemplate(): Observable<any> {
+  downloadWeeklyInputTemplate(queryparam): Observable<any> {
    let httpOptions:any = {
       headers: new HttpHeaders({
         'Authorization': 'Token ' + this.token
       }),
+      params : queryparam,
       responseType: 'blob',
     } 
-    return this.http.get<any>(this.apiURL + 'scenario/weekly-input-template-download/',httpOptions)
+    return this.http.get<any>(this.apiURL + 'api/scenario/weekly-input-template-download/',httpOptions )
     .pipe(
       retry(1),
       catchError(this.handleError)

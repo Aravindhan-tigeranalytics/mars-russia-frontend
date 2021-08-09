@@ -163,7 +163,22 @@ export class PromoOptimizerComponent implements OnInit {
         this.closeModal($event)
     }
     optimizeAndReset($event){
+
         console.log($event , "event otimize")
+        console.log(this.get_optimizer_form() , "form otimize")
+        console.log(this.product , "product")
+        let res = {...this.get_optimizer_form(),...$event['data']}
+        console.log(res , "result")
+        // debugger
+        if($event.type == 'optimize'){
+            this.optimize.optimizeResult(res).subscribe(data=>{
+                this.optimize.setOptimizerResponseObservable(data)
+                this.isOptimiserFilterApplied = true
+               
+            })
+           
+        
+        }
     }
     receiveMessage($event: any) {
         console.log('recieved');
@@ -184,13 +199,17 @@ export class PromoOptimizerComponent implements OnInit {
         }
     }
     get_optimizer_form(){
+        console.log(this.selected_retailer , "retailer selected")
+        console.log(this.selected_product , "product selected")
+        let product = this.product.find(d=>(d.product_group == this.selected_product && d.account_name == this.selected_retailer))
+        
         let obj = {
-            "account_name" : "Pyaterochka",
-            "brand":"",
-            "brand_format" : "",
-            "corporate_segment":"GUM",
-            "strategic_cell" : "",
-            "product_group" : "Orbit OTC",
+            "account_name" :product?.account_name,
+            "brand":product?.brand_filter,
+            "brand_format" : product?.brand_format_filter,
+            "corporate_segment":product?.corporate_segment,
+            "strategic_cell" : product?.strategic_cell_filter,
+            "product_group" : product?.product_group,
             "objective_function" : "MAC",
             "mars_tpr" : "",
             "co_investment" : 0,
@@ -206,20 +225,20 @@ export class PromoOptimizerComponent implements OnInit {
             "config_sales": false,
             "config_trade_expense": false,
             "config_units": false,
-            "param_gsv": 5,
-            "param_mac": 5,
-            "param_mac_perc": 5,
-            "param_max_consecutive_promo": 5,
-            "param_min_consecutive_promo": 5,
-            "param_nsv": 5,
-            "param_promo_gap": 5,
-            "param_rp": 5,
-            "param_rp_perc": 5,
-            "param_sales": 5,
-            "param_trade_expense": 5,
-            "param_units": 5,
-            "param_no_of_waves":5,
-            "param_no_of_promo" : 5,
+            "param_gsv": 0,
+            "param_mac": 0,
+            "param_mac_perc": 0,
+            "param_max_consecutive_promo": 0,
+            "param_min_consecutive_promo": 0,
+            "param_nsv": 0,
+            "param_promo_gap": 0,
+            "param_rp": 0,
+            "param_rp_perc": 0,
+            "param_sales": 0,
+            "param_trade_expense": 0,
+            "param_units": 0,
+            "param_no_of_waves":0,
+            "param_no_of_promo" : 0,
             "param_total_promo_min" : 0,
             "param_total_promo_max" : 0
         }

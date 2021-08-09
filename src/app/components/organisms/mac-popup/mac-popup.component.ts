@@ -20,6 +20,8 @@ export class MacPopupComponent {
 
     @Input()
     label = ""
+    @Output()
+    value = 1
    
     @Output()
     configChangeEvent = new EventEmitter()
@@ -51,6 +53,13 @@ export class MacPopupComponent {
         })
 
 
+    }
+    apply(){
+        this.configChangeEvent.emit({
+            "label" : this.label,
+            "event" : this.value
+
+        })
     }
     
 }

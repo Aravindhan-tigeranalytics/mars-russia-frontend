@@ -3,13 +3,13 @@
         <nwn-command-header type="stroke" nwnSvgIcon="adjustments">{{label}}</nwn-command-header>
     </div>
     <div class="h-auto bg-white">
-        <div class="border-b border-marsgray-200">
+        <!-- <div class="border-b border-marsgray-200">
             <nwn-metric-item-popup>
                 <p metricPopHead>x1.00</p>
                 <p metricPopContent>{{label}} (input)</p>
             </nwn-metric-item-popup>
-            <!-- <nwn-command-search [hideClose]="true" placeholder="Try typing 1.00 "></nwn-command-search> -->
-        </div>
+            <nwn-command-search [hideClose]="true" placeholder="Try typing 1.00 "></nwn-command-search>
+        </div> -->
 
         <div class="grid grid-cols-2">
             <div>
@@ -19,10 +19,10 @@
                 </nwn-metric-item-popup> -->
             </div>
         </div>
-        <div class="flex justify-center">
-            <nwn-promo-elasticity>Promo elasticity</nwn-promo-elasticity>
+        <div class="flex">
+            <nwn-promo-elasticity [(ngModel)]='value'>Promo elasticity</nwn-promo-elasticity>
             <!-- <nwn-slider (sliderChangeEvent) = "sliderChangeEvent($event)" [floor] = "floor" [ceil] = "ceil" [steps] = "steps" [options] = "options"></nwn-slider> -->
         </div>
     </div>
-    <nwn-search-footer [showApply]="true"></nwn-search-footer>
+    <nwn-search-footer (click) = "apply()" [showApply]="true"></nwn-search-footer>
 </div>

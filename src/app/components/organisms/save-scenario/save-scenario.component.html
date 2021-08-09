@@ -8,6 +8,7 @@
             <nwn-text-input formControlName="name" nwnTextInput="text" placeholder="Scenario name" [error]="true"
                 ><p label>Scenario name</p></nwn-text-input
             >
+            <div class="error" *ngIf="error">{{error}}*</div>
         </div>
         <div>
             <nwn-text-input  formControlName="comment" nwnTextInput="textarea" placeholder="Description"

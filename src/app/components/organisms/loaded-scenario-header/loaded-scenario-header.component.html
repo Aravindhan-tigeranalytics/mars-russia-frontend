@@ -3,40 +3,56 @@
         <div class="flex flex-row flex-wrap content-start items-center justify-start">
             <div class="mr-2 mb-2">
                 <nwn-button type="nostyle" size="nosize">
-                    <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked($event)" [hideClose]="filter_model.retailer =='Retailers'" type="stroke" nwnSvgIcon="retailers" (click)="sendMessage('filter-retailer')"
+                    <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked('Retailers')" 
+                                    [hideClose]="filter_model.retailer =='Retailers'" 
+                                    type="stroke" nwnSvgIcon="retailers"
+                                    (click)="sendMessage('filter-retailer')"
                         >{{filter_model.retailer}}</nwn-filter-item
                     >
                 </nwn-button>
             </div>
             <div class="mr-2 mb-2">
-                <nwn-filter-item type="stroke" nwnSvgIcon="categories" (click)="sendMessage('filter-categories')"
-                    >Categories</nwn-filter-item
+                <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked('Category')"
+                                [hideClose]="filter_model.category =='Category'" 
+                                type="stroke" nwnSvgIcon="categories" 
+                                (click)="sendMessage('filter-categories')"
+                    >{{filter_model.category}}</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item
+                (closeClickedEvent) = "$event.stopPropagation();closeClicked('Strategic cells')"
+                [hideClose]="filter_model.strategic_cell =='Strategic cells'"
                     type="stroke"
                     nwnSvgIcon="strategic-cells"
                     (click)="sendMessage('filter-stragetic-cells')"
-                    >Strategic Cells</nwn-filter-item
-                >
-            </div>
-            <div class="mr-2 mb-2">
-                <nwn-filter-item type="stroke" nwnSvgIcon="brands" (click)="sendMessage('filter-brands')"
-                    > Brands</nwn-filter-item
-                >
-            </div>
-            <div class="mr-2 mb-2">
-                <nwn-filter-item type="stroke" nwnSvgIcon="brand-formats" (click)="sendMessage('filter-brand-formats')"
-                    > Brand Formats</nwn-filter-item
+                    >{{filter_model.strategic_cell}}</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item
+                (closeClickedEvent) = "$event.stopPropagation();closeClicked('Brands')"
+                [hideClose]="filter_model.brand =='Brands'"
+                type="stroke" nwnSvgIcon="brands" (click)="sendMessage('filter-brands')"
+                    > {{filter_model.brand}}</nwn-filter-item
+                >
+            </div>
+            <div class="mr-2 mb-2">
+                <nwn-filter-item
+                (closeClickedEvent) = "$event.stopPropagation();closeClicked('Brand Formats')"
+                [hideClose]="filter_model.brand_format =='Brand Formats'"
+                 type="stroke" nwnSvgIcon="brand-formats" (click)="sendMessage('filter-brand-formats')"
+                    > {{filter_model.brand_format}}</nwn-filter-item
+                >
+            </div>
+            <div class="mr-2 mb-2">
+                <nwn-filter-item
+                (closeClickedEvent) = "$event.stopPropagation();closeClicked('Product groups')"
+                [hideClose]="filter_model.product_group =='Product groups'"
                     type="stroke"
                     nwnSvgIcon="product-groups"
                     (click)="sendMessage('filter-product-groups')"
-                    > Product Groups</nwn-filter-item
+                    > {{filter_model.product_group}}</nwn-filter-item
                 >
             </div>
         </div>
@@ -111,7 +127,7 @@
     <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
         <div class="flex flex-row space-x-2 items-center">
             <div class="flex flex-row space-x-2 border-r border-marsgray-300 pr-2">
-                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button [disabled] = "disable_button" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="download" (click)="downloadWeeklyInput()"></nwn-svg-icon>
                     <p tooltipContent>Download weekly input</p>
                 </nwn-button>
@@ -139,16 +155,16 @@
         <div class="flex flex-row">
             <div class="flex flex-row space-x-4 items-center">
              <nwn-button type="link" size="sm" (click)="simulateAndReset('Reset')"> Reset </nwn-button>
-                <nwn-button type="primary" size="sm" (click)="simulateAndReset('Simulate')"> Simulate </nwn-button>
-                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button [disabled] = "disable_button" type="primary" size="sm" (click)="simulateAndReset('Simulate')"> Simulate </nwn-button>
+                <nwn-button [disabled] = "disable_button" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon
                     (click)="sendMessage('save-scenario-popup')"
                     type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                     
                     <p tooltipContent>Save scenario</p>
                 </nwn-button>
-                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
-                    <nwn-svg-icon type="stroke" (click)="download()" nwnSvgIcon="save-download"></nwn-svg-icon>
+                <nwn-button [disabled] = "disable_button" type="icon" size="iconsm" [showTooltip]="true">
+                    <nwn-svg-icon  type="stroke" (click)="download()" nwnSvgIcon="save-download"></nwn-svg-icon>
                     <p tooltipContent>Download scenario</p>
                 </nwn-button>
                 <div class="relative">

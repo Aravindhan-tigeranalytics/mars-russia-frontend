@@ -47,10 +47,10 @@
         </div>
         
         <div [ngClass]="{ hidden: showNo == false }">
-            <nwn-button type="primary" size="sm">No</nwn-button>
+            <nwn-button (click) = "buttonClicked('no')" type="secondary" size="sm">No</nwn-button>
         </div>
         <div [ngClass]="{ hidden: showYes == false }">
-            <nwn-button type="danger" size="sm">yes</nwn-button>
+            <nwn-button (click) = "buttonClicked('yes')" type="primary" size="sm">yes</nwn-button>
         </div>
     </div>
 </div>

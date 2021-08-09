@@ -1,6 +1,7 @@
 <nwn-loaded-scenario-header 
 [filter_model] = "filter_model" 
 [hidepanel] = "hidepanel"
+(filterResetEvent) = "filterResetEvent($event)"
 (downloadEvent)="downloadEvent($event)" 
 (modalEvent)="receiveMessage($event)" 
 (simulateResetEvent)="simulateResetEvent($event)">
@@ -49,7 +50,7 @@
 </nwn-modal>
 
 <nwn-modal id="save-scenario-popup" class="hidden">
-    <nwn-save-scenario (saveScenarioEvent)="saveScenario($event)"></nwn-save-scenario>
+    <nwn-save-scenario [error] = "save_scenario_error" (saveScenarioEvent)="saveScenario($event)"></nwn-save-scenario>
 </nwn-modal>
 <!-- compare-promo-scenario -->
 <nwn-modal id="compare-promo-scenario" class="hidden">
@@ -69,12 +70,9 @@
 </nwn-modal>
 <!-- loaded-promosimulator-scenario -->
 <nwn-modal id="loaded-promosimulator-scenario" class="hidden">
-    <nwn-loaded-promosimulator-scenario [scenario_name] = 'scenario_name' [scenario_comment]='scenario_comment'></nwn-loaded-promosimulator-scenario>
+    <nwn-loaded-promosimulator-scenario [promotion_viewed] = 'promotion_viewed'></nwn-loaded-promosimulator-scenario>
 </nwn-modal>
 
-<nwn-modal id="delete-scenario" class="hidden">
-    <nwn-delete-alert></nwn-delete-alert>
-</nwn-modal>
 <!-- Command Interface filter -->
 <nwn-modal id="filter-basic" class="hidden">
     <nwn-filter-basic></nwn-filter-basic>
@@ -84,3 +82,5 @@
 <nwn-modal id="promo-elasticity-modal" class="hidden">
     <nwn-promo-elasticity-popup></nwn-promo-elasticity-popup>
 </nwn-modal>
+
+

@@ -108,7 +108,9 @@
                     </div>
                 </div>
                 <div class="flex flex-row w-full max-w-[700px] mx-auto my-0">
-                    <nwn-calendar-simulated-chart [stimulatedCalendarData]="stimulatedCalendar" [stimulatedDropdownFilter]="stimulatedCalDropdown"></nwn-calendar-simulated-chart>
+                    <nwn-calendar-simulated-chart 
+                    [baselineCalendarData]="baseCalendar"
+                    [stimulatedCalendarData]="stimulatedCalendar" [stimulatedDropdownFilter]="stimulatedCalDropdown"></nwn-calendar-simulated-chart>
                 </div>
                 <div class="my-6 flex flex-row-reverse">
                     <div class="flex flex-row space-x-4">

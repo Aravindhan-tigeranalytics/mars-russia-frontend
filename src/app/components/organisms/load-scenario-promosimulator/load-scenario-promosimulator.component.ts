@@ -39,14 +39,30 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
                     })
 
     }
+    confirmationDelete($event){
+        console.log(this.promotion_viewed , "protoion detaile to delete")
+        console.log(this.promotion_viewed.id , "id to delete")
+        console.log($event , "confimatin delete at load scenario")
+        this.modal.close("delete-scenario")
+        if($event == 'yes'){
+            this.optimize.deletePromoScenario(this.promotion_viewed.id).subscribe(data=>{
+                this.optimize.deleteListPromotion(this.promotion_viewed.id)
+                this.modal.close("promo-simulator-popup")
+            },err=>{
+                console.log(err , "error")
+            })
+
+        }
+        
+
+
+    }
     deleteClickedEvent($event){
-        console.log($event , "delete event")
-        this.optimize.deletePromoScenario($event.id).subscribe(data=>{
-            this.optimize.deleteListPromotion($event.id)
-            this.modal.close("promo-simulator-popup")
-        },err=>{
-            console.log(err , "error")
-        })
+
+
+        this.modal.open("delete-scenario")
+        // console.log($event , "delete event")
+       
 
     }
     infoClickedEvent($event){

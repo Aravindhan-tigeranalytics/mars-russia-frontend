@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input , Output , EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'nwn-search-footer',
@@ -32,4 +32,11 @@ export class SearchFooterComponent {
     type = '';
     @Input()
     color: string | 'bgGray-50' | 'bgWhite' = 'bgGray-50';
+    @Output()
+    buttonClickedEvent = new EventEmitter()
+
+    buttonClicked(type){
+        this.buttonClickedEvent.emit(type)
+
+    }
 }

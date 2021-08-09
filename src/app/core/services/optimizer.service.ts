@@ -181,6 +181,7 @@ export class OptimizerService {
     return this.apiService.postd('api/scenario/promo-download/' , requestData 
       )
   }
+  
   fetch_load_scenario(){
     this.apiService.get<ListPromotion[]>('api/scenario/list-saved-promo/').subscribe(data=>{
         this.setListPromotionObservable(data)

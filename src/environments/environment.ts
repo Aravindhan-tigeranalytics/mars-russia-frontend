@@ -6,10 +6,12 @@ export const environment = {
     production: false,
     token : '810cb754eaef90fe8c49dee9510be98234c5401f',
     api_url : 'http://localhost:8000/'
+    // token : '8b670713a2a9e075cfb0c9c47d4eaa5410abece6',
+    // api_url : 'https://mars-promo-api.azurewebsites.net/'
 
 };
 
-/*
+/* ng build --aot=false --build-optimizer=false
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *

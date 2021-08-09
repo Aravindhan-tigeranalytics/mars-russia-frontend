@@ -1,4 +1,4 @@
-import { Component, OnInit,EventEmitter, Output,forwardRef } from '@angular/core';
+import { Component, OnInit,EventEmitter, Output,forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor,NG_VALUE_ACCESSOR,FormGroup, FormControl, Validators } from '@angular/forms'
 
 @Component({
@@ -10,6 +10,8 @@ import { ControlValueAccessor,NG_VALUE_ACCESSOR,FormGroup, FormControl, Validato
 export class SaveScenarioComponent {
     @Output()
     saveScenarioEvent = new EventEmitter()
+    @Input()
+    error :any = null
     saveForm = new FormGroup({
         name: new FormControl(),
         comment: new FormControl(),

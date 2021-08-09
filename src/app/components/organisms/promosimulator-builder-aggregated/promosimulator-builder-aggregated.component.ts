@@ -77,7 +77,16 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
         this.weeklyTableWidth = window.innerWidth - 155;
         this.weeklyTableHeight = window.innerHeight - 150;
         this.aggregatedGraphWidth = window.innerWidth - 155;
-        this.loadStimulatedData()
+        // this.loadStimulatedData()
+        this.optimize.getSimulatedDataObservable().subscribe((data: any) => {
+            if(data){
+                console.log(data , "holiday information with data")
+                this.convertToGraphNTableData(data)
+
+            }
+           
+            
+        })
     }
 
     weeklySubTabClick(key : string){
@@ -178,7 +187,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "arrow":  data['simulated']['total']['te'] > data['base']['total']['te'] ?  'carret-up' : 'carret-down' ,
                 "percent": "(" + Utils.percentageDifference(data['simulated']['total']['te'],data['base']['total']['te']) + "%)",
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],true,false) + ")",
-                "color": this.colorForDifference(data['base']['total']['te'] , data['simulated']['total']['te']),
+                "color": this.colorForDifference( data['simulated']['total']['te'],data['base']['total']['te']),
             }
 
             this.nsv = {
@@ -337,13 +346,13 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                         "arrow": data['simulated']['weekly'][i]['trade_expense'] > data['base']['weekly'][i]['trade_expense'] ?  'carret-up' : 'carret-down' ,
                         "percent": "(" + Utils.percentageDifference(data['simulated']['weekly'][i]['trade_expense'],data['base']['weekly'][i]['trade_expense']) + "%)",
                         "converted_difference": "(" + Utils.formatNumber(data['simulated']['weekly'][i]['trade_expense']-data['base']['weekly'][i]['trade_expense'],true,false) + ")",
-                        "color":  this.colorForDifference(data['base']['weekly'][i]['trade_expense'] , data['simulated']['weekly'][i]['trade_expense']),
+                        "color":  this.colorForDifference(data['simulated']['weekly'][i]['trade_expense'],data['base']['weekly'][i]['trade_expense'] ),
                     },
                     'te_percent_of_lsv': {
                         "converted_base": Utils.formatNumber(data['base']['weekly'][i]['te_percent_of_lsv'],true,false),
                         "converted_simulated": Utils.formatNumber(data['simulated']['weekly'][i]['te_percent_of_lsv'],true,false),
                         "arrow": data['simulated']['weekly'][i]['te_percent_of_lsv'] > data['base']['weekly'][i]['te_percent_of_lsv'] ?  'carret-up' : 'carret-down' ,
-                        "color": this.colorForDifference(data['base']['weekly'][i]['te_percent_of_lsv'] , data['simulated']['weekly'][i]['te_percent_of_lsv']),
+                        "color": this.colorForDifference(data['simulated']['weekly'][i]['te_percent_of_lsv'],data['base']['weekly'][i]['te_percent_of_lsv']),
                         "percent": "(" + Utils.percentageDifference(data['simulated']['weekly'][i]['te_percent_of_lsv'],data['base']['weekly'][i]['te_percent_of_lsv']) + "%)",
                         "converted_difference": "(" + Utils.formatNumber(data['simulated']['weekly'][i]['te_percent_of_lsv']-data['base']['weekly'][i]['te_percent_of_lsv'],true,false) + ")"
                     },
@@ -383,7 +392,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                         "converted_base": Utils.formatNumber(data['base']['weekly'][i]['te_per_units'],true,false),
                         "converted_simulated": Utils.formatNumber(data['simulated']['weekly'][i]['te_per_units'],true,false),
                         "arrow": data['simulated']['weekly'][i]['te_per_units'] > data['base']['weekly'][i]['te_per_units'] ?  'carret-up' : 'carret-down' ,
-                        "color":  this.colorForDifference(data['base']['weekly'][i]['te_per_units'] , data['simulated']['weekly'][i]['te_per_units']),
+                        "color":  this.colorForDifference( data['simulated']['weekly'][i]['te_per_units'],data['base']['weekly'][i]['te_per_units'] ),
                         "percent": "(" + Utils.percentageDifference(data['simulated']['weekly'][i]['te_per_units'],data['base']['weekly'][i]['te_per_units']) + "%)",
                         "converted_difference": "(" + Utils.formatNumber(data['simulated']['weekly'][i]['te_per_units']-data['base']['weekly'][i]['te_per_units'],true,false) + ")"
                     },
@@ -420,10 +429,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
 
     // Get simulated data
     loadStimulatedData() {
-        this.optimize.getSimulatedDataObservable().subscribe((data: any) => {
-            console.log(data , "holiday information with data")
-            this.convertToGraphNTableData(data)
-        })
+       
     }
 
     colorForDifference(base:any, simulated:any){

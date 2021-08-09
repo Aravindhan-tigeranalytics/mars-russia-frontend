@@ -29,6 +29,7 @@ export class CalendarChartComponent implements OnInit {
         for (let property in changes) {
             if (property === 'baselineCalendarData') {
               this.baselineCalendarData = changes[property].currentValue
+              this.createSvg()
               this.drawBars(this.baselineCalendarData);
             }
             else if(property === 'baselineDropdownFilter'){

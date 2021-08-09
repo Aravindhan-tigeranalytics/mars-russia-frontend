@@ -88,6 +88,9 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     }
 
     getChartData(){
+        this.weeklyData = []
+        this.baseCalendar = []
+        this.stimulatedCalendar = []
         let optimizerResponse = this.optimizer_response.optimal
         let metrics: any = []
         for(let i=0; i < optimizerResponse.length; i++){
@@ -284,8 +287,21 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                         'seasonality': seasonality
                     },
                     'promotions': {
-                        'promotion_value' : promotion_value,
-                        'coinvestment': data['base']['weekly'][i]['co_investment']
+                        'promotion_value' : Utils.genratePromotion(
+                            data['base']['weekly'][i]['flag_promotype_motivation'],data['base']['weekly'][i]['flag_promotype_n_pls_1'],
+                            data['base']['weekly'][i]['flag_promotype_traffic'],data['base']['weekly'][i]['promo_depth'],
+                            data['base']['weekly'][i]['co_investment']
+
+
+                        )
+                        ,
+                        'promotion_value_simulated':  Utils.genratePromotion(
+                            data['simulated']['weekly'][i]['flag_promotype_motivation'],data['simulated']['weekly'][i]['flag_promotype_n_pls_1'],
+                            data['simulated']['weekly'][i]['flag_promotype_traffic'],data['simulated']['weekly'][i]['promo_depth'],
+                            data['simulated']['weekly'][i]['co_investment']
+
+
+                        )
                     },
                     'predicted_units': {
                         "converted_base": Utils.formatNumber(data['base']['weekly'][i]['predicted_units'],true,false),

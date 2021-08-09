@@ -22,7 +22,9 @@ export class PromoScenarioBuilderComponent implements OnInit {
     hidepanel = true
     isFilterApplied: boolean = false
     hideFilter: string = 'yettobesimulated'
+    save_scenario_error:any = null
     form: FormGroup = null as any;
+    promotion_viewed : ListPromotion = null as any
     product:Product[] = []
     product_week:ProductWeek[] = [];
     genobj : {[key:string] : any[]  } = {}
@@ -92,6 +94,43 @@ export class PromoScenarioBuilderComponent implements OnInit {
           })
       
     }
+    _reset_checkbox(checkboxArray : CheckboxModel[]){
+        checkboxArray.filter(d=>{
+            if(d.checked){
+                d.checked = false
+            }
+        })
+
+    }
+    filterResetEvent($event){
+        console.log($event , "filter and reset event")
+        // {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
+        // "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
+        if($event == 'Retailers'){
+            this.filter_model.retailer = $event
+            this._reset_checkbox(this.retailers)
+        }
+        else if($event == 'Category'){
+            this.filter_model.category = $event
+            this._reset_checkbox(this.categories)
+        }
+        else if($event == 'Brands'){
+            this.filter_model.brand = $event
+            this._reset_checkbox(this.brands)
+        }
+        else if($event == 'Brand Formats'){
+            this.filter_model.brand_format = $event
+            this._reset_checkbox(this.brands_format)
+        }
+        else if($event == 'Product groups'){
+            this.filter_model.product_group = $event
+            this._reset_checkbox(this.product_group)
+        }
+        else if($event == 'Strategic cells'){
+            this.filter_model.strategic_cell = $event
+            this._reset_checkbox(this.strategic_cell)
+        }
+    }
     retailerChange(event:CheckboxModel){
        
         this.retailers.filter(val=>val.value != event.value).forEach(val=>val.checked = false)
@@ -116,6 +155,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
 
             this.categories.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
             this.selected_category = event.value
+            this.filter_model.category = this.selected_category
 
         }
         this.strategic_cell = [...new Set(this.product.filter(val=>val.corporate_segment == event.value).map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (e===this.selected_strategic_cell)}));
@@ -132,6 +172,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         if(event.checked){
             this.selected_strategic_cell = event.value
             this.strategic_cell.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
+            this.filter_model.strategic_cell = this.selected_strategic_cell
 
         }
         this.categories = [...new Set(this.product.filter(val=>val.strategic_cell_filter == event.value).map(item => item.corporate_segment))].map(e=>({"value" : e,"checked" : (e===this.selected_category)}));
@@ -146,6 +187,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         if(event.checked){
             this.selected_brand = event.value
             this.brands.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
+            this.filter_model.brand = this.selected_brand
 
         }
         this.strategic_cell = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (e===this.selected_strategic_cell)}));
@@ -161,6 +203,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         if(event.checked){
             this.selected_brand_format = event.value
             this.brands_format.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
+            this.filter_model.brand_format = this.selected_brand_format
 
         }
         this.strategic_cell = [...new Set(this.product.filter(val=>val.brand_format_filter == event.value).map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (e===this.selected_strategic_cell)}));
@@ -176,6 +219,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         if(event.checked){
             this.selected_product = event.value
             this.product_group.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
+            this.filter_model.product_group = this.selected_product
 
         }
         this.strategic_cell = [...new Set(this.product.filter(val=>val.product_group == event.value).map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (e===this.selected_strategic_cell)}));
@@ -234,12 +278,19 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.selected_product= null as any
         this._populateFilters(this.product)
         this.optimize.setProductWeekObservable([])
+        this.optimize.setLoadedScenarioModel(null as any)
+        this.promotion_viewed = null as any
         this.hidepanel = true
         this.restApi.setAccAndPPGFilteredFlagObservable(true)
+        this.filter_model =  {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
+        "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
         // this.selected_product_week
         // t
     }
     hidePanel(){
+        if(this.hideFilter == 'yettobesimulated'){
+            return
+        }
        
         this.hidepanel = !this.hidepanel
         if(this.hidepanel){
@@ -349,14 +400,31 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.uploaded_file = $event
         
     }
+    generateListPromotion(){
+        this.promotion_viewed = {
+            "id" : this.loaded_scenario.scenario_id,
+            "name" : this.loaded_scenario.scenario_name,
+            "comments" : this.loaded_scenario.scenario_comment,
+            "scenario_type" : this.loaded_scenario.scenario_type,
+            "meta" : {
+                "product_group" : this.loaded_scenario.product_group,
+                "retailer" : this.loaded_scenario.account_name,
+                "pricing" : false
+            }
+        }
+
+    }
     loadPromotionEvent($event){
         this.optimize.fetch_load_scenario_by_id($event.id).subscribe(data=>{
             this.loaded_scenario = data
-            this.scenario_name = this.loaded_scenario.scenario_name
-            this.scenario_comment = this.loaded_scenario.scenario_comment
+            this.generateListPromotion()
             this.productChange({"value" : data.product_group , "checked" : true})
             this.retailerChange({"value" : data.corporate_segment , "checked" : true}) 
             this.optimize.setLoadedScenarioModel(this.loaded_scenario)  
+            this.optimize.setSimulatedDataObservable(this.loaded_scenario)
+            this.isFilterApplied = true
+            this.hideFilter = 'viewmore'
+            // this.optimize.set
 
             console.log(this.loaded_scenario , "loaded sceanrio")
         })
@@ -391,6 +459,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         });
         
 this.optimize.savePromoScenario(weekly).subscribe(data=>{
+    this.modalService.close("save-scenario-popup")
     let promotion : ListPromotion = {
         "id" : data["saved_id"],
         "name" : weekly["name"],
@@ -407,8 +476,13 @@ this.optimize.savePromoScenario(weekly).subscribe(data=>{
     this.optimize.addPromotionList(promotion)
 
     console.log("saved data" , data)
+},
+error=>{
+    console.log(error , "eror")
+    this.save_scenario_error = error.detail
+
 })
-this.modalService.close("save-scenario-popup")
+
     // debugger
     }
 

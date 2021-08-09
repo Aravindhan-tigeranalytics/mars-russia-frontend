@@ -18,7 +18,11 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     @Input()
     hidepanel = true
     @Input()
+    disable_button = true
+    @Input()
     title: string = 'Untitled';
+    @Output()
+    filterResetEvent = new EventEmitter()
     @Output()
     modalEvent = new EventEmitter<string>();
     @Output()
@@ -38,6 +42,8 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     available_year:any[] = ["1 year" , "2 years" , "3 years"]
     loaded_scenario:LoadedScenarioModel = null as any
     promo_elasticity = 0
+
+    // hidepanel = true
     constructor(private optimize : OptimizerService,private simulatorService : SimulatorService){
 
     }
@@ -81,6 +87,11 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
             console.log(data ,"get loaded model")
             if(data){
                 this.populatePromotionWeek(data)
+                this.title = data.scenario_name
+
+            }
+            else{
+                this.title = "Untitled"
 
             }
            
@@ -111,6 +122,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
                 this.selected_quarter = ''
                 this.selected_product_week  = []
                 this.optimize.setPromotionObservable([])
+                this.disable_button = true
 
             }
             else{
@@ -159,6 +171,8 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
                     )
                     ).sort((a,b)=>(a.week > b.week) ? 1 : ((b.week > a.week) ? -1 : 0))
                 console.log(this.genobj , "gen obj")
+
+                this.disable_button = false
                
               }
 
@@ -170,25 +184,34 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     }
 
     closeClicked($event){
-        console.log("close clicked" , $event)
+        // closeClicked
+
+        this.filterResetEvent.emit($event)
+        
     }
 
     downloadWeeklyInput(){
-        this.simulatorService.downloadWeeklyInputTemplate().subscribe(data=>{
+        if(this.disable_button){
+            return
+        }
+        console.log(this.filter_model , "avaible model")
+        let queryObj = {
+            "account_name" : this.filter_model.retailer,
+            "product_group" : this.filter_model.product_group
+        }
+
+        this.simulatorService.downloadWeeklyInputTemplate(queryObj).subscribe(data=>{
         const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });    
         FileSaver.saveAs(
             blob,
             'WeeklyInput' + '_Template_' + new Date().getTime() + 'xlsx'
           );
         })
-        //     if(data){
-        //         window.open('file:///' + data.download_url)
-        //     }
-        // })
+       
     }
     populatePromotionWeek(scenario : LoadedScenarioModel){
         let pw:ProductWeek[]=[];
-        this.title = scenario.scenario_name
+        
         scenario.base.weekly.forEach((data,index)=>{
             let simulated_depth = scenario.simulated.weekly[index].promo_depth
             let simulated_coinv = scenario.simulated.weekly[index].co_investment
@@ -253,7 +276,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
                     "selected_promotion": utils.genratePromotion(
                         parseFloat(data.flag_promotype_motivation)
                         ,parseFloat(data.flag_promotype_n_pls_1),parseFloat(data.flag_promotype_traffic),
-                        parseFloat(data.promo_depth),parseFloat(data.promo_depth)
+                        parseFloat(data.promo_depth),parseFloat(data.co_investment)
                     ),
                     // "TPR-"+val+"%",
                     "week" : data})
@@ -282,18 +305,32 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
 
     simulateAndReset(type){
         console.log(this.promo_elasticity , "promo elasticity")
+        console.log(this.disable_button , "hiding panel")
+        if(!this.disable_button){
+            this.simulateResetEvent.emit({
+                "action" : type,
+                "promotion_map" : this.promotion_map,
+                "promo_elasticity" : this.promo_elasticity
+            })
+
+        }
+        return
         
-        this.simulateResetEvent.emit({
-            "action" : type,
-            "promotion_map" : this.promotion_map,
-            "promo_elasticity" : this.promo_elasticity
-        })
+       
     }
 
     sendMessage(modalType: string): void {
+        if(modalType == 'save-scenario-popup'){
+            if(this.disable_button){
+                return
+            }
+        }
         this.modalEvent.emit(modalType);
     }
     download(){
+        if(this.disable_button){
+            return
+        }
         this.downloadEvent.emit()
 
     }
@@ -399,6 +436,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
             if (property === 'hidepanel') {
                 console.log(changes[property].currentValue , "current value")
                 this.hidepanel = changes[property].currentValue
+
                 
                 
                

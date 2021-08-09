@@ -11,6 +11,8 @@ export class CalendarSimulatedChartComponent implements OnInit {
     @Input() 
     stimulatedCalendarData: any[];
     @Input()
+    baselineCalendarData : any[];
+    @Input()
     stimulatedDropdownFilter: string | 'roi' | 'lift' | 'si' = 'roi'
 
     private svg: any;
@@ -26,7 +28,7 @@ export class CalendarSimulatedChartComponent implements OnInit {
     }
     ngOnInit(): void {
         this.createSvg();
-        this.drawBars(this.stimulatedCalendarData);
+        this.drawBars(this.stimulatedCalendarData ,this.baselineCalendarData);
         console.log(this.stimulatedCalendarData);
     }
 
@@ -48,17 +50,18 @@ export class CalendarSimulatedChartComponent implements OnInit {
             if (property === 'stimulatedCalendarData') {
               this.stimulatedCalendarData = changes[property].currentValue
               setTimeout(()=>{
-                this.drawBars(this.stimulatedCalendarData);
+                  this.createSvg()
+                this.drawBars(this.stimulatedCalendarData,this.baselineCalendarData);
               },100)
             }
             else if(property === 'stimulatedDropdownFilter'){
                 this.createSvg()
-                this.drawBars(this.stimulatedCalendarData);
+                this.drawBars(this.stimulatedCalendarData,this.baselineCalendarData);
             }  
         }
     }
 
-    private drawBars(data: any[]): void {
+    private drawBars(data: any[] , others:any[]): void {
         var key = ''
         var label = ''
         if(this.stimulatedDropdownFilter == 'roi'){
@@ -77,7 +80,9 @@ export class CalendarSimulatedChartComponent implements OnInit {
         // Maxim value in the data to find the maximum bound dynamically
         const maximumDiscountInData = getMaxDiscount();
         function getMaxDiscount() {
-            return Math.max(...data.map((d) => d.discount));
+            let basemax = Math.max(...data.map((d) => d.discount));
+            let othermax = Math.max(...others.map((d) => d.discount));
+            return Math.max(basemax , othermax)
         }
         // Maxim value in the data to find the maximum bound dynamically
         const maximumROIInData = getMaxROI();

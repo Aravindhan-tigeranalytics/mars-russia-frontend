@@ -102,7 +102,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
 
     }
     configChangeEvent($event){
-        console.log($event)
+        console.log($event , "config change event")
         // label: "MAC", event:max_val: 0.4
 // min_val: 0
 this.checkboxMetrices.find(d=>{
@@ -110,7 +110,7 @@ this.checkboxMetrices.find(d=>{
     console.log(d.checkboxLabel , "check box label availalbe")
     if(d.checkboxLabel==$event["label"]){
 
-        d.checkHeadValue = "x" +  $event['event']['max_val']
+        d.checkHeadValue = "x" +  $event['event'] 
     }
     // if(d.id=="retailer-popup"){
     //     d.checkHeadValue = "x" +  $event['event']['max_val']
@@ -199,14 +199,45 @@ this.checkboxMetrices.find(d=>{
         }
 
     }
+    get_order_map(id){
+        let ret = ''
+        if(id == 'mac-popup'){
+            ret = 'MAC'
+        }
+        if(id == 'retailer-popup'){
+            ret = 'RP'
+        }
+        if(id == 'te-popup'){
+            ret = 'Trade_Expense'
+        }
+        if(id == 'mac-per-popup'){
+            ret = 'MAC_Perc'
+        }
+        if(id == 'rp-per-popup'){
+            ret = 'RP_Perc'
+        }
+        return ret
+    }
     optimizerData(){
        let decoded =  this.selected_promotions.map(d=>Utils.decodePromotion(d))
-    //    console.log(decoded)
-    //    debugger
-        // Utils.decodePromotion()
-        return {
 
-           "objective_function" : this.selected_objective,
+       console.log(this.checkboxMetrices, "check box metrices")
+    
+       
+      let mac:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "mac-popup")['checkHeadValue'].split("x")[1])
+      let rp:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "retailer-popup")['checkHeadValue'].split("x")[1])
+      let te:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "te-popup")['checkHeadValue'].split("x")[1])
+      let mac_nsv:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "mac-per-popup")['checkHeadValue'].split("x")[1])
+      let rp_rsv:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "rp-per-popup")['checkHeadValue'].split("x")[1])
+      
+        // Utils.decodePromotion()
+        // checkboxMetrices "Fin_Pref_Order":['Trade_Expense',"RP_Perc",'MAC_Perc','RP','MAC'],
+        // checkHeadValue: 'x0.50',
+        // checkboxLabel: 'MAC',
+        return {
+            "fin_pref_order" : this.checkboxMetrices.map(d=>this.get_order_map(d.id)),
+
+           "objective_function" : this.selected_objective.replace("Maximize " , "").replace("Minimize " , ""),
     "param_max_consecutive_promo" : this.duration_max,
     "param_min_consecutive_promo" : this.duration_min,
     "param_promo_gap" : this.param_gap_max,
@@ -215,8 +246,16 @@ this.checkboxMetrices.find(d=>{
    "mars_tpr": decoded.map(d=>d.promo_depth),
    "co_investment" : decoded.map(d=>d.co_investment),
    "mechanics" : decoded.map(d=>d.promo_mechanics),
-
-
+   "config_mac" : mac != 1,
+   "param_mac" : mac,
+   "config_rp" : rp != 1,
+   "param_rp" : rp,
+   "config_trade_expense" : te != 1,
+   "param_trade_expense" : te,
+   "config_mac_perc" : mac_nsv != 1,
+   "param_mac_perc" : mac_nsv,
+   "config_rp_perc" : rp_rsv != 1,
+   "param_rp_perc" : rp_rsv
         }
     }
 
@@ -319,7 +358,7 @@ this.checkboxMetrices.find(d=>{
     // }
 
     // drag and drop
-    checkboxMetrices = [
+    checkboxMetrices:any = [
         {
             id:"mac-popup",
             checkHeadValue: 'x0.50',
@@ -353,7 +392,10 @@ this.checkboxMetrices.find(d=>{
     ];
 
     drop(event: CdkDragDrop<string[]>) {
+        console.log(event , "event dragging")
         moveItemInArray(this.checkboxMetrices, event.previousIndex, event.currentIndex);
+        console.log(event.previousIndex, event.currentIndex , "prev and current")
+        console.log(this.checkboxMetrices, event.currentIndex , "this.checkboxMetrices and current")
     }
 
     onRoleChangeCheckbox(ev, index) {
