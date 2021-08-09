@@ -104,6 +104,13 @@ export class OptimizerService {
         })
     }
   }
+
+  arrayDiff(a:any, b:any) {
+    return [
+        ...a.filter(x => !b.includes(x)),
+        ...b.filter(x => !a.includes(x))
+    ];
+    }
   public deleteCompareScenario(id){
       let scenarios = this.compareScenarioObservable.getValue()
       scenarios = scenarios.filter(data=>data.scenario_id != id)
