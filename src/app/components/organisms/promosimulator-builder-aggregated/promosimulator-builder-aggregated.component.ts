@@ -23,6 +23,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     plChartData:any = [];
     baselineLiftChartData:any = []
 
+    baseline:any
     incrementalLift:any 
     lsv:any
     tradeExpence:any
@@ -153,6 +154,16 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                     baseline2: [data['simulated']['total']['units'],  data['simulated']['total']['increment_units']],
                 },
             ];
+
+            this.baseline = {
+                "converted_base": Utils.formatNumber(data['base']['total']['units'],false,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['units'],false,false),
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['units'],data['base']['total']['units']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['units']-data['base']['total']['units'],false,false) + ")",
+                "arrow": data['simulated']['total']['units'] >  data['base']['total']['units']?  'carret-up' : 'carret-down' ,
+                "color": this.colorForDifference(data['base']['total']['units'] , data['simulated']['total']['units']) 
+            }
+
             
             this.incrementalLift = {
                 "converted_base": Utils.formatNumber(data['base']['total']['increment_units'],false,false),

@@ -111,11 +111,16 @@
                 <table class="border border-marsgray-200 text-left">
                     <thead class="bg-white">
                         <tr class="whitespace-nowrap">
-                            <th colspan="1" scope="colgroup">
+                            <th colspan="2" scope="colgroup">
                                 <nwn-cell-header type="headersm" color="bggray-100">Baseline vs Incremental (In Units)</nwn-cell-header>
                             </th>
                         </tr>
                         <tr class="whitespace-nowrap">
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >Baseline</nwn-cell-header
+                                >
+                            </th>
                             <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent"
                                     >Incremental Units</nwn-cell-header
@@ -125,6 +130,7 @@
                     </thead>
                     <tbody class="bg-white">
                         <tr class="whitespace-nowrap">
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="baseline"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="incrementalLift"></nwn-cell-item></td>
                         </tr>
                     </tbody>
