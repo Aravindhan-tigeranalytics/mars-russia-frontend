@@ -13,7 +13,7 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
     @Input()
     loaded_scenario:Array<LoadedScenarioModel> = []
     promotions :PromoCompareModel[] = []
-    constructor(private elRef: ElementRef) {}
+    constructor(private elRef: ElementRef,) {}
 
     public ppTableWidth: any;
     public ppTableHeight: any;
@@ -25,30 +25,41 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
     }
     generate_metrics(loaded_scenario : Array<LoadedScenarioModel>){
         
-       
+        this.promotions = []
+        this.scenario_names = []
         loaded_scenario.forEach(element => {
             
-           
+           console.log(element,"check promotion here")
+            let base_value:any = element.base.weekly
             this.scenario_names.push(element.scenario_name)
-            element.simulated.weekly.forEach((data,index)=>{
+            element.simulated.weekly.forEach((data:any,index)=>{
                 console.log(data , "promotion plans tabs value")
-//                 flag_promotype_motivation: 0
-// flag_promotype_n_pls_1: 0
-// flag_promotype_traffic: 0 , co_investment
+
                 let promo = this.promotions.find(d=>d.week == data.week)
+                let simulated_promotion = Utils.genratePromotion(
+                    parseFloat(data.flag_promotype_motivation) , 
+                    parseFloat(data.flag_promotype_n_pls_1),
+                    parseFloat(data.flag_promotype_traffic),
+                    parseFloat(data.promo_depth) , 
+                    parseFloat(data.co_investment)
+                )
+                let base_promo = Utils.genratePromotion(
+                    parseFloat(base_value[index].flag_promotype_motivation) , 
+                    parseFloat(base_value[index].flag_promotype_n_pls_1),
+                    parseFloat(base_value[index].flag_promotype_traffic),
+                    parseFloat(base_value[index].promo_depth) , 
+                    parseFloat(base_value[index].co_investment)
+                )
                 if(promo){
-                    promo.discount.push( {"tpr":data.promo_depth , "co_inv" : data.promo_depth})
+                    promo.discount.push({"promotion_value": base_promo,"promotion_value_simulated": simulated_promotion})
 
                 }
                 else{
                     this.promotions.push(
                         {"week" : data.week,
                         "date":data.date , 
-                        discount:[
-                            {"tpr":data.promo_depth , "co_inv" : data.promo_depth}
-                        ]})
-                     
-
+                        discount:[{"promotion_value": base_promo,"promotion_value_simulated": simulated_promotion}]
+                    })
                 }
                
                 
