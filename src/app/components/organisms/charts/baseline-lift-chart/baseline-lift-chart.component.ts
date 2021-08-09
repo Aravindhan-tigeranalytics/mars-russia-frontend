@@ -98,9 +98,9 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
                 return num
             } 
             if(num.toString()[1] != undefined && num.toString()[1] == "0"){
-                return d3.format('.1s')(d)
+                return (d3.format('.1s')(d)).replace(/G/,"B")
             }
-            return  d3.format('.2s')(d)
+            return  (d3.format('.2s')(d)).replace(/G/,"B")
         };
         this.svg
             .append('g')
@@ -219,14 +219,14 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
 
             if(index.key == "baseline1"){
                 // if (d3.select(datum.target).attr('id') === 'base') {
-                    d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#7DD3FC;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value1) + '</div><br/><div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value2)+'</div>');
+                    d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#7DD3FC;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;Simulated : '+ dollarFormat(index.value1) + '</div><br/><div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;Incremental : '+dollarFormat(index.value2)+'</div>');
                 // } else {
                 //     d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value2) + '</div><br/><div style="background-color:#7DD3FC;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value1)+'</div>');
                 // }
             }
             else {
                 // if (d3.select(datum.target).attr('id') === 'base') {
-                    d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#0284C7;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value1) + '</div><br/><div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value2)+'</div>');
+                    d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#0284C7;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;Simulated : '+ dollarFormat(index.value1) + '</div><br/><div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;Incremental : '+dollarFormat(index.value2)+'</div>');
                 // } else {
                 //     d3.select('#baseline-tooltip').select('#base').html('<div style="background-color:#E0F2FE;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+ dollarFormat(index.value2) + '</div><br/><div style="background-color:#0284C7;height:8px;width:8px;display:inline-block;"></div><div style="display:inline-block;">&nbsp;&nbsp;'+dollarFormat(index.value1)+'</div>');
                 // }

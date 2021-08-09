@@ -30,6 +30,8 @@ export class CompareScenarioPopupComponent implements OnInit {
             if(data.length > 0){
                 console.log(data , "comparescenario datas")
                     this.loaded_scenario = data
+                    this.CompareScenarioChartData = []
+                    this.legendNames = []
                     if(this.loaded_scenario.length > 0){
                         this.CompareScenarioChartData = [
                             { "group": "LSV"},
