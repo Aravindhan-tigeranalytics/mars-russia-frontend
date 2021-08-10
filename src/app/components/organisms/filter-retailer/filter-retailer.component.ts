@@ -1,4 +1,5 @@
 import { Component, OnInit, Input,EventEmitter, Output  } from '@angular/core';
+import { SimulatorService } from '@core/services/simulator.service';
 import {CheckboxModel} from "../../../core/models"
 import {ModalApply} from "../../../shared/modal-apply.component"
 
@@ -30,12 +31,15 @@ export class FilterRetailerComponent extends ModalApply implements OnInit  {
   
   placeholder:any = 'Search retailers'
 
-  constructor() {
+  constructor(public restApi: SimulatorService) {
     super()
    }
 
   ngOnInit(): void {
-    
+    this.restApi.ClearScearchText.asObservable().subscribe(data=>{
+      console.log(data,"from modal apply")
+      this.searchText = ""
+    })
     console.log(this.cont , "cont value in filters")
   }
   valueChangeSelect(event:any){

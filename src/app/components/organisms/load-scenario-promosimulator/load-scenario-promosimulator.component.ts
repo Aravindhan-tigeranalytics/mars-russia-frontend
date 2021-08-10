@@ -1,5 +1,5 @@
 import { Component,OnInit,Output , EventEmitter } from '@angular/core';
-import {OptimizerService} from '@core/services'
+import {OptimizerService, SimulatorService} from '@core/services'
 import { ListPromotion} from "@core/models"
 import { ModalService } from '@molecules/modal/modal.service';
 
@@ -22,10 +22,14 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
     list_promotion_optimizer:Array<ListPromotion> = []
     list_promotion_pricing:Array<ListPromotion> = []
 
-    constructor(private optimize : OptimizerService,private modal : ModalService){
+    constructor(private optimize : OptimizerService,private modal : ModalService,public restApi: SimulatorService){
 
     }
     ngOnInit(): void {
+        this.restApi.ClearScearchText.asObservable().subscribe(data=>{
+            console.log(data,"from modal apply")
+            this.searchText = ""
+          })
         this.optimize.getListObservation().subscribe(data=>{
             if(data){
                 console.log(data , "get list promotions")

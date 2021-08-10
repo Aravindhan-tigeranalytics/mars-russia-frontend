@@ -1,4 +1,5 @@
 import { Component, OnInit,Input,EventEmitter, Output  } from '@angular/core';
+import { SimulatorService } from '@core/services/simulator.service';
 import {ModalApply} from "../../../shared/modal-apply.component"
 
 @Component({
@@ -15,12 +16,17 @@ export class FilterBrandsComponent extends ModalApply implements OnInit {
   brandChange = new EventEmitter()
 
   placeholder:any = 'Search brands'
-  constructor() {
+  constructor(public restApi: SimulatorService) {
     super()
    }
 
   ngOnInit(): void {
+    this.restApi.ClearScearchText.asObservable().subscribe(data=>{
+      console.log(data,"from modal apply")
+      this.searchText = ""
+    })
   }
+  
   valueChangeSelect(event:any){
     this.brandChange.emit(event)
   }

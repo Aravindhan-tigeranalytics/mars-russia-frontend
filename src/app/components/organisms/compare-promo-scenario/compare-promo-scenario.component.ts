@@ -3,6 +3,7 @@ import { ModalService } from '@molecules/modal/modal.service';
 import {OptimizerService} from '../../../core/services/optimizer.service'
 import { ListPromotion} from "../../../core/models"
 import { tickStep } from 'd3';
+import { SimulatorService } from '@core/services';
 
 @Component({
     selector: 'nwn-compare-promo-scenario',
@@ -18,11 +19,15 @@ export class ComparePromoScenarioComponent implements OnInit {
     openTab = 2;
     searchText = ''
     promotion_viewed:ListPromotion = null as any
-    constructor(private modal : ModalService,private optimize : OptimizerService,){
+    constructor(private modal : ModalService,private optimize : OptimizerService,public restApi: SimulatorService){
         this.optimize.fetch_load_scenario()
 
     }
     ngOnInit(): void {
+        this.restApi.ClearScearchText.asObservable().subscribe(data=>{
+            console.log(data,"from modal apply")
+            this.searchText = ""
+          })
         this.optimize.getListObservation().subscribe(data=>{
             if(data){
                 console.log(data , "list promotions")

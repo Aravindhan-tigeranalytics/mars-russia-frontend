@@ -34,17 +34,17 @@ export class PromoOptimizerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        var self = this;
-        $(document).keydown(function(event) { 
-            if (event.keyCode == 27) {
-                var modal_id = self.modalService.opened_modal
-                if(modal_id.length > 0){
-                    modal_id = modal_id[modal_id.length-1]
-                    $('#'+modal_id).hide(); 
-                    self.modalService.remove_last_modal()
-                }
-            }
-        });
+        // var self = this;
+        // $(document).keydown(function(event) { 
+        //     if (event.keyCode == 27) {
+        //         var modal_id = self.modalService.opened_modal
+        //         if(modal_id.length > 0){
+        //             modal_id = modal_id[modal_id.length-1]
+        //             $('#'+modal_id).hide(); 
+        //             self.modalService.remove_last_modal()
+        //         }
+        //     }
+        // });
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)
