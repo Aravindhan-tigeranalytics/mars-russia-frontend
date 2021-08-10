@@ -158,7 +158,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
             console.log(this.plChartData,"checkhere")
             this.baselineLiftChartData = [
                 {
-                    group: 'Baseline vs Incremental',
+                    group: 'Sales Units',
                     baseline1: [data['base']['total']['units'], data['base']['total']['increment_units']],
                     baseline2: [data['simulated']['total']['units'],  data['simulated']['total']['increment_units']],
                 },

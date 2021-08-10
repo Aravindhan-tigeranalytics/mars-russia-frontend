@@ -1,4 +1,8 @@
-<nwn-loaded-optimizer-header (optimizeAndResetEvent) = "optimizeAndReset($event)" (modalClose) = "closeModalEvent($event)" (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
+<nwn-loaded-optimizer-header 
+(optimizeAndResetEvent) = "optimizeAndReset($event)"
+ (modalClose) = "closeModalEvent($event)"
+ [filter_model] = "filter_model" 
+  (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
 <!-- [simulated]="status" -->
 <div>
     <nwn-summary-placeholder *ngIf="!isOptimiserFilterApplied"></nwn-summary-placeholder>
