@@ -67,5 +67,5 @@
         </div>
 
     </div>
-    <nwn-search-footer [showBack]="true" [showLoad]="true"></nwn-search-footer>
+    <nwn-search-footer (buttonClickedEvent) = "buttonClickedEvent($event)" [showBack]="true" [showLoad]="true" ></nwn-search-footer>
 </div>

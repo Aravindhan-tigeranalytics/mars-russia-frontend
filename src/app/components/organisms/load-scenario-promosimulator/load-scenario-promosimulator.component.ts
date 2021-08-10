@@ -57,9 +57,15 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
             })
 
         }
-        
-
-
+    }
+    modalConfirmation($event){
+        if($event == 'back'){
+            this.modal.close('promo-simulator-popup')
+        }
+        else if($event == 'load'){
+            this.modal.close('promo-simulator-popup')
+            this.loadScenario()
+        }
     }
     deleteClickedEvent($event){
 

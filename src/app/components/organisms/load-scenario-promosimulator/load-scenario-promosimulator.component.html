@@ -48,7 +48,7 @@
 </div>
 
 <nwn-modal id="promo-simulator-popup" class="hidden">
-    <nwn-promo-simulator-scenario (deleteClicked) = "deleteClickedEvent($event)" [promotion_viewed] = "promotion_viewed" ></nwn-promo-simulator-scenario>
+    <nwn-promo-simulator-scenario (confirmatonEventModal)="modalConfirmation($event)" (deleteClicked) = "deleteClickedEvent($event)" [promotion_viewed] = "promotion_viewed" ></nwn-promo-simulator-scenario>
 </nwn-modal>
 
 <nwn-modal id="pricing-scenario-popup" class="hidden">
