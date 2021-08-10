@@ -67,7 +67,7 @@ export class AddPromotionComponent implements OnInit {
     get f(){
         return this.form.controls;
       }
-    promo_name = ['Motivation' , 'N+1' , 'TPR']
+    promo_name:any[] = []
     ngOnInit(){
 this.form.valueChanges.subscribe(data=>{
     // console.log(data , "form changes subscription")
@@ -86,6 +86,7 @@ this.form.valueChanges.subscribe(data=>{
     
     // console.log(name , "name of label")
     this.base_line_promotions = this.optimize.get_base_line_promotions().map(e=>({"value" : e,"checked" : false}))
+    this.promo_name = this.optimize.get_base_line_promotions().map(e=>Utils.decodePromotion(e)['promo_mechanics'])
     console.log(this.base_line_promotions , "base line promotions")
 })
     }

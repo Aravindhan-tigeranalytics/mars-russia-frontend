@@ -62,5 +62,5 @@
 </nwn-modal> -->
 
 <nwn-modal id="delete-scenario" class="hidden">
-    <nwn-delete-alert (confirmatonEvent) = "confirmationDelete($event)"></nwn-delete-alert>
+    <nwn-delete-alert [selected_promotion] = "selected_promotion" (confirmatonEvent) = "confirmationDelete($event)"></nwn-delete-alert>
 </nwn-modal>

@@ -1,4 +1,4 @@
-import { Component, OnInit  , Output , EventEmitter } from '@angular/core';
+import { Component, OnInit ,Input , Output , EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'nwn-delete-alert',
@@ -9,6 +9,8 @@ export class DeleteAlertComponent implements OnInit {
     selectedIndex!: number;
     @Output()
     confirmatonEvent = new EventEmitter()
+    @Input()
+    selected_promotion = null as any
     constructor() {}
 
     ngOnInit() {}
