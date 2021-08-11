@@ -29,6 +29,7 @@ export class FilterBasicComponent extends ModalApply implements OnInit{
     openFilterModal(id:string){
         this.searchText = ""
         let temp:any = {}
+        temp.close = 'filter-basic'
         temp.open = id
         this.simulatorService.setCommandInterfaceModalObservable(temp)
     }

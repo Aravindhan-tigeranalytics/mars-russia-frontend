@@ -201,7 +201,7 @@
                     <p tooltipContent>Save scenario</p>
                 </nwn-button>
                 <nwn-button [disabled] = "disable_button" type="icon" size="iconsm" [showTooltip]="true">
-                    <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
+                    <nwn-svg-icon type="stroke" nwnSvgIcon="save-download" (click)="download()"></nwn-svg-icon>
                     <p tooltipContent>Download scenario</p>
                 </nwn-button>
                 <div class="relative">

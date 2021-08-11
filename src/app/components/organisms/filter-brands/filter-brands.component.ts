@@ -12,8 +12,8 @@ export class FilterBrandsComponent extends ModalApply implements OnInit {
   @Input()
   brands:Array<string> = []
 
-  @Output()
-  brandChange = new EventEmitter()
+  // @Output()
+  // brandChange = new EventEmitter()
 
   placeholder:any = 'Search brands'
   constructor(public restApi: SimulatorService) {
@@ -27,8 +27,8 @@ export class FilterBrandsComponent extends ModalApply implements OnInit {
     })
   }
   
-  valueChangeSelect(event:any){
-    this.brandChange.emit(event)
-  }
+  // valueChangeSelect(event:any){
+  //   this.brandChange.emit(event)
+  // }
 
 }

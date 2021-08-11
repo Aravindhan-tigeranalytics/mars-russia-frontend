@@ -13,8 +13,8 @@ export class FilterCategoriesComponent extends ModalApply  implements OnInit {
   @Input()
   categories:Array<CheckboxModel> = []
 
-  @Output()
-  categoryChange = new EventEmitter()
+  // @Output()
+  // categoryChange = new EventEmitter()
   	
   placeholder:any = 'Search categories'
   constructor(public restApi: SimulatorService) { 
@@ -27,8 +27,8 @@ export class FilterCategoriesComponent extends ModalApply  implements OnInit {
       this.searchText = ""
     })
   }
-  valueChangeSelect(event:any){
-    this.categoryChange.emit(event)
-  }
+  // valueChangeSelect(event:any){
+  //   this.categoryChange.emit(event)
+  // }
 
 }
