@@ -180,6 +180,10 @@ export class OptimizerService {
     return this.apiService.post<any>('api/scenario/save/' , requestData)
 
   }
+  saveOptimizerScenario(requestData: any):Observable<any>{
+    return this.apiService.post<any>('api/optimiser/save/' , requestData)
+
+  }
   deletePromoScenario(id){
       return this.apiService.delete('api/scenario/savedscenario/'+id)
   }
@@ -199,12 +203,17 @@ export class OptimizerService {
     return this.apiService.get<LoadedScenarioModel>('api/scenario/list-saved-promo/' + id)
       // http://localhost:8000/api/scenario/list-saved-promo/39/
   }
+  fetch_optimizer_scenario_by_id(id){
+      return this.apiService.get<any>('api/optimiser/list-saved-optimizer/' + id)
+
+  }
   set_base_line_promotion(promotions:any){
     this.base_line_promotion = [...this.base_line_promotion , ...promotions]
     this.base_line_promotion = [...new Set(this.base_line_promotion)]
     console.log(this.base_line_promotion , "Base line promotion set")
 
   }
+
   insert_base_line_promotion(promotions:string){
       this.base_line_promotion.push(promotions)
   }

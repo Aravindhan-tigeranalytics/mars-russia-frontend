@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ModalService } from '@molecules/modal/modal.service';
-import { CheckboxModel,Product,FilterModel } from "../../core/models"
+import { CheckboxModel,ListPromotion,Product,FilterModel } from "../../core/models"
 import {OptimizerService} from '../../core/services/optimizer.service'
 import * as $ from 'jquery';
 
@@ -12,7 +12,7 @@ import * as $ from 'jquery';
 })
 
 export class PromoOptimizerComponent implements OnInit {
-    status: any = 'yettobesimulated' 
+    status: any = 'viewmore' 
     isOptimiserFilterApplied: boolean = false
     retailers:Array<CheckboxModel> = []
     categories:Array<CheckboxModel> = [] 
@@ -27,6 +27,9 @@ export class PromoOptimizerComponent implements OnInit {
     selected_strategic_cell:string = null as any
     selected_brand:string = null as any
     selected_brand_format:string = null as any
+    save_scenario_error:any = null
+    optimizer_response : any = null
+
     filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
     "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
     product:Product[] = []
@@ -177,6 +180,27 @@ export class PromoOptimizerComponent implements OnInit {
     closeModalEvent($event){
         this.closeModal($event)
     }
+    loadOptimizer($event){
+        this.productChange({"value" : $event['meta']['product_group'] , "checked" : true})
+            this.retailerChange({"value" : $event['meta']['retailer'] , "checked" : true})
+        // this.selected_product = $event['meta']['product_group']
+        // this.selected_retailer = 
+        // console.log($event , "load event")
+        this.optimize.fetch_optimizer_scenario_by_id($event["id"]).subscribe(data=>{
+            if(data){
+                console.log(data , "fetch response ..")
+                // this.optimizer_response = data
+                this.optimize.setoptimizerDataObservable(data)
+                // this.isOptimiserFilterApplied = true
+
+            }
+           
+
+        },err=>{
+            console.log(err , "errror")
+        })
+        console.table($event)
+    }
     optimizeAndReset($event){
 
         console.log($event , "event otimize")
@@ -187,6 +211,7 @@ export class PromoOptimizerComponent implements OnInit {
         // debugger
         if($event.type == 'optimize'){
             this.optimize.optimizeResult(res).subscribe(data=>{
+                this.optimizer_response = data
                 this.optimize.setOptimizerResponseObservable(data)
                 this.isOptimiserFilterApplied = true
                
@@ -194,6 +219,51 @@ export class PromoOptimizerComponent implements OnInit {
            
         
         }
+    }
+    saveScenario($event){
+        let p:Product = this.product.find(d=>(d.account_name == this.selected_retailer && d.product_group == this.selected_product))!
+        let data_response = this.optimizer_response.optimal
+        let data;
+        let keys_to_keep = ["Optimum_Promo" , "Coinvestment" , "week"]
+
+        data=data_response.map(element => Object.assign({}, ...keys_to_keep.map(key => ({[key]: element[key]}))))
+        let obj = {
+            "type" : 'optimizer',
+            "meta_id" : p?.id,
+        // "account_name" : this.selected_category,
+        // "product_group" : this.product_group , 
+        "name" : $event['name'],
+        "comments" : $event["comments"],
+        'optimizer_data' : data
+
+        
+        }
+        this.optimize.saveOptimizerScenario(obj).subscribe(data=>{
+            console.log(data , "saved data")
+            let promotion : ListPromotion = {
+                "id" : data["message"],
+                "name" :$event['name'],
+                "comments" :  $event["comments"],
+                "scenario_type" : "optimizer",
+                "meta" : {
+                    "retailer" : p?.account_name,
+                    "product_group" : p?.product_group,
+                    "pricing" : false
+                }
+        
+        
+            }
+            this.optimize.addPromotionList(promotion)
+
+        },error=>{
+            console.log(error , "error")
+            this.save_scenario_error = error.detail
+
+        })
+
+        console.log(data , "save scenario event")
+
+
     }
     receiveMessage($event: any) {
         console.log('recieved');

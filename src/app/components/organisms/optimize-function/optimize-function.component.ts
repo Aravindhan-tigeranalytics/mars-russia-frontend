@@ -6,6 +6,7 @@ import { Component , Output , EventEmitter } from '@angular/core';
     styleUrls: ['./optimize-function.component.css'],
 })
 export class OptimizeFunctionComponent {
+    objective_value:any = null
 
     @Output()
     objectiveEvent = new EventEmitter()
@@ -13,8 +14,13 @@ export class OptimizeFunctionComponent {
 objective_function = ['Maximize MAC' ,'Maximize RP' , 'Minimize TE']
 
 selectObjective(objective){
+    this.objective_value = objective
     this.objectiveEvent.emit(objective)
-    console.log(objective , "objective function")
+    // console.log(objective , "objective function")
+}
+apply(){
+    this.objectiveEvent.emit(this.objective_value)
+
 }
 
 }

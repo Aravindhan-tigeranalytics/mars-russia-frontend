@@ -1,4 +1,4 @@
-import { Component,Output , EventEmitter, Input } from '@angular/core';
+import { Component,Output , EventEmitter, Input,SimpleChanges } from '@angular/core';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 
 @Component({
@@ -42,18 +42,50 @@ export class MinimumGapWavesComponent {
     }
 
 
-    duration_min = 0
-    duration_max = 0
-    value = "0 - 0"
+    duration_min = (this.basepromo - 3) 
+    duration_max = this.basepromo + 3
+    value = "0"
 
 
     sliderChangeEvent($event){
         this.duration_max = $event['max_val']
         this.duration_min = $event['min_val']
-        this.value = this.duration_min + " - " + this.duration_max
-        this.paramGapEvent.emit($event)
+        if(this.duration_min > 0){
+            this.value = this.duration_min + " - " + this.duration_max
+
+        }
+        else{
+            this.value =  String(this.duration_max)
+        }
+        // this.value = this.duration_min + " - " + this.duration_max
+        // this.paramGapEvent.emit($event)
 
         // min_val: 0, max_val: 12
         console.log($event , "slider change event")
     }
+    apply(){
+        this.paramGapEvent.emit({
+            "max_val" : this.duration_max,
+            "min_val" : this.duration_min
+        })
+
+    }
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'basepromo') {
+                this.duration_min = (this.basepromo - 3) 
+                this.duration_max = this.basepromo + 3
+                
+                if(this.duration_min > 0){
+                    this.value = this.duration_min + " - " + this.duration_max
+        
+                }
+                else{
+                    this.value =  String(this.duration_max)
+                }
+            } 
+        }
+    }
+
 }

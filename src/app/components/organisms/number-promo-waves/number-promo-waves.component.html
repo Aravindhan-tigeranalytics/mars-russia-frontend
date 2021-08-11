@@ -22,8 +22,8 @@
             </div>
         </div>
         <div class="custom-slider px-6 pt-4 pb-6">
-            <nwn-slider (sliderChangeEvent) = "sliderChangeEvent($event)" [floor] = "floor" [ceil] = "ceil" [steps] = "steps" [options] = "options"></nwn-slider>
+            <nwn-slider (sliderChangeEvent) = "sliderChangeEvent($event)" [floor] = "floor" [ceil] = "ceil" [steps] = "steps" [options] = "options" [minValue] = "duration_min" [maxValue] = "duration_max"></nwn-slider>
         </div>
     </div>
-    <nwn-search-footer [showApply]="true"></nwn-search-footer>
+    <nwn-search-footer (click) = "apply()"  [showApply]="true"></nwn-search-footer>
 </div>

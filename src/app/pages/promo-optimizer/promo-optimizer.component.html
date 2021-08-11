@@ -2,6 +2,7 @@
 (optimizeAndResetEvent) = "optimizeAndReset($event)"
  (modalClose) = "closeModalEvent($event)"
  [filter_model] = "filter_model" 
+ [status]= "status"
   (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
 <!-- [simulated]="status" -->
 <div>
@@ -34,6 +35,10 @@
 <nwn-modal id="filter-product-groups" class="hidden">
     <nwn-filter-product-groups (closeModal)="close($event)" (filterApply)="filterApply($event)" (productChange) = "productChange($event)" [product_groups] = "product_group"></nwn-filter-product-groups>
 </nwn-modal>
+<!-- save scenario -->
+<nwn-modal id="save-scenario-popup" class="hidden">
+    <nwn-save-scenario [error] = "save_scenario_error" (saveScenarioEvent)="saveScenario($event)"></nwn-save-scenario>
+</nwn-modal>
 <!-- Add Promotions -->
 <nwn-modal id="add-promotion" class="hidden">
     <nwn-add-promotion></nwn-add-promotion>
@@ -48,7 +53,7 @@
 </nwn-modal>
 <!-- load scenario promosimulator -->
 <nwn-modal id="load-scenario-promosimulator" class="hidden">
-    <nwn-load-scenario-promosimulator></nwn-load-scenario-promosimulator>
+    <nwn-load-scenario-promosimulator (loadPromotionEvent) = "loadOptimizer($event)"></nwn-load-scenario-promosimulator>
 </nwn-modal>
 <!-- pricing scenario -->
 <nwn-modal id="pricing-scenario" class="hidden">

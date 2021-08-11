@@ -82,14 +82,14 @@
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('duration-of-waves')">
                         <p topValue>{{optimizer_data?.data.param_max_consecutive_promo}}</p>
-                        <p topHeadValue>{{duration_min}} - {{duration_max}}</p>
+                        <p topHeadValue><span *ngIf="duration_min">{{duration_min}} - </span>{{duration_max}}</p>
                         <p topMetricContent>Duration of waves</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('minimum-gap-waves')">
                         <p topValue>{{optimizer_data?.data.param_promo_gap}}</p>
-                        <p topHeadValue>{{param_gap_min}} - {{param_gap_max}}</p>
+                        <p topHeadValue><span *ngIf="param_gap_min">{{param_gap_min}} - </span>{{param_gap_max}}</p>
                         <p topMetricContent>Minimum gap</p>
                     </nwn-metric-item>
                 </div>
@@ -98,7 +98,7 @@
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
                         <p topValue>{{optimizer_data?.data.param_no_of_promo}}</p>
-                        <p topHeadValue>{{min_week}} - {{max_week}}</p>
+                        <p topHeadValue><span *ngIf="min_week">{{min_week}} - </span>{{max_week}}</p>
                         <p topMetricContent>Number of weeks</p>
                     </nwn-metric-item>
                 </div>
@@ -181,7 +181,7 @@
     <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
         <div class="flex flex-row space-x-2 items-center">
             <div class="">
-                <nwn-button
+                <nwn-button 
                     type="icon"
                     size="iconsm"
                     [showTooltip]="true"
@@ -194,13 +194,13 @@
         </div>
         <div class="flex flex-row">
             <div class="flex flex-row space-x-4 items-center">
-                <nwn-button type="link" size="sm" (click)="sendMessage('OptimizerFilterReset')"> Reset </nwn-button>
-                <nwn-button type="primary" size="sm" (click)="optimizeReset('optimize')"> Optimize </nwn-button>
-                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button [disabled] = "disable_button" type="link" size="sm" (click)="sendMessage('OptimizerFilterReset')"> Reset </nwn-button>
+                <nwn-button [disabled] = "disable_button" type="primary" size="sm" (click)="optimizeReset('optimize')"> Optimize </nwn-button>
+                <nwn-button  [disabled] = "disable_button" (click)="sendMessage('save-scenario-popup')" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                     <p tooltipContent>Save scenario</p>
                 </nwn-button>
-                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button [disabled] = "disable_button" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
                     <p tooltipContent>Download scenario</p>
                 </nwn-button>
@@ -255,7 +255,7 @@
     </div>
 </div>
 <div *ngIf="status == yettobesimulated">
-    <nwn-status-bar nwnStatusBar="yettobesimulated">YET TO BE SIMULATED</nwn-status-bar>
+    <nwn-status-bar nwnStatusBar="yettobesimulated">YET TO BE OPTIMIZED</nwn-status-bar>
 </div>
 <div *ngIf="isExpand">
     <nwn-status-bar nwnStatusBar="viewmore" (click)="expandHeader()">View More</nwn-status-bar>
@@ -263,6 +263,16 @@
 <div *ngIf="!isExpand">
     <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
 </div>
+
+<!-- <div *ngIf="status == yettobesimulated">
+    <nwn-status-bar nwnStatusBar="yettobesimulated">YET TO BE OPTIMIZED</nwn-status-bar>
+</div>
+<div *ngIf="status == viewmore">
+    <nwn-status-bar nwnStatusBar="viewmore" (click)="expandHeader()">View More</nwn-status-bar>
+</div>
+<div  *ngIf="status == viewless">
+    <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
+</div> -->
 
 
 

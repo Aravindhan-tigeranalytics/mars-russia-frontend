@@ -80,7 +80,9 @@ export interface LoadedScenarioModel {
     corporate_segment:string;
     product_group:string;
     scenario_comment : string;
-    scenario_type:string
+    scenario_type:string;
+    promo_elasticity : number
+    holiday_array : any[];
     
     base:{
         total : PromoSimulatedTotalModel;

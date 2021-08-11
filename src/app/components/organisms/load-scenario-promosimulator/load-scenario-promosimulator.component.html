@@ -10,6 +10,9 @@
             <div class="pr-6">
                 <nwn-tab-cta (click)="toggleTabs(2)" [type]="openTab === 2 ? 'selectedtab' : 'unselectedtab'">Promo simulator scenario</nwn-tab-cta>
             </div>
+            <div class="pr-6">
+                <nwn-tab-cta (click)="toggleTabs(3)" [type]="openTab === 3 ? 'selectedtab' : 'unselectedtab'">Optimizer scenario</nwn-tab-cta>
+            </div>
         </div>
     </div>
     <div class="border-b border-marsgray-200">
@@ -39,6 +42,20 @@
             [ngClass]="{ active: selectedIndex == i }"
         >
             <nwn-scenario-load-card [showInfo]="true">
+                <p slcHead>{{promotion.name}}</p>
+                <p slcContent>{{promotion.comments}}</p>
+            </nwn-scenario-load-card>
+        </div>
+    </div>
+    <div class="h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3" [ngClass]="{ hidden: openTab !== 3, block: openTab === 3 }">
+        <!-- [ngClass]="{ 'bg-marsgray-100': active }" -->
+        <div
+            class="border border-marsgray-300 cursor-pointer"
+            *ngFor="let promotion of list_promotion_optimizer | appFilter: searchText : 'promo';let i = index"
+            (click)="select(i,promotion)"
+            [ngClass]="{ active: selectedIndex == i }"
+        >
+            <nwn-scenario-load-card [id] = "promotion" (infoClickedEvent) = "infoClickedEvent($event)" [showInfo]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>{{promotion.comments}}</p>
             </nwn-scenario-load-card>

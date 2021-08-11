@@ -41,6 +41,8 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     @Output()
     optimizeAndResetEvent = new EventEmitter()
     @Input()
+    disable_button = true
+
     filter_model : FilterModel
 
     optimizerMetrics:any = ''
@@ -50,6 +52,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
             takeUntil(this.unsubscribe$)
         ).subscribe(data=>{
             if(data){
+                this.disable_button = false
                 this.isExpand = false
                 this.optimizer_data = data
                 this.populatePromotion(this.optimizer_data.weekly)
@@ -84,17 +87,20 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     }
 
     durationWavesEvent($event){
+        this.modalClose.emit("duration-of-waves")
         this.duration_min = $event["min_val"]
         this.duration_max = $event["max_val"]
-        console.log($event , "slider change event")
+        
     }
     paramGapEvent($event){
+        this.modalClose.emit("minimum-gap-waves")
         this.param_gap_min = $event["min_val"]
         this.param_gap_max = $event["max_val"]
         console.log($event , "slider change event param gap")
 
     }
     promoWaveEvent($event){
+        this.modalClose.emit("number-promo-waves")
         this.min_week = $event["min_val"]
         this.max_week = $event["max_val"]
 
@@ -177,6 +183,7 @@ this.checkboxMetrices.find(d=>{
     }
 
     objectiveEvent($event){
+        this.modalClose.emit("optimize-function")
         this.selected_objective = $event
         this.toggle_disable(this.selected_objective)
         
@@ -246,7 +253,7 @@ this.checkboxMetrices.find(d=>{
     "param_total_promo_max":this.max_week,
    "mars_tpr": decoded.map(d=>d.promo_depth),
    "co_investment" : decoded.map(d=>d.co_investment),
-   "mechanics" : decoded.map(d=>d.promo_mechanics),
+   "promo_mech" : decoded.map(d=>d.promo_mechanics),
    "config_mac" : mac != 1,
    "param_mac" : mac,
    "config_rp" : rp != 1,
@@ -279,6 +286,9 @@ this.checkboxMetrices.find(d=>{
     // expand and collapse
     isExpand = true;
     expandHeader() {
+        if(this.disable_button){
+            return
+        }
         this.isExpand = !this.isExpand;
     }
     populateConfig(configData :OptimizerConfigModel ){
