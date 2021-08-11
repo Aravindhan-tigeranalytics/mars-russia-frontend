@@ -3,7 +3,7 @@
         <nwn-command-header type="stroke" nwnSvgIcon="filter">Filter</nwn-command-header>
     </div>
     <div class="border-b border-marsgray-200">
-        <nwn-command-search [hideClose]="true" [placeholder]="placeholder" (inputChangeEvent) = "inputChangeEvent($event)"></nwn-command-search>
+        <nwn-command-search [value] = "searchText" [hideClose]="true" [placeholder]="placeholder" (inputChangeEvent)="inputChangeEvent($event)"></nwn-command-search>
     </div>
     <div>
         <!-- <nwn-command-iconitem type="stroke" nwnSvgIcon="retailers" [hideTick]="true" (click)="openFilterModal('filter-retailer')"
