@@ -240,6 +240,11 @@ export class OptimizerService {
           )
   }
 
+  downloadOptimiserExcel(requestData: any): Observable<any> {
+    return this.apiService.postd('api/optimiser/optimizer-download/' , requestData 
+      )
+  }
+
   public getOptimizerMetricsObservable():Observable<any>{
     return this.optimizerMetricsData.asObservable()
   }

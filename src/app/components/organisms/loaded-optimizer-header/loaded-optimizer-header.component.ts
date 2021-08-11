@@ -42,7 +42,9 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     optimizeAndResetEvent = new EventEmitter()
     @Input()
     disable_button = true
-
+    @Output()
+    downloadEvent = new EventEmitter<any>();
+    @Input()
     filter_model : FilterModel
 
     optimizerMetrics:any = ''
@@ -62,6 +64,13 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
             
         })
         
+    }
+    download(){
+        // if(this.disable_button){
+        //     return
+        // }
+        this.downloadEvent.emit()
+
     }
   
 
