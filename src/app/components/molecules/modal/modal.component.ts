@@ -31,10 +31,11 @@ export class ModalComponent implements OnInit, OnDestroy {
         var self = this;
         $(document).keydown(function(event) { 
             if (event.keyCode == 27) {
-                var modal_id = self.modalService.opened_modal
+                var modal_id:any = self.modalService.opened_modal
                 if(modal_id.length > 0){
                     modal_id = modal_id[modal_id.length-1]
-                    $('#'+modal_id).hide(); 
+                    // $('#'+modal_id).hide();
+                    self.modalService.close(modal_id) 
                     self.modalService.remove_last_modal()
                     self.restApi.setClearScearchTextObservable(self.id)
                 }

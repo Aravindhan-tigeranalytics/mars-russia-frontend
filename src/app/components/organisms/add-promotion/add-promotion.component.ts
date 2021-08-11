@@ -113,11 +113,11 @@ this.form.valueChanges.subscribe(data=>{
         console.log(val , "val genetratefd")
         this.optimize.setPromotionObservable(val)
         console.log(this.input_promotions , "input promotions ") 
-        var modal_id = this.modalService.opened_modal
+        var modal_id:any = this.modalService.opened_modal
         if(modal_id.length > 0){
             modal_id = modal_id[modal_id.length-1]
-            $('#'+modal_id).hide(); 
-            this.modalService.remove_last_modal()
+            // $('#'+modal_id).hide(); 
+            this.modalService.close(modal_id)
             this.restApi.setClearScearchTextObservable(modal_id)
         }
     }

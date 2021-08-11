@@ -11,12 +11,12 @@
     @apply w-5 h-5;
 }
 .light-gradient{
-    background-color: #E0F2FE;
+    background-color: #E0F2FE !important;
  
  }
  .medium-gradient{
-     background-color: #7DD3FC;
+     background-color: #7DD3FC !important;
  }
  .high-gradient{
-     background-color: #40ACE2;
+     background-color: #40ACE2 !important;
  }
