@@ -118,7 +118,7 @@ this.format = "percent"
                 
 
 
-     return {
+     let ret =  {
          "id" : element.scenario_id,
             "base" : base,
             "simulated" : simulated,
@@ -135,6 +135,16 @@ this.format = "percent"
             "color" : difference < 0 ? "red" : "green"
 
         }
+        let rev_color = ["te","te_percent_of_lsv","te_per_unit"]
+        if(rev_color.includes(key)){
+            ret["color"] =  difference > 0 ? "red" : "green"
+        }
+        return ret
+        // this.te.value.push(this._generate_obj(element , "te"))
+        // this.te.visible = true
+        // this.te_per_lsv.value.push(this._generate_obj(element , "te_percent_of_lsv", true))
+        // this.te_per_lsv.visible = true
+        // this.te_per_unit.value.push(this._generate_obj(element , "te_per_unit"))
 
     }
     metricChanges(e:Array<string>){

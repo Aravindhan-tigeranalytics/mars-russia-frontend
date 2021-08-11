@@ -145,6 +145,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     }
 
     convertToGraphNTableData(data: any){
+        this.weeklyData = []
         if(data){
             this.plChartData = [
                 { group: 'LSV', base: data['base']['total']['lsv'], simulated: data['simulated']['total']['lsv'] },

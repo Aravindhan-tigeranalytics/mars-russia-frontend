@@ -12069,7 +12069,7 @@ export class SimulatorService {
         'Authorization': 'Token ' + this.token
       })
     }  
-    return this.http.post<any>(this.apiURL + 'scenario/promo-simulate-file-upload/', requestData, httpOptions)
+    return this.http.post<any>(this.apiURL + 'api/scenario/promo-simulate-file-upload/', requestData, httpOptions)
     .pipe(
       retry(1),
       catchError(this.handleError)

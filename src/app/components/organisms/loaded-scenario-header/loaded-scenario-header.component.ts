@@ -88,6 +88,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
             if(data){
                 this.populatePromotionWeek(data)
                 this.title = data.scenario_name
+                this.promo_elasticity = data.promo_elasticity
 
             }
             else{
@@ -123,6 +124,8 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
                 this.selected_product_week  = []
                 this.optimize.setPromotionObservable([])
                 this.disable_button = true
+                this.promotion_map = []
+                this.promo_elasticity = 0
 
             }
             else{
