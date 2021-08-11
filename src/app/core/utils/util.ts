@@ -133,7 +133,7 @@ export function convertCurrency(value:any , per?:any , is_curr = true){
 }
 
 export function formatNumber(number: any,currency: boolean,percentage: boolean){
-    var SI_SYMBOL = ["", "K", "M", "G", "T", "P", "E"];
+    var SI_SYMBOL = ["", "K", "M", "B", "T", "P", "E"];
     // what tier? (determines SI symbol)
     var tier = Math.log10(Math.abs(number)) / 3 | 0;
 

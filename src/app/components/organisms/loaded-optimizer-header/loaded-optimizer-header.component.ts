@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {OptimizerService} from "@core/services"
-import {OptimizerModel , ProductWeek , OptimizerConfigModel} from "@core/models"
+import {OptimizerModel , ProductWeek , OptimizerConfigModel, FilterModel} from "@core/models"
 import * as Utils from "@core/utils"
 // import { Component, Output, EventEmitter, ViewChild, OnInit,Input } from '@angular/core';
 // import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -43,6 +43,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     @Input()
     disable_button = true
 
+    filter_model : FilterModel
 
     optimizerMetrics:any = ''
     constructor(public optimize:OptimizerService){}

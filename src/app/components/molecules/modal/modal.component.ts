@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalService } from './modal.service';
+import * as $ from 'jquery';
+import { SimulatorService } from '@core/services/simulator.service';
 
 @Component({
     selector: 'nwn-modal',
@@ -13,7 +15,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     id!: string;
     private element: any;
 
-    constructor(private modalService: ModalService, el: ElementRef) {
+    constructor(private modalService: ModalService, el: ElementRef,public restApi: SimulatorService) {
         this.id = '';
         this.element = el.nativeElement;
     }
@@ -26,6 +28,20 @@ export class ModalComponent implements OnInit, OnDestroy {
             return;
         }
 
+        var self = this;
+        $(document).keydown(function(event) { 
+            if (event.keyCode == 27) {
+                var modal_id:any = self.modalService.opened_modal
+                if(modal_id.length > 0){
+                    modal_id = modal_id[modal_id.length-1]
+                    // $('#'+modal_id).hide();
+                    self.modalService.close(modal_id) 
+                    self.modalService.remove_last_modal()
+                    self.restApi.setClearScearchTextObservable(self.id)
+                }
+            }
+        });
+
         // move element to bottom of page (just before </body>) so it can be displayed above everything else
         document.body.appendChild(this.element);
 
@@ -34,6 +50,7 @@ export class ModalComponent implements OnInit, OnDestroy {
             console.log("modal component click close")
             console.log("modal component click close target",el.target.className)
             if (el.target.className === 'nwn-modal-bg') {
+                this.restApi.setClearScearchTextObservable(this.id)
                 this.close();
                 // document.body.classList.add('nwn-modal-open');
             }

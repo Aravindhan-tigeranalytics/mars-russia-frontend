@@ -3,7 +3,7 @@
         <nwn-command-header type="fill" nwnSvgIcon="simulator">Promo Scenario Builder</nwn-command-header>
     </div>
     <div class="border-b border-marsgray-200">
-        <nwn-command-search [hideClose]="true" [placeholder]="placeholder" (inputChangeEvent) = "inputChangeEvent($event)"></nwn-command-search>
+        <nwn-command-search [value]="searchText" [hideClose]="true" [placeholder]="placeholder" (inputChangeEvent) = "inputChangeEvent($event)"></nwn-command-search>
     </div>
     <div>
         <ng-container *ngFor="let data of filterNames | appFilter: searchText : 'promo';">

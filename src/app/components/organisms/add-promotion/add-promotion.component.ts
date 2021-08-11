@@ -1,9 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import {OptimizerService} from '@core/services'
+import {OptimizerService, SimulatorService} from '@core/services'
 import {CheckboxModel} from '@core/models'
+import { ModalService } from '@molecules/modal/modal.service';
 import * as Utils from "@core/utils"
+import * as $ from 'jquery';
+
 // import { tickStep } from 'd3-array';
 @Component({
     selector: 'nwn-add-promotion',
@@ -11,7 +14,7 @@ import * as Utils from "@core/utils"
     styleUrls: ['./add-promotion.component.css'],
 })
 export class AddPromotionComponent implements OnInit {
-    constructor(private optimize : OptimizerService,){
+    constructor(private optimize : OptimizerService,public modalService: ModalService,public restApi: SimulatorService){
 
     }
     promo_generated = ''
@@ -109,7 +112,14 @@ this.form.valueChanges.subscribe(data=>{
         let val = this.input_promotions.map(e=>e.value)
         console.log(val , "val genetratefd")
         this.optimize.setPromotionObservable(val)
-     console.log(this.input_promotions , "input promotions ")   
+        console.log(this.input_promotions , "input promotions ") 
+        var modal_id:any = this.modalService.opened_modal
+        if(modal_id.length > 0){
+            modal_id = modal_id[modal_id.length-1]
+            // $('#'+modal_id).hide(); 
+            this.modalService.close(modal_id)
+            this.restApi.setClearScearchTextObservable(modal_id)
+        }
     }
 
     addPromotions(){

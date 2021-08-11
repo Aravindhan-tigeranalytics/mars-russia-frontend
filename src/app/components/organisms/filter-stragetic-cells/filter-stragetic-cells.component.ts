@@ -1,4 +1,5 @@
 import { Component, OnInit, Input ,EventEmitter, Output} from '@angular/core';
+import { SimulatorService } from '@core/services/simulator.service';
 import {ModalApply} from "../../../shared/modal-apply.component"
 @Component({
   selector: 'nwn-filter-stragetic-cells',
@@ -12,12 +13,17 @@ export class FilterStrageticCellsComponent extends ModalApply implements OnInit 
   strategicCellChange = new EventEmitter()
 
   placeholder:any = 'Search strategic cells'
-  constructor() { 
+  constructor(public restApi: SimulatorService) { 
     super()
   }
 
   ngOnInit(): void {
+    this.restApi.ClearScearchText.asObservable().subscribe(data=>{
+      console.log(data,"from modal apply")
+      this.searchText = ""
+    })
   }
+  
   valueChangeSelect(event:any){
     this.strategicCellChange.emit(event)
   }

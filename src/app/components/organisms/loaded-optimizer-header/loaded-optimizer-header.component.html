@@ -5,54 +5,54 @@
                 <nwn-filter-item
                     type="stroke"
                     nwnSvgIcon="retailers"
-                    [hideClose]="true"
+                    [hideClose]="filter_model.retailer =='Retailers'"
                     (click)="sendMessage('filter-retailer')"
-                    >Retailers</nwn-filter-item
+                    >{{filter_model.retailer}}</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item
                     type="stroke"
                     nwnSvgIcon="categories"
-                    [hideClose]="true"
+                    [hideClose]="filter_model.category =='Category'"
                     (click)="sendMessage('filter-categories')"
-                    >Categories</nwn-filter-item
+                    >{{filter_model.category}}</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item
                     type="stroke"
                     nwnSvgIcon="strategic-cells"
-                    [hideClose]="true"
+                    [hideClose]="filter_model.strategic_cell =='Strategic cells'"
                     (click)="sendMessage('filter-stragetic-cells')"
-                    >Strategic Cells</nwn-filter-item
+                    >{{filter_model.strategic_cell}}</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item
                     type="stroke"
                     nwnSvgIcon="brands"
-                    [hideClose]="true"
+                    [hideClose]="filter_model.brand =='Brands'"
                     (click)="sendMessage('filter-brands')"
-                    >Brands</nwn-filter-item
+                    >{{filter_model.brand}}</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item
                     type="stroke"
                     nwnSvgIcon="brand-formats"
-                    [hideClose]="true"
+                    [hideClose]="filter_model.brand_format =='Brand Formats'"
                     (click)="sendMessage('filter-brand-formats')"
-                    >Brand Formats</nwn-filter-item
+                    >{{filter_model.brand_format}}</nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
                 <nwn-filter-item
                     type="stroke"
                     nwnSvgIcon="product-groups"
-                    [hideClose]="true"
+                    [hideClose]="filter_model.product_group =='Product groups'"
                     (click)="sendMessage('filter-product-groups')"
-                    >Product Groups</nwn-filter-item
+                    >{{filter_model.product_group}}</nwn-filter-item
                 >
             </div>
         </div>
