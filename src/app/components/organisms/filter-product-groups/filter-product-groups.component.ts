@@ -12,8 +12,8 @@ export class FilterProductGroupsComponent extends ModalApply implements OnInit {
   @Input()
   product_groups:Array<CheckboxModel> = []
 
-  @Output()
-  productChange = new EventEmitter()
+  // @Output()
+  // productChange = new EventEmitter()
 
   placeholder:any = 'Search product groups'
   constructor(public restApi: SimulatorService) { 
@@ -26,8 +26,8 @@ export class FilterProductGroupsComponent extends ModalApply implements OnInit {
       this.searchText = ""
     })
   }
-  valueChangeSelect(event:any){
-    this.productChange.emit(event)
-  }
+  // valueChangeSelect(event:any){
+  //   this.productChange.emit(event)
+  // }
 
 }

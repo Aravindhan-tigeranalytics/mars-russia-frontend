@@ -6,7 +6,7 @@
         <nwn-command-search [value]="searchText" [placeholder]="placeholder" [hideClose]="true" (inputChangeEvent)="inputChangeEvent($event)"></nwn-command-search>
     </div>
     <div class="scrollbar-y h-[287px]">
-        <nwn-command-multiselect  (valueChangeSelect)="valueChangeSelect($event)"  *ngFor="let brand_format of brand_formats | appFilter: searchText;" [value] = "brand_format.value" [checked]="brand_format.checked" [leftBorder]="false" [hideClose]="true">{{brand_format.value}}</nwn-command-multiselect>
+        <nwn-command-multiselect  (valueChangeSelect)="valueChangeSelect($event,'Brand Formats')"  *ngFor="let brand_format of brand_formats | appFilter: searchText;" [value] = "brand_format.value" [checked]="brand_format.checked" [leftBorder]="false" [hideClose]="true">{{brand_format.value}}</nwn-command-multiselect>
         <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Galaxy Silk</nwn-command-multiselect>
         <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Galaxy Silk</nwn-command-multiselect>
         <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Galaxy Silk</nwn-command-multiselect>

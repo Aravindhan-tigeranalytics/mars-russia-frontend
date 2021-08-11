@@ -12,27 +12,27 @@
 <!-- Modals -->
 <!-- Filter Retailer -->
 <nwn-modal id="filter-retailer" class="hidden">
-    <nwn-filter-retailer (closeModal)="close($event)" (retailerChange) = "retailerChange($event)" [retailers] = "retailers"></nwn-filter-retailer>
+    <nwn-filter-retailer (closeModal)="close($event)" (filterApply)="filterApply($event)" (retailerChange) = "retailerChange($event)" [retailers] = "retailers"></nwn-filter-retailer>
 </nwn-modal>
 <!-- Filter Category -->
 <nwn-modal id="filter-categories" class="hidden">
-    <nwn-filter-categories (closeModal)="close($event)" (categoryChange) = "categoryChange($event)" [categories] = "categories"></nwn-filter-categories>
+    <nwn-filter-categories (closeModal)="close($event)" (filterApply)="filterApply($event)" (categoryChange) = "categoryChange($event)" [categories] = "categories"></nwn-filter-categories>
 </nwn-modal>
 <!-- Filter Strategic Cell -->
 <nwn-modal id="filter-stragetic-cells" class="hidden">
-    <nwn-filter-stragetic-cells (closeModal)="close($event)" (strategicCellChange) = "strategicCellChange($event)" [stragetic_cells] = "strategic_cell"></nwn-filter-stragetic-cells>
+    <nwn-filter-stragetic-cells (closeModal)="close($event)" (filterApply)="filterApply($event)" (strategicCellChange) = "strategicCellChange($event)" [stragetic_cells] = "strategic_cell"></nwn-filter-stragetic-cells>
 </nwn-modal>
 <!-- Filter Brands -->
 <nwn-modal id="filter-brands" class="hidden">
-    <nwn-filter-brands (closeModal)="close($event)" (brandChange) = "brandChange($event)"  [brands] = "brands"></nwn-filter-brands>
+    <nwn-filter-brands (closeModal)="close($event)" (filterApply)="filterApply($event)" (brandChange)="brandChange($event)"  [brands] = "brands"></nwn-filter-brands>
 </nwn-modal>
 <!-- Filter Brand Formats -->
 <nwn-modal id="filter-brand-formats" class="hidden">
-    <nwn-filter-brands-formats (closeModal)="close($event)" (brandFormatChange) = "brandFormatChange($event)" [brand_formats] = "brands_format"></nwn-filter-brands-formats>
+    <nwn-filter-brands-formats (closeModal)="close($event)" (filterApply)="filterApply($event)" (brandFormatChange) = "brandFormatChange($event)" [brand_formats] = "brands_format"></nwn-filter-brands-formats>
 </nwn-modal>
 <!-- Filter Product Groups -->
 <nwn-modal id="filter-product-groups" class="hidden">
-    <nwn-filter-product-groups (closeModal)="close($event)" (productChange) = "productChange($event)" [product_groups] = "product_group"></nwn-filter-product-groups>
+    <nwn-filter-product-groups (closeModal)="close($event)" (filterApply)="filterApply($event)" (productChange) = "productChange($event)" [product_groups] = "product_group"></nwn-filter-product-groups>
 </nwn-modal>
 <!-- Add Promotions -->
 <nwn-modal id="add-promotion" class="hidden">

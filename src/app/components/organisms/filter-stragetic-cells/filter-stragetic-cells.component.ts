@@ -9,8 +9,8 @@ import {ModalApply} from "../../../shared/modal-apply.component"
 export class FilterStrageticCellsComponent extends ModalApply implements OnInit {
   @Input()
   stragetic_cells:Array<string> = []
-  @Output()
-  strategicCellChange = new EventEmitter()
+  // @Output()
+  // strategicCellChange = new EventEmitter()
 
   placeholder:any = 'Search strategic cells'
   constructor(public restApi: SimulatorService) { 
@@ -24,8 +24,8 @@ export class FilterStrageticCellsComponent extends ModalApply implements OnInit 
     })
   }
   
-  valueChangeSelect(event:any){
-    this.strategicCellChange.emit(event)
-  }
+  // valueChangeSelect(event:any){
+  //   this.strategicCellChange.emit(event)
+  // }
 
 }

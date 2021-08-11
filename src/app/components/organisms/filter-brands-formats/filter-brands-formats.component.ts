@@ -11,8 +11,8 @@ export class FilterBrandsFormatsComponent extends ModalApply  implements OnInit 
   @Input()
   brand_formats:Array<string> = []
 
-  @Output()
-  brandFormatChange = new EventEmitter()
+  // @Output()
+  // brandFormatChange = new EventEmitter()
 
   placeholder:any = 'Search brand formats'
 
@@ -26,8 +26,8 @@ export class FilterBrandsFormatsComponent extends ModalApply  implements OnInit 
       this.searchText = ""
     })
   }
-  valueChangeSelect(event:any){
-    this.brandFormatChange.emit(event)
-  }
+  // valueChangeSelect(event:any){
+  //   this.brandFormatChange.emit(event)
+  // }
 
 }

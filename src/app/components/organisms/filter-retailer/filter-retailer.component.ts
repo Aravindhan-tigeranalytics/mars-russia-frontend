@@ -26,10 +26,11 @@ export class FilterRetailerComponent extends ModalApply implements OnInit  {
   retailers:Array<CheckboxModel> = []
   @Input()
   cont:Array<any> = []
-  @Output()
-  retailerChange = new EventEmitter()
+  // @Output()
+  // retailerChange = new EventEmitter()
   
   placeholder:any = 'Search retailers'
+  retailerSelected:any = ''
 
   constructor(public restApi: SimulatorService) {
     super()
@@ -42,9 +43,9 @@ export class FilterRetailerComponent extends ModalApply implements OnInit  {
     })
     console.log(this.cont , "cont value in filters")
   }
-  valueChangeSelect(event:any){
-    this.retailerChange.emit(event)
-  }
+  // valueChangeSelect(event:any){
+  //   this.retailerChange.emit(event)
+  // }
   // inputChangeEvent(event:any){
   //   this.searchText = event
   // }
