@@ -22,7 +22,7 @@ export class PromoElasticityComponent {
       //   }
       // })
     }
-    disable = true
+    disable = false
     counter = 0;
     
     _name = 0;

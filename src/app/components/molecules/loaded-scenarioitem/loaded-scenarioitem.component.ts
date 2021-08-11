@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,Output,EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'nwn-loaded-scenarioitem',
@@ -7,5 +7,14 @@ import { Component, Input } from '@angular/core';
 })
 export class LoadedScenarioitemComponent {
     @Input()
-    title: string = 'Galaxy promo scenario';
+    title: string = 'Untitled';
+    @Output()
+    openInfoEvent = new EventEmitter()
+    // @Input()
+    // info_promotion = null as any
+
+    openInfo(modalId){
+        this.openInfoEvent.emit(modalId)
+
+    }
 }

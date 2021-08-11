@@ -46,7 +46,7 @@ export class DurationPromoWavesComponent {
     }
 
 
-    duration_min = (this.basepromo - 3) 
+    duration_min = this.basepromo - 3
     duration_max = this.basepromo + 3
     value = "0"
 
@@ -81,6 +81,10 @@ export class DurationPromoWavesComponent {
             if (property === 'basepromo') {
                 this.duration_min = (this.basepromo - 3) 
                 this.duration_max = this.basepromo + 3
+                if(this.duration_min < 0) {
+                    this.duration_min = 0
+                }
+                // this.duration_min = 0 : ((this.basepromo - 3) < 0 ) 0
                 
                 if(this.duration_min > 0){
                     this.value = this.duration_min + " - " + this.duration_max
