@@ -281,6 +281,7 @@ export class PromoOptimizerComponent implements OnInit {
         
         }
         this.optimize.saveOptimizerScenario(obj).subscribe(data=>{
+            this.closeModal("save-scenario-popup")
             console.log(data , "saved data")
             let promotion : ListPromotion = {
                 "id" : data["message"],

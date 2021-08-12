@@ -1,6 +1,6 @@
 <div class="w-[650px] bg-white mx-auto my-6">
     <div class="border-b border-marsgray-200">
-        <nwn-command-header type="stroke" nwnSvgIcon="adjustments">Number of promo waves</nwn-command-header>
+        <nwn-command-header type="stroke" nwnSvgIcon="adjustments">Number of weeks</nwn-command-header>
     </div>
     <div class="h-auto bg-white">
         <div class="border-b border-marsgray-200">
@@ -10,7 +10,7 @@
         <div class="grid grid-cols-2">
             <div>
                 <nwn-metric-item-popup>
-                    <p metricPopHead>{{duration_min}} - {{duration_max}}</p>
+                    <p metricPopHead><span *ngIf="duration_min && duration_min!=duration_max">{{duration_min}} - </span>{{duration_max}}</p>
                     <p metricPopContent>Number of weeks (input)</p>
                 </nwn-metric-item-popup>
             </div>

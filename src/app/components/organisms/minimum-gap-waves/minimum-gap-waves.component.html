@@ -10,7 +10,7 @@
         <div class="grid grid-cols-2">
             <div>
                 <nwn-metric-item-popup>
-                    <p metricPopHead>{{duration_min}} - {{duration_max}}</p>
+                    <p metricPopHead><span *ngIf="duration_min && duration_min!=duration_max">{{duration_min}} - </span>{{duration_max}}</p>
                     <p metricPopContent>Number of weeks (input)</p>
                 </nwn-metric-item-popup>
             </div>
