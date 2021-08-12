@@ -207,6 +207,8 @@ export class PromoOptimizerComponent implements OnInit {
         this.closeModal($event)
     }
     loadOptimizer($event){
+        this.filter_model["retailer"] =  $event['meta']['retailer']
+        this.filter_model["product_group"] =  $event['meta']['product_group']
         this.productChange({"value" : $event['meta']['product_group'] , "checked" : true})
             this.retailerChange({"value" : $event['meta']['retailer'] , "checked" : true})
         // this.selected_product = $event['meta']['product_group']
@@ -267,8 +269,9 @@ export class PromoOptimizerComponent implements OnInit {
     saveScenario($event){
         let p:Product = this.product.find(d=>(d.account_name == this.selected_retailer && d.product_group == this.selected_product))!
         let data_response = this.optimizer_response.optimal
+        console.log(data_response , "data response")
         let data;
-        let keys_to_keep = ["Optimum_Promo" , "Coinvestment" , "week"]
+        let keys_to_keep = ["Optimum_Promo" , "Coinvestment" , "week","Mechanic"]
 
         data=data_response.map(element => Object.assign({}, ...keys_to_keep.map(key => ({[key]: element[key]}))))
         let obj = {
@@ -345,10 +348,10 @@ export class PromoOptimizerComponent implements OnInit {
             "config_gsv": false,
             "config_mac": false,
             "config_mac_perc": false,
-            "config_max_consecutive_promo": false,
-            "config_min_consecutive_promo": false,
+            "config_max_consecutive_promo": true,
+            "config_min_consecutive_promo": true,
             "config_nsv": false,
-            "config_promo_gap": false,
+            "config_promo_gap": true,
             "config_rp": false,
             "config_rp_perc": false,
             "config_sales": false,

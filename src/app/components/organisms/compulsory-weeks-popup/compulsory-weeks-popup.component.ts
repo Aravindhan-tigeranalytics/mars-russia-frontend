@@ -14,6 +14,8 @@ export class CompulsoryWeeksPopupComponent implements OnInit {
     product_week:ProductWeek[] = []
     @Output()
     cumpulsoryWeekEvent = new EventEmitter()
+    @Input()
+    ignored_week_val:Array<any> = []
     selected_product_week:ProductWeek[] = []
     selected_quarter:string = ''
     weekly_map:Array<any> = [] //{"selected_promotion" : $event.value , "week" : this.product_week }
@@ -28,18 +30,18 @@ export class CompulsoryWeeksPopupComponent implements OnInit {
         })
 
     }
-    getWeek(p,weekly_m){
-        if(weekly_m.find(d=>d.week == p.week)){
-            return 'compulsoryWeek'
-        }
-        return "defaultWeek"
-    }
+    
     clickWeekly(product){
+        if(this.ignored_week_val.find(d=>d.week == product.week)){
+            return
+
+        }
         if(this.weekly_map.find(d=>d.week == product.week)){
             this.weekly_map = this.weekly_map.filter(d=>d.week!=product.week)
         }
         else{
-            this.weekly_map.push(product)
+            // this.weekly_map.push(product)
+            this.weekly_map = [...this.weekly_map, product];
 
         }
         

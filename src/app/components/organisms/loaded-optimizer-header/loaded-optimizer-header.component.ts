@@ -37,6 +37,8 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     @Output()
     modalClose = new EventEmitter()
     cumpulsory_week = 0
+    cumpulsory_week_val:any[] = []
+    ignored_week_val:any[] = []
     ignored_week = 0
     @Output()
     optimizeAndResetEvent = new EventEmitter()
@@ -107,6 +109,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         this.sendMessage($event)
     }
     cumpulsoryWeekEvent($event){
+        this.cumpulsory_week_val = $event["value"]
         // {
         //     "id" : "compulsory-weeks-popup",
         //     "value" : this.weekly_map
@@ -115,6 +118,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         this.modalClose.emit($event["id"])
     }
     ignoredWeekEvent($event){
+        this.ignored_week_val =  $event["value"]
         this.ignored_week =  $event["value"].length
         this.modalClose.emit($event["id"])
 
@@ -283,7 +287,7 @@ this.checkboxMetrices.find(d=>{
       let te:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "te-popup")['checkHeadValue'].split("x")[1])
       let mac_nsv:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "mac-per-popup")['checkHeadValue'].split("x")[1])
       let rp_rsv:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "rp-per-popup")['checkHeadValue'].split("x")[1])
-      
+    //   debugger
         // Utils.decodePromotion()
         // checkboxMetrices "Fin_Pref_Order":['Trade_Expense',"RP_Perc",'MAC_Perc','RP','MAC'],
         // checkHeadValue: 'x0.50',
@@ -309,7 +313,10 @@ this.checkboxMetrices.find(d=>{
    "config_mac_perc" : mac_nsv != 1,
    "param_mac_perc" : mac_nsv,
    "config_rp_perc" : rp_rsv != 1,
-   "param_rp_perc" : rp_rsv
+   "param_rp_perc" : rp_rsv , 
+   "param_compulsory_no_promo_weeks" : this.ignored_week_val.map(d=>d.week),
+   "param_compulsory_promo_weeks" : this.cumpulsory_week_val.map(d=>d.week)
+
         }
     }
 
@@ -370,6 +377,7 @@ this.checkboxMetrices.find(d=>{
         })
     }
     populatePromotion(weekdata : ProductWeek[]){
+        this.promotions = []
         this.product_week = this.optimizer_data.weekly
         
                 

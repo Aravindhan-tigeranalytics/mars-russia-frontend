@@ -23,7 +23,10 @@ export class ModalService {
     }
 
     open(id: string) {
-        this.opened_modal.push(id);
+        if(!this.opened_modal.includes(id)){
+            this.opened_modal.push(id);
+        }
+        
         console.log("opening modal" , id)
         console.log(this.opened_modal , "opened modal")
         // open modal specified by id
