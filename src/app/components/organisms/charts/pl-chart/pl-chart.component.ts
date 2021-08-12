@@ -183,12 +183,18 @@ export class PlChartComponent implements OnInit,OnChanges {
                 .attr('stroke-width', '1')
                 .attr('fill', '#E4E4E7');
 
+            console.log(index.value)
             // Update the tooltip
             d3.select('#pl-chart-tooltip')
                 .style('opacity', '1')
                 .style('left', xPositionForTooltip + 'px')
                 .style('top', yPositionForTooltip + 'px');
-            d3.select('#pl-chart-tooltip').select('#base').text(dollarFormat(index.value));
+            if(index.key == 'base'){
+                d3.select('#pl-chart-tooltip').select('#base').text('Base : '+dollarFormat(index.value));
+            }
+            else {
+                d3.select('#pl-chart-tooltip').select('#base').text('Simulated : '+dollarFormat(index.value));
+            }
             d3.select('#pl-chart-tooltip')
                 .select('#baseColor')
                 .style('background-color', d3.select(datum.target).attr('fill'));
