@@ -97,10 +97,12 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             let durationObj = this.convertToFormat(optimizerResponse[i].Date) 
             let week = optimizerResponse[i].week
             let holiday = false
+            let holiday_name:any = ''
             if(this.optimizer_response.holiday.length > 0){
                 for(let j = 0; j < this.optimizer_response.holiday.length; j++){
                     if(optimizerResponse[i][this.optimizer_response.holiday[j]] == 1){
                         holiday = true
+                        holiday_name = this.optimizer_response.holiday[j]
                     }
                 }
             }
@@ -128,7 +130,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 si : (optimizerResponse[i].SI).toFixed(2),
                 roi: (optimizerResponse[i].Baseline_ROI).toFixed(2),
                 lift : (optimizerResponse[i].Baseline_Lift).toFixed(2),
-                holidayNames : this.optimizer_response.holiday
+                holidayNames : holiday_name.split('_').map(capitalize).join(' ').replace("Flag ","")
             })
             this.stimulatedCalendar.push({
                 date: durationObj.date,
@@ -142,7 +144,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 si : (optimizerResponse[i].SI).toFixed(2), 
                 roi: (optimizerResponse[i].Optimum_ROI).toFixed(2),
                 lift : (optimizerResponse[i].Optimum_Lift).toFixed(2) ,
-                holidayNames : this.optimizer_response.holiday
+                holidayNames : holiday_name.split('_').map(capitalize).join(' ').replace("Flag ","")
             })
         }
 

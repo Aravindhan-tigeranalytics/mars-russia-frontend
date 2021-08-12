@@ -154,7 +154,7 @@ export class CalendarChartComponent implements OnInit {
         // Add Y Right Axis - ROI
         const yRightScale = d3
             .scaleLinear()
-            .domain([minYaxisValue, maximumROIInData + maximumROIInData / 10])
+            .domain([0, maximumROIInData + maximumROIInData / 10])
             .range([this.boundingHeight, 0])
             // To make sure the axis starts and ends on round numbers
             .nice();
@@ -334,8 +334,10 @@ export class CalendarChartComponent implements OnInit {
             }
 
             if (index.holiday) {
+                console.log(index.holidayNames)
                 d3.select('#calendarBase-tooltip')
                     .select('#holiday')
+                    // .text('Holiday: ' + index.holidayNames)
                     .attr('class', 'flex flex-row items-center space-x-2');
             } else {
                 d3.select('#calendarBase-tooltip').select('#holiday').attr('class', 'hidden');
@@ -417,6 +419,7 @@ export class CalendarChartComponent implements OnInit {
             if (index.holiday) {
                 d3.select('#calendarBase-tooltip')
                     .select('#holiday')
+                    // .select('#holiday').text('Holiday: ' + index.holidayNames)
                     .attr('class', 'flex flex-row items-center space-x-2');
             } else {
                 d3.select('#calendarBase-tooltip').select('#holiday').attr('class', 'hidden');

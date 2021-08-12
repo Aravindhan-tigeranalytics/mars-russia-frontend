@@ -160,7 +160,7 @@ export class CalendarSimulatedChartComponent implements OnInit {
         // Add Y Right Axis - ROI
         const yRightScale = d3
             .scaleLinear()
-            .domain([minYaxisValue, maximumROIInData + maximumROIInData / 10])
+            .domain([0, maximumROIInData + maximumROIInData / 10])
             .range([this.boundingHeight, 0])
             // To make sure the axis starts and ends on round numbers
             .nice();
