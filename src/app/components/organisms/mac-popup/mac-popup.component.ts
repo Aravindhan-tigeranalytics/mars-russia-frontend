@@ -47,15 +47,35 @@ export class MacPopupComponent {
     }
 
     sliderChangeEvent($event){
-        this.configChangeEvent.emit({
-            "label" : this.label,
-            "event" : $event
-        })
+        // this.configChangeEvent.emit({
+        //     "label" : this.label,
+        //     "event" : $event
+        // })
 
 
     }
+    get_popup_id(label){
+        let ret = ''
+        if(label == 'MAC'){
+            ret = 'mac-popup'
+        }
+        if(label == 'Retailer profit'){
+            ret = 'retailer-popup'
+        }
+        if(label == 'Trade expense'){
+            ret = 'te-popup'
+        }
+        if(label == 'MAC, % NSV'){
+            ret = 'mac-per-popup'
+        }
+        if(label == 'RP, % RSV'){
+            ret = 'rp-per-popup'
+        }
+        return ret
+    }
     apply(){
         this.configChangeEvent.emit({
+            "id" : this.get_popup_id(this.label),
             "label" : this.label,
             "event" : this.value
 

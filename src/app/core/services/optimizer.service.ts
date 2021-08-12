@@ -56,6 +56,11 @@ export class OptimizerService {
 
 
   }
+  public getPromotionById(id):ListPromotion{
+   let list_promo : ListPromotion[] =  this.listPromotionObservable.getValue()
+   return list_promo.find(d=>d.id == id)!
+
+  }
   public setoptimizerDataObservable(data:OptimizerModel){
       this.optimizerDataObservable.next(data)
   }

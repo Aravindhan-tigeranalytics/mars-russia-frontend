@@ -216,6 +216,9 @@ export class PromoOptimizerComponent implements OnInit {
             if(data){
                 console.log(data , "fetch response ..")
                 // this.optimizer_response = data
+                let promotion = this.optimize.getPromotionById($event["id"])
+                data["meta"] = promotion
+                console.log(data , "data with promotion details")
                 this.optimize.setoptimizerDataObservable(data)
                 // this.isOptimiserFilterApplied = true
 
@@ -229,13 +232,8 @@ export class PromoOptimizerComponent implements OnInit {
     }
     optimizeAndReset($event){
 
-        console.log($event , "event otimize")
-        console.log(this.get_optimizer_form() , "form otimize")
-        console.log(this.product , "product")
-        let res = {...this.get_optimizer_form(),...$event['data']}
-        console.log(res , "result")
-        // debugger
         if($event.type == 'optimize'){
+            let res = {...this.get_optimizer_form(),...$event['data']}
             this.optimize.optimizeResult(res).subscribe(data=>{
                 this.optimizer_response = data
                 this.optimize.setOptimizerResponseObservable(data)
@@ -244,6 +242,26 @@ export class PromoOptimizerComponent implements OnInit {
             })
            
         
+        }
+        if($event.type == "reset"){
+            console.log("resetting")
+            this.selected_brand = null as any
+        this.selected_brand_format = null as any
+        this.selected_category= null as any
+        this.selected_product= null as any
+        this.selected_product= null as any
+        this._populateFilters(this.product)
+
+            this.status = "viewless"
+            this.optimize.setoptimizerDataObservable(null as any) 
+
+            this.optimizer_response = null
+            this.optimize.setOptimizerResponseObservable(null)
+
+            this.isOptimiserFilterApplied = false
+            this.filter_model =  {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
+            "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
+            // pass
         }
     }
     saveScenario($event){

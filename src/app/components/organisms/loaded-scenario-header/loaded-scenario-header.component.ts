@@ -88,7 +88,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
             if(data){
                 this.populatePromotionWeek(data)
                 this.title = data.scenario_name
-                this.promo_elasticity = data.promo_elasticity
+                this.promo_elasticity = data.promo_elasticity | 0
 
             }
             else{
@@ -214,6 +214,8 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     }
     populatePromotionWeek(scenario : LoadedScenarioModel){
         let pw:ProductWeek[]=[];
+        console.log(this.promotion_map , "promotion map vallllllllllllllllllllllllllllllll")
+        this.promotion_map = []
         
         scenario.base.weekly.forEach((data,index)=>{
             let simulated_depth = scenario.simulated.weekly[index].promo_depth

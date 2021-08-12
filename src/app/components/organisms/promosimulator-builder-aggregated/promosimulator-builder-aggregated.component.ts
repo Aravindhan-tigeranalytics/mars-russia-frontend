@@ -128,7 +128,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
         let ret : string = null as any
         if(holiday){
             // debugger
-            data.forEach(element => {
+            data?.forEach(element => {
                 console.log(element , "retttttttttttttttttt element")
                 // coefficient_old: "flag_russian_day", coefficient_new: "Holiday_Flag1"
                 if(element['coefficient_new'].split("_").join("").toLowerCase() == holiday.split("_").join("").toLowerCase()){

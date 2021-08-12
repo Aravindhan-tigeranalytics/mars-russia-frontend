@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {OptimizerService} from "@core/services"
-import {OptimizerModel , ProductWeek , OptimizerConfigModel, FilterModel} from "@core/models"
+import {OptimizerModel , ProductWeek , OptimizerConfigModel, FilterModel, ListPromotion} from "@core/models"
 import * as Utils from "@core/utils"
 // import { Component, Output, EventEmitter, ViewChild, OnInit,Input } from '@angular/core';
 // import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -29,7 +29,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
 
     product_week : ProductWeek[] = []
     @Input()
-    title: string = '';
+    title: string = 'Untitled';
     @Input()
     status: 'string' | 'yettobesimulated' | 'viewmore' | 'viewless' = 'yettobesimulated';
     @Output()
@@ -46,6 +46,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     downloadEvent = new EventEmitter<any>();
     @Input()
     filter_model : FilterModel
+    info_promotion : ListPromotion = null as any
 
     optimizerMetrics:any = ''
     constructor(public optimize:OptimizerService){}
@@ -54,11 +55,35 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
             takeUntil(this.unsubscribe$)
         ).subscribe(data=>{
             if(data){
+                console.log(data , "data of optimizer loaded")
                 this.disable_button = false
                 this.isExpand = false
                 this.optimizer_data = data
                 this.populatePromotion(this.optimizer_data.weekly)
                 this.populateConfig(this.optimizer_data.data)
+                if("meta" in data){
+                    this.info_promotion = data["meta"]
+                    this.title = data["meta"]["name"]
+                }
+            }
+            else{
+                this.disable_button = true
+                this.isExpand = true
+                this.optimizer_data  = data
+                this.title = "Untitled"
+                this.product_week = []
+
+                this.quarter_year = []
+    this.promotions = []
+    this.selected_objective = ''
+    this.duration_min = 0
+    this.duration_max = 0
+    this.param_gap_min = 0
+    this.param_gap_max = 0
+    this.min_week= 0
+    this.max_week = 0
+    this.selected_promotions = []
+    this.info_promotion = null as any
 
             }
             
@@ -77,6 +102,10 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     // constructor(private optimize : OptimizerService){
 
     // }
+
+    openInfoEvent($event){
+        this.sendMessage($event)
+    }
     cumpulsoryWeekEvent($event){
         // {
         //     "id" : "compulsory-weeks-popup",
@@ -119,6 +148,8 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     }
     configChangeEvent($event){
         console.log($event , "config change event")
+        this.modalClose.emit($event["id"])
+       
         // label: "MAC", event:max_val: 0.4
 // min_val: 0
 this.checkboxMetrices.find(d=>{
@@ -213,6 +244,12 @@ this.checkboxMetrices.find(d=>{
     
             // }
             // this.modalEvent.emit(modalType);
+        }
+        if(type == 'reset'){
+            this.optimizeAndResetEvent.emit({
+                "type" : 'reset',
+            })
+
         }
 
     }

@@ -57,7 +57,7 @@
             </div>
         </div>
         <div *ngIf="title">
-            <nwn-loaded-scenarioitem></nwn-loaded-scenarioitem>
+            <nwn-loaded-scenarioitem (openInfoEvent) = "openInfoEvent($event)" [title] = "title"></nwn-loaded-scenarioitem>
         </div>
     </div>
     <!-- <div class="flex flex-col">
@@ -194,7 +194,7 @@
         </div>
         <div class="flex flex-row">
             <div class="flex flex-row space-x-4 items-center">
-                <nwn-button [disabled] = "disable_button" type="link" size="sm" (click)="sendMessage('OptimizerFilterReset')"> Reset </nwn-button>
+                <nwn-button [disabled] = "disable_button" type="link" size="sm" (click)="optimizeReset('reset')"> Reset </nwn-button>
                 <nwn-button [disabled] = "disable_button" type="primary" size="sm" (click)="optimizeReset('optimize')"> Optimize </nwn-button>
                 <nwn-button  [disabled] = "disable_button" (click)="sendMessage('save-scenario-popup')" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
@@ -339,3 +339,6 @@
 </nwn-modal>
 
 
+<nwn-modal id="loaded-promosimulator-scenario" class="hidden">
+    <nwn-loaded-promosimulator-scenario [promotion_viewed] = 'info_promotion'></nwn-loaded-promosimulator-scenario>
+</nwn-modal>

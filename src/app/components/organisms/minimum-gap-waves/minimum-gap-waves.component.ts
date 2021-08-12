@@ -76,6 +76,10 @@ export class MinimumGapWavesComponent {
             if (property === 'basepromo') {
                 this.duration_min = (this.basepromo - 3) 
                 this.duration_max = this.basepromo + 3
+                if(this.duration_min < 0) {
+                    this.duration_min = 0
+                }
+                
                 
                 if(this.duration_min > 0){
                     this.value = this.duration_min + " - " + this.duration_max
