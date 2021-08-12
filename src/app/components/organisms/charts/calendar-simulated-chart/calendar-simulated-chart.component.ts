@@ -341,10 +341,24 @@ export class CalendarSimulatedChartComponent implements OnInit {
                 d3.select('#calendarSimulated-tooltip').select('#base').attr('class', 'hidden');
             }
 
+            if (index.seasonality === 'high' || index.seasonality === 'med' || index.seasonality === 'low') {
+                d3.select('#calendarSimulated-tooltip')
+                    .select('#si')
+                    .text('Seasonality: ' + index.si + ' ('+ index.seasonality.toUpperCase() +')');
+                d3.select('#calendarSimulated-tooltip')
+                    .select('#seasonColor')
+                    .style('background-color', d3.select(datum.target).attr('fill'));
+            } else {
+                d3.select('#calendarSimulated-tooltip').select('#si').attr('class', 'hidden');
+            }
+
             if (index.holiday) {
                 d3.select('#calendarSimulated-tooltip')
                     .select('#holiday')
                     .attr('class', 'flex flex-row items-center space-x-2');
+                d3.select('#calendarSimulated-tooltip')
+                    .select('#holidayName')
+                    .text('Holiday : ' + index.holidayNames);
             } else {
                 d3.select('#calendarSimulated-tooltip').select('#holiday').attr('class', 'hidden');
             }
@@ -422,10 +436,24 @@ export class CalendarSimulatedChartComponent implements OnInit {
                 d3.select('#calendarSimulated-tooltip').select('#base').attr('class', 'hidden');
             }
 
+            if (index.seasonality === 'high' || index.seasonality === 'med' || index.seasonality === 'low') {
+                d3.select('#calendarSimulated-tooltip')
+                    .select('#si')
+                    .text('Seasonality: ' + index.si + ' ('+ index.seasonality.toUpperCase() +')');
+                d3.select('#calendarSimulated-tooltip')
+                    .select('#seasonColor')
+                    .style('background-color', d3.select(datum.target).attr('discount'));
+            } else {
+                d3.select('#calendarSimulated-tooltip').select('#si').attr('class', 'hidden');
+            }
+
             if (index.holiday) {
                 d3.select('#calendarSimulated-tooltip')
                     .select('#holiday')
                     .attr('class', 'flex flex-row items-center space-x-2');
+                d3.select('#calendarSimulated-tooltip')
+                    .select('#holidayName')
+                    .text('Holiday : ' + index.holidayNames);
             } else {
                 d3.select('#calendarSimulated-tooltip').select('#holiday').attr('class', 'hidden');
             }
