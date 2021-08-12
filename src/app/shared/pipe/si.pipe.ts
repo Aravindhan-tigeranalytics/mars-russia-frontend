@@ -19,7 +19,7 @@ export class SIPipe implements PipeTransform {
 
           }
       }
-      return "meediumholidayweek"
+      return "lowholidayweek"
       
   }
 }

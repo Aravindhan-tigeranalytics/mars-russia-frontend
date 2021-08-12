@@ -255,36 +255,34 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                     promotion_value = 'TPR - '+data['base']['weekly'][i]['promo_depth']+'%';
                 }
 
-                let holiday = false
-                let holidayName: any = ''
+                let holiday: string = null as any
                 if(this.optimizer_response.holiday.length > 0){
                     for(let j = 0; j < this.optimizer_response.holiday.length; j++){
                         if(this.optimizer_response.optimal[i][this.optimizer_response.holiday[j]] == 1){
-                            holiday = true
-                            holidayName = this.optimizer_response.holiday[j].split('_').map(capitalize).join(' ').replace("Flag ","");
+                            holiday = this.optimizer_response.holiday[j].split('_').map(capitalize).join(' ').replace("Flag ","");
                         }
                     }
                 }
-                let seasonality = ''
-                if(this.optimizer_response.optimal[i].SI){
-                    if(this.optimizer_response.optimal[i].SI < 0.95){
-                        seasonality = 'lowholidayweek'
-                    }
-                    else if(this.optimizer_response.optimal[i].SI < 1.05){
-                        seasonality = 'mediumholidayweek'
-                    }
-                    else{
-                        seasonality = 'highholidayweek'
-                    }
-                }
+                // let seasonality = ''
+                // if(this.optimizer_response.optimal[i].SI){
+                //     if(this.optimizer_response.optimal[i].SI < 0.95){
+                //         seasonality = 'lowholidayweek'
+                //     }
+                //     else if(this.optimizer_response.optimal[i].SI < 1.05){
+                //         seasonality = 'mediumholidayweek'
+                //     }
+                //     else{
+                //         seasonality = 'highholidayweek'
+                //     }
+                // }
+                // console.log(this.optimizer_response.optimal[i].SI,seasonality,"week season")
 
                 let weekObj = {
                     'duration': {
                         'week':"Week "+(i+1),
                         'date': data['simulated']['weekly'][i].date,
                         'holiday': holiday,
-                        'holiday_name': holidayName,
-                        'seasonality': seasonality
+                        'si': this.optimizer_response.optimal[i].SI
                     },
                     'promotions': {
                         'promotion_value' : Utils.genratePromotion(

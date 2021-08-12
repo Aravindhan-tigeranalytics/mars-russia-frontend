@@ -47,30 +47,25 @@ export class PromoOptimizerComponent implements OnInit {
             console.log(error , "error")
           })
     }
+
     downloadEvent($event){
-        console.log(this.optimize.getOptimizerResponseObservabe(),"download")
-    //     let form = {
-    //         "account_name" : this.selected_retailer ,
-    //          "corporate_segment" : this.selected_category,
-    //         "product_group" : this.selected_product,
-    //     "param_depth_all" : false,
-    // "promo_elasticity" : 0}
-    // this.promotion_map.forEach(element => {
-    //     let key = "week-" + element.week.week
-    //     let obj = {
-    //         "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
-    //         "promo_mechanics":"",
-    //         "co_investment":parseInt(element.week.co_investment)
-    //     }
-    //     form[key] = obj
-    // });
-    // this.optimize.downloadOptimiserExcel(form).subscribe(data=>{
-    //     const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-    //     FileSaver.saveAs(
-    //         blob,
-    //         'Optimizer' + '_export_' + new Date().getTime() + 'xlsx'
-    //       );
-    //     })
+        console.log($event)
+        let form = {
+        "account_name" : this.selected_retailer,
+        "product_group" : this.selected_product,
+        "optimizer_data" : {}
+        }
+
+        this.optimize.getOptimizerResponseObservabe().subscribe((data)=>{
+            form.optimizer_data = data
+            this.optimize.downloadOptimiserExcel(form).subscribe(data=>{
+                const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+                FileSaver.saveAs(
+                    blob,
+                    'Optimizer' + '_export_' + new Date().getTime() + 'xlsx'
+                  );
+                })
+        })
     }
     filterApply(event){
         console.log(event,"after apply")
