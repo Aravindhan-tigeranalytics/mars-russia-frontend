@@ -9,6 +9,8 @@ import * as Utils from "../../../core/utils/util"
 
 
 export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit {
+    @ViewChild('scrollOne') scrollOne: ElementRef;
+    @ViewChild('scrollTwo') scrollTwo: ElementRef;
     translate_y: string = '';
     currentTranslateRate: string = '';
     constructor(private elRef: ElementRef,private restApi: OptimizerService) {}
@@ -65,10 +67,22 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             }
             
         })
-        // setTimeout(()=>{
-            // 
-            // },2000)
     }
+
+    updateScroll(value:any){
+        if(value == 'GraphBase'){
+            const scrollOne = this.scrollOne.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwo.nativeElement as HTMLElement;
+
+            scrollTwo.scrollLeft = scrollOne.scrollLeft;
+        }
+        else if(value == 'GraphSimulated'){
+            const scrollOne = this.scrollOne.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwo.nativeElement as HTMLElement;
+
+            scrollOne.scrollLeft = scrollTwo.scrollLeft;
+        }
+      }
 
     aggregatedSubTabClick(key : string){
         if(key == 'Absolute'){
