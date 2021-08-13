@@ -364,35 +364,25 @@ export class PromoScenarioBuilderComponent implements OnInit {
        
     }
     downloadEvent($event){
-        let form = {
-            "account_name" : this.selected_retailer ,
-             "corporate_segment" : this.selected_category,
-            "product_group" : this.selected_product,
-        "param_depth_all" : false,
-    "promo_elasticity" : 0}
-    this.promotion_map.forEach(element => {
-        let key = "week-" + element.week.week
-        let obj = {
-            "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
-            "promo_mechanics":"",
-            "co_investment":parseInt(element.week.co_investment)
-        }
-        form[key] = obj
-        
-        
-    });
-    this.optimize.downloadPromo(form).subscribe(data=>{
-            
-            const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-            
-        FileSaver.saveAs(
-            blob,
-            'promo' + '_export_' + new Date().getTime() + 'xlsx'
-          );
-
-         
+        this.optimize.getSimulatedDataObservable().subscribe((response:any)=>{
+            this.optimize.downloadPromo(response).subscribe(data=>{
+                const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+                FileSaver.saveAs(
+                    blob,
+                    'promo' + '_export_' + new Date().getTime() + 'xlsx'
+                    );
+                })
         })
-    
+
+    // this.promotion_map.forEach(element => {
+    //     let key = "week-" + element.week.week
+    //     let obj = {
+    //         "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
+    //         "promo_mechanics":"",
+    //         "co_investment":parseInt(element.week.co_investment)
+    //     }
+    //     form[key] = obj
+    // });
 
     }
     uploadFile(){
