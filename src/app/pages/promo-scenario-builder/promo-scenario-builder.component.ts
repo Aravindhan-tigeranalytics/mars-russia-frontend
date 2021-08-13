@@ -431,6 +431,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.optimize.fetch_load_scenario_by_id($event.id).subscribe(data=>{
             this.loaded_scenario = data
             this.generateListPromotion()
+            this.filter_model["product_group"] = data.product_group
+            this.filter_model["retailer"] = data.account_name
             // debugger
             this.productChange({"value" : data.product_group , "checked" : true})
             this.retailerChange({"value" : data.account_name , "checked" : true}) 

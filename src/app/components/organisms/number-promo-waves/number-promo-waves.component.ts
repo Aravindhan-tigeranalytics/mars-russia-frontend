@@ -55,7 +55,7 @@ export class NumberPromoWavesComponent {
         this.duration_max = $event['max_val']
         this.duration_min = $event['min_val']
         // this.value = this.duration_min + " - " + this.duration_max
-        if(this.duration_min > 0){
+        if(this.duration_min > 0 && this.duration_min!=this.duration_max){
             this.value = this.duration_min + " - " + this.duration_max
 
         }

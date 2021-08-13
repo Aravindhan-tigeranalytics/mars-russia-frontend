@@ -82,14 +82,14 @@
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('duration-of-waves')">
                         <p topValue>{{optimizer_data?.data.param_max_consecutive_promo}}</p>
-                        <p topHeadValue><span *ngIf="duration_min">{{duration_min}} - </span>{{duration_max}}</p>
+                        <p topHeadValue><span *ngIf="duration_min && duration_min!=duration_max">{{duration_min}} - </span>{{duration_max}}</p>
                         <p topMetricContent>Duration of waves</p>
                     </nwn-metric-item>
                 </div>
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('minimum-gap-waves')">
                         <p topValue>{{optimizer_data?.data.param_promo_gap}}</p>
-                        <p topHeadValue><span *ngIf="param_gap_min">{{param_gap_min}} - </span>{{param_gap_max}}</p>
+                        <p topHeadValue><span *ngIf="param_gap_min && param_gap_min!=param_gap_max">{{param_gap_min}} - </span>{{param_gap_max}}</p>
                         <p topMetricContent>Minimum gap</p>
                     </nwn-metric-item>
                 </div>
@@ -98,7 +98,7 @@
                 <div class="mr-2">
                     <nwn-metric-item nwnMetricItem="defaultTop" (click)="sendMessage('number-promo-waves')">
                         <p topValue>{{optimizer_data?.data.param_no_of_promo}}</p>
-                        <p topHeadValue><span *ngIf="min_week">{{min_week}} - </span>{{max_week}}</p>
+                        <p topHeadValue><span *ngIf="min_week && min_week!=max_week">{{min_week}} - </span>{{max_week}}</p>
                         <p topMetricContent>Number of weeks</p>
                     </nwn-metric-item>
                 </div>
@@ -331,11 +331,11 @@
 
 <!-- Compulsory Weeks -->
 <nwn-modal id="compulsory-weeks-popup" class="hidden">
-    <nwn-compulsory-weeks-popup (cumpulsoryWeekEvent) = "cumpulsoryWeekEvent($event)" *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-compulsory-weeks-popup>
+    <nwn-compulsory-weeks-popup [ignored_week_val] ="ignored_week_val" (cumpulsoryWeekEvent) = "cumpulsoryWeekEvent($event)" *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-compulsory-weeks-popup>
 </nwn-modal>
 <!-- Weeks Ignored-->
 <nwn-modal id="weeks-ignored" class="hidden">
-    <nwn-weeks-ignored (ignoredWeekEvent) = "ignoredWeekEvent($event)" *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-weeks-ignored>
+    <nwn-weeks-ignored [cumpulsory_week_val] ="cumpulsory_week_val" (ignoredWeekEvent) = "ignoredWeekEvent($event)" *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-weeks-ignored>
 </nwn-modal>
 
 

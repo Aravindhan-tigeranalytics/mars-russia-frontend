@@ -14,6 +14,8 @@ export class WeeksIgnoredComponent {
     product_week:ProductWeek[] = []
     @Output()
     ignoredWeekEvent = new EventEmitter()
+    @Input()
+    cumpulsory_week_val:Array<any> = []
     selected_product_week:ProductWeek[] = []
     selected_quarter:string = ''
     weekly_map:Array<any> = [] //{"selected_promotion" : $event.value , "week" : this.product_week 
@@ -28,20 +30,22 @@ export class WeeksIgnoredComponent {
         })
 
     }
-    getWeek(p,weekly_m){
-        if(weekly_m.find(d=>d.week == p.week)){
-            return 'disabledWeek'
-        }
-        return "defaultWeek"
-    }
+    
     clickWeekly(product){
+        if(this.cumpulsory_week_val.find(d=>d.week == product.week)){
+            return
+
+        }
+         
         if(this.weekly_map.find(d=>d.week == product.week)){
             this.weekly_map = this.weekly_map.filter(d=>d.week!=product.week)
         }
         else{
-            this.weekly_map.push(product)
+            
+            this.weekly_map = [...this.weekly_map, product];
 
         }
+         
         
     }
     filter_product_week(){
@@ -50,7 +54,7 @@ export class WeeksIgnoredComponent {
             )
             ).sort((a,b)=>(a.week > b.week) ? 1 : ((b.week > a.week) ? -1 : 0))
 
-            console.log(this.selected_product_week , "selected product week")
+            // console.log(this.selected_product_week , "selected product week")
 
     }
     changeQuarter(key:string){
@@ -63,7 +67,7 @@ export class WeeksIgnoredComponent {
             ).sort((a,b)=>(a.week > b.week) ? 1 : ((b.week > a.week) ? -1 : 0))
     }
     ngOnChanges(changes: SimpleChanges) {
- console.log(changes , "changes in compusory weeks")
+//  console.log(changes , "changes in compusory weeks")
         for (let property in changes) {
             if (property === 'quarter_year') {
                 // console.log(changes[property].currentValue , "current value")

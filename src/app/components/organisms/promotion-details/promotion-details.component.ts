@@ -153,6 +153,7 @@ export class PromotionDetailsComponent implements OnInit {
                        this.base_promotions = changes[property].currentValue
                        if(this.base_promotions.length > 0){
                         this.optionsNormal = this.base_promotions.map(e=> Utils.decodePromotion(e)['promo_mechanics'])
+                        this.optionsNormal = [...new Set(this.optionsNormal.map(item => item))]
 
                        }
                       
