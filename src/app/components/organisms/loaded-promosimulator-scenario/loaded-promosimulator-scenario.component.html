@@ -22,7 +22,7 @@
     </div>
     <div class="h-auto bg-white">
         <div class="px-6 py-4 bg-white">
-            <nwn-scenario-load-card (deleteClickedEvent)="deleteClickedEvent($event)" [showTrash]="true">
+            <nwn-scenario-load-card (deleteClickedEvent)="deleteClickedEvent($event)" [showTrash]="false">
                 <p slcHead>{{promotion_viewed?.name}}</p>
                 <p slcContent>
                    {{promotion_viewed?.comments}}
@@ -85,5 +85,5 @@
         </div>
 
     </div>
-    <nwn-search-footer [showBack]="true" [showLoad]="true"></nwn-search-footer>
+    <nwn-search-footer (click)="closeModalPopup()" [showBack]="true" [showLoad]="false"></nwn-search-footer>
 </div>

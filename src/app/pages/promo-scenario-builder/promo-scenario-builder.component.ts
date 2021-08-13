@@ -420,6 +420,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     loadPromotionEvent($event){
         this.optimize.fetch_load_scenario_by_id($event.id).subscribe(data=>{
             this.loaded_scenario = data
+            this.loaded_scenario.scenario_comment = $event.comments
             this.generateListPromotion()
             this.filter_model["product_group"] = data.product_group
             this.filter_model["retailer"] = data.account_name
@@ -431,7 +432,6 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.isFilterApplied = true
             this.hideFilter = 'viewmore'
             // this.optimize.set
-
             console.log(this.loaded_scenario , "loaded sceanrio")
         })
         console.log($event.id , "id of saved promotion")
