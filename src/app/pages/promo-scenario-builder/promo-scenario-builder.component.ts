@@ -19,6 +19,7 @@ import { tickStep } from 'd3';
     styleUrls: ['./promo-scenario-builder.component.css'],
 })
 export class PromoScenarioBuilderComponent implements OnInit {
+    scenarioTitle:any = 'Untitled'
     hidepanel = true
     isFilterApplied: boolean = false
     hideFilter: string = 'yettobesimulated'
@@ -509,6 +510,13 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 }
                 this.optimize.addPromotionList(promotion)
                 console.log("saved data" , data)
+
+                this.promotion_viewed.name = $event['name']
+                this.scenarioTitle = $event['name']
+                this.promotion_viewed.comments = $event["comments"]
+                this.promotion_viewed.meta['product_group'] = this.selected_product
+                this.promotion_viewed.meta['retailer'] = this.selected_retailer
+
             },
             error=>{
                 console.log(error , "eror")
@@ -558,6 +566,11 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 }
                 this.optimize.addPromotionList(promotion)
                 console.log("saved data" , data)
+                this.promotion_viewed.name = $event['name']
+                this.scenarioTitle = $event['name']
+                this.promotion_viewed.comments = $event["comments"]
+                this.promotion_viewed.meta['product_group'] = this.selected_product
+                this.promotion_viewed.meta['retailer'] = this.selected_retailer
             },
             error=>{
                 console.log(error , "eror")
