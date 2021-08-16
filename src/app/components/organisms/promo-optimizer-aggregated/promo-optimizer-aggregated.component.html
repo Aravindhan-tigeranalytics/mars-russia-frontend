@@ -16,7 +16,7 @@
     </div>
     <div id="agregated" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
         <div class="flex flex-row justify-between border-b border-marsgray-300">
-            <div class="border-r border-marsgra-300 pr-6 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidth }">
+            <div class="border-r border-marsgra-300 pr-6 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidth }" (scroll)="updateScroll('GraphBase')" #scrollOne>
                 <div class="pt-5">
                     <div class="flex flex-row justify-between pt-5 pb-10">
                         <h1 class="text-title-medium text-gray-700 font-medium">Base calendar</h1>
@@ -44,6 +44,11 @@
                                 <nwn-svg-icon type="stroke" nwnSvgIcon="chevron-down"></nwn-svg-icon>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="flex flex-row-reverse space-x-2">
+                    <div class="w-20 h-auto border border-marsgray-100 img-height">
+                        <img class="w-full h-auto" src="/assets/subbrand-img/orbit-otc.png" alt="" />
                     </div>
                 </div>
                 <div class="flex flex-row w-full max-w-[700px] mx-auto my-0">
@@ -79,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="pt-5 pb-10 pl-6 w-1/2 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidth }">
+            <div class="pt-5 pb-10 pl-6 w-1/2 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidth }" (scroll)="updateScroll('GraphSimulated')" #scrollTwo>
                 <div class="flex flex-row justify-between pt-5 pb-10">
                     <h1 class="text-title-medium text-gray-700 font-medium">Simulated calendar</h1>
                     <div class="relative">
@@ -105,6 +110,11 @@
                         <div class="absolute top-2 right-2 z-0 text-marsgray-500">
                             <nwn-svg-icon type="stroke" nwnSvgIcon="chevron-down"></nwn-svg-icon>
                         </div>
+                    </div>
+                </div>
+                <div class="flex flex-row-reverse space-x-2">
+                    <div class="w-20 h-auto border border-marsgray-100 img-height">
+                        <img class="w-full h-auto" src="/assets/subbrand-img/orbit-otc.png" alt="" />
                     </div>
                 </div>
                 <div class="flex flex-row w-full max-w-[700px] mx-auto my-0">

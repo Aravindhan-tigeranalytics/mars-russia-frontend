@@ -20,7 +20,8 @@
             </div>
         </div>
         <div class="flex">
-            <nwn-promo-elasticity [(ngModel)]='value'>{{label}}</nwn-promo-elasticity>
+            <nwn-promo-elasticity *ngIf="label == 'MAC'" [steps] = "0.05"  [(ngModel)]='value'>{{label}}</nwn-promo-elasticity>
+            <nwn-promo-elasticity *ngIf="label != 'MAC'"  [(ngModel)]='value'>{{label}}</nwn-promo-elasticity>
             <!-- <nwn-slider (sliderChangeEvent) = "sliderChangeEvent($event)" [floor] = "floor" [ceil] = "ceil" [steps] = "steps" [options] = "options"></nwn-slider> -->
         </div>
     </div>

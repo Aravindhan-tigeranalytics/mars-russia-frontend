@@ -24,6 +24,11 @@
 .right-area {
     width: calc(100% - 50px);
 }
+#saveas_but .small-btn {
+    width: max-content !important;
+    padding: 6px 15px !important;
+    margin-left: 20px !important;
+}
 .nwn-modal-open {
     @apply overflow-hidden;
 }

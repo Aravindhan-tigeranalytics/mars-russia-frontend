@@ -1,4 +1,4 @@
-import { Component,forwardRef} from '@angular/core';
+import { Component,Input,forwardRef} from '@angular/core';
 import { ControlValueAccessor,NG_VALUE_ACCESSOR,FormGroup, FormControl, Validators } from '@angular/forms'
 import { SimulatorService } from '@core/services';
 
@@ -15,6 +15,9 @@ import { SimulatorService } from '@core/services';
       ]
 })
 export class PromoElasticityComponent {
+  @Input()
+  steps: number | 0.05 | 0.1 = 0.1
+
     constructor(public simulatorService: SimulatorService) {
       // this.simulatorService.promoElasticityValue.asObservable().subscribe(data=>{
       //   if(data != ''){
@@ -65,7 +68,8 @@ export class PromoElasticityComponent {
         if(this.name != 0 || this.name > 0){
             this.disable = false
         }
-        this.name = Number((this.name + 0.1).toFixed(1));
+        this.name = Number((this.name + this.steps).toFixed(2));
+        console.log(this.name)
         // this.simulatorService.setPromoElasticityValueObservable(this.name)
     }
 
@@ -75,7 +79,8 @@ export class PromoElasticityComponent {
             this.disable = true
             return 
         }
-        this.name = Number((this.name - 0.1).toFixed(1));
+        this.name = Number((this.name - this.steps).toFixed(2));
+        console.log(this.name)
         // this.simulatorService.setPromoElasticityValueObservable(this.name)
     }
 

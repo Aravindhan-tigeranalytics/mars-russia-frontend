@@ -1,5 +1,6 @@
-import { Component,Input, Output,EventEmitter } from '@angular/core';
+import { Component,Input, Output,EventEmitter, OnInit } from '@angular/core';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
+import { OptimizerService } from '@core/services/optimizer.service';
 // import { EventEmitter } from 'stream';
 
 @Component({
@@ -45,6 +46,8 @@ export class MacPopupComponent {
             }
         },
     }
+    
+    constructor(public optimize:OptimizerService){}
 
     sliderChangeEvent($event){
         // this.configChangeEvent.emit({

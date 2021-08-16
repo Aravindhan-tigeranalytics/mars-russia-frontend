@@ -17,5 +17,5 @@
         </div>
     </form>
     </div>
-    <nwn-search-footer (click)="saveScenario()" [showSaved]="true"></nwn-search-footer>
+    <nwn-search-footer (SaveScenarioEvent)="saveScenario($event)" [showSaved]="true"  [showSaveAs]="showSaveas"></nwn-search-footer>
 </div>

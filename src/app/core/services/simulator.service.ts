@@ -21,6 +21,7 @@ export class SimulatorService {
 //   public promoElasticityValue = new BehaviorSubject<any>('')
   public isAccAndProductFiltered = new BehaviorSubject<boolean>(false)
   public ClearScearchText = new BehaviorSubject<any>('')
+  public IsSaveScenarioLoaded = new BehaviorSubject<any>('')
   public ClearScearchTextCatg = new BehaviorSubject<any>('')
 
   constructor(private http: HttpClient,private apiService: ApiService) { }
@@ -64,6 +65,14 @@ export class SimulatorService {
    public getClearScearchTextObservable(){
    return this.ClearScearchText.asObservable()
    }
+
+  // Set and Get save scenario data flag
+  public setIsSaveScenarioLoadedObservable(value:any){
+    this.IsSaveScenarioLoaded.next(value)
+  }
+  public getIsSaveScenarioLoadedObservable(){
+    return this.IsSaveScenarioLoaded.asObservable()
+  }
 
   /*========================================
     CRUD Methods for consuming RESTful API

@@ -50,9 +50,11 @@
     <nwn-compare-scenario-popup></nwn-compare-scenario-popup>
 </nwn-modal>
 
+<!-- save scenario -->
 <nwn-modal id="save-scenario-popup" class="hidden">
-    <nwn-save-scenario [error] = "save_scenario_error" (saveScenarioEvent)="saveScenario($event)"></nwn-save-scenario>
+    <nwn-save-scenario [error]="save_scenario_error" [loadScenarioData]='loaded_scenario' [showSaveas]='show_save_as' (saveScenarioEvent)="saveScenario($event)"></nwn-save-scenario>
 </nwn-modal>
+
 <!-- compare-promo-scenario -->
 <nwn-modal id="compare-promo-scenario" class="hidden">
     <nwn-compare-promo-scenario></nwn-compare-promo-scenario>
