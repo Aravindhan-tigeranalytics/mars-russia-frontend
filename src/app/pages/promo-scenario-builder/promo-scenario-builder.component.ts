@@ -19,6 +19,7 @@ import { tickStep } from 'd3';
     styleUrls: ['./promo-scenario-builder.component.css'],
 })
 export class PromoScenarioBuilderComponent implements OnInit {
+    scenarioTitle:any = 'Untitled'
     hidepanel = true
     isFilterApplied: boolean = false
     hideFilter: string = 'yettobesimulated'
@@ -296,7 +297,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.optimize.setLoadedScenarioModel(null as any)
         this.restApi.setIsSaveScenarioLoadedObservable('')
         this.promotion_viewed = null as any
-        this.title = "Untitled"
+        this.scenarioTitle = "Untitled"
            
         this.hidepanel = true
         this.restApi.setAccAndPPGFilteredFlagObservable(true)
@@ -507,7 +508,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     
                 }
                 this.optimize.addPromotionList(promotion)
-                this.title = weekly["name"]
+                this.scenarioTitle = weekly["name"]
                 // debugger
                 this.promotion_viewed = {...{
                     "id" : data["saved_id"],
@@ -530,6 +531,13 @@ export class PromoScenarioBuilderComponent implements OnInit {
 // --------------
                 
                 console.log("saved data" , data)
+
+                this.promotion_viewed.name = $event['name']
+                this.scenarioTitle = $event['name']
+                this.promotion_viewed.comments = $event["comments"]
+                this.promotion_viewed.meta['product_group'] = this.selected_product
+                this.promotion_viewed.meta['retailer'] = this.selected_retailer
+
             },
             error=>{
                 console.log(error , "eror")
@@ -579,6 +587,11 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 }
                 this.optimize.addPromotionList(promotion)
                 console.log("saved data" , data)
+                this.promotion_viewed.name = $event['name']
+                this.scenarioTitle = $event['name']
+                this.promotion_viewed.comments = $event["comments"]
+                this.promotion_viewed.meta['product_group'] = this.selected_product
+                this.promotion_viewed.meta['retailer'] = this.selected_retailer
             },
             error=>{
                 console.log(error , "eror")
