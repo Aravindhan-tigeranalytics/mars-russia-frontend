@@ -29,14 +29,22 @@ export class SearchFooterComponent {
     @Input()
     showNo: boolean = false;
     @Input()
+    showSaveAs: boolean = false;
+    @Input()
     type = '';
     @Input()
     color: string | 'bgGray-50' | 'bgWhite' = 'bgGray-50';
     @Output()
     buttonClickedEvent = new EventEmitter()
+    @Output()
+    SaveScenarioEvent = new EventEmitter()
 
     buttonClicked(type){
-        this.buttonClickedEvent.emit(type)
-
+        if(type == 'save' || type == 'saveas'){
+            this.SaveScenarioEvent.emit(type)
+        }
+        else{
+            this.buttonClickedEvent.emit(type)
+        }
     }
 }

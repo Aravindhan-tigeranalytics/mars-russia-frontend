@@ -183,7 +183,9 @@ export class OptimizerService {
   }  
   savePromoScenario(requestData: any):Observable<any>{
     return this.apiService.post<any>('api/scenario/save/' , requestData)
-
+  }
+  updatePromoScenario(requestData: any):Observable<any>{
+    return this.apiService.post<any>('api/scenario/update/' , requestData)
   }
   saveOptimizerScenario(requestData: any):Observable<any>{
     return this.apiService.post<any>('api/optimiser/save/' , requestData)

@@ -23,6 +23,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     isFilterApplied: boolean = false
     hideFilter: string = 'yettobesimulated'
     save_scenario_error:any = null
+    show_save_as:any = null
     form: FormGroup = null as any;
     promotion_viewed : ListPromotion = null as any
     product:Product[] = []
@@ -292,6 +293,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this._populateFilters(this.product)
         this.optimize.setProductWeekObservable([])
         this.optimize.setLoadedScenarioModel(null as any)
+        this.restApi.setIsSaveScenarioLoadedObservable('')
         this.promotion_viewed = null as any
         this.hidepanel = true
         this.restApi.setAccAndPPGFilteredFlagObservable(true)
@@ -429,12 +431,37 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.retailerChange({"value" : data.account_name , "checked" : true}) 
             this.optimize.setLoadedScenarioModel(this.loaded_scenario)  
             this.optimize.setSimulatedDataObservable(this.loaded_scenario)
+            this.populatePromotionWeek(this.loaded_scenario)
             this.isFilterApplied = true
             this.hideFilter = 'viewmore'
             // this.optimize.set
             console.log(this.loaded_scenario , "loaded sceanrio")
+            this.restApi.setIsSaveScenarioLoadedObservable(true)
         })
         console.log($event.id , "id of saved promotion")
+    }
+
+    populatePromotionWeek(scenario : LoadedScenarioModel){
+        let pw:ProductWeek[]=[];
+        console.log(this.promotion_map , "promotion map valll")
+        this.promotion_map = []
+        
+        scenario.base.weekly.forEach((data,index)=>{
+            let simulated_depth = scenario.simulated.weekly[index].promo_depth
+            let simulated_coinv = scenario.simulated.weekly[index].co_investment
+            let simulated_n_plus_1 = scenario.simulated.weekly[index].flag_promotype_n_pls_1
+            let simulated_motivation = scenario.simulated.weekly[index].flag_promotype_motivation
+            let simulated_traffic = scenario.simulated.weekly[index].flag_promotype_traffic
+            if(simulated_depth){
+                this.promotion_map.push({
+                    "selected_promotion" : utils.genratePromotion(
+                        simulated_motivation,simulated_n_plus_1,simulated_traffic,simulated_depth,
+                        simulated_coinv
+                    ) ,
+                     "week" : data
+                })
+            }
+        })
     }
     
     populatePromotionMap(){
@@ -442,54 +469,102 @@ export class PromoScenarioBuilderComponent implements OnInit {
     }
     saveScenario($event){
         console.log($event , "save scenario event")
-        let weekly = {
-            "name" : $event['name'],
-            "comments" : $event["comments"],
-            "account_name" : this.selected_retailer ,
-            "corporate_segment" : this.selected_category,
-           "product_group" : this.selected_product,
-       "param_depth_all" : false,
-   "promo_elasticity" : 0
-        }
-        // debugger
-        this.promotion_map.forEach(element => {
-            let key = "week-" + element.week.week
-            let obj = utils.decodePromotion(element.selected_promotion)
-            // {
-            //     "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
-            //     "promo_mechanics":"",
-            //     "co_investment":parseInt(element.week.co_investment)
-            // }
-            weekly[key] = obj
+        if($event.type == 'saveas'){
+            let weekly = {
+                "name" : $event['name'],
+                "comments" : $event["comments"],
+                "account_name" : this.selected_retailer ,
+                "corporate_segment" : this.selected_category,
+                "product_group" : this.selected_product,
+                "param_depth_all" : false,
+                "promo_elasticity" : 0
+            }
+            this.promotion_map.forEach(element => {
+                let key = "week-" + element.week.week
+                let obj = utils.decodePromotion(element.selected_promotion)
+                // {
+                //     "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
+                //     "promo_mechanics":"",
+                //     "co_investment":parseInt(element.week.co_investment)
+                // }
+                weekly[key] = obj
+                
+            });
             
-        });
-        
-this.optimize.savePromoScenario(weekly).subscribe(data=>{
-    this.modalService.close("save-scenario-popup")
-    let promotion : ListPromotion = {
-        "id" : data["saved_id"],
-        "name" : weekly["name"],
-        "comments" : weekly["comments"],
-        "scenario_type" : "promo",
-        "meta" : {
-            "retailer" : weekly["account_name"],
-            "product_group" : weekly["product_group"],
-            "pricing" : false
+            this.optimize.savePromoScenario(weekly).subscribe(data=>{
+                this.save_scenario_error = null
+                this.modalService.close("save-scenario-popup")
+                let promotion : ListPromotion = {
+                    "id" : data["saved_id"],
+                    "name" : weekly["name"],
+                    "comments" : weekly["comments"],
+                    "scenario_type" : "promo",
+                    "meta" : {
+                        "retailer" : weekly["account_name"],
+                        "product_group" : weekly["product_group"],
+                        "pricing" : false
+                    }
+                    
+    
+                }
+                this.optimize.addPromotionList(promotion)
+                console.log("saved data" , data)
+            },
+            error=>{
+                console.log(error , "eror")
+                this.save_scenario_error = error.detail
+            })
+
+        }
+        else if($event.type == 'save'){
+            console.log('save clicked')
+            let weekly = {
+                "name" : $event['name'],
+                "comments" : $event["comments"],
+                "account_name" : this.selected_retailer ,
+                "corporate_segment" : this.selected_category,
+                "product_group" : this.selected_product,
+                "param_depth_all" : false,
+                "promo_elasticity" : 0,
+                "scenario_id": this.loaded_scenario.scenario_id
+            }
+            this.promotion_map.forEach(element => {
+                let key = "week-" + element.week.week
+                let obj = utils.decodePromotion(element.selected_promotion)
+                // {
+                //     "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
+                //     "promo_mechanics":"",
+                //     "co_investment":parseInt(element.week.co_investment)
+                // }
+                weekly[key] = obj
+                
+            });
+            
+            this.optimize.updatePromoScenario(weekly).subscribe(data=>{
+                this.save_scenario_error = null
+                this.modalService.close("save-scenario-popup")
+                let promotion : ListPromotion = {
+                    "id" : data["saved_id"],
+                    "name" : weekly["name"],
+                    "comments" : weekly["comments"],
+                    "scenario_type" : "promo",
+                    "meta" : {
+                        "retailer" : weekly["account_name"],
+                        "product_group" : weekly["product_group"],
+                        "pricing" : false
+                    }
+    
+    
+                }
+                this.optimize.addPromotionList(promotion)
+                console.log("saved data" , data)
+            },
+            error=>{
+                console.log(error , "eror")
+                this.save_scenario_error = error.detail
+            })
         }
 
-
-    }
-    this.optimize.addPromotionList(promotion)
-
-    console.log("saved data" , data)
-},
-error=>{
-    console.log(error , "eror")
-    this.save_scenario_error = error.detail
-
-})
-
-    // debugger
     }
 
     receiveMessage($event: any) {
@@ -501,12 +576,27 @@ error=>{
         else if($event == 'Reset'){
             this.isFilterApplied = false
             this.hideFilter = 'viewmore'
+            this.restApi.setIsSaveScenarioLoadedObservable('')
         }
-        else{
+        else if($event == 'save-scenario-popup'){
+            this.optimize.getLoadedScenarioModel().subscribe(data=>{
+                if(data != null && data != undefined){
+                    this.show_save_as = true
+                    this.restApi.setIsSaveScenarioLoadedObservable(true)
+                    
+                }
+                else {
+                    this.show_save_as = false
+                    this.restApi.setIsSaveScenarioLoadedObservable('')
+                    // this.openModal($event);
+                }
+            })
+            this.save_scenario_error = null
             this.openModal($event);
         }
-
+        else{
+            this.show_save_as = false
+            this.openModal($event);
+        }
     }
-
-
 }
