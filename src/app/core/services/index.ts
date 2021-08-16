@@ -1,4 +1,5 @@
 export * from './optimizer.service'
 export * from './simulator.service'
-export * from './auth.service'
+export * from './auth.services'
 export * from './api.service'
+export * from './auth-guard.service'

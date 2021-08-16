@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SharedModule} from "../shared/shared.module"
+import {RouterModule} from '@angular/router';
 
 // Custom Components
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -122,7 +123,7 @@ import {DeleteAlertComponent} from "@organisms/delete-alert/delete-alert.compone
 
 
 @NgModule({
-    imports: [SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule,DragDropModule],
+    imports: [RouterModule,SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule,DragDropModule],
     declarations: [
         ButtonComponent,
         LinkComponent,

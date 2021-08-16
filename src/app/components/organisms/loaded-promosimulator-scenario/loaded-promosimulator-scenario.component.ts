@@ -1,4 +1,4 @@
-import { Component, OnInit , Input , Output , EventEmitter } from '@angular/core';
+import { Component, OnInit , Input , Output , EventEmitter,SimpleChanges } from '@angular/core';
 import {ListPromotion} from "@core/models"
 
 @Component({
@@ -18,5 +18,17 @@ export class LoadedPromosimulatorScenarioComponent {
 
       // console.log(this.promotion_viewed , "delete event")
   }
+//   ngOnChanges(changes: SimpleChanges) {
+//     for (let property in changes) {
+//         if (property === 'promotion_viewed') {
+//           this.promotion_viewed = changes[property].currentValue
+
+//           // if(this.isUploadClicked == true){
+//           //     this.uploadFile()
+//           // }
+//         }
+//     }
+// }
+  
 
 }

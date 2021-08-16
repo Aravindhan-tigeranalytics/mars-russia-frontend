@@ -12,6 +12,8 @@ import { PagesModule } from '@pages/pages.module';
 import {CoreModule} from "./core/core.module"
 
 import {SharedModule} from "./shared/shared.module"
+import {AuthModule} from "./auth/auth.module"
+// import {AuthRoutingModule} from "./auth/auth-routing.module"
 import {
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule,
@@ -30,7 +32,7 @@ import {
     pbDirection: PB_DIRECTION.leftToRight,
     fgsSize: 40,
     fgsType: SPINNER.squareJellyBox,
-    pbThickness: 5
+    pbThickness: 5,
   };
 
 @NgModule({
@@ -38,6 +40,8 @@ import {
     imports: [
         BrowserModule, 
         AppRoutingModule, 
+        AuthModule,
+        // AuthRoutingModule,
         ComponentModule, 
         PagesModule,CoreModule, 
         SharedModule,

@@ -123,6 +123,13 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
             this.activeAggregatedTab = "percent"
         }
     }
+    get_holiday_calendar(str){
+        if(str){
+            return str.split(",").map(d=>d.split("_").join(" "))
+        }
+        return null
+
+    }
 
     get_holiday_information(holiday , data){
         let ret : string = null as any
@@ -286,9 +293,10 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                         'week':"Week "+(i+1),
                         'date': data['simulated']['weekly'][i].date,
                         "si" : data['simulated']['weekly'][i].si,
-                        "holiday" : this.get_holiday_information(data['base']['weekly'][i].holiday , 
-                        data['holiday_array']
-                        )
+                        "holiday" :this.get_holiday_calendar(data['holiday_calendar'][i][i+1])
+                        //  this.get_holiday_information(data['base']['weekly'][i].holiday , 
+                        // data['holiday_array']
+                        // )
                           , 
                     },
                     'promotions': {

@@ -1,6 +1,32 @@
 <div class="bg-white">
     <div class="flex flex-row">
         <nwn-promotool-tab
+        *ngIf="groups.includes('promo') || groups.includes('admin')"
+            type="fill"
+            nwnSvgIcon="simulator"
+            [link]="'/promo/simulator'" 
+            
+            [active]="currentRoute === '/promo/simulator'"
+            >Promo scenario builder</nwn-promotool-tab
+        >
+        <nwn-promotool-tab
+        *ngIf="groups.includes('optimizer') || groups.includes('admin')"
+            type="fill"
+            nwnSvgIcon="optimizer"
+            [link]="'/promo/optimizer'" 
+            
+            [active]="currentRoute === '/promo/optimizer'"
+            >Promo optimizer</nwn-promotool-tab
+        >
+        <div class="mx-auto self-center" *ngIf="userdetail">Welcome {{userdetail?.user.email}}!</div>
+    </div>
+</div>
+
+
+
+<!-- <div class="bg-white">
+    <div class="flex flex-row">
+        <nwn-promotool-tab
             type="fill"
             nwnSvgIcon="simulator"
             href="/promo-tool/promo-scenario-builder"
@@ -15,4 +41,4 @@
             >Promo optimizer</nwn-promotool-tab
         >
     </div>
-</div>
+</div> -->

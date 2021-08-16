@@ -12,8 +12,9 @@
         hover:text-marsblue-500
     "
     [ngClass]="{ 'active-headtab': active == true }"
-    [href]="href"
+    [routerLink]="link"
 >
+<!-- [href]="href" -->
     <nwn-svg-icon [type]="type" [nwnSvgIcon]="nwnSvgIcon"></nwn-svg-icon>
     <p class="text-body text-marsgray-700 group-hover:text-marsblue-500">
         <ng-content></ng-content>

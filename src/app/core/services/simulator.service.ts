@@ -73,7 +73,7 @@ export class SimulatorService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + this.token
+      'Authorization': 'Token ' + localStorage.getItem('token')
     })
   }  
 
@@ -88,7 +88,7 @@ export class SimulatorService {
   uploadPromoSimulateInput(requestData: any): Observable<any> {
     let httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Token ' + this.token
+        'Authorization': 'Token ' + localStorage.getItem('token')
       })
     }  
     return this.http.post<any>(this.apiURL + 'api/scenario/promo-simulate-file-upload/', requestData, httpOptions)
@@ -101,7 +101,7 @@ export class SimulatorService {
   downloadWeeklyInputTemplate(queryparam): Observable<any> {
    let httpOptions:any = {
       headers: new HttpHeaders({
-        'Authorization': 'Token ' + this.token
+        'Authorization': 'Token ' + localStorage.getItem('token')
       }),
       params : queryparam,
       responseType: 'blob',

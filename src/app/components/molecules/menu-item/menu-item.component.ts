@@ -9,6 +9,8 @@ export class MenuItemComponent {
     @Input()
     href = '';
     @Input()
+    link = '';
+    @Input()
     type = 'stroke';
     @Input()
     active = false;

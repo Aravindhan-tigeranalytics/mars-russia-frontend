@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {SharedModule} from "../shared/shared.module"
 
 import { AppRoutingModule } from '../app-routing.module';
+import {RouterModule} from '@angular/router';
 
 // Components
 import { ComponentModule } from '@components/components.module';
@@ -14,7 +15,7 @@ import { PricingToolComponent } from './pricing-tool/pricing-tool.component';
 import { PromoToolComponent } from './promo-tool/promo-tool.component';
 
 @NgModule({
-    imports: [CommonModule,ComponentModule,SharedModule,AppRoutingModule],
+    imports: [RouterModule,CommonModule,ComponentModule,SharedModule,AppRoutingModule],
     declarations: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent, PromoToolComponent],
     exports: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent],
     // imports: [ComponentModule, ],

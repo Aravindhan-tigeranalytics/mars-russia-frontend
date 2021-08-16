@@ -3,17 +3,23 @@
         <nwn-menu-item
             type="stroke"
             nwnSvgIcon="pricing-tool"
-            [active]="currentRoute === '/pricing-tool'"
-            href="/pricing-tool"
+           
+           
+            routerLink="pricing" 
             >Pricing tool</nwn-menu-item
         >
+        <!-- href="/pricing-tool" -->
+        <!-- [active]="currentRoute === '/pricing-tool'" -->
         <nwn-menu-item
             type="stroke"
             nwnSvgIcon="promo-tool"
-            [active]="currentRoute === '/promo-tool/promo-scenario-builder'"
-            href="/promo-tool/promo-scenario-builder"
+            routerLink="promo" 
+           
+           
             >Promo tool</nwn-menu-item
         >
+        <!-- [active]="currentRoute === '/promo-tool/promo-scenario-builder'" -->
+        <!-- href="/promo-tool/promo-scenario-builder" -->
     </div>
     <div class="flex flex-col space-y-6 pt-6">
         <nwn-menu-item type="stroke" nwnSvgIcon="profit-tool" href="/">Profit tool</nwn-menu-item>

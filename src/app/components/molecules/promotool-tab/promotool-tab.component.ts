@@ -12,6 +12,8 @@ export class PromotoolTabComponent {
     type = '';
     @Input()
     active: boolean = false;
+    @Input()
+    link = '';
 
     @Input()
     nwnSvgIcon = '';

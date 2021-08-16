@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy,SimpleChanges
 // import {OptimizerService} from '../../../core/services/optimizer.service'
 import {OptimizerService , SimulatorService} from "@core/services"
 // import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel} from "../../../core/models"
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel , UploadModel, FilterModel} from "@core/models"
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel , UploadModel, FilterModel, ListPromotion} from "@core/models"
 import { Observable, of, from, BehaviorSubject, combineLatest , Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import * as utils from "@core/utils"
@@ -263,7 +263,8 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
 
         }
         else{
-            this.promotion_map.push($event)
+            this.promotion_map = [...this.promotion_map, $event];
+            // this.promotion_map.push($event)
 
         }
       
@@ -439,8 +440,16 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
  
         for (let property in changes) {
             if (property === 'hidepanel') {
-                console.log(changes[property].currentValue , "current value")
+                // console.log(changes[property].currentValue , "current value")
                 this.hidepanel = changes[property].currentValue
+
+                
+                
+               
+            } 
+            if (property === 'title') {
+                console.log(changes[property].currentValue , "current value")
+                this.title = changes[property].currentValue
 
                 
                 

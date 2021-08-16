@@ -8,19 +8,19 @@ import { Router } from '@angular/router';
     styleUrls: ['./side-menu.component.css'],
 })
 export class SideMenuComponent {
-    @Input()
-    href = '/';
+    // @Input()
+    // href = '/';
 
     currentRoute = '';
 
     constructor(location: Location, router: Router) {
-        router.events.subscribe((val) => {
-            if (location.path() != '') {
-                this.currentRoute = location.path();
-            } else {
-                this.currentRoute = '';
-            }
-        });
+        // router.events.subscribe((val) => {
+        //     if (location.path() != '') {
+        //         this.currentRoute = location.path();
+        //     } else {
+        //         this.currentRoute = '';
+        //     }
+        // });
     }
 
     ngOnInit() {}

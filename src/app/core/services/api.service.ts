@@ -21,7 +21,7 @@ export class ApiService {
    get<T>(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     var reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + this.token
+      'Authorization': 'Token ' + localStorage.getItem('token')
    });
     return this.http.get<T>(`${this.api_path}${path}`,{ headers: reqHeader })
       .pipe(catchError(this.formatErrors));
@@ -37,7 +37,7 @@ export class ApiService {
   post<T>(path: string, body: Object = {}): Observable<any> {
     var reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + this.token
+      'Authorization': 'Token ' + localStorage.getItem('token')
    });
    let obj={}
    
@@ -52,7 +52,7 @@ export class ApiService {
   postd(path: string, body: Object = {}): Observable<any> {
     var reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + this.token
+      'Authorization': 'Token ' + localStorage.getItem('token')
    });
    
    
@@ -70,7 +70,7 @@ export class ApiService {
   delete(path:string): Observable<any> {
     var reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + this.token
+      'Authorization': 'Token ' + localStorage.getItem('token')
    });
    
     return this.http.delete(

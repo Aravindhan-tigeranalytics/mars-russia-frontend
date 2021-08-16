@@ -22,6 +22,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     hidepanel = true
     isFilterApplied: boolean = false
     hideFilter: string = 'yettobesimulated'
+    title = "Untitled"
     save_scenario_error:any = null
     form: FormGroup = null as any;
     promotion_viewed : ListPromotion = null as any
@@ -293,6 +294,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.optimize.setProductWeekObservable([])
         this.optimize.setLoadedScenarioModel(null as any)
         this.promotion_viewed = null as any
+        this.title = "Untitled"
+           
         this.hidepanel = true
         this.restApi.setAccAndPPGFilteredFlagObservable(true)
         this.filter_model =  {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
@@ -490,8 +493,22 @@ this.optimize.savePromoScenario(weekly).subscribe(data=>{
 
     }
     this.optimize.addPromotionList(promotion)
-
+    this.title = weekly["name"]
+    // debugger
+    this.promotion_viewed = {...{
+        "id" : data["saved_id"],
+        "name" : weekly["name"],
+        "comments" :  weekly["comments"],
+        "scenario_type" :  "promo",
+        "meta" : {
+            "product_group" :weekly["account_name"],
+            "retailer" : weekly["product_group"],
+            "pricing" : false
+        }
+    },...this.promotion_viewed 
+}
     console.log("saved data" , data)
+    console.log(this.promotion_viewed , "promotion viewed")
 },
 error=>{
     console.log(error , "eror")

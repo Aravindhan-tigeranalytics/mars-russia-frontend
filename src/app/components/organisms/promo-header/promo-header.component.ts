@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import {AuthService} from "@core/services/auth.services"
+import {User} from "@core/models/user.model"
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'nwn-promo-header',
@@ -9,8 +12,10 @@ import { Router } from '@angular/router';
 })
 export class PromoHeaderComponent {
     currentRoute = '';
+    userdetail: User = null as any
+    groups:any[] = []
 
-    constructor(location: Location, router: Router) {
+    constructor(private authService: AuthService,location: Location, router: Router) {
         router.events.subscribe((val) => {
             if (location.path() != '') {
                 this.currentRoute = location.path();
@@ -20,5 +25,13 @@ export class PromoHeaderComponent {
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.authService.getUser().subscribe(data=>{
+            console.log("user in header" , data )
+            this.userdetail = data
+            console.log(this.userdetail , "setting user data in header")
+            // this.user.user.
+            this.groups = data.user.groups.map(d=>d.name)
+        })
+    }
 }

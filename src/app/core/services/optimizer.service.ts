@@ -86,7 +86,7 @@ export class OptimizerService {
     httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': 'Token ' + this.token
+          'Authorization': 'Token ' + localStorage.getItem('token')
         })
       }  
 
