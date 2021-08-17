@@ -5,6 +5,7 @@ import { CheckboxModel,ListPromotion,Product,FilterModel } from "../../core/mode
 import {OptimizerService} from '../../core/services/optimizer.service'
 import * as $ from 'jquery';
 import * as FileSaver from 'file-saver';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'nwn-promo-optimizer',
@@ -34,7 +35,7 @@ export class PromoOptimizerComponent implements OnInit {
     filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
     "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
     product:Product[] = []
-    constructor(private modalService: ModalService,private optimize : OptimizerService,) {
+    constructor(private toastr: ToastrService,private modalService: ModalService,private optimize : OptimizerService,) {
 
     }
 
@@ -61,11 +62,14 @@ export class PromoOptimizerComponent implements OnInit {
         })
 
         this.optimize.downloadOptimiserExcel(form).subscribe(data=>{
+            this.toastr.success('File Downloaded Successfully', 'Success')
             const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
             FileSaver.saveAs(
                 blob,
                 'Optimizer' + '_export_' + new Date().getTime() + 'xlsx'
               );
+        },(err:any)=>{
+            this.toastr.warning('File Downloaded Unsuccessfully', 'Failed')
         })
     }
     filterApply(event){
@@ -233,6 +237,7 @@ export class PromoOptimizerComponent implements OnInit {
         if($event.type == 'optimize'){
             let res = {...this.get_optimizer_form(),...$event['data']}
             this.optimize.optimizeResult(res).subscribe(data=>{
+                this.toastr.success('Optimized Successfully','Success')
                 this.optimizer_response = data
                 this.optimize.setOptimizerResponseObservable(data)
                 this.isOptimiserFilterApplied = true
@@ -294,9 +299,8 @@ export class PromoOptimizerComponent implements OnInit {
                     "product_group" : p?.product_group,
                     "pricing" : false
                 }
-        
-        
             }
+            this.toastr.success('Scenario Saved Successfully','Success')
             this.optimize.addPromotionList(promotion)
 
         },error=>{

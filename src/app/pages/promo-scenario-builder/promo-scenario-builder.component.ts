@@ -12,6 +12,7 @@ import * as FileSaver from 'file-saver';
 // import { ThisReceiver } from '@angular/compiler';
 import { SimulatorService } from "@core/services";
 import { tickStep } from 'd3';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'nwn-promo-scenario-builder',
@@ -59,14 +60,14 @@ export class PromoScenarioBuilderComponent implements OnInit {
         return this.form.controls.orders as FormArray;
       }
 
-    constructor(private modalService: ModalService,public restApi: SimulatorService,
+    constructor(private toastr: ToastrService,private modalService: ModalService,public restApi: SimulatorService,
         private optimize : OptimizerService,private formBuilder: FormBuilder) {
 
             this.form = this.formBuilder.group({
                 orders: new FormArray([])
               });
+
         }
-    
 
     ngOnInit() {
         this.restApi.openCommandInterfaceModal.asObservable().subscribe(data=>{
@@ -352,6 +353,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         }
         else{
             this.optimize.getPromoSimulateData(form).subscribe(data=>{
+                this.toastr.success('Simulted Successfully', 'Success')
                 this.optimize.setSimulatedDataObservable(data)
                 if($event.action == 'Simulate'){
                  this.isFilterApplied = true
@@ -361,6 +363,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
                  // this.hideFilter = 'yettobesimulated'
              }
             
+             },(error: any)=>{
+                this.toastr.warning(error, 'Failed')
              })
 
         }
@@ -370,14 +374,19 @@ export class PromoScenarioBuilderComponent implements OnInit {
        
     }
     downloadEvent($event){
+        let downloadData:any = []
         this.optimize.getSimulatedDataObservable().subscribe((response:any)=>{
-            this.optimize.downloadPromo(response).subscribe(data=>{
-                const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-                FileSaver.saveAs(
-                    blob,
-                    'promo' + '_export_' + new Date().getTime() + 'xlsx'
-                    );
-                })
+            downloadData = response
+        })
+        this.optimize.downloadPromo(downloadData).subscribe(data=>{
+            const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+            this.toastr.success('File Downloaded Successfully','Success');
+            FileSaver.saveAs(
+                blob,
+                'promo' + '_export_' + new Date().getTime() + 'xlsx'
+                );
+        },(err:any)=>{
+            this.toastr.warning(err.error,'Failed');
         })
 
     // this.promotion_map.forEach(element => {
@@ -394,6 +403,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     uploadFile(){
            this.restApi.uploadPromoSimulateInput(this.uploaded_file).subscribe((data: UploadModel) => {
                console.log(data , "data uploaded")
+            this.toastr.success('Weekly Input Uploaded Successfully','Success');
             this.productChange({"value" : data.simulated.product_group , "checked" : true})
             this.retailerChange({"value" : data.simulated.account_name , "checked" : true})
             //    this.optimize.setProductWeekObservable(data.base)
@@ -439,6 +449,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.isFilterApplied = true
             this.hideFilter = 'viewmore'
             // this.optimize.set
+            this.toastr.success('Scenario Loaded Successfully', 'Success')
             console.log(this.loaded_scenario , "loaded sceanrio")
             this.restApi.setIsSaveScenarioLoadedObservable(true)
         })
@@ -494,6 +505,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.optimize.savePromoScenario(weekly).subscribe(data=>{
                 this.save_scenario_error = null
                 this.modalService.close("save-scenario-popup")
+                this.toastr.success('Scenario Saved Successfully', 'Success')
                 let promotion : ListPromotion = {
                     "id" : data["saved_id"],
                     "name" : weekly["name"],
@@ -572,6 +584,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.optimize.updatePromoScenario(weekly).subscribe(data=>{
                 this.save_scenario_error = null
                 this.modalService.close("save-scenario-popup")
+                this.toastr.success('Scenario Updated Successfully', 'Success')
                 let promotion : ListPromotion = {
                     "id" : data["saved_id"],
                     "name" : weekly["name"],
