@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { ModalService } from '@molecules/modal/modal.service';
 import { OptimizerService } from '../../../core/services/optimizer.service';
 import * as Utils from "../../../core/utils/util"
 @Component({
@@ -13,7 +14,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     @ViewChild('scrollTwo') scrollTwo: ElementRef;
     translate_y: string = '';
     currentTranslateRate: string = '';
-    constructor(private elRef: ElementRef,private restApi: OptimizerService) {}
+    constructor(private elRef: ElementRef,private restApi: OptimizerService,public modalService: ModalService) {}
     
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
@@ -608,6 +609,10 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     openTab = 1;
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;
+    }
+
+    openModal(id: string){
+        this.modalService.open(id)
     }
 }
 

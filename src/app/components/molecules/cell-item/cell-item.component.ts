@@ -13,7 +13,7 @@ export class CellItemComponent{
     @Input()
     color: string | 'green' | 'red' | 'neutral' = 'green';
     @Input()
-    nwnCellItem: string | 'carret-up' | 'carret-down' | 'promo' = 'carret-up';
+    nwnCellItem: string | 'carret-up' | 'carret-down' | 'summarypopup' |'promo'  = 'carret-up';
     @Input()
     nwnCellData: any = {}
     @Input()
