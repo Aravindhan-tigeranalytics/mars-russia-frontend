@@ -58,13 +58,14 @@ export class PromoOptimizerComponent implements OnInit {
 
         this.optimize.getOptimizerResponseObservabe().subscribe((data)=>{
             form.optimizer_data = data
-            this.optimize.downloadOptimiserExcel(form).subscribe(data=>{
-                const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-                FileSaver.saveAs(
-                    blob,
-                    'Optimizer' + '_export_' + new Date().getTime() + 'xlsx'
-                  );
-                })
+        })
+
+        this.optimize.downloadOptimiserExcel(form).subscribe(data=>{
+            const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+            FileSaver.saveAs(
+                blob,
+                'Optimizer' + '_export_' + new Date().getTime() + 'xlsx'
+              );
         })
     }
     filterApply(event){
