@@ -72,3 +72,8 @@
 .baselinemetrics{
     align-self: baseline;
 }
+.bullted-list {
+    display: inline-block;
+    list-style: disc !important;
+    margin-left: 12%;
+}

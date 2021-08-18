@@ -16,7 +16,7 @@ import { SimulatorService } from '@core/services';
 })
 export class PromoElasticityComponent {
   @Input()
-  steps: number | 0.05 | 0.1 = 0.1
+  steps: number | 0.01 | 0.1 = 0.1
 
     constructor(public simulatorService: SimulatorService) {
       // this.simulatorService.promoElasticityValue.asObservable().subscribe(data=>{
