@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild, OnInit,Input } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, OnInit,Input ,SimpleChanges } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -44,11 +44,17 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     optimizeAndResetEvent = new EventEmitter()
     @Input()
     disable_button = true
+    @Input()
+    disable_save_download = true
     @Output()
     downloadEvent = new EventEmitter<any>();
     @Input()
     filter_model : FilterModel
     info_promotion : ListPromotion = null as any
+    ip_val : any =  {
+        'mac' : 0,
+        'rp' : 0
+    }
 
     optimizerMetrics:any = ''
     constructor(public optimize:OptimizerService){}
@@ -86,6 +92,20 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     this.max_week = 0
     this.selected_promotions = []
     this.info_promotion = null as any
+    this.checkboxMetrices.forEach(element => {
+        element.checkHeadValue =  'x1.0'
+        
+    });
+    this.ip_val = {...{
+        'mac' : 1,
+        'rp' : 1
+    },
+    ...this.ip_val}
+    console.log(this.ip_val , "setting ip val to 1")
+    this.cumpulsory_week = 0
+    this.cumpulsory_week_val= []
+    this.ignored_week_val = []
+    this.ignored_week = 0
 
             }
             
@@ -554,5 +574,19 @@ this.checkboxMetrices.find(d=>{
         console.log("destroying optimizer header")
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
+    }
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            
+            if (property === 'title') {
+                console.log(changes[property].currentValue , "current value")
+                this.title = changes[property].currentValue
+
+                
+                
+               
+            } 
+        }
     }
 }

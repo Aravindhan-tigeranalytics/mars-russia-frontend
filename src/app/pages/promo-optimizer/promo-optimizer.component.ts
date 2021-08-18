@@ -13,6 +13,7 @@ import * as FileSaver from 'file-saver';
 })
 
 export class PromoOptimizerComponent implements OnInit {
+    scenarioTitle:any = 'Untitled'
     status: any = 'viewmore' 
     isOptimiserFilterApplied: boolean = false
     retailers:Array<CheckboxModel> = []
@@ -30,6 +31,7 @@ export class PromoOptimizerComponent implements OnInit {
     selected_brand_format:string = null as any
     save_scenario_error:any = null
     optimizer_response : any = null
+    disable_save_download = true
 
     filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
     "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
@@ -58,13 +60,13 @@ export class PromoOptimizerComponent implements OnInit {
 
         this.optimize.getOptimizerResponseObservabe().subscribe((data)=>{
             form.optimizer_data = data
-            this.optimize.downloadOptimiserExcel(form).subscribe(data=>{
-                const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-                FileSaver.saveAs(
-                    blob,
-                    'Optimizer' + '_export_' + new Date().getTime() + 'xlsx'
-                  );
-                })
+            // this.optimize.downloadOptimiserExcel(form).subscribe(data=>{
+            //     const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+            //     FileSaver.saveAs(
+            //         blob,
+            //         'Optimizer' + '_export_' + new Date().getTime() + 'xlsx'
+            //       );
+            //     })
         })
     }
     filterApply(event){
@@ -228,6 +230,7 @@ export class PromoOptimizerComponent implements OnInit {
         console.table($event)
     }
     optimizeAndReset($event){
+        console.log($event , "optimize and reset event")
 
         if($event.type == 'optimize'){
             let res = {...this.get_optimizer_form(),...$event['data']}
@@ -235,6 +238,7 @@ export class PromoOptimizerComponent implements OnInit {
                 this.optimizer_response = data
                 this.optimize.setOptimizerResponseObservable(data)
                 this.isOptimiserFilterApplied = true
+                this.disable_save_download = false
                
             })
            
@@ -254,6 +258,7 @@ export class PromoOptimizerComponent implements OnInit {
 
             this.optimizer_response = null
             this.optimize.setOptimizerResponseObservable(null)
+            this.scenarioTitle = "Untitled"
 
             this.isOptimiserFilterApplied = false
             this.filter_model =  {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
@@ -297,6 +302,7 @@ export class PromoOptimizerComponent implements OnInit {
         
             }
             this.optimize.addPromotionList(promotion)
+            this.scenarioTitle = $event['name']
 
         },error=>{
             console.log(error , "error")

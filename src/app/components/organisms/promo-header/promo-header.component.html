@@ -18,7 +18,7 @@
             [active]="currentRoute === '/promo/optimizer'"
             >Promo optimizer</nwn-promotool-tab
         >
-        <div class="mx-auto self-center" *ngIf="userdetail">Welcome {{userdetail?.user.email}}!</div>
+        <div style="flex: 1;text-align: end;padding: 5px;" class="self-center" *ngIf="userdetail">{{userdetail?.user.email}}</div>
     </div>
 </div>
 

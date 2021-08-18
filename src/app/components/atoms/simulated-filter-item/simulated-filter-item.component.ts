@@ -33,7 +33,7 @@ export class SimulatedFilterItemComponent  implements OnInit{
                                 this.type = 'active'
                             }
                             else{
-                                if(this.promotion_map.length > 0){
+                                if(this.promotion_map && this.promotion_map.length > 0){
                                     let av_quater = this.promotion_map.map(d=>d.week.quater)
                         let key_split = Number(this.key.split("Q")[1])
                         if(av_quater.includes(key_split)){
@@ -74,7 +74,7 @@ export class SimulatedFilterItemComponent  implements OnInit{
                     this.type = 'active'
                 }
                 else{
-                    if(this.promotion_map.length > 0){
+                    if(this.promotion_map && this.promotion_map.length > 0){
                         let av_quater = this.promotion_map.map(d=>d.week.quater)
                         let key_split = Number(this.key.split("Q")[1])
                         if(av_quater.includes(key_split)){
