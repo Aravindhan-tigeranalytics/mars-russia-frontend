@@ -88,6 +88,7 @@ import { ComparePromoOptimizerComponent } from '@organisms/compare-promo-optimiz
 import { ComparePromoScenarioComponent } from '@organisms/compare-promo-scenario/compare-promo-scenario.component';
 import { ManageMetricsComponent } from '@organisms/manage-metrics/manage-metrics.component';
 import { CompulsoryWeeksPopupComponent } from '@organisms/compulsory-weeks-popup/compulsory-weeks-popup.component';
+import { OptimizerSummaryPopupComponent } from '@organisms/optimizer-summary-popup/optimizer-summary-popup.component';
 import { WeekItemComponent } from '@molecules/week-item/week-item.component';
 import { WeeksIgnoredComponent } from '@organisms/weeks-ignored/weeks-ignored.component';
 import { NumberPromoWeeksComponent } from '@organisms/number-promo-weeks/number-promo-weeks.component';
@@ -194,6 +195,7 @@ import {DeleteAlertComponent} from "@organisms/delete-alert/delete-alert.compone
         ComparePromoScenarioComponent,
         ManageMetricsComponent,
         CompulsoryWeeksPopupComponent,
+        OptimizerSummaryPopupComponent,
         WeekItemComponent,
         WeeksIgnoredComponent,
         NumberPromoWeeksComponent,
@@ -333,6 +335,7 @@ import {DeleteAlertComponent} from "@organisms/delete-alert/delete-alert.compone
         DurationPromoWavesComponent,
         MinimumGapWavesComponent,
         CompulsoryWeeksPopupComponent,
+        OptimizerSummaryPopupComponent,
         WeeksIgnoredComponent,
         MacPopupComponent,
         NumberPromoWeeksComponent,

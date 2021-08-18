@@ -14,7 +14,7 @@ export class SaveScenarioComponent implements OnInit{
     @Output()
     saveScenarioEvent = new EventEmitter()
     @Input()
-    showSaveas: boolean | false | true = false
+    showSave: boolean | false | true = false
     @Input()
     error :any = null
     @Input()

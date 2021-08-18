@@ -1,6 +1,9 @@
 <div class="px-12 py-5">
     <div class="text-left py-5">
-        <h1 class="text-heading font-extrabold">Summary</h1>
+        <h1 class="text-heading font-extrabold inline-block">Summary</h1>
+        <nwn-button class="inline-block" type="icon" size="iconsm" (click)="openModal('optimizer-summary-popup')">
+            <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="info"></nwn-svg-icon>
+        </nwn-button>
     </div>
     <div class="flex flex-row flex-wrap border-b border-marsgray-300">
         <div class="pr-6">
@@ -184,11 +187,11 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-row justify-between items-center py-5">
-            <div class="baselinemetrics scrollbar-x">
-                <table class="border border-marsgray-200 text-left">
+        <div class="flex flex-row justify-between items-center py-5 bg-white">
+            <div class="baselinemetrics scrollbar-x bg-white">
+                <table class="border border-marsgray-200 text-left bg-white">
                     <thead class="bg-white">
-                        <tr class="whitespace-nowrap">
+                        <tr class="whitespace-nowrap bg-white">
                             <th colspan="5" scope="colgroup">
                                 <nwn-cell-header type="headersm" color="bggray-100">Sales metrics</nwn-cell-header>
                             </th>
@@ -196,7 +199,7 @@
                                 <nwn-cell-header type="headersm" color="bggray-100">Mars metrics</nwn-cell-header>
                             </th>
                         </tr>
-                        <tr class="whitespace-nowrap">
+                        <tr class="whitespace-nowrap bg-white">
                             <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent">Units</nwn-cell-header>
                             </th>
@@ -954,3 +957,9 @@
         </div>
     </div>
 </div>
+
+
+<!-- summary popup -->
+<nwn-modal id="optimizer-summary-popup" class="hidden">
+    <nwn-optimizer-summary-popup></nwn-optimizer-summary-popup>
+</nwn-modal>

@@ -7,7 +7,7 @@ import { Observable, of, from, BehaviorSubject, combineLatest , Subject } from '
 import {takeUntil} from "rxjs/operators"
 import * as utils from "@core/utils"
 import * as FileSaver from 'file-saver';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'nwn-loaded-scenario-header',
     templateUrl: './loaded-scenario-header.component.html',
@@ -44,7 +44,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     promo_elasticity = 0
 
     // hidepanel = true
-    constructor(private optimize : OptimizerService,private simulatorService : SimulatorService){
+    constructor(private toastr: ToastrService,private optimize : OptimizerService,private simulatorService : SimulatorService){
 
     }
     ngOnInit(){
@@ -204,6 +204,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
         }
 
         this.simulatorService.downloadWeeklyInputTemplate(queryObj).subscribe(data=>{
+        this.toastr.success('File Downloaded Successfully','Success');
         const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });    
         FileSaver.saveAs(
             blob,

@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { ModalService } from '@molecules/modal/modal.service';
 import { OptimizerService } from '../../../core/services/optimizer.service';
 import * as Utils from "../../../core/utils/util"
 @Component({
@@ -13,7 +14,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     @ViewChild('scrollTwo') scrollTwo: ElementRef;
     translate_y: string = '';
     currentTranslateRate: string = '';
-    constructor(private elRef: ElementRef,private restApi: OptimizerService) {}
+    constructor(private elRef: ElementRef,private restApi: OptimizerService,public modalService: ModalService) {}
     
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
@@ -105,7 +106,23 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             return str.split(",").map(d=>d.split("_").join(" "))
         }
         return null
-
+    }
+    HolidayNameConversion(isHoliday:any,value:any){
+        if(isHoliday){
+            if(value){
+                let temp = value.split(',')
+                if(temp.length > 1){
+                    for(let i = 0;i < temp.length;i++){
+                        temp[i] = ' ' + temp[i].split('_').map(capitalize).join(' ').replace("Flag ","")
+                    }
+                    return temp.join()
+                }
+                else if(temp.length == 1){
+                    return temp[0].split('_').map(capitalize).join(' ').replace("Flag ","")
+                }
+            }
+        }
+        return ''
     }
 
     getChartData(){
@@ -119,12 +136,10 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             let week = optimizerResponse[i].week
             let holiday = false
             let holiday_name:any = ''
-            if(this.optimizer_response.holiday.length > 0){
-                for(let j = 0; j < this.optimizer_response.holiday.length; j++){
-                    if(optimizerResponse[i][this.optimizer_response.holiday[j]] == 1){
-                        holiday = true
-                        holiday_name = this.optimizer_response.holiday[j]
-                    }
+            if(this.optimizer_response.financial_metrics.holiday_calendar.length > 0){
+                if(this.optimizer_response.financial_metrics.holiday_calendar[i][i+1] != ""){
+                    holiday = true
+                    holiday_name = this.optimizer_response.financial_metrics.holiday_calendar[i][i+1]
                 }
             }
             let seasonality = ''
@@ -151,7 +166,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 si : (optimizerResponse[i].SI).toFixed(2),
                 roi: (optimizerResponse[i].Baseline_ROI).toFixed(2),
                 lift : (optimizerResponse[i].Baseline_Lift).toFixed(2),
-                holidayNames : holiday_name.split('_').map(capitalize).join(' ').replace("Flag ","")
+                holidayNames : this.HolidayNameConversion(holiday,holiday_name)
             })
             this.stimulatedCalendar.push({
                 date: durationObj.date,
@@ -165,7 +180,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 si : (optimizerResponse[i].SI).toFixed(2), 
                 roi: (optimizerResponse[i].Optimum_ROI).toFixed(2),
                 lift : (optimizerResponse[i].Optimum_Lift).toFixed(2) ,
-                holidayNames : holiday_name.split('_').map(capitalize).join(' ').replace("Flag ","")
+                holidayNames : this.HolidayNameConversion(holiday,holiday_name)
             })
         }
 
@@ -617,6 +632,10 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     openTab = 1;
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;
+    }
+
+    openModal(id: string){
+        this.modalService.open(id)
     }
 }
 
