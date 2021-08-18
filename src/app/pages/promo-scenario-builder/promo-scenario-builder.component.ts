@@ -26,7 +26,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     hideFilter: string = 'yettobesimulated'
     title = "Untitled"
     save_scenario_error:any = null
-    show_save_as:any = null
+    show_save:any = null
     form: FormGroup = null as any;
     promotion_viewed : ListPromotion = null as any
     product:Product[] = []
@@ -628,12 +628,12 @@ export class PromoScenarioBuilderComponent implements OnInit {
         else if($event == 'save-scenario-popup'){
             this.optimize.getLoadedScenarioModel().subscribe(data=>{
                 if(data != null && data != undefined){
-                    this.show_save_as = true
+                    this.show_save = true
                     this.restApi.setIsSaveScenarioLoadedObservable(true)
                     
                 }
                 else {
-                    this.show_save_as = false
+                    this.show_save = false
                     this.restApi.setIsSaveScenarioLoadedObservable('')
                     // this.openModal($event);
                 }
@@ -642,7 +642,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.openModal($event);
         }
         else{
-            this.show_save_as = false
+            this.show_save = false
             this.openModal($event);
         }
     }
