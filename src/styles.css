@@ -369,3 +369,7 @@ nwn-scenario-load-card .load-scenario-card {
     border: 2px solid #a5a5a5 !important;
     border-radius: 5px !important;
 }
+
+#compare-scenario-br button{
+  background-color: unset !important;
+}

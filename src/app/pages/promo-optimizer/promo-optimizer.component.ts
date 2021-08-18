@@ -6,6 +6,7 @@ import {OptimizerService} from '../../core/services/optimizer.service'
 import * as $ from 'jquery';
 import * as FileSaver from 'file-saver';
 import { ToastrService } from 'ngx-toastr';
+import { SimulatorService } from '@core/services';
 
 @Component({
     selector: 'nwn-promo-optimizer',
@@ -35,7 +36,7 @@ export class PromoOptimizerComponent implements OnInit {
     filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
     "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
     product:Product[] = []
-    constructor(private toastr: ToastrService,private modalService: ModalService,private optimize : OptimizerService,) {
+    constructor(private toastr: ToastrService,private modalService: ModalService,private optimize : OptimizerService,private restApi: SimulatorService) {
 
     }
 
@@ -47,6 +48,13 @@ export class PromoOptimizerComponent implements OnInit {
           },error=>{
             console.log(error , "error")
           })
+          this.restApi.getSignoutPopupObservable().subscribe(data=>{
+            if(data != ''){
+                if(data.type == 'optimizer'){
+                    this.openModal(data.id)
+                }
+            }
+        })
     }
 
     downloadEvent($event){

@@ -23,6 +23,7 @@ export class SimulatorService {
   public ClearScearchText = new BehaviorSubject<any>('')
   public IsSaveScenarioLoaded = new BehaviorSubject<any>('')
   public ClearScearchTextCatg = new BehaviorSubject<any>('')
+  public SignoutPopup = new BehaviorSubject<any>('')
 
   constructor(private http: HttpClient,private apiService: ApiService) { }
 
@@ -72,6 +73,14 @@ export class SimulatorService {
   }
   public getIsSaveScenarioLoadedObservable(){
     return this.IsSaveScenarioLoaded.asObservable()
+  }
+
+  // Set and Get save scenario data flag
+  public setSignoutPopupObservable(value:any){
+    this.SignoutPopup.next(value)
+  }
+  public getSignoutPopupObservable(){
+    return this.SignoutPopup.asObservable()
   }
 
   /*========================================

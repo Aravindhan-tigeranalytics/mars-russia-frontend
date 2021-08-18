@@ -79,6 +79,14 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 this.openModal(data.open)
             }
         })
+        this.restApi.getSignoutPopupObservable().subscribe(data=>{
+            if(data != ''){
+                if(data.type == 'simulator'){
+                    this.openModal(data.id)
+                }
+            }
+        })
+
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)
