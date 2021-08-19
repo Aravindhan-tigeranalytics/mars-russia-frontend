@@ -102,6 +102,7 @@ export class PromotionDetailsComponent implements OnInit {
         })
     }
     valueChangePromo($event){
+        debugger
         if($event['checked']){
             this.selected_promotions.push($event['value'])
         }
@@ -149,7 +150,7 @@ export class PromotionDetailsComponent implements OnInit {
         // console.log(this.promo_generated , "promotion generated")
     }
     hideNoResultsFound(){
-        $( "#promo-details" ).click(function() {
+        $( "#promo-details1" ).click(function() {
            let temp:any =  $(".available-items").text();
            if(temp == "No results found!"){
             $(".available-items").hide()
@@ -187,4 +188,9 @@ export class PromotionDetailsComponent implements OnInit {
                    
                }
            }
+    changePromotion(e:any){
+            this.form.controls['promo'].setValue(e.value);
+            console.log(e.value , "selected value");
+            console.log(this.form.value , "fomr value")
+        }
 }

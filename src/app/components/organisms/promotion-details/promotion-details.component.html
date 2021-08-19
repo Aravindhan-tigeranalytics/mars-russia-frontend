@@ -8,8 +8,8 @@
             <label for="promoname">Promo Mechanic</label>
                 <ngx-select-dropdown
                 (open)="hideNoResultsFound()"
-                (change)="hideNoResultsFound()"
-                id="promo-details"
+                (change)="hideNoResultsFound();changePromotion($event)"
+                id="promo-details1"
                 tabindex="0"
                 [multiple]="false"
                 [config]="config"
