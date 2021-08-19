@@ -62,3 +62,23 @@
     white-space: normal;
     cursor: pointer;
 }
+
+.mail-text {
+    font-size: 12px !important;
+    color: #5f6368;
+    letter-spacing: normal;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.user-name {
+    font-size: 15px;
+    color: black;
+    font: 500 16px/22px Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    letter-spacing: 0.29px;
+    margin: 0;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

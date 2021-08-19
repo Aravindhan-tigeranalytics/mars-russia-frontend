@@ -26,8 +26,8 @@
                         <div data-leters="Y" id="userLogo1" class="text-center bg-div"></div>
                     </div>
                     <div class="text-center border-b" style="padding-bottom: 20px;margin-top: -12vh;">
-                        <h2 class="text-title-medium text-marsgray-700">{{userdetail.user.name | titlecase }}</h2>
-                        <span class="text-title-small">{{userdetail.user.email}}</span>
+                        <h2 class="user-name text-marsgray-700">{{userdetail.user.name | titlecase }}</h2>
+                        <span class="text-title-small mail-text">{{userdetail.user.email}}</span>
                     </div>
                     <div class="border-b">
                         <nwn-button type="sideBorder" size="sideBorderSize" class="w-full" (click)="openModal('load-scenario-promosimulator')">
