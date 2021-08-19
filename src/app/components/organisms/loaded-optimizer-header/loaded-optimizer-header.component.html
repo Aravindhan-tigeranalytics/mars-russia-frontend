@@ -196,11 +196,11 @@
             <div class="flex flex-row space-x-4 items-center">
                 <nwn-button [disabled] = "disable_button" type="link" size="sm" (click)="optimizeReset('reset')"> Reset </nwn-button>
                 <nwn-button [disabled] = "disable_button" type="primary" size="sm" (click)="optimizeReset('optimize')"> Optimize </nwn-button>
-                <nwn-button  [disabled] = "disable_button" (click)="sendMessage('save-scenario-popup')" type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button  [disabled] = "disable_save_download" (click)="sendMessage('save-scenario-popup')" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                     <p tooltipContent>Save scenario</p>
                 </nwn-button>
-                <nwn-button [disabled] = "disable_button" type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button [disabled] = "disable_save_download" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save-download" (click)="download()"></nwn-svg-icon>
                     <p tooltipContent>Download scenario</p>
                 </nwn-button>
@@ -301,24 +301,24 @@
 
 <!-- nwn-mac-popup -->
 <nwn-modal id="mac-popup" class="hidden">
-    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'MAC'"></nwn-mac-popup>
+    <nwn-mac-popup [ip_val] = "ip_val" (configChangeEvent) = "configChangeEvent($event)" [label] = "'MAC'"></nwn-mac-popup>
 </nwn-modal>
 
 <!-- nwn-mac-popup -->
 <nwn-modal id="retailer-popup" class="hidden">
-    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'Retailer profit'"></nwn-mac-popup>
+    <nwn-mac-popup [ip_val] = "ip_val" (configChangeEvent) = "configChangeEvent($event)" [label] = "'Retailer profit'"></nwn-mac-popup>
 </nwn-modal>
 
 <nwn-modal id="te-popup" class="hidden">
-    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'Trade expense'"></nwn-mac-popup>
+    <nwn-mac-popup [ip_val] = "ip_val" (configChangeEvent) = "configChangeEvent($event)" [label] = "'Trade expense'"></nwn-mac-popup>
 </nwn-modal>
 
 <nwn-modal id="mac-per-popup" class="hidden">
-    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'MAC, % NSV'"></nwn-mac-popup>
+    <nwn-mac-popup [ip_val] = "ip_val" (configChangeEvent) = "configChangeEvent($event)" [label] = "'MAC, % NSV'"></nwn-mac-popup>
 </nwn-modal>
 
 <nwn-modal id="rp-per-popup" class="hidden">
-    <nwn-mac-popup (configChangeEvent) = "configChangeEvent($event)" [label] = "'RP, % RSV'"></nwn-mac-popup>
+    <nwn-mac-popup [ip_val] = "ip_val" (configChangeEvent) = "configChangeEvent($event)" [label] = "'RP, % RSV'"></nwn-mac-popup>
 </nwn-modal>
 <!--  -->
 

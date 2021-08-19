@@ -148,6 +148,8 @@ export class PromotionDetailsComponent implements OnInit {
         
                for (let property in changes) {
                    if (property === 'base_promotions') {
+                       this.input_promotions = []
+                       this.selected_promotions = []
                       
                        // console.log(changes[property].currentValue , "current value")
                        this.base_promotions = changes[property].currentValue

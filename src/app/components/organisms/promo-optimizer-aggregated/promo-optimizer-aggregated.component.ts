@@ -66,6 +66,10 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 this.getChartData()
 
             }
+            else{
+                this.optimizer_response = null
+
+            }
             
         })
     }
@@ -100,6 +104,12 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             }
             this.activeAggregatedTab = "percent"
         }
+    }
+    get_holiday_calendar(str){
+        if(str){
+            return str.split(",").map(d=>d.split("_").join(" "))
+        }
+        return null
     }
     HolidayNameConversion(isHoliday:any,value:any){
         if(isHoliday){
@@ -286,6 +296,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 else{
                     promotion_value = 'TPR - '+data['base']['weekly'][i]['promo_depth']+'%';
                 }
+                // debugger
 
                 let holiday: string = null as any
                 if(this.optimizer_response.holiday.length > 0){
@@ -313,7 +324,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                     'duration': {
                         'week':"Week "+(i+1),
                         'date': data['simulated']['weekly'][i].date,
-                        'holiday': holiday,
+                        'holiday': this.get_holiday_calendar(data['holiday_calendar'][i][i+1]),
+                        // holiday,
                         'si': this.optimizer_response.optimal[i].SI
                     },
                     'promotions': {

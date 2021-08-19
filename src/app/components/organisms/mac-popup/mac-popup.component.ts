@@ -1,4 +1,4 @@
-import { Component,Input, Output,EventEmitter, OnInit } from '@angular/core';
+import { Component,Input, Output,EventEmitter, OnInit,SimpleChanges   } from '@angular/core';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 import { OptimizerService } from '@core/services/optimizer.service';
 // import { EventEmitter } from 'stream';
@@ -21,11 +21,19 @@ export class MacPopupComponent {
 
     @Input()
     label = ""
-    @Output()
-    value = 1
+
+    @Input()
+    value : number = 1
+
+    @Input()
+    ip_val : any = {
+        'mac' : 0,
+        'rp' : 0
+    }
    
     @Output()
     configChangeEvent = new EventEmitter()
+    
     @Input()
     options: Options = {
         floor: this.floor,
@@ -84,5 +92,16 @@ export class MacPopupComponent {
 
         })
     }
+      ngOnChanges(changes: SimpleChanges) {
+        console.log(changes , "property changes")
+    for (let property in changes) {
+        
+        if (property === 'ip_val') {
+          
+this.value = 1
+         
+        }
+    }
+}
     
 }

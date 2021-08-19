@@ -61,7 +61,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: '/login',
+        redirectTo: '/promo/simulator',
         pathMatch: 'full'
     },
     {

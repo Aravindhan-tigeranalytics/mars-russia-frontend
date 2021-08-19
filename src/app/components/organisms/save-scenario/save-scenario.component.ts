@@ -30,19 +30,35 @@ export class SaveScenarioComponent implements OnInit{
     ngOnInit() {
         this.restApi.getIsSaveScenarioLoadedObservable().subscribe(data=>{
             console.log(data,"load scenario save flag")
-            if(data != ''){
-                this.optimize.getLoadedScenarioModel().subscribe(scenarioData=>{
-                    this.saveForm.patchValue({
-                        name: scenarioData.scenario_name,
-                        comment: scenarioData.scenario_comment
-                    });
-                })
-            }
-            else {
-                this.saveForm.patchValue({
+            if(!data ){
+                 this.saveForm.patchValue({
                     name:  '',
                     comment: ''
                 });
+                // this.optimize.getLoadedScenarioModel().subscribe(scenarioData=>{
+                //     this.saveForm.patchValue({
+                //         name: scenarioData.scenario_name,
+                //         comment: scenarioData.scenario_comment
+                //     });
+                // })
+            }
+            else {
+                if(data.data.type=='optimizer'){
+                    this.showSave = false
+                }
+                else{
+                    this.showSave = true
+                }
+                
+                console.log(data.data.name,"name in scenario")
+                    this.saveForm.patchValue({
+                        name: data.data.name,
+                        comment: data.data.comments,
+                    });
+                // this.saveForm.patchValue({
+                //     name:  '',
+                //     comment: ''
+                // });
             }
         })
     }
