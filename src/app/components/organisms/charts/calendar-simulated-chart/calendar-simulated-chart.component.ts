@@ -72,10 +72,14 @@ export class CalendarSimulatedChartComponent implements OnInit {
             key = 'lift'
             label = 'Lift %'
         }
-        else if(this.stimulatedDropdownFilter == 'si'){
-            key = 'si'
-            label = 'Seasonality Index'
+        else if(this.stimulatedDropdownFilter == 'asp'){
+            key = 'asp'
+            label = 'ASP'
         }
+        // else if(this.stimulatedDropdownFilter == 'si'){
+        //     key = 'si'
+        //     label = 'Seasonality Index'
+        // }
         const boundingHeight = this.boundingHeight;
         // Maxim value in the data to find the maximum bound dynamically
         const maximumDiscountInData = getMaxDiscount();
@@ -367,7 +371,7 @@ export class CalendarSimulatedChartComponent implements OnInit {
                 .text(index.name + ' - ' + index.timePeriod);
             d3.select('#calendarSimulated-tooltip')
                 .select('#roi')
-                .text(label+': ' + index[key]);
+                .text(label+' : ' + index[key]);
         }
 
         function mouseleave(datum: any, index: any, nodes: any) {
@@ -462,7 +466,7 @@ export class CalendarSimulatedChartComponent implements OnInit {
                 .text(index.name + ' - ' + index.timePeriod);
             d3.select('#calendarSimulated-tooltip')
                 .select('#roi')
-                .text(label+': ' + index[key]);
+                .text(label+' : ' + index[key]);
         }
 
         function mouseleavePoint(datum: any, index: any, nodes: any) {

@@ -69,10 +69,14 @@ export class CalendarChartComponent implements OnInit {
             key = 'lift'
             label = 'Lift %'
         }
-        else if(this.baselineDropdownFilter == 'si'){
-            key = 'si'
-            label = 'Seasonality Index'
+        else if(this.baselineDropdownFilter == 'asp'){
+            key = 'asp'
+            label = 'ASP'
         }
+        // else if(this.baselineDropdownFilter == 'si'){
+        //     key = 'si'
+        //     label = 'Seasonality Index'
+        // }
         const boundingHeight = this.boundingHeight;
         // Maxim value in the data to find the maximum bound dynamically
         const maximumDiscountInData = getMaxDiscount();
@@ -360,7 +364,7 @@ export class CalendarChartComponent implements OnInit {
                 .text(index.name + ' - ' + index.timePeriod);
             d3.select('#calendarBase-tooltip')
                 .select('#roi')
-                .text(label+': ' + index[key]);
+                .text(label+' : ' + index[key]);
         }
 
         function mouseleave(datum: any, index: any, nodes: any) {
@@ -455,7 +459,7 @@ export class CalendarChartComponent implements OnInit {
                 .text(index.name + ' - ' + index.timePeriod);
             d3.select('#calendarBase-tooltip')
                 .select('#roi')
-                .text(label+': ' + index[key]);
+                .text(label+' : ' + index[key]);
         }
 
         function mouseleavePoint(datum: any, index: any, nodes: any) {

@@ -129,15 +129,27 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
         return ''
     }
 
+    getSeasonality(value:any){
+        if(value < 0.95){
+            return 'low'
+        }
+        else if(value < 1.05){
+            return 'med'
+        }
+        else{
+            return 'high'
+        }
+    }
+
     getChartData(){
         this.weeklyData = []
         this.baseCalendar = []
         this.stimulatedCalendar = []
-        let optimizerResponse = this.optimizer_response.optimal
+        let optimizerResponse = this.optimizer_response.financial_metrics
         let metrics: any = []
-        for(let i=0; i < optimizerResponse.length; i++){
-            let durationObj = this.convertToFormat(optimizerResponse[i].Date) 
-            let week = optimizerResponse[i].week
+        for(let i=0; i < optimizerResponse.base.weekly.length; i++){
+            let durationObj = this.convertToFormat(optimizerResponse.base.weekly[i].date) 
+            let week = optimizerResponse.base.weekly[i].week
             let holiday = false
             let holiday_name:any = ''
             if(this.optimizer_response.financial_metrics.holiday_calendar.length > 0){
@@ -146,30 +158,31 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                     holiday_name = this.optimizer_response.financial_metrics.holiday_calendar[i][i+1]
                 }
             }
-            let seasonality = ''
-            if(optimizerResponse[i].SI){
-                if(optimizerResponse[i].SI < 0.95){
-                    seasonality = 'low'
-                }
-                else if(optimizerResponse[i].SI < 1.05){
-                    seasonality = 'med'
-                }
-                else{
-                    seasonality = 'high'
-                }
-            }
+            // let seasonality = ''
+            // if(optimizerResponse[i].SI){
+            //     if(optimizerResponse[i].SI < 0.95){
+            //         seasonality = 'low'
+            //     }
+            //     else if(optimizerResponse[i].SI < 1.05){
+            //         seasonality = 'med'
+            //     }
+            //     else{
+            //         seasonality = 'high'
+            //     }
+            // }
             this.baseCalendar.push({
                 date: durationObj.date,
                 timePeriod: durationObj.day + ' ' + durationObj.month,
                 month: durationObj.month,
                 year: durationObj.year,
                 name: 'W'+ week + ' '+ durationObj.year,
-                discount: optimizerResponse[i].Baseline_Promo/100,
+                discount: optimizerResponse.base.weekly[i].promo_depth/100,
                 holiday: holiday,
-                seasonality: seasonality,
-                si : (optimizerResponse[i].SI).toFixed(2),
-                roi: (optimizerResponse[i].Baseline_ROI).toFixed(2),
-                lift : (optimizerResponse[i].Baseline_Lift).toFixed(2),
+                seasonality: this.getSeasonality(optimizerResponse.base.weekly[i].si),
+                si : (optimizerResponse.base.weekly[i].si).toFixed(2),
+                roi: (optimizerResponse.base.weekly[i].roi).toFixed(2),
+                lift : (optimizerResponse.base.weekly[i].lift).toFixed(2),
+                asp: (optimizerResponse.base.weekly[i].asp).toFixed(2),
                 holidayNames : this.HolidayNameConversion(holiday,holiday_name)
             })
             this.stimulatedCalendar.push({
@@ -178,12 +191,13 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 month: durationObj.month,
                 year: durationObj.year,
                 name: 'W'+ week + ' '+ durationObj.year,
-                discount: optimizerResponse[i].Optimum_Promo/100,
+                discount: optimizerResponse.simulated.weekly[i].promo_depth/100,
                 holiday: holiday,
-                seasonality: seasonality,
-                si : (optimizerResponse[i].SI).toFixed(2), 
-                roi: (optimizerResponse[i].Optimum_ROI).toFixed(2),
-                lift : (optimizerResponse[i].Optimum_Lift).toFixed(2) ,
+                seasonality: this.getSeasonality(optimizerResponse.simulated.weekly[i].si),
+                si: (optimizerResponse.simulated.weekly[i].si).toFixed(2),
+                roi: (optimizerResponse.simulated.weekly[i].roi).toFixed(2),
+                lift : (optimizerResponse.simulated.weekly[i].lift).toFixed(2),
+                asp: (optimizerResponse.simulated.weekly[i].asp).toFixed(2),
                 holidayNames : this.HolidayNameConversion(holiday,holiday_name)
             })
         }
@@ -522,9 +536,12 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             else if(this.baselineCalDropdown == 'lift'){
                 this.baselineChartLegend = 'Lift %';
             }
-            else if(this.baselineCalDropdown == 'si'){
-                this.baselineChartLegend = 'Seasonality Index';
+            else if(this.baselineCalDropdown == 'asp'){
+                this.baselineChartLegend = 'ASP';
             }
+            // else if(this.baselineCalDropdown == 'si'){
+            //     this.baselineChartLegend = 'Seasonality Index';
+            // }
         }
         else if(type == 'stimulated'){
             this.stimulatedCalDropdown = deviceValue.target.value
@@ -534,9 +551,12 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             else if(this.stimulatedCalDropdown == 'lift'){
                 this.stimulatedChartLegend = 'Lift %';
             }
-            else if(this.stimulatedCalDropdown == 'si'){
-                this.stimulatedChartLegend = 'Seasonality Index';
+            else if(this.stimulatedCalDropdown == 'asp'){
+                this.stimulatedChartLegend = 'ASP';
             }
+            // else if(this.stimulatedCalDropdown == 'si'){
+            //     this.stimulatedChartLegend = 'Seasonality Index';
+            // }
         }
     }
 
