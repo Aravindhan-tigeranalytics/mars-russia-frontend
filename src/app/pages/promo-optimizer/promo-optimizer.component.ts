@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ModalService } from '@molecules/modal/modal.service';
 import { CheckboxModel,ListPromotion,Product,FilterModel } from "../../core/models"
-import {OptimizerService} from '../../core/services/optimizer.service'
+// import {OptimizerService} from '../../core/services/optimizer.service'
+import {SimulatorService,OptimizerService} from "@core/services"
 import * as $ from 'jquery';
 import * as FileSaver from 'file-saver';
 import { ToastrService } from 'ngx-toastr';
@@ -37,11 +38,15 @@ export class PromoOptimizerComponent implements OnInit {
     filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
     "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
     product:Product[] = []
-    constructor(private toastr: ToastrService,private modalService: ModalService,private optimize : OptimizerService,) {
+    constructor(private toastr: ToastrService,private modalService: ModalService,
+        private optimize : OptimizerService,public restApi: SimulatorService) {
 
     }
 
     ngOnInit(): void {
+        this.scenarioTitle = "Untitled"
+        this.restApi.setIsSaveScenarioLoadedObservable(null)
+
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)
@@ -209,6 +214,7 @@ export class PromoOptimizerComponent implements OnInit {
         this.closeModal($event)
     }
     loadOptimizer($event){
+        this.isOptimiserFilterApplied = false
         this.filter_model["retailer"] =  $event['meta']['retailer']
         this.filter_model["product_group"] =  $event['meta']['product_group']
         this.productChange({"value" : $event['meta']['product_group'] , "checked" : true})
@@ -224,6 +230,13 @@ export class PromoOptimizerComponent implements OnInit {
                 data["meta"] = promotion
                 console.log(data , "data with promotion details")
                 this.optimize.setoptimizerDataObservable(data)
+                this.restApi.setIsSaveScenarioLoadedObservable({"flag" : true , "data" : {
+                    "name" : data.meta.name,
+                    "comments" : data.meta.comments,
+                    "id" : data.meta.id,
+                    "type" : data.meta.scenario_type
+    
+                }})
                 // this.isOptimiserFilterApplied = true
 
             }
@@ -265,6 +278,7 @@ export class PromoOptimizerComponent implements OnInit {
             this.optimizer_response = null
             this.optimize.setOptimizerResponseObservable(null)
             this.scenarioTitle = "Untitled"
+            this.restApi.setIsSaveScenarioLoadedObservable(null)
 
             this.isOptimiserFilterApplied = false
             this.filter_model =  {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
@@ -307,7 +321,14 @@ export class PromoOptimizerComponent implements OnInit {
             }
             this.toastr.success('Scenario Saved Successfully','Success')
             this.optimize.addPromotionList(promotion)
-            this.scenarioTitle = $event['name']
+            this.scenarioTitle = promotion
+            this.restApi.setIsSaveScenarioLoadedObservable({"flag" : true , "data" : {
+                "name" : $event['name'],
+                "comments" :  $event["comments"],
+                "id" : data["message"],
+                "type" :  "optimizer"
+
+            }})
 
         },error=>{
             console.log(error , "error")

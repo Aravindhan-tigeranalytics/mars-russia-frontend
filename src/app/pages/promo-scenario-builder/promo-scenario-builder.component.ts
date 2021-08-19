@@ -70,6 +70,9 @@ export class PromoScenarioBuilderComponent implements OnInit {
         }
 
     ngOnInit() {
+        this.restApi.setIsSaveScenarioLoadedObservable(null)
+        
+        this.scenarioTitle = "Untitled"
         this.restApi.openCommandInterfaceModal.asObservable().subscribe(data=>{
             if(data != ''){
                 console.log(data)
@@ -80,6 +83,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             }
         })
         this.optimize.fetchVal().subscribe(data=>{
+            this.reset()
             this.product = data
             this._populateFilters(this.product)
 
@@ -296,7 +300,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this._populateFilters(this.product)
         this.optimize.setProductWeekObservable([])
         this.optimize.setLoadedScenarioModel(null as any)
-        this.restApi.setIsSaveScenarioLoadedObservable('')
+        this.restApi.setIsSaveScenarioLoadedObservable(null)
         this.promotion_viewed = null as any
         this.scenarioTitle = "Untitled"
            
@@ -451,7 +455,13 @@ export class PromoScenarioBuilderComponent implements OnInit {
             // this.optimize.set
             this.toastr.success('Scenario Loaded Successfully', 'Success')
             console.log(this.loaded_scenario , "loaded sceanrio")
-            this.restApi.setIsSaveScenarioLoadedObservable(true)
+            this.restApi.setIsSaveScenarioLoadedObservable({"flag" : true , "data" : {
+                "name" : this.loaded_scenario.scenario_name,
+                "comments" : this.loaded_scenario.scenario_comment,
+                "id" : this.loaded_scenario.scenario_id,
+                "type" : this.loaded_scenario.scenario_type
+
+            }})
         })
         console.log($event.id , "id of saved promotion")
     }
@@ -483,7 +493,13 @@ export class PromoScenarioBuilderComponent implements OnInit {
         // this.promotion_map.push({"selected_promotion":"TPR-"+val+"%","week" : data})
     }
     saveScenario($event){
-        console.log($event , "save scenario event")
+        console.log($event , "event type")
+        this._saveEvent($event)
+        
+
+
+    }
+    _saveEvent($event){
         if($event.type == 'saveas'){
             let weekly = {
                 "name" : $event['name'],
@@ -534,21 +550,24 @@ export class PromoScenarioBuilderComponent implements OnInit {
                     }
                 },...this.promotion_viewed 
             }
-// --------------
- 
-   
-  
-
-
-// --------------
-                
-                console.log("saved data" , data)
 
                 this.promotion_viewed.name = $event['name']
                 this.scenarioTitle = $event['name']
                 this.promotion_viewed.comments = $event["comments"]
                 this.promotion_viewed.meta['product_group'] = this.selected_product
                 this.promotion_viewed.meta['retailer'] = this.selected_retailer
+                this.restApi.setIsSaveScenarioLoadedObservable({"flag" : true , "data" : {
+                    "name" :weekly["name"],
+                    "comments" : weekly["comments"],
+                    "id" :  data["saved_id"],
+                    "type" : "promo"
+
+                    // "id" : data["saved_id"],
+                    // "name" : weekly["name"],
+                    // "comments" : weekly["comments"],
+                    // "scenario_type" : "promo",
+    
+                }})
 
             },
             error=>{
@@ -572,11 +591,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.promotion_map.forEach(element => {
                 let key = "week-" + element.week.week
                 let obj = utils.decodePromotion(element.selected_promotion)
-                // {
-                //     "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
-                //     "promo_mechanics":"",
-                //     "co_investment":parseInt(element.week.co_investment)
-                // }
+                 
                 weekly[key] = obj
                 
             });
@@ -605,13 +620,18 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 this.promotion_viewed.comments = $event["comments"]
                 this.promotion_viewed.meta['product_group'] = this.selected_product
                 this.promotion_viewed.meta['retailer'] = this.selected_retailer
+                this.restApi.setIsSaveScenarioLoadedObservable({"flag" : true , "data" : {
+                    "name" : $event['name'],
+                    "comments" : $event["comments"],
+                    "id" :  data["saved_id"],
+                    "type" : "promo"
+                }})
             },
             error=>{
                 console.log(error , "eror")
                 this.save_scenario_error = error.detail
             })
         }
-
     }
 
     receiveMessage($event: any) {
@@ -623,21 +643,25 @@ export class PromoScenarioBuilderComponent implements OnInit {
         else if($event == 'Reset'){
             this.isFilterApplied = false
             this.hideFilter = 'viewmore'
-            this.restApi.setIsSaveScenarioLoadedObservable('')
+            this.restApi.setIsSaveScenarioLoadedObservable(null)
         }
         else if($event == 'save-scenario-popup'){
-            this.optimize.getLoadedScenarioModel().subscribe(data=>{
-                if(data != null && data != undefined){
-                    this.show_save = true
-                    this.restApi.setIsSaveScenarioLoadedObservable(true)
+            // this.optimize.getLoadedScenarioModel().subscribe(data=>{
+            //     if(data != null && data != undefined){
+            //         this.show_save = true
+            //         // this.restApi.setIsSaveScenarioLoadedObservable({"flag" : true , "data" : {
+            //         //     "name" : data.scenario_name,
+            //         //     "comments" : data.scenario_comment,
+            //         //     "id" :  data.scenario_id,
+            //         //     "type" : data.scenario_type
+            //         // }})
                     
-                }
-                else {
-                    this.show_save = false
-                    this.restApi.setIsSaveScenarioLoadedObservable('')
-                    // this.openModal($event);
-                }
-            })
+            //     }
+            //     else {
+            //         this.show_save = false
+            //         // this.restApi.setIsSaveScenarioLoadedObservable(null)
+            //     }
+            // })
             this.save_scenario_error = null
             this.openModal($event);
         }

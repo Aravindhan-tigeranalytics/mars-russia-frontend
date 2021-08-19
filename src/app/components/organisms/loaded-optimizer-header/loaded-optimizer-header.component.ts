@@ -63,6 +63,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
             takeUntil(this.unsubscribe$)
         ).subscribe(data=>{
             if(data){
+                this.reset()
                 console.log(data , "data of optimizer loaded")
                 this.disable_button = false
                 this.isExpand = false
@@ -75,42 +76,46 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
                 }
             }
             else{
-                this.disable_button = true
-                this.isExpand = true
-                this.optimizer_data  = data
-                this.title = "Untitled"
-                this.product_week = []
-
-                this.quarter_year = []
-    this.promotions = []
-    this.selected_objective = ''
-    this.duration_min = 0
-    this.duration_max = 0
-    this.param_gap_min = 0
-    this.param_gap_max = 0
-    this.min_week= 0
-    this.max_week = 0
-    this.selected_promotions = []
-    this.info_promotion = null as any
-    this.checkboxMetrices.forEach(element => {
-        element.checkHeadValue =  'x1.0'
-        
-    });
-    this.ip_val = {...{
-        'mac' : 1,
-        'rp' : 1
-    },
-    ...this.ip_val}
-    console.log(this.ip_val , "setting ip val to 1")
-    this.cumpulsory_week = 0
-    this.cumpulsory_week_val= []
-    this.ignored_week_val = []
-    this.ignored_week = 0
+                this.reset()
 
             }
             
         })
         
+    }
+    reset(){
+        this.disable_button = true
+        this.isExpand = true
+        this.optimizer_data  = null as any
+        this.title = "Untitled"
+        this.product_week = []
+
+        this.quarter_year = []
+this.promotions = []
+this.selected_objective = ''
+this.duration_min = 0
+this.duration_max = 0
+this.param_gap_min = 0
+this.param_gap_max = 0
+this.min_week= 0
+this.max_week = 0
+this.selected_promotions = []
+this.info_promotion = null as any
+this.checkboxMetrices.forEach(element => {
+element.checkHeadValue =  'x1.0'
+
+});
+this.ip_val = {...{
+'mac' : 1,
+'rp' : 1
+},
+...this.ip_val}
+console.log(this.ip_val , "setting ip val to 1")
+this.cumpulsory_week = 0
+this.cumpulsory_week_val= []
+this.ignored_week_val = []
+this.ignored_week = 0
+
     }
     download(){
         // if(this.disable_button){
@@ -580,8 +585,17 @@ this.checkboxMetrices.find(d=>{
         for (let property in changes) {
             
             if (property === 'title') {
-                console.log(changes[property].currentValue , "current value")
-                this.title = changes[property].currentValue
+                if(changes[property].currentValue == "Untitled"){
+                    this.title = changes[property].currentValue
+                }
+                else{
+                    let change = changes[property].currentValue as ListPromotion
+                    this.title = change.name
+                    this.info_promotion = change
+
+                }
+                // info_promotion
+                
 
                 
                 

@@ -66,6 +66,10 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
                 this.getChartData()
 
             }
+            else{
+                this.optimizer_response = null
+
+            }
             
         })
     }
