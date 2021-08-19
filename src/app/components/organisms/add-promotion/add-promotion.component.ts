@@ -17,6 +17,10 @@ export class AddPromotionComponent implements OnInit {
     constructor(private optimize : OptimizerService,public modalService: ModalService,public restApi: SimulatorService){
 
     }
+    config:any = {
+        displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+        search: true
+    };
     promo_generated = ''
     input_promotions:Array<CheckboxModel> = []
     base_line_promotions:Array<CheckboxModel> = []
@@ -71,8 +75,13 @@ export class AddPromotionComponent implements OnInit {
         return this.form.controls;
       }
     promo_name:any[] = []
+
     ngOnInit(){
-this.form.valueChanges.subscribe(data=>{
+    this.config = {
+        displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+        search: true,
+    };
+    this.form.valueChanges.subscribe(data=>{
     // console.log(data , "form changes subscription")
     // let promo = null
     let final = Utils.genratePromotion(
@@ -91,12 +100,22 @@ this.form.valueChanges.subscribe(data=>{
     this.base_line_promotions = this.optimize.get_base_line_promotions().map(e=>({"value" : e,"checked" : false}))
     this.promo_name = this.optimize.get_base_line_promotions().map(e=>Utils.decodePromotion(e)['promo_mechanics'])
     console.log(this.base_line_promotions , "base line promotions")
-})
+    })
+    console.log(this.promo_name,"this.promo_name")
+    }
+    hideNoResultsFound(){
+        $( "#promo-details" ).click(function() {
+           let temp:any =  $(".available-items").text();
+           if(temp == "No results found!"){
+            $(".available-items").hide()
+           }
+           else {
+            $(".available-items").show()
+           }
+        })
     }
     valueChangePromo(e:any){
         console.log(e.value , "promo value selected")
-    
-
     }
     valueChangeBaseline(e:any){
         this.history_baseline.push(e.value)
@@ -155,9 +174,8 @@ this.form.valueChanges.subscribe(data=>{
         // ignoreElements()
     }
     changePromotion(e:any){
-        this.form.controls['promo'].setValue(e.target.value);
-        console.log(e.target.value , "selected value");
+        this.form.controls['promo'].setValue(e.value);
+        console.log(e.value , "selected value");
         console.log(this.form.value , "fomr value")
-
     }
 }

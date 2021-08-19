@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 import * as Utils from "@core/utils"
 import { CheckboxModel } from '@core/models';
-
+import * as $ from 'jquery';
 
 @Component({
     selector: 'nwn-promotion-details',
@@ -66,9 +66,9 @@ export class PromotionDetailsComponent implements OnInit {
     };
 
     singleSelect: any = [];
-    config = {
+    config:any = {
         displayKey: 'name', // if objects array passed which key to be displayed defaults to description
-        search: true,
+        search: true
     };
     // optionsNormal = ["Motivation","N+1","Traffic"
     //        ];
@@ -77,6 +77,10 @@ export class PromotionDetailsComponent implements OnInit {
     constructor() {}
 
     ngOnInit(): void {
+        this.config = {
+            displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+            search: true,
+        };
         console.log(this.base_promotions , "base promotions")
         this.form.valueChanges.subscribe(data=>{
             // console.log(data , "form changes subscription")
@@ -144,6 +148,17 @@ export class PromotionDetailsComponent implements OnInit {
         
         // console.log(this.promo_generated , "promotion generated")
     }
+    hideNoResultsFound(){
+        $( "#promo-details" ).click(function() {
+           let temp:any =  $(".available-items").text();
+           if(temp == "No results found!"){
+            $(".available-items").hide()
+           }
+           else {
+            $(".available-items").show()
+           }
+        })
+    }
     ngOnChanges(changes: SimpleChanges) {
         
                for (let property in changes) {
@@ -156,7 +171,10 @@ export class PromotionDetailsComponent implements OnInit {
                        if(this.base_promotions.length > 0){
                         this.optionsNormal = this.base_promotions.map(e=> Utils.decodePromotion(e)['promo_mechanics'])
                         this.optionsNormal = [...new Set(this.optionsNormal.map(item => item))]
-
+                        console.log(this.optionsNormal,"this.optionsNormal")
+                        // setTimeout(() => {
+                        //     this.optionsNormal = [{ id: 1, display: 'shahid' },{ id: 2, display: 'shahidd' }];
+                        //   }, 0);
                        }
                       
                        

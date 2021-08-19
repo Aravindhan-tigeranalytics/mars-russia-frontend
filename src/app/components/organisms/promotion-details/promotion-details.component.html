@@ -6,13 +6,16 @@
     <div class="h-auto bg-white">
         <div class="px-6 py-3 space-y-2 promodetailselect">
             <label for="promoname">Promo Mechanic</label>
-            <ngx-select-dropdown
+                <ngx-select-dropdown
+                (open)="hideNoResultsFound()"
+                (change)="hideNoResultsFound()"
+                id="promo-details"
                 tabindex="0"
                 [multiple]="false"
-                formControlName="promo"
                 [config]="config"
                 [options]="optionsNormal"
-            ></ngx-select-dropdown>
+                >
+            </ngx-select-dropdown>
         </div>
         <div class="px-6 py-2">
             <label for="promoname">Discount depth</label>
