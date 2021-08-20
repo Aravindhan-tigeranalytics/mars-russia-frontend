@@ -256,6 +256,18 @@ export class PromoOptimizerComponent implements OnInit {
     }
     optimizeAndReset($event){
         console.log($event , "optimize and reset event")
+        
+        if(!$event['data']['objective_function']){
+            this.toastr.error('Cannot optimize without objective function ');
+            return
+        }
+        if($event['data']['mars_tpr'].length == 0){
+            this.toastr.error('Please select atleast one promotion');
+            return
+
+        }
+       
+        
 
         if($event.type == 'optimize'){
             let res = {...this.get_optimizer_form(),...$event['data']}

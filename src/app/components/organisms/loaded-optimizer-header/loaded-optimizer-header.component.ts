@@ -102,7 +102,11 @@ this.max_week = 0
 this.selected_promotions = []
 this.info_promotion = null as any
 this.checkboxMetrices.forEach(element => {
-element.checkHeadValue =  'x1.0'
+element.checkHeadValue =  'x1.0',
+element.disable = false,
+element.checked = false
+
+
 
 });
 this.ip_val = {...{
@@ -318,7 +322,7 @@ this.checkboxMetrices.find(d=>{
         // checkHeadValue: 'x0.50',
         // checkboxLabel: 'MAC',
         return {
-            "fin_pref_order" : this.checkboxMetrices.map(d=>this.get_order_map(d.id)),
+            "fin_pref_order" : this.checkboxMetrices.map(d=>this.get_order_map(d.id)).reverse(),
 
            "objective_function" : this.selected_objective.replace("Maximize " , "").replace("Minimize " , ""),
     "param_max_consecutive_promo" : this.duration_max,
@@ -374,7 +378,7 @@ this.checkboxMetrices.find(d=>{
 
         this.checkboxMetrices.filter(d=>{
             if(d.id == "mac-popup"){
-                d.disabled = true
+                // d.disabled = true
                 d.checkHeadValue = "x" + configData.param_mac
 
             }
@@ -454,30 +458,40 @@ this.checkboxMetrices.find(d=>{
             checkHeadValue: 'x0.50',
             checkboxLabel: 'MAC',
             disabled: false,
+            checked : false,
+            
         },
         {
             id:"retailer-popup",
             checkHeadValue: 'x0.75',
             checkboxLabel: 'Retailer profit',
             disabled: false,
+            checked : false,
+           
         },
         {
             id:"te-popup",
             checkHeadValue: 'x1.50',
             checkboxLabel: 'Trade expense',
             disabled: false,
+            checked : false,
+             
         },
         {
             id:"mac-per-popup",
             checkHeadValue: 'x1.25',
             checkboxLabel: 'MAC, % NSV',
             disabled: false,
+            checked : false,
+             
         },
         {
             id:"rp-per-popup",
             checkHeadValue: 'x1.00',
             checkboxLabel: 'RP, % RSV',
             disabled: false,
+            checked : false,
+             
         },
     ];
 
@@ -487,10 +501,34 @@ this.checkboxMetrices.find(d=>{
         console.log(event.previousIndex, event.currentIndex , "prev and current")
         console.log(this.checkboxMetrices, event.currentIndex , "this.checkboxMetrices and current")
     }
+    metricClick(ev , index){
+        // console.log(ev , "event clicked")
+        // debugger
+        setTimeout(()=>{
+            if(this.checkboxMetrices[index].checked){
+                this.sendMessage(this.checkboxMetrices[index].id)
+            }
+
+        },100)
+       
+       
+        // else{
+        //     ev.stopPropagation();
+        // }
+
+    }
 
     onRoleChangeCheckbox(ev, index) {
+        console.log(ev , index , " :ecv and index")
         this.checkboxMetrices[index].disabled = !ev;
+        this.checkboxMetrices[index].checked = ev.checked
         console.log(this.checkboxMetrices);
+        if(ev.checked){
+             
+            this.sendMessage(this.checkboxMetrices[index].id)
+            
+
+        }
     }
 
     // select config

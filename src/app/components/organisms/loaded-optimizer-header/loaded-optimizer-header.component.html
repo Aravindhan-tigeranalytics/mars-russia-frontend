@@ -151,11 +151,15 @@
                     cdkDrag
                     [cdkDragDisabled]="checkboxMetric.disabled"
                 >
+                 <!-- (click) = "metricClick($event , i)" -->
+                        
                     <nwn-metric-item
-                        (click)="sendMessage(checkboxMetric.id)"
+                    (click)="metricClick($event , i)"
                         nwnMetricItem="checkboxMetric"
                         [disabled]="checkboxMetric.disabled"
                         [checkboxValue]="!checkboxMetric.disabled"
+                        [value] = "checkboxMetric.checkboxLabel"
+                        [checked] = "checkboxMetric.checked"
                         (toggle)="onRoleChangeCheckbox($event, i)"
                     >
                         <p checkHeadValue>{{ checkboxMetric.checkHeadValue }}</p>

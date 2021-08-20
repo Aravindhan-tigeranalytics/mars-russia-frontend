@@ -72,6 +72,17 @@ export class AddPromotionComponent implements OnInit {
       }
     promo_name:any[] = []
     ngOnInit(){
+        this.restApi.ClearScearchText.asObservable().subscribe(data=>{
+            if(data == "add-promotion"){
+                console.log(data , "promotion modal.................................")
+                this.valueCoInvestment = 0
+                this.valueDiscountdepth = 0
+                this.form.reset()
+                // this.form.reset()
+            }
+            
+            
+          })
 this.form.valueChanges.subscribe(data=>{
     // console.log(data , "form changes subscription")
     // let promo = null
@@ -90,7 +101,7 @@ this.form.valueChanges.subscribe(data=>{
     // console.log(name , "name of label")
     this.base_line_promotions = this.optimize.get_base_line_promotions().map(e=>({"value" : e,"checked" : false}))
     this.promo_name = this.optimize.get_base_line_promotions().map(e=>Utils.decodePromotion(e)['promo_mechanics'])
-    console.log(this.base_line_promotions , "base line promotions")
+    // console.log(this.base_line_promotions , "base line promotions")
 })
     }
     valueChangePromo(e:any){
@@ -101,7 +112,7 @@ this.form.valueChanges.subscribe(data=>{
     valueChangeBaseline(e:any){
         this.history_baseline.push(e.value)
         this.input_promotions.push({"value" : e.value, "checked" : e.checked})
-        console.log(this.input_promotions , "input promotions ")
+        // console.log(this.input_promotions , "input promotions ")
         // debugger
         this.base_line_promotions = this.base_line_promotions.filter(val=>val.value!=e.value)
         // this.base_line_promotions.indexOf()

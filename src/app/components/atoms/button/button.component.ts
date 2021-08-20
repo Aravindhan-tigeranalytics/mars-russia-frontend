@@ -29,9 +29,9 @@ export class ButtonComponent {
  
         for (let property in changes) {
             if (property === 'disabled') {
-                console.log(changes[property].currentValue , "current value")
+                // console.log(changes[property].currentValue , "current value")
                 this.disabled = changes[property].currentValue
-                console.log(this.disabled , this.type , "disabled icon and type")
+                // console.log(this.disabled , this.type , "disabled icon and type")
                 // if(this.disabled){
                 //     this.type ="transparent"
 

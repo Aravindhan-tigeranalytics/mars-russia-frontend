@@ -31,6 +31,8 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     simulateResetEvent = new EventEmitter<{"action" : string,"promotion_map" : Array<any> , "promo_elasticity" : number}>();
     @Input()
     filter_model : FilterModel
+    @Input()
+    disable_save_download = true
     options1:Array<any> = [];
     promotions$: Observable<string[]> = null as any;
     product_week:ProductWeek[] = [];
@@ -327,6 +329,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
     }
 
     sendMessage(modalType: string): void {
+        this.isShowDivIf = true
         if(modalType == 'save-scenario-popup'){
             if(this.disable_button){
                 return
