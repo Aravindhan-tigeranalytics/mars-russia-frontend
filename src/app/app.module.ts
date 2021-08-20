@@ -9,6 +9,8 @@ import { ComponentModule } from '@components/components.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+import { NgImageSliderModule } from 'ng-image-slider';
+
 // Pages
 import { PagesModule } from '@pages/pages.module';
 import {CoreModule} from "./core/core.module"
@@ -50,7 +52,8 @@ import {
         PagesModule,CoreModule, 
         SharedModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-        NgxUiLoaderHttpModule.forRoot({ showForeground: true })
+        NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
+        NgImageSliderModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

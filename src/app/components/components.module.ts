@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { NgImageSliderModule } from 'ng-image-slider';
 // Atoms
 import { ButtonComponent } from '@atoms/button/button.component';
 import { LinkComponent } from '@atoms/link/link.component';
@@ -125,7 +125,7 @@ import { UserGuidePopupComponent } from '@organisms/user-guide-popup/user-guide-
 
 
 @NgModule({
-    imports: [RouterModule,SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule,DragDropModule],
+    imports: [RouterModule,SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule,DragDropModule,NgImageSliderModule],
     declarations: [
         ButtonComponent,
         LinkComponent,

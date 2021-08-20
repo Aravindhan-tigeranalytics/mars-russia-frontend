@@ -36,6 +36,7 @@
     "file-saver": "^2.0.5",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
+    "ng-image-slider": "^2.8.0",
     "ng2-charts": "^3.0.0-rc.4",
     "ngx-select-dropdown": "^2.1.0",
     "ngx-toastr": "^14.1.0",
