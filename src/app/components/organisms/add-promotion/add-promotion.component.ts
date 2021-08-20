@@ -6,7 +6,7 @@ import {CheckboxModel} from '@core/models'
 import { ModalService } from '@molecules/modal/modal.service';
 import * as Utils from "@core/utils"
 import * as $ from 'jquery';
-
+import { ToastrService } from 'ngx-toastr';
 // import { tickStep } from 'd3-array';
 @Component({
     selector: 'nwn-add-promotion',
@@ -14,7 +14,12 @@ import * as $ from 'jquery';
     styleUrls: ['./add-promotion.component.css'],
 })
 export class AddPromotionComponent implements OnInit {
-    constructor(private optimize : OptimizerService,public modalService: ModalService,public restApi: SimulatorService){
+    errMsg:any = {
+        mechanic: false,
+        discount: false,
+        co_investment: false
+    }
+    constructor(private toastr: ToastrService,private optimize : OptimizerService,public modalService: ModalService,public restApi: SimulatorService){
 
     }
     config:any = {
@@ -140,32 +145,57 @@ export class AddPromotionComponent implements OnInit {
 
     }
     applyPromotion(){
-        let val = this.input_promotions.map(e=>e.value)
-        console.log(val , "val genetratefd")
-        this.optimize.setPromotionObservable(val)
-        console.log(this.input_promotions , "input promotions ") 
-        var modal_id:any = this.modalService.opened_modal
-        if(modal_id.length > 0){
-            modal_id = modal_id[modal_id.length-1]
-            // $('#'+modal_id).hide(); 
-            this.modalService.close(modal_id)
-            this.restApi.setClearScearchTextObservable(modal_id)
+        if(this.input_promotions.length > 0){
+            let val = this.input_promotions.map(e=>e.value)
+            console.log(val , "val genetratefd")
+            this.optimize.setPromotionObservable(val)
+            console.log(this.input_promotions , "input promotions ") 
+            var modal_id:any = this.modalService.opened_modal
+            if(modal_id.length > 0){
+                modal_id = modal_id[modal_id.length-1]
+                // $('#'+modal_id).hide(); 
+                this.modalService.close(modal_id)
+                this.restApi.setClearScearchTextObservable(modal_id)
+            }
+        }
+        else{
+            this.toastr.error("Please select atleast one promotion")
         }
     }
 
     addPromotions(){
+        if(this.form.value.promo != ""){
+            if(Object.prototype.toString.call(this.form.value.promo).slice(8, -1).toLowerCase() == 'array'){
+                this.errMsg.mechanic = true
+                return
+            }
+        }
+        else if(this.form.value.promo == ""){
+            this.errMsg.mechanic = true
+            return
+        }
+
+        if(this.form.value.tpr == 0 || this.form.value.tpr == null){
+            this.errMsg.discount = true
+            return
+        }
+
+        // if(this.form.value.co_inv == 0 || this.form.value.co_inv == null){
+        //     this.errMsg.co_investment = true
+        //     return
+        // }
         if(this.promo_generated){
             if(!this.input_promotions.find(v=>v.value == this.promo_generated)){
                 this.input_promotions.push({"value" : this.promo_generated , "checked" : false})
-
-
             }
-           
         }
        
         this.valueCoInvestment = 0
         this.valueDiscountdepth = 0
         this.form.reset()
+        this.errMsg.mechanic = false
+        this.errMsg.discount = false
+        this.errMsg.co_investment = false
         
         // console.log(this.promo_generated , "promotion generated")
     }
@@ -186,8 +216,12 @@ export class AddPromotionComponent implements OnInit {
         // ignoreElements()
     }
     changePromotion(e:any){
+        this.errMsg.mechanic = false
         this.form.controls['promo'].setValue(e.value);
         console.log(e.value , "selected value");
         console.log(this.form.value , "fomr value")
+    }
+    sliderEvent(){
+        this.errMsg.discount = false
     }
 }

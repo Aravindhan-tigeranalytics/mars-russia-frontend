@@ -4,13 +4,18 @@ import { Options, LabelType } from '@angular-slider/ngx-slider';
 import * as Utils from "@core/utils"
 import { CheckboxModel } from '@core/models';
 import * as $ from 'jquery';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'nwn-promotion-details',
     templateUrl: './promotion-details.component.html',
     styleUrls: ['./promotion-details.component.css'],
 })
 export class PromotionDetailsComponent implements OnInit {
+    errMsg:any = {
+        mechanic: false,
+        discount: false,
+        co_investment: false
+    }
     input_promotions:Array<CheckboxModel> = []
     @Output()
     promotionAddEvent = new EventEmitter()
@@ -74,7 +79,9 @@ export class PromotionDetailsComponent implements OnInit {
     //        ];
     optionsNormal:any[] = []
 
-    constructor() {}
+
+    
+    constructor(private toastr: ToastrService,) {}
 
     ngOnInit(): void {
         this.config = {
@@ -126,21 +133,36 @@ export class PromotionDetailsComponent implements OnInit {
         console.log($event , "close event")
     }
     apply(){
-        this.promotionAddEvent.emit({
-            "id" : "promotion-details",
-            "value" : this.selected_promotions
-        })
-
-
+        if(this.selected_promotions.length > 0){
+            this.promotionAddEvent.emit({
+                "id" : "promotion-details",
+                "value" : this.selected_promotions
+            })
+        }
+        else {
+            this.toastr.error("Please select atleast one promotion")
+        }
     }
     addPromotions(){
+        if(this.form.value.promo != ""){
+            if(Object.prototype.toString.call(this.form.value.promo).slice(8, -1).toLowerCase() == 'array'){
+                this.errMsg.mechanic = true
+                return
+            }
+        }
+        else if(this.form.value.promo == ""){
+            this.errMsg.mechanic = true
+            return
+        }
+
+        if(this.form.value.tpr == 0 || this.form.value.tpr == null){
+            this.errMsg.discount = true
+            return
+        }
         if(this.promo_generated){
             if(!this.input_promotions.find(v=>v.value == this.promo_generated)){
                 this.input_promotions.push({"value" : this.promo_generated , "checked" : false})
-
-
             }
-           
         }
        
         this.valueCoInvestment = 0
@@ -190,8 +212,12 @@ export class PromotionDetailsComponent implements OnInit {
                }
            }
     changePromotion(e:any){
-            this.form.controls['promo'].setValue(e.value);
-            console.log(e.value , "selected value");
-            console.log(this.form.value , "fomr value")
-        }
+        this.errMsg.mechanic = false
+        this.form.controls['promo'].setValue(e.value);
+        console.log(e.value , "selected value");
+        console.log(this.form.value , "fomr value")
+    }
+    sliderEvent(){
+        this.errMsg.discount = false
+    }
 }
