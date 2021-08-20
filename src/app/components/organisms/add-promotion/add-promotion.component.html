@@ -4,9 +4,20 @@
     </div>
     <form [formGroup]="form" >
     <div class="h-auto bg-white">
-        <div class="px-6 py-3 space-y-2">
+        <div class="px-6 py-3 space-y-2 promodetailselect">
             <label for="promoname">Promo Mechanic</label>
-            <div class="relative">
+            <ngx-select-dropdown
+            (open)="hideNoResultsFound()"
+            (change)="hideNoResultsFound();changePromotion($event)"
+            id="promo-details"
+            formControlName="promo"
+            tabindex="0"
+            [multiple]="false"
+            [config]="config"
+            [options]="promo_name"
+            >
+        </ngx-select-dropdown>
+            <!-- <div class="relative">
                 <select (change)="changePromotion($event)" formControlName="promo"
                     name="promoname"
                     class="
@@ -25,10 +36,10 @@
                 <option value="">Choose Promotion</option>
                     <option value="{{promo}}" *ngFor="let promo of promo_name">{{promo}}</option>
                     <!-- <option value="">Promo name</option>
-                    <option value="">Promo name</option> -->
+                    <option value="">Promo name</option> 
                 </select>
                 <nwn-svg-icon type="stroke" nwnSvgIcon="chevron-down" class="absolute top-1 right-1"></nwn-svg-icon>
-            </div>
+            </div> -->
         </div>
         <div class="px-6 py-2">
             <label for="promoname">Discount depth</label>

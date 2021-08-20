@@ -29,13 +29,13 @@
                         <h2 class="user-name text-marsgray-700">{{userdetail.user.name | titlecase }}</h2>
                         <span class="text-title-small mail-text">{{userdetail.user.email}}</span>
                     </div>
-                    <div class="border-b">
+                    <div>
                         <nwn-button type="sideBorder" size="sideBorderSize" class="w-full" (click)="openModal('load-scenario-promosimulator')">
                             <nwn-svg-icon class="mr-0.5" type="stroke" nwnSvgIcon="plus" size="lg"></nwn-svg-icon>
                             My scenarios
                         </nwn-button>
                     </div>
-                    <div class="">
+                    <!-- <div class="border-b">
                         <nwn-button type="sideBorder" id="compare-scenario-br" size="sideBorderSize" class="w-full" (click)="openModal('compare-promo-scenario')">
                             <nwn-svg-icon
                                 class="mr-0.5"
@@ -45,7 +45,7 @@
                             ></nwn-svg-icon>
                             Compare scenarios
                         </nwn-button>
-                    </div>
+                    </div> -->
 
                     <div class="text-center">
                         <span class="sign-out" (click)="signout()">Sign out</span>

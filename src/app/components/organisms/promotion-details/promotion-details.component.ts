@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 import * as Utils from "@core/utils"
 import { CheckboxModel } from '@core/models';
-
+import * as $ from 'jquery';
 
 @Component({
     selector: 'nwn-promotion-details',
@@ -66,9 +66,9 @@ export class PromotionDetailsComponent implements OnInit {
     };
 
     singleSelect: any = [];
-    config = {
+    config:any = {
         displayKey: 'name', // if objects array passed which key to be displayed defaults to description
-        search: true,
+        search: true
     };
     // optionsNormal = ["Motivation","N+1","Traffic"
     //        ];
@@ -77,6 +77,10 @@ export class PromotionDetailsComponent implements OnInit {
     constructor() {}
 
     ngOnInit(): void {
+        this.config = {
+            displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+            search: true,
+        };
         console.log(this.base_promotions , "base promotions")
         this.form.valueChanges.subscribe(data=>{
             // console.log(data , "form changes subscription")
@@ -98,6 +102,7 @@ export class PromotionDetailsComponent implements OnInit {
         })
     }
     valueChangePromo($event){
+        debugger
         if($event['checked']){
             this.selected_promotions.push($event['value'])
         }
@@ -144,6 +149,17 @@ export class PromotionDetailsComponent implements OnInit {
         
         // console.log(this.promo_generated , "promotion generated")
     }
+    hideNoResultsFound(){
+        $( "#promo-details1" ).click(function() {
+           let temp:any =  $(".available-items").text();
+           if(temp == "No results found!"){
+            $(".available-items").hide()
+           }
+           else {
+            $(".available-items").show()
+           }
+        })
+    }
     ngOnChanges(changes: SimpleChanges) {
         
                for (let property in changes) {
@@ -173,4 +189,9 @@ export class PromotionDetailsComponent implements OnInit {
                    
                }
            }
+    changePromotion(e:any){
+            this.form.controls['promo'].setValue(e.value);
+            console.log(e.value , "selected value");
+            console.log(this.form.value , "fomr value")
+        }
 }
