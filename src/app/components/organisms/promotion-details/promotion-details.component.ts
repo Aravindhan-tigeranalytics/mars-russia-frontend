@@ -102,7 +102,7 @@ export class PromotionDetailsComponent implements OnInit {
         })
     }
     valueChangePromo($event){
-        debugger
+        // debugger
         if($event['checked']){
             this.selected_promotions.push($event['value'])
         }

@@ -19,6 +19,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
     public aggregatedGraphWidth: any;
+    message1 : string= ''
+    message2 : string = ''
 
     plChartData:any = [];
     baselineLiftChartData:any = []
@@ -199,14 +201,28 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['lsv']-data['base']['total']['lsv'],true,false) + ")",
                 "color": this.colorForDifference(data['base']['total']['lsv'],data['simulated']['total']['lsv']),
             }
+            let teper = Utils.percentageDifference(data['simulated']['total']['te'],data['base']['total']['te'])
+            this.message1 += "Trade expense is "
 
             this.tradeExpence = {
                 "converted_base": Utils.formatNumber(data['base']['total']['te'],true,false),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['te'],true,false),
                 "arrow":  data['simulated']['total']['te'] > data['base']['total']['te'] ?  'carret-up' : 'carret-down' ,
-                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['te'],data['base']['total']['te']) + "%)",
+                "percent": "(" + teper + "%)",
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],true,false) + ")",
                 "color": this.colorForDifference( data['simulated']['total']['te'],data['base']['total']['te']),
+            }
+            if(Number(teper)<0){
+                this.message1 += "decreased by " +teper+ "%"
+
+            }
+            else if(Number(teper) > 0){
+                this.message1 += "increased by " +teper+ "%"
+
+            }
+            else{
+                this.message1 += "not changes"
+
             }
 
             this.nsv = {
@@ -226,6 +242,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['cogs']-data['base']['total']['cogs'],true,false) + ")",
                 "color":  this.colorForDifference(data['base']['total']['cogs'] , data['simulated']['total']['cogs']),
             }
+            let macper = Utils.percentageDifference(data['simulated']['total']['mac'],data['base']['total']['mac'])
+            this.message2 += "MAC is "
 
             this.mac = {
                 "converted_base": Utils.formatNumber(data['base']['total']['mac'],true,false),
@@ -234,6 +252,18 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "percent": "(" + Utils.percentageDifference(data['simulated']['total']['mac'],data['base']['total']['mac']) + "%)",
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['mac']-data['base']['total']['mac'],true,false) + ")",
                 "color":  this.colorForDifference(data['base']['total']['mac'] , data['simulated']['total']['mac'] ),
+            }
+            if(Number(macper)<0){
+                this.message2 += "decreased by " +macper+ "%"
+
+            }
+            else if(Number(macper) > 0){
+                this.message2 += "increased by " +macper+ "%"
+
+            }
+            else{
+                this.message2 += "not changes"
+
             }
 
             this.rsvWithoutVat = {

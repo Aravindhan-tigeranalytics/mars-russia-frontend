@@ -2,8 +2,8 @@
     <div class="text-left py-5">
         <h1 class="text-heading font-extrabold inline-block">Summary</h1>
         <ul class="bullted-list">
-            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
-            <li>Maxime mollitia, molestiae quas vel sint commodi repudiandae</li>
+            <li [ngClass]="{ red: tradeExpence.color == 'red', green: tradeExpence.color == 'green' }">{{message1}}</li>
+            <li [ngClass]="{ red: mac.color == 'red', green: mac.color == 'green' }">{{message2}}</li>
         </ul>
     </div>
     <div class="flex flex-row flex-wrap border-b border-marsgray-300">
