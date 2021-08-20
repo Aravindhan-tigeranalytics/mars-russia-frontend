@@ -17,18 +17,23 @@
                 [options]="optionsNormal"
                 >
             </ngx-select-dropdown>
+            <span *ngIf="errMsg.mechanic" class="err-msg">Please select the promo mechanic</span>
         </div>
         <div class="px-6 py-2">
             <label for="promoname">Discount depth<span class="mandatory-fields">*</span></label>
             <div class="custom-slider pt-4 pb-6">
-                <ngx-slider [(value)]="valueDiscountdepth" [options]="discountdepth"></ngx-slider>
+                <ngx-slider [(value)]="valueDiscountdepth" (mouseup)="sliderEvent()" [options]="discountdepth"></ngx-slider>
             </div>
+            <span *ngIf="errMsg.discount" class="err-msg">Please select the discount depth</span>
         </div>
         <div class="px-6 py-2">
-            <label for="promoname">Co-investment depth<span class="mandatory-fields">*</span></label>
+            <label for="promoname">Co-investment depth
+                <!-- <span class="mandatory-fields">*</span> -->
+            </label>
             <div class="custom-slider pt-4 pb-6">
                 <ngx-slider [(value)]="valueCoInvestment" [options]="coInvestment"></ngx-slider>
             </div>
+            <!-- <span *ngIf="errMsg.co_investment" class="err-msg">Please select the co-investment depth</span> -->
         </div>
         <div class="px-6 py-2">
             <nwn-text-input nwnTextInput="text" [placeholder]="promo_generated" [error]="true"
