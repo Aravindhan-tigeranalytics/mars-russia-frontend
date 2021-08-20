@@ -373,3 +373,8 @@ nwn-scenario-load-card .load-scenario-card {
 #compare-scenario-br button{
   background-color: unset !important;
 }
+
+.mandatory-fields {
+  color: red;
+  margin-left: 3px;
+}
