@@ -399,7 +399,20 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.modalService.close(id);
     }
     close($event){
+        console.log(this.selected_retailer , "selected retailer")
+        console.log(this.selected_product , "selected product")
+
         if($event=="filter-product-groups"){
+            if(!this.selected_retailer || this.selected_retailer == "Retailers"){
+                this.toastr.error("Set retailer to simulate")
+                this.closeModal($event)
+                return
+            }
+            if(!this.selected_product  || this.selected_product == "Product groups"){
+                this.toastr.error("Set product to simulate")
+                this.closeModal($event)
+                return
+            }
             let p = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
             if(p){
                 this.optimize.fetch_week_value(p.id)

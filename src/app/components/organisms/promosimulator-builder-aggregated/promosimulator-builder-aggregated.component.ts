@@ -201,6 +201,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['lsv']-data['base']['total']['lsv'],true,false) + ")",
                 "color": this.colorForDifference(data['base']['total']['lsv'],data['simulated']['total']['lsv']),
             }
+            this.message1 = ''
             let teper = Utils.percentageDifference(data['simulated']['total']['te'],data['base']['total']['te'])
             this.message1 += "Trade expense is "
 
@@ -221,7 +222,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
 
             }
             else{
-                this.message1 += "not changes"
+                this.message1 += "not changed"
 
             }
 
@@ -242,6 +243,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['cogs']-data['base']['total']['cogs'],true,false) + ")",
                 "color":  this.colorForDifference(data['base']['total']['cogs'] , data['simulated']['total']['cogs']),
             }
+            this.message2 = ""
             let macper = Utils.percentageDifference(data['simulated']['total']['mac'],data['base']['total']['mac'])
             this.message2 += "MAC is "
 
@@ -262,7 +264,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
 
             }
             else{
-                this.message2 += "not changes"
+                this.message2 += "not changed"
 
             }
 

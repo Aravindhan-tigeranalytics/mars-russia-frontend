@@ -110,6 +110,7 @@ export class AddPromotionComponent implements OnInit {
     // console.log(name , "name of label")
     this.base_line_promotions = this.optimize.get_base_line_promotions().map(e=>({"value" : e,"checked" : false}))
     this.promo_name = this.optimize.get_base_line_promotions().map(e=>Utils.decodePromotion(e)['promo_mechanics'])
+    this.promo_name = [...new Set(this.promo_name.map(item => item))]
     console.log(this.base_line_promotions , "base line promotions")
     })
     console.log(this.promo_name,"this.promo_name")

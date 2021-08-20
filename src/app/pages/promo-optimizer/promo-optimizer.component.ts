@@ -257,19 +257,20 @@ export class PromoOptimizerComponent implements OnInit {
     optimizeAndReset($event){
         console.log($event , "optimize and reset event")
         
-        if(!$event['data']['objective_function']){
-            this.toastr.error('Cannot optimize without objective function ');
-            return
-        }
-        if($event['data']['mars_tpr'].length == 0){
-            this.toastr.error('Please select atleast one promotion');
-            return
-
-        }
-       
+        
         
 
         if($event.type == 'optimize'){
+            if(!$event['data']['objective_function']){
+                this.toastr.error('Set Objective function to optimize ');
+                return
+            }
+            if($event['data']['mars_tpr'].length == 0){
+                this.toastr.error('Please select atleast one promotion');
+                return
+    
+            }
+           
             let res = {...this.get_optimizer_form(),...$event['data']}
             this.optimize.optimizeResult(res).subscribe(data=>{
                 this.toastr.success('Optimized Successfully','Success')
@@ -432,6 +433,16 @@ export class PromoOptimizerComponent implements OnInit {
     close($event){
         
         if($event=="filter-product-groups"){
+            if(!this.selected_retailer || this.selected_retailer == "Retailers"){
+                this.toastr.error("Set retailer to simulate")
+                this.closeModal($event)
+                return
+            }
+            if(!this.selected_product  || this.selected_product == "Product groups"){
+                this.toastr.error("Set product to simulate")
+                this.closeModal($event)
+                return
+            }
             let p = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
             // debugger
             if(p){
