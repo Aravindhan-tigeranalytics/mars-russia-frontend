@@ -45,14 +45,14 @@ export class MinimumGapWavesComponent {
     duration_min = (this.basepromo - 3) 
     duration_max = this.basepromo + 3
     value = "0"
-
+    minGapWaves:any = ''
 
     sliderChangeEvent($event){
-        this.duration_max = $event['max_val']
-        this.duration_min = $event['min_val']
+        console.log(this.minGapWaves)
+        this.duration_max = this.minGapWaves
+        this.duration_min = this.minGapWaves
         if(this.duration_min > 0 && this.duration_min!=this.duration_max){
             this.value = this.duration_min + " - " + this.duration_max
-
         }
         else{
             this.value =  String(this.duration_max)
@@ -63,6 +63,7 @@ export class MinimumGapWavesComponent {
         // min_val: 0, max_val: 12
         console.log($event , "slider change event")
     }
+
     apply(){
         this.paramGapEvent.emit({
             "max_val" : this.duration_max,
