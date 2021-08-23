@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import{AuthService } from "@core/services"
-import { Router } from '@angular/router';
+import { Router,NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '@core/models';
 
@@ -11,13 +11,36 @@ import { User } from '@core/models';
 })
 export class SideBarComponent implements OnInit {
     user$ : Observable<User>
+    login_route =['/login']
+    hide_side = false
+    is_logged_in = false
     constructor(private authService : AuthService,private router: Router){
+        router.events.subscribe((val) => {
+            if (val instanceof NavigationEnd) {
+                // console.log(val, 'VAL OF ROUTER ');
+                // console.log(val.url, 'VAL OF ROUTER ');
+                if (this.login_route.includes(val.url)) {
+                  // this.hideNav()
+                  this.hide_side = true;
+                } else {
+                  this.hide_side = false;
+                }
+                 
+              }
+        });
 
     }
     ngOnInit(){
         this.user$ = this.authService.getUser()
+        this.user$.subscribe(data=>{
+            if(data){
+               this.is_logged_in = true 
+            }
+        })
     }
-
+    redirectPage(){
+        window.open("https://mars-tool.azurewebsites.net/", '_blank')
+    }
 
     logout(){
 this.authService.logout().subscribe(data=>{

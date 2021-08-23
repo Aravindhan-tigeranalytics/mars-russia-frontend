@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {OptimizerService} from "@core/services"
 import {OptimizerModel , ProductWeek , OptimizerConfigModel, FilterModel, ListPromotion} from "@core/models"
 import * as Utils from "@core/utils"
+import { tickStep } from 'd3';
 // import { Component, Output, EventEmitter, ViewChild, OnInit,Input } from '@angular/core';
 // import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 // import {OptimizerService} from '../../../core/services/optimizer.service'
@@ -55,6 +56,14 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         'mac' : 0,
         'rp' : 0
     }
+    week_validation = {
+        "min_promo_gap" : this.param_gap_min,
+        "max_promo_gap" : this.param_gap_max,
+        "promo_max" : this.max_week,
+        "promo_min" : this.min_week,
+        "max_consecutive_promo" : this.duration_max,
+        "min_consecutive_promo" : this.duration_min
+    }
 
     optimizerMetrics:any = ''
     constructor(public optimize:OptimizerService){}
@@ -68,6 +77,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
                 this.disable_button = false
                 this.isExpand = false
                 this.optimizer_data = data
+                this.set_week_validation_data()
                 this.populatePromotion(this.optimizer_data.weekly)
                 this.populateConfig(this.optimizer_data.data)
                 if("meta" in data){
@@ -82,6 +92,17 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
             
         })
         
+    }
+    set_week_validation_data(){
+
+        this.week_validation = {
+            "max_consecutive_promo" : this.optimizer_data?.data.param_max_consecutive_promo,
+            "min_consecutive_promo" : this.optimizer_data?.data.param_max_consecutive_promo, 
+            "promo_max" : this.optimizer_data?.data.param_no_of_promo,
+            "promo_min" : this.optimizer_data?.data.param_no_of_promo,
+            "max_promo_gap" : this.optimizer_data?.data.param_promo_gap,
+            "min_promo_gap" : this.optimizer_data?.data.param_promo_gap,
+        }
     }
     reset(){
         this.disable_button = true
@@ -122,27 +143,17 @@ this.ignored_week = 0
 
     }
     download(){
-        // if(this.disable_button){
-        //     return
-        // }
+
         this.downloadEvent.emit()
 
     }
   
-
-    // constructor(private optimize : OptimizerService){
-
-    // }
 
     openInfoEvent($event){
         this.sendMessage($event)
     }
     cumpulsoryWeekEvent($event){
         this.cumpulsory_week_val = $event["value"]
-        // {
-        //     "id" : "compulsory-weeks-popup",
-        //     "value" : this.weekly_map
-        // }
         this.cumpulsory_week = $event["value"].length
         this.modalClose.emit($event["id"])
     }
@@ -161,12 +172,20 @@ this.ignored_week = 0
         this.modalClose.emit("duration-of-waves")
         this.duration_min = $event["min_val"]
         this.duration_max = $event["max_val"]
+        this.week_validation = {...this.week_validation , ...{
+            "max_consecutive_promo" : this.duration_max ,
+            "min_consecutive_promo" : this.duration_min
+        }}
         
     }
     paramGapEvent($event){
         this.modalClose.emit("minimum-gap-waves")
         this.param_gap_min = $event["min_val"]
         this.param_gap_max = $event["max_val"]
+        this.week_validation = {...this.week_validation , ...{
+            "min_promo_gap" : this.param_gap_min,
+            "max_promo_gap" : this.param_gap_max
+        }}
         console.log($event , "slider change event param gap")
 
     }
@@ -174,6 +193,10 @@ this.ignored_week = 0
         this.modalClose.emit("number-promo-waves")
         this.min_week = $event["min_val"]
         this.max_week = $event["max_val"]
+        this.week_validation = {...this.week_validation , ...{
+            "promo_max" : this.max_week,
+            "promo_min" : this.min_week
+        }}
 
     }
     promoEvent($event){
