@@ -11,6 +11,8 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class OptimizerService {
+    public isAccAndProductFiltered = new BehaviorSubject<boolean>(false)
+    public ClearScearchText = new BehaviorSubject<any>('')
   private compareScenarioObservable = new BehaviorSubject<LoadedScenarioModel[]>([])
   private optimizerDataObservable = new BehaviorSubject<OptimizerModel>(null as any)
   private uploadedScenarioObservable = new BehaviorSubject<UploadModel>(null as any)
@@ -67,6 +69,22 @@ export class OptimizerService {
   public getoptimizerDataObservable():Observable<OptimizerModel>{
     return this.optimizerDataObservable.asObservable()
   }
+
+    // Set and Get Account and Product Filtered Flag
+    public setAccAndPPGFilteredFlagObservable(value:any){
+        this.isAccAndProductFiltered.next(value)
+      }
+      public getAccAndPPGFilteredFlagObservable(){
+        return this.isAccAndProductFiltered.asObservable()
+      }
+    
+    // Set and Get clear search result
+    public setClearScearchTextObservable(value:any){
+    this.ClearScearchText.next(value)
+    }
+    public getClearScearchTextObservable(){
+    return this.ClearScearchText.asObservable()
+    }
 
     // Error handling 
     handleError(error: any) {
