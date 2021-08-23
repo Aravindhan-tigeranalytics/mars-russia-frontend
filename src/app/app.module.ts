@@ -9,6 +9,7 @@ import { ComponentModule } from '@components/components.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+
 // Pages
 import { PagesModule } from '@pages/pages.module';
 import {CoreModule} from "./core/core.module"

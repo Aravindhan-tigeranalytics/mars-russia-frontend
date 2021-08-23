@@ -82,3 +82,9 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+.my-scenario-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+}
