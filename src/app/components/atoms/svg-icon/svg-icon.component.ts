@@ -51,5 +51,6 @@ export class SvgIconComponent {
         | 'arrow-down'
         | 'filter'
         | 'carret-up'
+        | 'my-scenarios'
         | 'carret-down' = 'logout';
 }
