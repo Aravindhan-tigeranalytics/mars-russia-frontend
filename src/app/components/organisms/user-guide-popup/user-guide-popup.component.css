@@ -51,6 +51,21 @@
     background-size: 100% 400px;
     background-repeat: no-repeat;
 }
+.bg_img_4_6 {
+  height: 460px;
+  margin-left: 7vw;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.bg_img_7 {
+  height: 400px;
+  width: 100%;
+  margin-left: 8vw;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 
 .bg_img_contain {
   height: 400px;
