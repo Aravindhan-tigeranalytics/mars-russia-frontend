@@ -21,8 +21,12 @@
                 </nwn-metric-item-popup>
             </div>
         </div>
-        <div class="">
-            <nwn-slider (sliderChangeEvent) = "sliderChangeEvent($event)" [floor] = "floor" [ceil] = "ceil" [steps] = "steps" [options] = "options"  [minValue] = "duration_min" [maxValue] = "duration_max"></nwn-slider>
+        <div class="px-6 py-2">
+            <div class="custom-slider pt-4 pb-6">
+                <ngx-slider [(value)]="minGapWaves" (mouseup)="sliderChangeEvent($event)" [options] = "options"></ngx-slider>
+    
+                <!-- <nwn-slider (sliderChangeEvent) = "sliderChangeEvent($event)" [floor] = "floor" [ceil] = "ceil" [steps] = "steps" [options] = "options"  [minValue] = "duration_min" [maxValue] = "duration_max"></nwn-slider> -->
+            </div>
         </div>
     </div>
     <nwn-search-footer (click) = "apply()" [showApply]="true"></nwn-search-footer>

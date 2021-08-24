@@ -46,7 +46,6 @@ export class PromoOptimizerComponent implements OnInit {
     ngOnInit(): void {
         this.scenarioTitle = "Untitled"
         this.restApi.setIsSaveScenarioLoadedObservable(null)
-
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)

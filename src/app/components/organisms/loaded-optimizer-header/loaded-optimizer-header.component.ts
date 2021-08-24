@@ -376,7 +376,9 @@ this.checkboxMetrices.find(d=>{
         // this.isExpand = true
         if(modalType == 'Optimize'){
             this.isExpand = true
-
+        }
+        if(modalType == 'user-guide-popup'){
+            this.optimize.setResetUserGuideFlagObservable(true)
         }
         this.modalEvent.emit(modalType);
     }

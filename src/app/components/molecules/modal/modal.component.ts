@@ -3,6 +3,7 @@ import { Component, ViewEncapsulation, ElementRef, Input, OnInit, OnDestroy } fr
 import { ModalService } from './modal.service';
 import * as $ from 'jquery';
 import { SimulatorService } from '@core/services/simulator.service';
+import { OptimizerService } from '@core/services';
 
 @Component({
     selector: 'nwn-modal',
@@ -15,7 +16,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     id!: string;
     private element: any;
 
-    constructor(private modalService: ModalService, el: ElementRef,public restApi: SimulatorService) {
+    constructor(private modalService: ModalService, el: ElementRef,public restApi: SimulatorService,public optimizerService: OptimizerService) {
         this.id = '';
         this.element = el.nativeElement;
     }
@@ -38,6 +39,7 @@ export class ModalComponent implements OnInit, OnDestroy {
                     self.modalService.close(modal_id) 
                     self.modalService.remove_last_modal()
                     self.restApi.setClearScearchTextObservable(self.id)
+                    self.optimizerService.setClearScearchTextObservable(self.id)
                 }
             }
         });
@@ -51,6 +53,7 @@ export class ModalComponent implements OnInit, OnDestroy {
             // console.log("modal component click close target",el.target.className)
             if (el.target.className === 'nwn-modal-bg') {
                 this.restApi.setClearScearchTextObservable(this.id)
+                this.optimizerService.setClearScearchTextObservable(this.id)
                 this.close();
                 // document.body.classList.add('nwn-modal-open');
             }
