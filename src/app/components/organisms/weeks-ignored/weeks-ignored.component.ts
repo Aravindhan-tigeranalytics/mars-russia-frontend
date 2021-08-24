@@ -28,6 +28,7 @@ export class WeeksIgnoredComponent {
        
     }
     apply(){
+        if(this.weekly_map.length > 0){
         let ignored_week_list = this.weekly_map.map(d=>d.week)
         let compulsory_week_list = this.cumpulsory_week_val.map(d=>d.week).sort(function(a, b){return a - b})
         // let min_compulsory = 
@@ -48,7 +49,7 @@ export class WeeksIgnoredComponent {
         this.error =null as any
        
         // console.log(not_all , "nnot allowed arrayss")
-        let sortedweek =[...ignored_week_list,...compulsory_week_list].sort(function(a, b){return a - b})
+        let sortedweek =[...ignored_week_list].sort(function(a, b){return a - b})
         
         console.log(sortedweek , "sorted weekvalue")
         // console.log(min_gap , "user input mingap")
@@ -63,6 +64,7 @@ export class WeeksIgnoredComponent {
         }
         this.error = null as any
         // console.log("valid data")
+    }
 
         this.ignoredWeekEvent.emit({
             "id" : "weeks-ignored",
