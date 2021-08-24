@@ -151,11 +151,15 @@
                     cdkDrag
                     [cdkDragDisabled]="checkboxMetric.disabled"
                 >
+                 <!-- (click) = "metricClick($event , i)" -->
+                        
                     <nwn-metric-item
-                        (click)="sendMessage(checkboxMetric.id)"
+                    (click)="metricClick($event , i)"
                         nwnMetricItem="checkboxMetric"
                         [disabled]="checkboxMetric.disabled"
                         [checkboxValue]="!checkboxMetric.disabled"
+                        [value] = "checkboxMetric.checkboxLabel"
+                        [checked] = "checkboxMetric.checked"
                         (toggle)="onRoleChangeCheckbox($event, i)"
                     >
                         <p checkHeadValue>{{ checkboxMetric.checkHeadValue }}</p>
@@ -337,11 +341,24 @@
 
 <!-- Compulsory Weeks -->
 <nwn-modal id="compulsory-weeks-popup" class="hidden">
-    <nwn-compulsory-weeks-popup [ignored_week_val] ="ignored_week_val" (cumpulsoryWeekEvent) = "cumpulsoryWeekEvent($event)" *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-compulsory-weeks-popup>
+    <nwn-compulsory-weeks-popup *ngIf="quarter_year.length > 0" 
+        [ignored_week_val] ="ignored_week_val"
+      [quarter_year] = "quarter_year" 
+      [product_week]="product_week"
+      [week_validation] = "week_validation"
+      (cumpulsoryWeekEvent) = "cumpulsoryWeekEvent($event)" 
+      ></nwn-compulsory-weeks-popup>
 </nwn-modal>
 <!-- Weeks Ignored-->
 <nwn-modal id="weeks-ignored" class="hidden">
-    <nwn-weeks-ignored [cumpulsory_week_val] ="cumpulsory_week_val" (ignoredWeekEvent) = "ignoredWeekEvent($event)" *ngIf="quarter_year.length > 0" [quarter_year] = "quarter_year" [product_week]="product_week"></nwn-weeks-ignored>
+    <nwn-weeks-ignored 
+    *ngIf="quarter_year.length > 0" 
+    [cumpulsory_week_val] ="cumpulsory_week_val" 
+    [quarter_year] = "quarter_year" 
+    [product_week]="product_week"
+    [week_validation] = "week_validation"
+    (ignoredWeekEvent) = "ignoredWeekEvent($event)" 
+    ></nwn-weeks-ignored>
 </nwn-modal>
 
 

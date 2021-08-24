@@ -19,6 +19,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
     public aggregatedGraphWidth: any;
+    message1 : string= ''
+    message2 : string = ''
 
     plChartData:any = [];
     baselineLiftChartData:any = []
@@ -26,12 +28,24 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     baseline:any
     incrementalLift:any 
     lsv:any
-    tradeExpence:any
     nsv:any
-    cogs:any
     mac:any
+    mac_nsv:any
+    tradeExpence:any
+    te_lsv:any
+    te_units:any
+    roi:any
+
+    asp:any
+    promo_asp:any
+
     rsvWithoutVat:any
     customerMargin:any
+    customermargin_rsv:any
+   
+    cogs:any
+   
+   
 
     weeklyData:any = []
 
@@ -81,7 +95,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
         // this.loadStimulatedData()
         this.optimize.getSimulatedDataObservable().subscribe((data: any) => {
             if(data){
-                console.log(data , "holiday information with data")
+                // console.log(data , "holiday information with data")
                 this.convertToGraphNTableData(data)
 
             }
@@ -136,7 +150,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
         if(holiday){
             // debugger
             data?.forEach(element => {
-                console.log(element , "retttttttttttttttttt element")
+                // console.log(element , "retttttttttttttttttt element")
                 // coefficient_old: "flag_russian_day", coefficient_new: "Holiday_Flag1"
                 if(element['coefficient_new'].split("_").join("").toLowerCase() == holiday.split("_").join("").toLowerCase()){
                     // console.log("retttttttttttttttttttttttttttttttttt",element['coefficient_old'])
@@ -152,6 +166,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     }
 
     convertToGraphNTableData(data: any){
+        console.log(data , "converttograpthtabledata")
         this.weeklyData = []
         if(data){
             this.plChartData = [
@@ -173,12 +188,12 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
             ];
 
             this.baseline = {
-                "converted_base": Utils.formatNumber(data['base']['total']['units'],false,false),
-                "converted_simulated": Utils.formatNumber(data['simulated']['total']['units'],false,false),
-                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['units'],data['base']['total']['units']) + "%)",
-                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['units']-data['base']['total']['units'],false,false) + ")",
-                "arrow": data['simulated']['total']['units'] >  data['base']['total']['units']?  'carret-up' : 'carret-down' ,
-                "color": this.colorForDifference(data['base']['total']['units'] , data['simulated']['total']['units']) 
+                "converted_base": Utils.formatNumber(data['base']['total']['base_units'],false,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['base_units'],false,false),
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['base_units'],data['base']['total']['base_units']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['base_units']-data['base']['total']['base_units'],false,false) + ")",
+                "arrow": data['simulated']['total']['base_units'] >  data['base']['total']['base_units']?  'carret-up' : 'carret-down' ,
+                "color": this.colorForDifference(data['base']['total']['base_units'] , data['simulated']['total']['base_units']) 
             }
 
             
@@ -199,33 +214,17 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['lsv']-data['base']['total']['lsv'],true,false) + ")",
                 "color": this.colorForDifference(data['base']['total']['lsv'],data['simulated']['total']['lsv']),
             }
-
-            this.tradeExpence = {
-                "converted_base": Utils.formatNumber(data['base']['total']['te'],true,false),
-                "converted_simulated": Utils.formatNumber(data['simulated']['total']['te'],true,false),
-                "arrow":  data['simulated']['total']['te'] > data['base']['total']['te'] ?  'carret-up' : 'carret-down' ,
-                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['te'],data['base']['total']['te']) + "%)",
-                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],true,false) + ")",
-                "color": this.colorForDifference( data['simulated']['total']['te'],data['base']['total']['te']),
-            }
-
             this.nsv = {
                 "converted_base": Utils.formatNumber(data['base']['total']['nsv'],true,false),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['nsv'],true,false),
-                "arrow":  data['simulated']['total']['nsv'] > data['base']['total']['nsv'] ? 'carret-up' : 'carret-down' ,
+                "arrow":  data['simulated']['total']['nsv'] > data['base']['total']['nsv'] ?  'carret-up' : 'carret-down' ,
                 "percent": "(" + Utils.percentageDifference(data['simulated']['total']['nsv'],data['base']['total']['nsv']) + "%)",
-                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['nsv'] - data['base']['total']['nsv'],true,false) + ")",
-                "color":  this.colorForDifference(data['base']['total']['nsv'] , data['simulated']['total']['nsv']),
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['nsv']-data['base']['total']['nsv'],true,false) + ")",
+                "color": this.colorForDifference(data['base']['total']['nsv'],data['simulated']['total']['nsv']),
             }
-
-            this.cogs = {
-                "converted_base": Utils.formatNumber(data['base']['total']['cogs'],true,false),
-                "converted_simulated": Utils.formatNumber(data['simulated']['total']['cogs'],true,false),
-                "arrow": data['simulated']['total']['cogs'] > data['base']['total']['cogs'] ?  'carret-up' : 'carret-down' ,
-                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['cogs'],data['base']['total']['cogs']) + "%)",
-                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['cogs']-data['base']['total']['cogs'],true,false) + ")",
-                "color":  this.colorForDifference(data['base']['total']['cogs'] , data['simulated']['total']['cogs']),
-            }
+            this.message2 = ""
+            let macper = Utils.percentageDifference(data['simulated']['total']['mac'],data['base']['total']['mac'])
+            this.message2 += "MAC is "
 
             this.mac = {
                 "converted_base": Utils.formatNumber(data['base']['total']['mac'],true,false),
@@ -235,7 +234,103 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['mac']-data['base']['total']['mac'],true,false) + ")",
                 "color":  this.colorForDifference(data['base']['total']['mac'] , data['simulated']['total']['mac'] ),
             }
+            if(Number(macper)<0){
+                this.message2 += "decreased by " +macper+ "%"
 
+            }
+            else if(Number(macper) > 0){
+                this.message2 += "increased by " +macper+ "%"
+
+            }
+            else{
+                this.message2 += "not changed"
+
+            }
+            this.mac_nsv = {
+                "converted_base": Utils.formatNumber(data['base']['total']['mac_percent'],true,true),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['mac_percent'],true,true),
+                "arrow":  data['simulated']['total']['mac_percent'] > data['base']['total']['mac_percent'] ? 'carret-up' : 'carret-down' ,
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['mac_percent'],data['base']['total']['mac_percent']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['mac_percent'] - data['base']['total']['mac_percent'],true,true) + ")",
+                "color":  this.colorForDifference(data['base']['total']['mac_percent'] , data['simulated']['total']['mac_percent']),
+            }
+
+            this.message1 = ''
+            let teper = Utils.percentageDifference(data['simulated']['total']['te'],data['base']['total']['te'])
+            this.message1 += "Trade expense is "
+
+            this.tradeExpence = {
+                "converted_base": Utils.formatNumber(data['base']['total']['te'],true,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['te'],true,false),
+                "arrow":  data['simulated']['total']['te'] > data['base']['total']['te'] ?  'carret-up' : 'carret-down' ,
+                "percent": "(" + teper + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],true,false) + ")",
+                "color": this.colorForDifference( data['simulated']['total']['te'],data['base']['total']['te']),
+            }
+            if(Number(teper)<0){
+                this.message1 += "decreased by " +teper+ "%"
+
+            }
+            else if(Number(teper) > 0){
+                this.message1 += "increased by " +teper+ "%"
+
+            }
+            else{
+                this.message1 += "not changed"
+
+            }
+            this.te_lsv = {
+                "converted_base": Utils.formatNumber(data['base']['total']['te_percent_of_lsv'],true,true),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['te_percent_of_lsv'],true,true),
+                "arrow":  data['simulated']['total']['te_percent_of_lsv'] > data['base']['total']['te_percent_of_lsv'] ?  'carret-up' : 'carret-down' ,
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['te_percent_of_lsv'],data['base']['total']['te_percent_of_lsv']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],true,true) + ")",
+                "color": this.colorForDifference( data['simulated']['total']['te'],data['base']['total']['te']),
+            }
+            this.te_units = {
+                "converted_base": Utils.formatNumber(data['base']['total']['te_per_unit'],true,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['te_per_unit'],true,false),
+                "arrow":  data['simulated']['total']['te_per_unit'] > data['base']['total']['te_per_unit'] ?  'carret-up' : 'carret-down' ,
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['te_per_unit'],data['base']['total']['te_per_unit']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te_per_unit']-data['base']['total']['te_per_unit'],true,false) + ")",
+                "color": this.colorForDifference( data['simulated']['total']['te_per_unit'],data['base']['total']['te_per_unit']),
+            }
+
+            this.roi = {
+                "converted_base": Utils.formatNumber(data['base']['total']['roi'],true,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['roi'],true,false),
+                "arrow": data['simulated']['total']['roi'] > data['base']['total']['roi'] ?  'carret-up' : 'carret-down' ,
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['roi'],data['base']['total']['roi']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['roi']-data['base']['total']['roi'],true,false) + ")",
+                "color":  this.colorForDifference(data['base']['total']['roi'] , data['simulated']['total']['roi']),
+            }
+            // debugger
+
+            this.asp = {
+                "converted_base": Utils.formatNumber(data['base']['total']['asp'],true,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['asp'],true,false),
+                "arrow": data['simulated']['total']['asp'] > data['base']['total']['asp'] ?  'carret-up' : 'carret-down' ,
+                "color":  this.colorForDifference(data['base']['total']['asp'] , data['simulated']['total']['asp']),
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['asp'],data['base']['total']['asp']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(Math.round(data['simulated']['total']['asp'])-Math.round(data['base']['total']['asp']),true,false) + ")"
+            }
+            // this.asp = {
+            //     "converted_base": Utils.formatNumber(data['base']['total']['asp'],true,false),
+            //     "converted_simulated": Utils.formatNumber(data['simulated']['total']['asp'],true,false),
+            //     "arrow": data['simulated']['total']['asp'] > data['base']['total']['asp'] ?  'carret-up' : 'carret-down' ,
+            //     "percent": "(" + Utils.percentageDifference(data['simulated']['total']['asp'],data['base']['total']['asp']) + "%)",
+            //     "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['asp']-data['base']['total']['asp'],true,false) + ")",
+            //     "color":  this.colorForDifference(data['base']['total']['asp'] , data['simulated']['total']['asp']),
+            // }
+            this.promo_asp = {
+                "converted_base": Utils.formatNumber(data['base']['total']['avg_promo_selling_price'],true,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['avg_promo_selling_price'],true,false),
+                "arrow": data['simulated']['total']['asp'] > data['base']['total']['asp'] ?  'carret-up' : 'carret-down' ,
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['avg_promo_selling_price'],data['base']['total']['avg_promo_selling_price']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(Math.round(data['simulated']['total']['avg_promo_selling_price'])-Math.round(data['base']['total']['avg_promo_selling_price']),true,false) + ")",
+                "color":  this.colorForDifference(data['base']['total']['avg_promo_selling_price'] , data['simulated']['total']['avg_promo_selling_price']),
+            }
+             
             this.rsvWithoutVat = {
                 "converted_base": Utils.formatNumber(data['base']['total']['total_rsv_w_o_vat'],true,false),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['total_rsv_w_o_vat'],true,false),
@@ -253,6 +348,24 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['rp']-data['base']['total']['rp'],true,false) + ")",
                 "color":  this.colorForDifference(data['base']['total']['rp'] , data['simulated']['total']['rp']),
             }
+            this.customermargin_rsv = {
+                "converted_base": Utils.formatNumber(data['base']['total']['rp_percent'],true,true),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['rp_percent'],true,true),
+                "arrow": data['simulated']['total']['rp_percent'] > data['base']['total']['rp_percent'] ?  'carret-up' : 'carret-down' ,
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['rp_percent'],data['base']['total']['rp_percent']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['rp_percent']-data['base']['total']['rp_percent'],true,true) + ")",
+                "color":  this.colorForDifference(data['base']['total']['rp_percent'] , data['simulated']['total']['rp_percent']),
+            }
+
+            this.cogs = {
+                "converted_base": Utils.formatNumber(data['base']['total']['cogs'],true,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['cogs'],true,false),
+                "arrow": data['simulated']['total']['cogs'] > data['base']['total']['cogs'] ?  'carret-up' : 'carret-down' ,
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['cogs'],data['base']['total']['cogs']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['cogs']-data['base']['total']['cogs'],true,false) + ")",
+                "color":  this.colorForDifference(data['base']['total']['cogs'] , data['simulated']['total']['cogs']),
+            }
+            
 
             let weeks: number = data['base']['weekly'].length
             // debugger;

@@ -60,7 +60,7 @@ export class PromoElasticityComponent {
 
     onInputChange(val){
         this._name = Number(val)
-        console.log(val , "promo elsticity change")
+        // console.log(val , "promo elsticity change")
 
     }
 
@@ -69,7 +69,7 @@ export class PromoElasticityComponent {
             this.disable = false
         }
         this.name = Number((this.name + this.steps).toFixed(2));
-        console.log(this.name)
+        // console.log(this.name)
         // this.simulatorService.setPromoElasticityValueObservable(this.name)
     }
 

@@ -34,7 +34,7 @@ export class NumberPromoWavesComponent {
         step : this.steps,
         showSelectionBar: true,
         translate: (value: number, label: LabelType): string => {
-            console.log("value" , value)
+            // console.log("value" , value)
             
             
             switch (label) {

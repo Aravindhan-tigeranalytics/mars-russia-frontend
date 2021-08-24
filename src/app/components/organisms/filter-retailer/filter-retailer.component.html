@@ -6,7 +6,7 @@
         <nwn-command-search [value]="searchText" [placeholder]="placeholder" [hideClose]="true" (inputChangeEvent)="inputChangeEvent($event)"></nwn-command-search>
     </div>
     <div class="scrollbar-y h-[287px]">
-        <nwn-command-multiselect (valueChangeSelect)="valueChangeSelect($event,'Retailer')" *ngFor="let retailer of retailers | appFilter: searchText;" [value] = "retailer.value" [checked]="retailer.checked" [leftBorder]="false" [hideClose]="true" >{{retailer.value}}</nwn-command-multiselect>
+        <nwn-command-multiselect (valueChangeSelect)="valueChangeSelect($event)" *ngFor="let retailer of retailers | appFilter: searchText;" [value] = "retailer.value" [checked]="retailer.checked" [leftBorder]="false" [hideClose]="true" >{{retailer.value}}</nwn-command-multiselect>
         <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Target</nwn-command-multiselect>
         <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Carrefour</nwn-command-multiselect>
         <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Trader Joe’s</nwn-command-multiselect>

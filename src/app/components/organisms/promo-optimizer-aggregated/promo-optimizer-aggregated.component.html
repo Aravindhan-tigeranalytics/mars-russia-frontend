@@ -1,9 +1,9 @@
 <div class="px-12 py-5">
     <div class="text-left py-5">
         <h1 class="text-heading font-extrabold inline-block">Summary</h1>
-        <nwn-button class="inline-block" type="icon" size="iconsm" (click)="openModal('optimizer-summary-popup')">
+        <!-- <nwn-button class="inline-block" type="icon" size="iconsm" (click)="openModal('optimizer-summary-popup')">
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="light-bulb"></nwn-svg-icon>
-        </nwn-button>
+        </nwn-button> -->
     </div>
     <div class="flex flex-row flex-wrap border-b border-marsgray-300">
         <div class="pr-6">
@@ -198,7 +198,7 @@
                                 <nwn-cell-header type="headersm" color="bggray-100">Sales metrics</nwn-cell-header>
                             </th>
                             <th colspan="5" scope="colgroup">
-                                <nwn-cell-header type="headersm" color="bggray-100">Mars metrics</nwn-cell-header>
+                                <nwn-cell-header type="headersm" color="bggray-100">Mars & Retailer metrics</nwn-cell-header>
                             </th>
                         </tr>
                         <tr class="whitespace-nowrap bg-white">
@@ -232,7 +232,28 @@
                                 >
                             </th>
                             <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">TE, %LSV</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">TE/Units</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">ROI</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">ASP</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">Promo ASP</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">RSV w/o VAT</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent">Customer Margin</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">Customer Margin,%RSV</nwn-cell-header>
                             </th>
                         </tr>
                     </thead>
@@ -247,7 +268,14 @@
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac_per_nsv"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="trade_expense"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="te_lsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="te_unit"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="roi"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="asp"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="promo_asp"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="rst_w_o_vat"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="customer_margin"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="customer_margin_rsv"></nwn-cell-item></td>
                         </tr>
                     </tbody>
                 </table>
@@ -471,489 +499,7 @@
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.retailer_margin"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.retailer_margin_percent_of_rsp"></nwn-cell-item></td>
                     </tr>
-                    <!-- <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
-                        <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-week-item type="lowholidayweek" [active]="true"></nwn-cell-week-item>
-                        </th>
-                        <td><nwn-cell-item nwnCellItem="promo"></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr> -->
+                    
                 </tbody>
             </table>
         </div>

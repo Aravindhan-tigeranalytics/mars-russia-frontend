@@ -12,6 +12,7 @@
                 />
             </svg>
         </a>
+        <ng-container *ngIf="!hide_side">
         <div  *ngIf="user$ | async as user" class="mb-10 text-center">
             <!-- <nwn-side-menu></nwn-side-menu> -->
             <div class="flex flex-col">
@@ -20,12 +21,13 @@
                     <nwn-menu-item
                         type="stroke"
                         nwnSvgIcon="pricing-tool"
+                        (click) = "redirectPage()"
+
                        
-                       
-                        [link]="'/pricing'" 
+                        
                         >Pricing tools</nwn-menu-item
                     >
-                    <!-- href="/pricing-tool" -->
+                    <!-- href="/pricing-tool" [link]="'/pricing'"  -->
                     <!-- [active]="currentRoute === '/pricing-tool'" -->
                     <nwn-menu-item
                         type="stroke"
@@ -36,15 +38,16 @@
                         >Promo tool</nwn-menu-item
                     >
                     <!-- [active]="currentRoute === '/promo-tool/promo-scenario-builder'" -->
-                    <!-- href="/promo-tool/promo-scenario-builder" -->
+                    <!-- href="/promo-tool/promo-scenario-builder" --> 
                 </div>
                 <div class="flex flex-col space-y-6 pt-6">
-                    <nwn-menu-item type="stroke" nwnSvgIcon="profit-tool" href="/">Profit tool</nwn-menu-item>
-                    <nwn-menu-item type="stroke" nwnSvgIcon="pricing-capabilities" href="/">Pricing Capabilities</nwn-menu-item>
-                    <nwn-menu-item type="stroke" nwnSvgIcon="srm-insight" href="/">SRM insights</nwn-menu-item>
+                    <nwn-menu-item type="stroke" nwnSvgIcon="profit-tool" [link]="'/profit'" >Profit tool</nwn-menu-item>
+                    <nwn-menu-item type="stroke" nwnSvgIcon="pricing-capabilities" [link]="'/pricing'">Pricing Capabilities</nwn-menu-item>
+                    <nwn-menu-item type="stroke" nwnSvgIcon="srm-insight"  [link]="'/srm'">SRM insights</nwn-menu-item>
                 </div>
             </div>
         </div>
+    </ng-container>
     </div>
     <div *ngIf="user$ | async as user">
         <nwn-menu-item type="stroke" nwnSvgIcon="logout"  (click) = "logout()" >Logout</nwn-menu-item>

@@ -1,4 +1,5 @@
 import { Component, OnInit,Input,EventEmitter, Output  } from '@angular/core';
+import { CheckboxModel, FilterModel } from '@core/models';
 import { SimulatorService } from '@core/services/simulator.service';
 import {ModalApply} from "../../../shared/modal-apply.component"
 
@@ -10,10 +11,12 @@ import {ModalApply} from "../../../shared/modal-apply.component"
 export class FilterBrandsComponent extends ModalApply implements OnInit {
 
   @Input()
-  brands:Array<string> = []
+  brands:Array<CheckboxModel> = []
+  @Input()
+  filter_model : FilterModel
 
-  // @Output()
-  // brandChange = new EventEmitter()
+  @Output()
+  brandChange = new EventEmitter()
 
   placeholder:any = 'Search brands'
   constructor(public restApi: SimulatorService) {
@@ -22,13 +25,32 @@ export class FilterBrandsComponent extends ModalApply implements OnInit {
 
   ngOnInit(): void {
     this.restApi.ClearScearchText.asObservable().subscribe(data=>{
-      console.log(data,"from modal apply")
+      if(data=="filter-brands"){
+        console.log(data,"from modal apply")
       this.searchText = ""
+      if(this.filter_model.brand == "Brands"){
+
+        this.brands.forEach(element => {
+          element.checked = false
+          
+        });
+        this.valueChangeSelect({...this.retailerSelected , ...{"checked" : false}})
+      }
+      
+      }
+      
     })
   }
   
-  // valueChangeSelect(event:any){
-  //   this.brandChange.emit(event)
-  // }
+  valueChangeSelect(event:any){
+    this.retailerSelected = event
+    this.brandChange.emit(event)
+  }
+  apply(id){
+
+    this.filterApply.emit({"key" : "Brands"})
+    this.closeModal.emit(id)
+    this.searchText = ""
+  }
 
 }

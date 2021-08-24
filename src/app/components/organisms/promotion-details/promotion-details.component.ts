@@ -109,7 +109,7 @@ export class PromotionDetailsComponent implements OnInit {
         })
     }
     valueChangePromo($event){
-        debugger
+        // debugger
         if($event['checked']){
             this.selected_promotions.push($event['value'])
         }
@@ -192,12 +192,13 @@ export class PromotionDetailsComponent implements OnInit {
                        // console.log(changes[property].currentValue , "current value")
                        this.base_promotions = changes[property].currentValue
                        if(this.base_promotions.length > 0){
-                        this.optionsNormal = this.base_promotions.map(e=> Utils.decodePromotion(e)['promo_mechanics'])
-                        this.optionsNormal = [...new Set(this.optionsNormal.map(item => item))]
-                        console.log(this.optionsNormal,"this.optionsNormal")
-                        // setTimeout(() => {
-                        //     this.optionsNormal = [{ id: 1, display: 'shahid' },{ id: 2, display: 'shahidd' }];
-                        //   }, 0);
+                        setTimeout(()=>{
+                            this.optionsNormal = this.base_promotions.map(e=> Utils.decodePromotion(e)['promo_mechanics'])
+                            this.optionsNormal = [...new Set(this.optionsNormal.map(item => item))]
+                
+                        },0)
+                      
+
                        }
                       
                        

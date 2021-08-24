@@ -7,6 +7,7 @@
             <div *ngFor="let year of quarter_year" class="mr-2 mb-2">
                 <nwn-simulated-filter-item (click) = "changeQuarter(year)" [selected_quarter]="selected_quarter" [key]="year" type="default" size="sfi">{{year}}</nwn-simulated-filter-item>
             </div>
+            <div  *ngIf="error" class="mr-2 mb-2 error">{{error}}</div>
             <!-- <div class="mr-2 mb-2">
                 <nwn-simulated-filter-item size="sfi">Quater 2</nwn-simulated-filter-item>
             </div>

@@ -1,18 +1,8 @@
 import { Component, OnInit, Input,EventEmitter, Output  } from '@angular/core';
 import { SimulatorService } from '@core/services/simulator.service';
-import {CheckboxModel} from "../../../core/models"
+import { tickStep } from 'd3';
+import {CheckboxModel, FilterModel} from "../../../core/models"
 import {ModalApply} from "../../../shared/modal-apply.component"
-
-// export class ModalApply{
-//   @Output()
-//   closeModal = new EventEmitter()
-
-//   apply(){
-//     // debugger
-//     this.closeModal.emit({"class" : this})
-//   }
-
-// }
 
 @Component({
   selector: 'nwn-filter-retailer',
@@ -26,8 +16,10 @@ export class FilterRetailerComponent extends ModalApply implements OnInit  {
   retailers:Array<CheckboxModel> = []
   @Input()
   cont:Array<any> = []
-  // @Output()
-  // retailerChange = new EventEmitter()
+  @Output()
+  retailerChange = new EventEmitter()
+  @Input()
+  filter_model : FilterModel
   
   placeholder:any = 'Search retailers'
   retailerSelected:any = ''
@@ -38,17 +30,42 @@ export class FilterRetailerComponent extends ModalApply implements OnInit  {
 
   ngOnInit(): void {
     this.restApi.ClearScearchText.asObservable().subscribe(data=>{
-      console.log(data,"from modal apply")
+      
+      if(data=="filter-retailer"){
+        
       this.searchText = ""
+
+      if(this.filter_model.retailer == "Retailers"){
+        console.log(this.retailers , "retailers after backdrop")
+        console.log(this.retailerSelected , "retailer selected.................................")
+
+        this.retailers.forEach(element => {
+          element.checked = false
+          
+        });
+        
+        this.valueChangeSelect({...this.retailerSelected , ...{"checked" : false}})
+      }
+
+      }
+    
+      
+      
+
     })
     console.log(this.cont , "cont value in filters")
   }
-  // valueChangeSelect(event:any){
-  //   this.retailerChange.emit(event)
-  // }
-  // inputChangeEvent(event:any){
-  //   this.searchText = event
-  // }
-  
+  valueChangeSelect(event:any){
+    this.retailerSelected = event
+    this.retailerChange.emit(event)
+   
+  }
+  apply(id){
+
+    this.filterApply.emit({"key" : "Retailer"})
+    this.closeModal.emit(id)
+    this.searchText = ""
+  }
+
 
 }

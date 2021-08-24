@@ -62,7 +62,7 @@
                 <div class="text-title-medium text-marsgray-700 flex flex-row">
                     <ng-content select="[checkHeadValue]"></ng-content>
                 </div>
-                <nwn-checkbox [showLabel]="true" [checkboxData]="checkboxValue" (toggle)="onRoleChangeCheckbox($event)"
+                <nwn-checkbox [checked] = "checked" [showLabel]="true" [value] = "value" [checkboxData]="checkboxValue" (valueChange)="onRoleChangeCheckbox($event)"
                     ><ng-content select="[checkboxLabel]"></ng-content
                 ></nwn-checkbox>
             </div>

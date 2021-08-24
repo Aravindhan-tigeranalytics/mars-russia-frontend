@@ -22,9 +22,15 @@ export class MetricItemComponent implements OnInit {
     @Input()
     checkboxValue = false;
 
+    @Input()
+    value = ''
+    @Input()
+    checked  =  false
+
     @Output() toggle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     onRoleChangeCheckbox(ev) {
+        // console.log(ev , "on role change metic item")
         this.checkboxValue = ev;
         this.toggle.emit(this.checkboxValue);
     }

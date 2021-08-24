@@ -164,14 +164,14 @@
             <div class="flex flex-row space-x-4 items-center">
              <nwn-button type="link" size="sm" (click)="simulateAndReset('Reset')"> Reset </nwn-button>
                 <nwn-button [disabled] = "disable_button" type="primary" size="sm" (click)="simulateAndReset('Simulate')"> Simulate </nwn-button>
-                <nwn-button [disabled] = "disable_button" type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button [disabled] = "disable_save_download" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon
                     (click)="sendMessage('save-scenario-popup')"
                     type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                     
                     <p tooltipContent>Save scenario</p>
                 </nwn-button>
-                <nwn-button [disabled] = "disable_button" type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button [disabled] = "disable_save_download" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon  type="stroke" (click)="download()" nwnSvgIcon="save-download"></nwn-svg-icon>
                     <p tooltipContent>Download scenario</p>
                 </nwn-button>

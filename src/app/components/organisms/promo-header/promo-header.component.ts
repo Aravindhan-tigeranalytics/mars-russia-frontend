@@ -30,13 +30,17 @@ export class PromoHeaderComponent {
 
     ngOnInit() {
         this.authService.getUser().subscribe(data=>{
-            console.log("user in header" , data )
-            this.userdetail = data
-            console.log(this.userdetail , "setting user data in header")
-            this.shortName = this.userdetail.user.email.charAt(0) 
-            $('#userLogo').attr('data-letters',this.shortName.toUpperCase())
-            // this.user.user.
-            this.groups = data.user.groups.map(d=>d.name)
+            if(data){
+                console.log("user in header" , data )
+                this.userdetail = data
+                console.log(this.userdetail , "setting user data in header")
+                this.shortName = this.userdetail.user.email.charAt(0) 
+                $('#userLogo').attr('data-letters',this.shortName.toUpperCase())
+                // this.user.user.
+                this.groups = data.user.groups.map(d=>d.name)
+
+            }
+         
         })
     }
 

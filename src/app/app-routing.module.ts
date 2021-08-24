@@ -56,7 +56,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'profit',
+        component: PricingToolComponent
+    },
+    {
         path: 'pricing',
+        component: PricingToolComponent
+    },
+    {
+        path: 'srm',
         component: PricingToolComponent
     },
     {

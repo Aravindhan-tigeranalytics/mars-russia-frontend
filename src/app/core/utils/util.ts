@@ -132,7 +132,8 @@ export function convertCurrency(value:any , per?:any , is_curr = true){
     return  (100 * Math.abs( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
 }
 
-export function formatNumber(number: any,currency: boolean,percentage: boolean){
+export function formatNumber(number: any,currency: boolean,percentage: boolean ){
+  
     var SI_SYMBOL = ["", "K", "M", "B", "T", "P", "E"];
     // what tier? (determines SI symbol)
     var tier = Math.log10(Math.abs(number)) / 3 | 0;
@@ -157,5 +158,79 @@ export function formatNumber(number: any,currency: boolean,percentage: boolean){
     // format number and add suffix
     return scaled.toFixed(1) + suffix;
 }
+
+
+export function generate_consecutive_list_max_diff(arr:Array<number>){
+  // debugger
+  if(arr.length > 0){
+    let final:any[] = []
+    let temp:number[] = [arr[0]]
+    let max_diff = 52
+    for(let i =1;i <= arr.length;i++ ){
+      if(arr[i] - arr[i-1]!=1){
+        let diff = arr[i] - temp[temp.length -1]
+        if(diff < max_diff){
+          max_diff = diff
+        }
+        final.push(temp)
+        temp = []
+        if(arr[i]){
+          temp.push(arr[i])
+
+        }
+        
+      }
+      else{
+        temp.push(arr[i])
+      }
+    }
+    if(temp.length > 0){
+      final.push(temp)
+
+    }
+    
+    // console.log(final , "final brfore return")
+
+    return {
+      "min_diff" : max_diff,
+      "consecutive" : final,
+      "max_len_consecutive" : Math.max(...final.map(d=>d.length)),
+     
+    }
+
+  }
+  
+return {
+  "min_diff" : 0,
+  "max_len_consecutive" : 52,
+  "consecutive" : []
+}
+}
+
+export function check_validate_gap(min_gap , calculated_gap){
+  return calculated_gap > min_gap || calculated_gap == 0 || calculated_gap == 1
+
+}
+
+export function calculate_not_allowed_array(comp_week , max_con){
+  // console.log(comp_week , "calculate not allowed comp")
+  let not_allowed:any[]= []
+  // debugger
+  for(let i =0;i < comp_week.length;i++ ){
+    let min_extreme = comp_week[i][0]  - max_con
+    let max_extreme = comp_week[i][comp_week[i].length - 1]  + max_con
+    for(let j = min_extreme ; j <=max_extreme ; j++){
+      // console.log(j)
+      not_allowed.push(j)
+      // not_allowed.push(j)
+
+    }
+  }
+  return not_allowed
+  
+
+}
   
   
+// def check_valide_gap(min_gap , calculated_gap):
+// return calculated_gap >= min_gap or calculated_gap ==1 or calculated_gap ==0

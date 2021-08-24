@@ -33,9 +33,9 @@ export class SliderComponent  implements OnInit{
         // } 
     // };
     changeSlider($event){
-        console.log($event , "$event")
-        console.log(this.minValue , "min value")
-        console.log(this.maxValue , "max value")
+        // console.log($event , "$event")
+        // console.log(this.minValue , "min value")
+        // console.log(this.maxValue , "max value")
          setTimeout(()=>{
                 this.sliderChangeEvent.emit({
                     "min_val" : this.minValue,

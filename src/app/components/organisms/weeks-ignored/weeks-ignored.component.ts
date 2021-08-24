@@ -1,5 +1,6 @@
 import { Component,EventEmitter,Input, OnInit,Output,SimpleChanges } from '@angular/core';
 import { ProductWeek } from '@core/models';
+import * as utils from "@core/utils"
 
 @Component({
     selector: 'nwn-weeks-ignored',
@@ -19,11 +20,50 @@ export class WeeksIgnoredComponent {
     selected_product_week:ProductWeek[] = []
     selected_quarter:string = ''
     weekly_map:Array<any> = [] //{"selected_promotion" : $event.value , "week" : this.product_week 
+    @Input()
+    week_validation:any;
+    error:string = null as any
     ngOnInit(){
         
        
     }
     apply(){
+        let ignored_week_list = this.weekly_map.map(d=>d.week)
+        let compulsory_week_list = this.cumpulsory_week_val.map(d=>d.week).sort(function(a, b){return a - b})
+        // let min_compulsory = 
+        console.log(compulsory_week_list , "compulsory week list")
+        console.log(ignored_week_list , "compulsory week list")
+        let con = utils.generate_consecutive_list_max_diff(compulsory_week_list)
+        console.log(con , "consecutive")
+        let min_gap = this.week_validation['min_consecutive_promo'] > 0 ? this.week_validation['min_consecutive_promo'] : this.week_validation['max_consecutive_promo']
+        let not_all =utils.calculate_not_allowed_array(con['consecutive'],min_gap)
+        console.log(not_all , "nnot allowed arrayss")
+        for(let i=0;i<ignored_week_list.length ; i++){
+            if(not_all.includes(ignored_week_list[i])){
+                console.log("first error")
+                this.error = "Gap between ignored week and compulsory week should be greater than or equal to minimum consecutive promotions ("+min_gap+")"
+                return 
+            }
+        }
+        this.error =null as any
+       
+        // console.log(not_all , "nnot allowed arrayss")
+        let sortedweek =[...ignored_week_list,...compulsory_week_list].sort(function(a, b){return a - b})
+        
+        console.log(sortedweek , "sorted weekvalue")
+        // console.log(min_gap , "user input mingap")
+        let min_diff = utils.generate_consecutive_list_max_diff(sortedweek)
+        console.log(min_diff , "min diff calculated")
+        // console.log(utils.check_validate_gap(min_gap,min_diff['min_diff'] ) , "is valid")
+        if(!utils.check_validate_gap(min_gap,min_diff['min_diff'] )){
+            console.log("second error")
+            this.error = "Gap between ignored week and compulsory week should be greater than or equal to minimum consecutive promotions ("+min_gap+")"
+            return 
+            
+        }
+        this.error = null as any
+        // console.log("valid data")
+
         this.ignoredWeekEvent.emit({
             "id" : "weeks-ignored",
             "value" : this.weekly_map

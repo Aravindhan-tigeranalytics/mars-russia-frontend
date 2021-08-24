@@ -1,6 +1,6 @@
 import { Component, OnInit,Input,EventEmitter, Output  } from '@angular/core';
 import { SimulatorService } from '@core/services/simulator.service';
-import {CheckboxModel} from "../../../core/models"
+import {CheckboxModel, FilterModel} from "../../../core/models"
 import {ModalApply} from "../../../shared/modal-apply.component"
 
 @Component({
@@ -12,9 +12,11 @@ export class FilterCategoriesComponent extends ModalApply  implements OnInit {
 
   @Input()
   categories:Array<CheckboxModel> = []
+  @Input()
+  filter_model : FilterModel
 
-  // @Output()
-  // categoryChange = new EventEmitter()
+  @Output()
+  categoryChange = new EventEmitter()
   	
   placeholder:any = 'Search categories'
   constructor(public restApi: SimulatorService) { 
@@ -23,12 +25,31 @@ export class FilterCategoriesComponent extends ModalApply  implements OnInit {
 
   ngOnInit(): void {
     this.restApi.ClearScearchText.asObservable().subscribe(data=>{
-      console.log(data,"from modal apply")
+      if(data == "filter-categories"){
+        console.log(data,"from modal apply")
       this.searchText = ""
+      if(this.filter_model.category == "Category"){
+
+        this.categories.forEach(element => {
+          element.checked = false
+          
+        });
+        this.valueChangeSelect({...this.retailerSelected , ...{"checked" : false}})
+      }
+      }
+      
     })
   }
-  // valueChangeSelect(event:any){
-  //   this.categoryChange.emit(event)
-  // }
+  valueChangeSelect(event:any){
+    this.retailerSelected = event
+    this.categoryChange.emit(event)
+  }
+  apply(id){
+
+    this.filterApply.emit({"key" : "Category"})
+    this.closeModal.emit(id)
+    this.searchText = ""
+  }
+
 
 }
