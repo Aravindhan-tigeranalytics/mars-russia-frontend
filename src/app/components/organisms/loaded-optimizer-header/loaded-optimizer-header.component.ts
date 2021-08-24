@@ -49,6 +49,8 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     disable_save_download = true
     @Output()
     downloadEvent = new EventEmitter<any>();
+    @Output()
+    filterResetEvent = new EventEmitter()
     @Input()
     filter_model : FilterModel
     info_promotion : ListPromotion = null as any
@@ -92,6 +94,9 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
             
         })
         
+    }
+    closeClicked($event){
+        this.filterResetEvent.emit($event)
     }
     set_week_validation_data(){
 
