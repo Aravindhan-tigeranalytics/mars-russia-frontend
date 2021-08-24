@@ -12,6 +12,7 @@ import { environment } from '../../../environments/environment';
 })
 export class OptimizerService {
     public isAccAndProductFiltered = new BehaviorSubject<boolean>(false)
+    public isUserGuideResetFlag = new BehaviorSubject<any>('')
     public ClearScearchText = new BehaviorSubject<any>('')
   private compareScenarioObservable = new BehaviorSubject<LoadedScenarioModel[]>([])
   private optimizerDataObservable = new BehaviorSubject<OptimizerModel>(null as any)
@@ -84,6 +85,14 @@ export class OptimizerService {
     }
     public getClearScearchTextObservable(){
     return this.ClearScearchText.asObservable()
+    }
+
+    // Set and Get clear user guide state
+    public setResetUserGuideFlagObservable(value:any){
+    this.isUserGuideResetFlag.next(value)
+    }
+    public getResetUserGuideFlagObservable(){
+    return this.isUserGuideResetFlag.asObservable()
     }
 
     // Error handling 

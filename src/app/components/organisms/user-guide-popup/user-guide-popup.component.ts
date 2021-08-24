@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit,Output,SimpleChanges } from '@angular/core';
 import { ProductWeek } from '@core/models';
+import { OptimizerService } from '@core/services';
 import { ModalService } from '@molecules/modal/modal.service';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'nwn-user-guide-popup',
@@ -9,9 +11,16 @@ import { ModalService } from '@molecules/modal/modal.service';
 })
 export class UserGuidePopupComponent implements OnInit {
   
-    constructor(public modalService: ModalService){}
+    constructor(public modalService: ModalService,public optimizerService: OptimizerService){}
     ngOnInit(){
-    
+        this.optimizerService.getResetUserGuideFlagObservable().subscribe((data:any)=>{
+            if(data != ''){
+                $( "#goBackToStep1" ).click();
+            }
+        })
+    }
+    reset(){
+        console.log("clicked")
     }
 
     closeModal(){
