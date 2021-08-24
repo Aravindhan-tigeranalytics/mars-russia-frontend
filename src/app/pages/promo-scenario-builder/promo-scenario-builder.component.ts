@@ -98,6 +98,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
 
           },error=>{
             console.log(error , "error")
+            throw error
           })
       
     }

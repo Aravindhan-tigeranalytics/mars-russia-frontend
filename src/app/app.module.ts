@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,7 @@ import {CoreModule} from "./core/core.module"
 
 import {SharedModule} from "./shared/shared.module"
 import {AuthModule} from "./auth/auth.module"
+import { GlobalErrorHandler } from "@core/services/global-error-handler.service";
 // import {AuthRoutingModule} from "./auth/auth-routing.module"
 import {
     NgxUiLoaderModule,
@@ -53,7 +54,12 @@ import {
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
         NgxUiLoaderHttpModule.forRoot({ showForeground: true })
     ],
-    providers: [],
+    providers: [
+      {
+        provide : ErrorHandler,
+        useClass : GlobalErrorHandler
+      }
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

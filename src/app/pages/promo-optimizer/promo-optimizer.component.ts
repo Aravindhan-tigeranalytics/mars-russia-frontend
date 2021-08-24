@@ -52,7 +52,9 @@ export class PromoOptimizerComponent implements OnInit {
             this._populateFilters(this.product)
 
           },error=>{
+              
             console.log(error , "error")
+            throw error
           })
           this.restApi.getSignoutPopupObservable().subscribe(data=>{
             if(data != ''){

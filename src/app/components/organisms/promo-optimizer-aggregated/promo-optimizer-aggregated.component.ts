@@ -50,7 +50,15 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     mac:any
     mac_per_nsv:any
     trade_expense:any
+    te_lsv : any
+    te_unit:any
+    roi:any
+
+    asp: any
+    promo_asp:any
+    rst_w_o_vat:any
     customer_margin:any
+    customer_margin_rsv:any
 
     weeklyData:any = []
     optimizer_response : any = null
@@ -283,6 +291,54 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "arrow": financial_metrics['simulated']['total']['te'] > financial_metrics['base']['total']['te'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference( financial_metrics['simulated']['total']['te'],financial_metrics['base']['total']['te'] )
         }
+        this.te_lsv = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['te_percent_of_lsv'],false,false),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['te_percent_of_lsv'],false,false),
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['te_percent_of_lsv'],financial_metrics['base']['total']['te_percent_of_lsv']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['te_percent_of_lsv']-financial_metrics['base']['total']['te_percent_of_lsv'],false,false) + ")",
+            "arrow": financial_metrics['simulated']['total']['te_percent_of_lsv'] > financial_metrics['base']['total']['te_percent_of_lsv'] ?  'carret-up' : 'carret-down' ,
+            "color": this.colorForDifference( financial_metrics['simulated']['total']['te_percent_of_lsv'],financial_metrics['base']['total']['te_percent_of_lsv'] )
+        }
+        this.te_unit = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['te_per_unit'],false,false),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['te_per_unit'],false,false),
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['te_per_unit'],financial_metrics['base']['total']['te_per_unit']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['te_per_unit']-financial_metrics['base']['total']['te_per_unit'],false,false) + ")",
+            "arrow": financial_metrics['simulated']['total']['te_per_unit'] > financial_metrics['base']['total']['te_per_unit'] ?  'carret-up' : 'carret-down' ,
+            "color": this.colorForDifference( financial_metrics['simulated']['total']['te_per_unit'],financial_metrics['base']['total']['te_per_unit'] )
+        }
+        this.roi = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['roi'],false,false),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['roi'],false,false),
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['roi'],financial_metrics['base']['total']['roi']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['roi']-financial_metrics['base']['total']['roi'],false,false) + ")",
+            "arrow": financial_metrics['simulated']['total']['roi'] > financial_metrics['base']['total']['roi'] ?  'carret-up' : 'carret-down' ,
+            "color": this.colorForDifference(financial_metrics['base']['total']['roi'] , financial_metrics['simulated']['total']['roi'])
+        }
+        this.asp = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['asp'],false,false),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['asp'],false,false),
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['asp'],financial_metrics['base']['total']['asp']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(Math.round(financial_metrics['simulated']['total']['asp'])-Math.round(financial_metrics['base']['total']['asp']),false,false) + ")",
+            "arrow": financial_metrics['simulated']['total']['asp'] > financial_metrics['base']['total']['asp'] ?  'carret-up' : 'carret-down' ,
+            "color": this.colorForDifference(financial_metrics['base']['total']['asp'] , financial_metrics['simulated']['total']['asp'])
+        }
+        this.promo_asp = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['avg_promo_selling_price'],false,false),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['avg_promo_selling_price'],false,false),
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['avg_promo_selling_price'],financial_metrics['base']['total']['avg_promo_selling_price']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(Math.round(financial_metrics['simulated']['total']['avg_promo_selling_price'])-Math.round(financial_metrics['base']['total']['avg_promo_selling_price']),false,false) + ")",
+            "arrow": financial_metrics['simulated']['total']['avg_promo_selling_price'] > financial_metrics['base']['total']['avg_promo_selling_price'] ?  'carret-up' : 'carret-down' ,
+            "color": this.colorForDifference(financial_metrics['base']['total']['avg_promo_selling_price'] , financial_metrics['simulated']['total']['avg_promo_selling_price'])
+        }
+        this.rst_w_o_vat = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['total_rsv_w_o_vat'],false,false),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['total_rsv_w_o_vat'],false,false),
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['total_rsv_w_o_vat'],financial_metrics['base']['total']['total_rsv_w_o_vat']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['total_rsv_w_o_vat']-financial_metrics['base']['total']['total_rsv_w_o_vat'],false,false) + ")",
+            "arrow": financial_metrics['simulated']['total']['total_rsv_w_o_vat'] > financial_metrics['base']['total']['total_rsv_w_o_vat'] ?  'carret-up' : 'carret-down' ,
+            "color": this.colorForDifference(financial_metrics['base']['total']['total_rsv_w_o_vat'] , financial_metrics['simulated']['total']['total_rsv_w_o_vat'])
+        }
 
         this.customer_margin = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['rp'],false,false),
@@ -291,6 +347,14 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['rp']-financial_metrics['base']['total']['rp'],false,false) + ")",
             "arrow": financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['rp'] , financial_metrics['simulated']['total']['rp'])
+        }
+        this.customer_margin_rsv = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['rp_percent'],false,false),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent'],false,false),
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['rp_percent'],financial_metrics['base']['total']['rp_percent']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent']-financial_metrics['base']['total']['rp_percent'],false,false) + ")",
+            "arrow": financial_metrics['simulated']['total']['rp_percent'] > financial_metrics['base']['total']['rp_percent'] ?  'carret-up' : 'carret-down' ,
+            "color": this.colorForDifference(financial_metrics['base']['total']['rp_percent'] , financial_metrics['simulated']['total']['rp_percent'])
         }
 
         let data = financial_metrics;

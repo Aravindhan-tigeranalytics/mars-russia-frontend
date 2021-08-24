@@ -31,7 +31,7 @@ export class WeeksIgnoredComponent {
         let ignored_week_list = this.weekly_map.map(d=>d.week)
         let compulsory_week_list = this.cumpulsory_week_val.map(d=>d.week).sort(function(a, b){return a - b})
         // let min_compulsory = 
-        console.log(compulsory_week_list , "compulsory week list")
+        // console.log(compulsory_week_list , "compulsory week list")
         let con = utils.generate_consecutive_list_max_diff(compulsory_week_list)
         // console.log(con , "consecutive")
         let min_gap = this.week_validation['min_consecutive_promo'] > 0 ? this.week_validation['min_consecutive_promo'] : this.week_validation['max_consecutive_promo']
@@ -55,15 +55,15 @@ export class WeeksIgnoredComponent {
         if(!utils.check_validate_gap(min_gap,min_diff['min_diff'] )){
             this.error = "Gap between ignored week and compulsory week should be greater than or equal to minimum consecutive promotions ("+min_gap+")"
             return 
-
+            
         }
         this.error = null as any
-        console.log("valid data")
+        // console.log("valid data")
 
-        // this.ignoredWeekEvent.emit({
-        //     "id" : "weeks-ignored",
-        //     "value" : this.weekly_map
-        // })
+        this.ignoredWeekEvent.emit({
+            "id" : "weeks-ignored",
+            "value" : this.weekly_map
+        })
 
     }
     

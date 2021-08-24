@@ -148,7 +148,7 @@ this.format = "percent"
 
     }
     metricChanges(e:Array<string>){
-        console.log(this.all_metrics , "all metrics")
+        // console.log(this.all_metrics , "all metrics")
         this.all_metrics.forEach(element=>{
              if(e.includes(element.key as string)){
                  element.visible = true
@@ -159,7 +159,7 @@ this.format = "percent"
              }
         })
 
-        console.log(e , "selected metrics in kpi compoannt")
+        // console.log(e , "selected metrics in kpi compoannt")
         
     }
     selectionChanged($event:any){
@@ -309,11 +309,11 @@ this.format = "percent"
            
             
         });
-        console.log(this.scenario_names , "genrated base value scenario_names")
-        console.log(this.base_units , "genrated base value base")
-        console.log(this.units , "genrated base value units")
-        console.log(this.increment_units , "genrated base value inc")
-        console.log(this.volume , "genrated base value volume")
+        // console.log(this.scenario_names , "genrated base value scenario_names")
+        // console.log(this.base_units , "genrated base value base")
+        // console.log(this.units , "genrated base value units")
+        // console.log(this.increment_units , "genrated base value inc")
+        // console.log(this.volume , "genrated base value volume")
         // setTimeout(()=>{
         //     this.units_compare = {"value" : this.units , "visible" : true}
         //     console.log("setting")
@@ -410,7 +410,7 @@ this.format = "percent"
             if (property === 'loaded_scenario') {
                 
                 this.loaded_scenario = changes[property].currentValue
-                console.log(this.loaded_scenario , "after delete loaded scenario")
+                // console.log(this.loaded_scenario , "after delete loaded scenario")
                 this.generate_metrics(this.loaded_scenario)
                
             } 

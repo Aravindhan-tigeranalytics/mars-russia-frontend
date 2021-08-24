@@ -29,11 +29,11 @@ export class UploadItemsComponent implements OnChanges {
         this.fileName = 'Uploading...'
         this.showLoadUpload = true
         const inputNode: any = document.querySelector('#simulatorInputFile');
-        console.log(inputNode.files[0])
+        // console.log(inputNode.files[0])
         let filename = inputNode.files[0].name
         var extension:any = filename.substr(filename.lastIndexOf('.'));
         if((extension.toLowerCase() == ".xlsx") || (extension.toLowerCase() == ".xls") || (extension.toLowerCase() == ".csv")){
-          console.log("good to go")
+          // console.log("good to go")
           this.sendMessage('file-selected')
           this.fileName = inputNode.files[0].name
         //   this.toastr.success('File Uploaded Successfully!');

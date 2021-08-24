@@ -20,7 +20,7 @@ export class AuthentictionComponent implements OnInit {
   signIn(creds) {
     this.authService.login(creds).subscribe(
       (data) => {
-        console.log(data , "LOGIN DATA")
+        // console.log(data , "LOGIN DATA")
         this.invalidLogin = false;
         localStorage.setItem('token', data['token']);
         localStorage.setItem('user' , JSON.stringify(data))

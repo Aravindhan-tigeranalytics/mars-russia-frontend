@@ -132,7 +132,8 @@ export function convertCurrency(value:any , per?:any , is_curr = true){
     return  (100 * Math.abs( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
 }
 
-export function formatNumber(number: any,currency: boolean,percentage: boolean){
+export function formatNumber(number: any,currency: boolean,percentage: boolean ){
+  
     var SI_SYMBOL = ["", "K", "M", "B", "T", "P", "E"];
     // what tier? (determines SI symbol)
     var tier = Math.log10(Math.abs(number)) / 3 | 0;
@@ -207,7 +208,7 @@ return {
 }
 
 export function check_validate_gap(min_gap , calculated_gap){
-  return calculated_gap >=min_gap || calculated_gap == 0 || calculated_gap == 0
+  return calculated_gap > min_gap || calculated_gap == 0 || calculated_gap == 1
 
 }
 

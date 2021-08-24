@@ -21,7 +21,7 @@ export class FilterItemComponent {
     closeClickedEvent = new EventEmitter()
 
     closeClicked($event){
-        console.log($event , "event in filter items")
+        // console.log($event , "event in filter items")
         this.closeClickedEvent.emit($event)
 
     }
