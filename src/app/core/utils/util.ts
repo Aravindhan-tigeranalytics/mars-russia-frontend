@@ -189,7 +189,7 @@ export function generate_consecutive_list_max_diff(arr:Array<number>){
 
     }
     
-    console.log(final , "final brfore return")
+    // console.log(final , "final brfore return")
 
     return {
       "min_diff" : max_diff,
@@ -213,7 +213,7 @@ export function check_validate_gap(min_gap , calculated_gap){
 }
 
 export function calculate_not_allowed_array(comp_week , max_con){
-  console.log(comp_week , "calculate not allowed comp")
+  // console.log(comp_week , "calculate not allowed comp")
   let not_allowed:any[]= []
   // debugger
   for(let i =0;i < comp_week.length;i++ ){
