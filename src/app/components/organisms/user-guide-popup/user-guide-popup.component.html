@@ -2,6 +2,7 @@
     <div class="border-b border-marsgray-200">
         <nwn-command-header type="stroke" nwnSvgIcon="user-guide">User Guide</nwn-command-header>
     </div>
+    <ng-container *ngIf="guideFor == 'optimizer'">
       <div class="carousel relative relative overflow-hidden shadow-xl bg-white" style="padding: 5vh 1vh;">
         <div class="carousel-inner relative overflow-hidden w-full">
 
@@ -114,5 +115,9 @@
       
         </div>
       </div>
+    </ng-container>
+    <ng-container *ngIf="guideFor == 'simulator'">
+
+    </ng-container>
     <nwn-search-footer (click)="closeModal()" [showClose]="true"></nwn-search-footer>
 </div>
