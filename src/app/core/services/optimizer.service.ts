@@ -38,6 +38,9 @@ export class OptimizerService {
       this.compareScenarioObservable.next(compare_scenario)
 
   }
+  public clearCompareScenarioObservable(){
+    this.compareScenarioObservable.next([])
+  }
   public getCompareScenarioObservable():Observable<LoadedScenarioModel[]>{
       return this.compareScenarioObservable.asObservable()
   }
