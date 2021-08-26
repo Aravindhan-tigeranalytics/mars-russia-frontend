@@ -82,7 +82,13 @@
   background-repeat: no-repeat;
 }
 
-
+.bg_img_contain_sim_6 {
+  height: 400px;
+  width: 100%;
+  margin-left: 6vw;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 
 
 .carousel-control {

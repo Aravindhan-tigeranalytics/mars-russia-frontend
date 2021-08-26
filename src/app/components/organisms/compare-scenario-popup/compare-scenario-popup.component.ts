@@ -30,7 +30,7 @@ export class CompareScenarioPopupComponent implements OnInit {
     legendNames:any = []
     ngOnInit(): void {
         this.optimizer.getCompareScenarioObservable().subscribe(data=>{
-            
+            debugger
             if(data.length > 0){
                 console.log(data , "comparescenario datas")
                     this.loaded_scenario = data
@@ -125,8 +125,8 @@ export class CompareScenarioPopupComponent implements OnInit {
         // id="compare-promo-scenario"
     }
     backClicked() {
+        this.optimizer.clearCompareScenarioObservable()
         this.modal.close('compare-scenario-popup')
-        
         // this._location.back();
     }
 }

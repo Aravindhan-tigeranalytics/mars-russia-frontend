@@ -4,6 +4,7 @@ import {OptimizerService} from '../../../core/services/optimizer.service'
 import { ListPromotion} from "../../../core/models"
 import { tickStep } from 'd3';
 import { SimulatorService } from '@core/services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'nwn-compare-promo-scenario',
@@ -19,9 +20,8 @@ export class ComparePromoScenarioComponent implements OnInit {
     openTab = 2;
     searchText = ''
     promotion_viewed:ListPromotion = null as any
-    constructor(private modal : ModalService,private optimize : OptimizerService,public restApi: SimulatorService){
+    constructor(private toastr: ToastrService,private modal : ModalService,private optimize : OptimizerService,public restApi: SimulatorService){
         this.optimize.fetch_load_scenario()
-
     }
     ngOnInit(): void {
         this.restApi.ClearScearchText.asObservable().subscribe(data=>{
@@ -60,9 +60,14 @@ export class ComparePromoScenarioComponent implements OnInit {
         console.log($event , "Event")
     }
     openComparePopup(){
-        this.optimize.setCompareScenarioIdObservable(this.selected_id)
-        console.log(this.selected_id , "selected save id")
-        this.modal.close('compare-promo-scenario')
-this.modal.open('compare-scenario-popup')
+        if(this.selected_id.length >= 2){
+            this.optimize.setCompareScenarioIdObservable(this.selected_id)
+            console.log(this.selected_id , "selected save id")
+            this.modal.close('compare-promo-scenario')
+            this.modal.open('compare-scenario-popup')
+        }
+        else{
+            this.toastr.error("Please select atleast two scenarios to compare")
+        }
     }
 }

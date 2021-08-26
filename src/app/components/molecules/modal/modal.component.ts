@@ -38,6 +38,9 @@ export class ModalComponent implements OnInit, OnDestroy {
                     // $('#'+modal_id).hide();
                     self.modalService.close(modal_id) 
                     self.modalService.remove_last_modal()
+                    if(self.id == 'compare-promo-scenario' || self.id == 'compare-scenario-popup'){
+                        self.optimizerService.clearCompareScenarioObservable()
+                    }
                     self.restApi.setClearScearchTextObservable(self.id)
                     self.optimizerService.setClearScearchTextObservable(self.id)
                 }
@@ -52,6 +55,9 @@ export class ModalComponent implements OnInit, OnDestroy {
             // console.log("modal component click close")
             // console.log("modal component click close target",el.target.className)
             if (el.target.className === 'nwn-modal-bg') {
+                if(this.id == 'compare-promo-scenario' || this.id == 'compare-scenario-popup'){
+                    this.optimizerService.clearCompareScenarioObservable()
+                }
                 this.restApi.setClearScearchTextObservable(this.id)
                 this.optimizerService.setClearScearchTextObservable(this.id)
                 this.close();
