@@ -273,12 +273,13 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "arrow": financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['mac'] , financial_metrics['simulated']['total']['mac']) 
         }
+        // debugger
 
         this.mac_per_nsv = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['mac_percent'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['mac_percent'],false,false),
-            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['mac_percent'],financial_metrics['base']['total']['mac_percent']) + "%)",
-            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['mac_percent']-financial_metrics['base']['total']['mac_percent'],false,false) + ")",
+            "percent": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['mac_percent']-financial_metrics['base']['total']['mac_percent'],false,true) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['mac_percent']-financial_metrics['base']['total']['mac_percent'],false,true) + ")",
             "arrow": financial_metrics['simulated']['total']['mac_percent'] > financial_metrics['base']['total']['mac_percent'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['mac_percent'] , financial_metrics['simulated']['total']['mac_percent'])
         }
@@ -294,8 +295,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
         this.te_lsv = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['te_percent_of_lsv'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['te_percent_of_lsv'],false,false),
-            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['te_percent_of_lsv'],financial_metrics['base']['total']['te_percent_of_lsv']) + "%)",
-            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['te_percent_of_lsv']-financial_metrics['base']['total']['te_percent_of_lsv'],false,false) + ")",
+            "percent": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['te_percent_of_lsv']-financial_metrics['base']['total']['te_percent_of_lsv'],false,true) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['te_percent_of_lsv']-financial_metrics['base']['total']['te_percent_of_lsv'],false,true) + ")",
             "arrow": financial_metrics['simulated']['total']['te_percent_of_lsv'] > financial_metrics['base']['total']['te_percent_of_lsv'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference( financial_metrics['simulated']['total']['te_percent_of_lsv'],financial_metrics['base']['total']['te_percent_of_lsv'] )
         }
@@ -351,8 +352,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
         this.customer_margin_rsv = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['rp_percent'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent'],false,false),
-            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['rp_percent'],financial_metrics['base']['total']['rp_percent']) + "%)",
-            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent']-financial_metrics['base']['total']['rp_percent'],false,false) + ")",
+            "percent": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent']-financial_metrics['base']['total']['rp_percent'],false,true) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent']-financial_metrics['base']['total']['rp_percent'],false,true) + ")",
             "arrow": financial_metrics['simulated']['total']['rp_percent'] > financial_metrics['base']['total']['rp_percent'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['rp_percent'] , financial_metrics['simulated']['total']['rp_percent'])
         }

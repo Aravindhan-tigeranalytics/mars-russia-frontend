@@ -28,6 +28,7 @@ export class CompulsoryWeeksPopupComponent implements OnInit {
        
     }
     apply(){
+        if(this.weekly_map.length > 0){
         // console.log(this.weekly_map.map(d=>d.week).sort(function(a, b){return a - b}) , "week list arry")
         
         let max_diff =utils.generate_consecutive_list_max_diff(this.weekly_map.map(d=>d.week).sort(function(a, b){return a - b}))
@@ -51,6 +52,7 @@ export class CompulsoryWeeksPopupComponent implements OnInit {
         this.error = null as any
         // console.log(max_diff , "maxdiff")
         // console.log(this.weekly_map , "weekly map result...................")
+    }
         this.cumpulsoryWeekEvent.emit({
             "id" : "compulsory-weeks-popup",
             "value" : this.weekly_map
