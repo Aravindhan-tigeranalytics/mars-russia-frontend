@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { ModalService } from '@molecules/modal/modal.service';
 import {OptimizerService} from '../../../core/services/optimizer.service'
@@ -12,8 +12,12 @@ import { color } from 'd3';
     templateUrl: './compare-scenario-popup.component.html',
     styleUrls: ['./compare-scenario-popup.component.css'],
 })
+
+
 export class CompareScenarioPopupComponent implements OnInit {
+
     CompareScenarioChartData:any = []
+    legendColors:any = ['#0000a0','#00d7b9','#ffdc00','#a6db00','#9600ff','#ff32a0','#ff3c14','#ff8200']
     constructor(private _location: Location,private modal : ModalService , private optimizer : OptimizerService
         ) {
             this.CompareScenarioChartData = []
@@ -43,7 +47,7 @@ export class CompareScenarioPopupComponent implements OnInit {
                             { "group": "Customer Margin"}
                         ]
                         for(let i = 0; i < this.loaded_scenario.length; i++){
-                            this.legendNames.push({'name': this.loaded_scenario[i].scenario_name,'color': this.getRandomColor()})
+                            this.legendNames.push({'name': this.loaded_scenario[i].scenario_name,'color': this.legendColors[i]})
                             let key:any = 'simulated_'+JSON.stringify(i+1)
                             this.CompareScenarioChartData[0][key] = this.loaded_scenario[i]['simulated']['total']['lsv']
                             this.CompareScenarioChartData[1][key] = this.loaded_scenario[i]['simulated']['total']['te']
@@ -83,9 +87,10 @@ export class CompareScenarioPopupComponent implements OnInit {
                 this.compare_scenario_data = data
             }
         })
-       
+        
         this.screenWidth = window.innerWidth - 2;
         this.screenHeight = window.innerHeight;
+        console.log(this.screenWidth,this.screenHeight)
     }
     getRandomColor() {
         var letters = '0123456789ABCDEF';

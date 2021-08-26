@@ -108,3 +108,8 @@
     right: 8px;
     z-index: 12;
 }
+
+.image-right {
+    position: absolute;
+    right: 2vw;
+}

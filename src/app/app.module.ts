@@ -18,6 +18,7 @@ import {SharedModule} from "./shared/shared.module"
 import {AuthModule} from "./auth/auth.module"
 import { GlobalErrorHandler } from "@core/services/global-error-handler.service";
 // import {AuthRoutingModule} from "./auth/auth-routing.module"
+import { environment } from 'src/environments/environment';
 import {
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule,
@@ -52,7 +53,11 @@ import {
         PagesModule,CoreModule, 
         SharedModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-        NgxUiLoaderHttpModule.forRoot({ showForeground: true })
+        NgxUiLoaderHttpModule.forRoot({ showForeground: true, 
+          exclude: [
+            environment.api_url + 'api/scenario/compare-scenario-download/'
+          ] 
+        })
     ],
     providers: [
       {
