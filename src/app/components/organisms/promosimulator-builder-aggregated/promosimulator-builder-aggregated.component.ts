@@ -250,8 +250,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_base": Utils.formatNumber(data['base']['total']['mac_percent'],true,true),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['mac_percent'],true,true),
                 "arrow":  data['simulated']['total']['mac_percent'] > data['base']['total']['mac_percent'] ? 'carret-up' : 'carret-down' ,
-                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['mac_percent'],data['base']['total']['mac_percent']) + "%)",
-                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['mac_percent'] - data['base']['total']['mac_percent'],true,true) + ")",
+                "percent": "(" + Utils.formatNumber(data['simulated']['total']['mac_percent'] - data['base']['total']['mac_percent'],false,true) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['mac_percent'] - data['base']['total']['mac_percent'],false,true) + ")",
                 "color":  this.colorForDifference(data['base']['total']['mac_percent'] , data['simulated']['total']['mac_percent']),
             }
 
@@ -283,8 +283,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_base": Utils.formatNumber(data['base']['total']['te_percent_of_lsv'],true,true),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['te_percent_of_lsv'],true,true),
                 "arrow":  data['simulated']['total']['te_percent_of_lsv'] > data['base']['total']['te_percent_of_lsv'] ?  'carret-up' : 'carret-down' ,
-                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['te_percent_of_lsv'],data['base']['total']['te_percent_of_lsv']) + "%)",
-                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],true,true) + ")",
+                "percent": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],false,true) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],false,true) + ")",
                 "color": this.colorForDifference( data['simulated']['total']['te'],data['base']['total']['te']),
             }
             this.te_units = {
@@ -352,8 +352,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_base": Utils.formatNumber(data['base']['total']['rp_percent'],true,true),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['rp_percent'],true,true),
                 "arrow": data['simulated']['total']['rp_percent'] > data['base']['total']['rp_percent'] ?  'carret-up' : 'carret-down' ,
-                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['rp_percent'],data['base']['total']['rp_percent']) + "%)",
-                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['rp_percent']-data['base']['total']['rp_percent'],true,true) + ")",
+                "percent": "(" + Utils.formatNumber(data['simulated']['total']['rp_percent']-data['base']['total']['rp_percent'],false,true)+ "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['rp_percent']-data['base']['total']['rp_percent'],false,true) + ")",
                 "color":  this.colorForDifference(data['base']['total']['rp_percent'] , data['simulated']['total']['rp_percent']),
             }
 
@@ -566,6 +566,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     }
 
     colorForDifference(base:any, simulated:any){
+        base  = parseFloat(base.toFixed(4));
+        simulated  = parseFloat(simulated.toFixed(4));
         if(simulated > base){
             return 'green'
         }

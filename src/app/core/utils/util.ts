@@ -123,16 +123,24 @@ export function convertCurrency(value:any , per?:any , is_curr = true){
   }
 
   export function  percentageDifference(a: number, b: number){
+    a  = parseFloat(a.toFixed(4));
+    b  = parseFloat(b.toFixed(4));
+    
     if (a == 0 && b == 0){
         return (0).toFixed(2)
     }
     if (a > 0 && b == 0){
         return (100).toFixed(2)
     }
-    return  (100 * Math.abs( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
+    // return  (100 * Math.abs( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
+    return  (100 * ( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
 }
 
-export function formatNumber(number: any,currency: boolean,percentage: boolean ){
+export function formatNumber(number: any,currency: boolean,percentage: boolean,debug=false ){
+  // if(debug){
+  //   debugger
+  // }
+  number  = parseFloat(number.toFixed(4));
   
     var SI_SYMBOL = ["", "K", "M", "B", "T", "P", "E"];
     // what tier? (determines SI symbol)
