@@ -1,7 +1,4 @@
-<div
-    [ngStyle]="{ 'width.px': screenWidth, 'height.px': screenHeight }"
-    class="compare-scenario-popup bg-white mx-auto my-0 scrollbar-y px-20"
->
+<div style="width: 100%;background: white;padding: 20px;">
     <div class="compare-head flex flex-row justify-between py-3">
         <div class="flex flex-row items-center space-x-5">
             <nwn-button type="icon" size="iconsm" (click)="backClicked()">
@@ -28,12 +25,12 @@
                     >Promotion plans</nwn-tab-cta
                 >
             </div>
-            <!-- <div class="pr-6">
+            <div class="pr-6">
                 <nwn-tab-cta (click)="toggleTabs(3)" [type]="openTab === 3 ? 'selectedtab' : 'unselectedtab'"
                     >Graph
                 </nwn-tab-cta
                 >
-            </div> -->
+            </div>
         </div>
         <div *ngIf="loaded_scenario.length > 0"  class="tab-content">
             <div id="kpi-metrics" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
@@ -42,7 +39,7 @@
             <div id="promotion-plans" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
                 <nwn-promotion-plans-tab [loaded_scenario]="loaded_scenario"></nwn-promotion-plans-tab>
             </div>
-            <!-- <div id="compare-scenario-graph" [ngClass]="{ hidden: openTab !== 3, block: openTab === 3 }" style="margin-top: 3rem;">
+            <div id="compare-scenario-graph" [ngClass]="{ hidden: openTab !== 3, block: openTab === 3 }" style="margin-top: 3rem;">
                 <nwn-cm-sc-chart [cschartdata]='CompareScenarioChartData' [legenddata]='legendNames'></nwn-cm-sc-chart>
                 <div class="flex flex-row-reverse space-x-4 space-x-reverse my-6">
                     <div>
@@ -52,7 +49,7 @@
                         </ng-container>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>

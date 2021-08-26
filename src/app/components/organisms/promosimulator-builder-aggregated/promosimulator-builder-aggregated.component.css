@@ -75,7 +75,8 @@
 .bullted-list {
     display: inline-block;
     list-style: disc !important;
-    margin-left: 12%;
+    margin-left: 30%;
+    vertical-align: middle;
 }
 .red{
     color: red;

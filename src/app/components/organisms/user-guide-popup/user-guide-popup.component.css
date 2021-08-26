@@ -41,7 +41,8 @@
 #carousel-7:checked~.control-7~.carousel-indicators li:nth-child(7) .carousel-bullet,
 #carousel-8:checked~.control-8~.carousel-indicators li:nth-child(8) .carousel-bullet,
 #carousel-9:checked~.control-9~.carousel-indicators li:nth-child(9) .carousel-bullet {
-  color: #2b6cb0;
+  /* color: #2b6cb0; */
+  color: #E6A000;
   /*Set to match the Tailwind colour you want the active one to be */
 }
 
