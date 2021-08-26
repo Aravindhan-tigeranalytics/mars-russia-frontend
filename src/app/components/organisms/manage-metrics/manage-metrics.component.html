@@ -38,6 +38,12 @@
                 >Customer Margin, %RSV</nwn-command-multiselect
             > -->
         </div>
+        <div class="border border-gray-200 px-2 bg-gray-100">
+            <nwn-cell-header type="headersm">Retailer metrics</nwn-cell-header>
+        </div>
+        <div *ngFor="let retailer of retailer_metrics | appFilter: searchText;">
+            <nwn-command-multiselect (valueChangeSelect) = "changeMetrics($event)" [leftBorder]="false" [value] = "retailer.value" [checked] = "retailer.checked" [hideClose]="true">{{retailer.value}}</nwn-command-multiselect>
+        </div>
     </div>
     <nwn-search-footer (click)="closeModal()" [showKeyBoardCtrl]="true" [showApply]="true"></nwn-search-footer>
 </div>

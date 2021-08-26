@@ -25,12 +25,16 @@ export class ManageMetricsComponent implements OnInit {
     {"value":"TE / Unit","checked":true},
     {"value":"ROI","checked":true},
     {"value":"Lift %","checked":true},  
+  ]
+
+  retailer_metrics:Array<CheckboxModel> = [
     {"value":"ASP","checked":true},
     {"value":"Promo ASP","checked":true},
     {"value":"RSV w/o VAT","checked":true},
-    {"value":"Customer Margin","checked":true}
+    {"value":"Customer Margin","checked":true},
+    {"value":"Customer Margin,%RSV","checked":true}
   ]
-  selected_metrics : Array<string> = [...this.sales_metrics.map(val=>val.value),...this.mars_metrics.map(val=>val.value)]
+  selected_metrics : Array<string> = [...this.sales_metrics.map(val=>val.value),...this.mars_metrics.map(val=>val.value),...this.retailer_metrics.map(val=>val.value)]
   @Output()
   metricChanges = new EventEmitter();
 
