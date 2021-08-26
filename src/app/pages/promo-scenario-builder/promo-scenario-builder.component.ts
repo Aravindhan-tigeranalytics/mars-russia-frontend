@@ -445,7 +445,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.disable_save_download = true
            
         this.hidepanel = true
-        this.restApi.setAccAndPPGFilteredFlagObservable(true)
+        this.restApi.setAccAndPPGFilteredFlagObservable(false)
         this.filter_model =  {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
         "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
         // this.selected_product_week

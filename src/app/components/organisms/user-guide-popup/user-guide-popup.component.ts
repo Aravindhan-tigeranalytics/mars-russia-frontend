@@ -10,7 +10,9 @@ import * as $ from 'jquery';
     styleUrls: ['./user-guide-popup.component.css'],
 })
 export class UserGuidePopupComponent implements OnInit {
-  
+    @Input()
+    guideFor: string | 'simulator' | 'optimizer' = 'optimizer'
+
     constructor(public modalService: ModalService,public optimizerService: OptimizerService){}
     ngOnInit(){
         this.optimizerService.getResetUserGuideFlagObservable().subscribe((data:any)=>{

@@ -1,6 +1,7 @@
 <nwn-loaded-optimizer-header 
 (optimizeAndResetEvent) = "optimizeAndReset($event)"
 (downloadEvent)="downloadEvent($event)"
+(filterResetEvent) = "filterResetEvent($event)"
  (modalClose) = "closeModalEvent($event)"
  [filter_model] = "filter_model" 
  [status]= "status"
@@ -16,27 +17,27 @@
 <!-- Modals -->
 <!-- Filter Retailer -->
 <nwn-modal id="filter-retailer" class="hidden">
-    <nwn-filter-retailer (closeModal)="close($event)" (filterApply)="filterApply($event)" (retailerChange) = "retailerChange($event)" [retailers] = "retailers"></nwn-filter-retailer>
+    <nwn-filter-retailer [filter_model]="filter_model" (closeModal)="close($event)" (filterApply)="filterApply($event)" (retailerChange) = "retailerChange($event)" [retailers] = "retailers"></nwn-filter-retailer>
 </nwn-modal>
 <!-- Filter Category -->
 <nwn-modal id="filter-categories" class="hidden">
-    <nwn-filter-categories (closeModal)="close($event)" (filterApply)="filterApply($event)" (categoryChange) = "categoryChange($event)" [categories] = "categories"></nwn-filter-categories>
+    <nwn-filter-categories [filter_model]="filter_model" (closeModal)="close($event)" (filterApply)="filterApply($event)" (categoryChange) = "categoryChange($event)" [categories] = "categories"></nwn-filter-categories>
 </nwn-modal>
 <!-- Filter Strategic Cell -->
 <nwn-modal id="filter-stragetic-cells" class="hidden">
-    <nwn-filter-stragetic-cells (closeModal)="close($event)" (filterApply)="filterApply($event)" (strategicCellChange) = "strategicCellChange($event)" [stragetic_cells] = "strategic_cell"></nwn-filter-stragetic-cells>
+    <nwn-filter-stragetic-cells [filter_model]="filter_model" (closeModal)="close($event)" (filterApply)="filterApply($event)" (strategicCellChange) = "strategicCellChange($event)" [stragetic_cells] = "strategic_cell"></nwn-filter-stragetic-cells>
 </nwn-modal>
 <!-- Filter Brands -->
 <nwn-modal id="filter-brands" class="hidden">
-    <nwn-filter-brands (closeModal)="close($event)" (filterApply)="filterApply($event)" (brandChange)="brandChange($event)"  [brands] = "brands"></nwn-filter-brands>
+    <nwn-filter-brands [filter_model]="filter_model" (closeModal)="close($event)" (filterApply)="filterApply($event)" (brandChange)="brandChange($event)"  [brands] = "brands"></nwn-filter-brands>
 </nwn-modal>
 <!-- Filter Brand Formats -->
 <nwn-modal id="filter-brand-formats" class="hidden">
-    <nwn-filter-brands-formats (closeModal)="close($event)" (filterApply)="filterApply($event)" (brandFormatChange) = "brandFormatChange($event)" [brand_formats] = "brands_format"></nwn-filter-brands-formats>
+    <nwn-filter-brands-formats [filter_model]="filter_model" (closeModal)="close($event)" (filterApply)="filterApply($event)" (brandFormatChange) = "brandFormatChange($event)" [brand_formats] = "brands_format"></nwn-filter-brands-formats>
 </nwn-modal>
 <!-- Filter Product Groups -->
 <nwn-modal id="filter-product-groups" class="hidden">
-    <nwn-filter-product-groups (closeModal)="close($event)" (filterApply)="filterApply($event)" (productChange) = "productChange($event)" [product_groups] = "product_group"></nwn-filter-product-groups>
+    <nwn-filter-product-groups [filter_model]="filter_model" (closeModal)="close($event)" (filterApply)="filterApply($event)" (productChange) = "productChange($event)" [product_groups] = "product_group"></nwn-filter-product-groups>
 </nwn-modal>
 <!-- save scenario -->
 <nwn-modal id="save-scenario-popup" class="hidden">
@@ -70,7 +71,7 @@
 
 <!-- User Guide Popup -->
 <nwn-modal id="user-guide-popup" class="hidden">
-    <nwn-user-guide-popup></nwn-user-guide-popup>
+    <nwn-user-guide-popup [guideFor]="'optimizer'"></nwn-user-guide-popup>
 </nwn-modal>
 
 

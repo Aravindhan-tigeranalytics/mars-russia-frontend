@@ -2,7 +2,7 @@
     <div class="flex flex-row items-center justify-between border-b border-gray-300 py-2">
         <div class="flex flex-row flex-wrap content-start items-center justify-start">
             <div class="mr-2 mb-2">
-                <nwn-filter-item
+                <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked('Retailers')"
                     type="stroke"
                     nwnSvgIcon="retailers"
                     [hideClose]="filter_model.retailer =='Retailers'"
@@ -11,7 +11,7 @@
                 >
             </div>
             <div class="mr-2 mb-2">
-                <nwn-filter-item
+                <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked('Category')"
                     type="stroke"
                     nwnSvgIcon="categories"
                     [hideClose]="filter_model.category =='Category'"
@@ -20,7 +20,7 @@
                 >
             </div>
             <div class="mr-2 mb-2">
-                <nwn-filter-item
+                <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked('Strategic cells')"
                     type="stroke"
                     nwnSvgIcon="strategic-cells"
                     [hideClose]="filter_model.strategic_cell =='Strategic cells'"
@@ -29,7 +29,7 @@
                 >
             </div>
             <div class="mr-2 mb-2">
-                <nwn-filter-item
+                <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked('Brands')"
                     type="stroke"
                     nwnSvgIcon="brands"
                     [hideClose]="filter_model.brand =='Brands'"
@@ -38,7 +38,7 @@
                 >
             </div>
             <div class="mr-2 mb-2">
-                <nwn-filter-item
+                <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked('Brand Formats')"
                     type="stroke"
                     nwnSvgIcon="brand-formats"
                     [hideClose]="filter_model.brand_format =='Brand Formats'"
@@ -47,7 +47,7 @@
                 >
             </div>
             <div class="mr-2 mb-2">
-                <nwn-filter-item
+                <nwn-filter-item (closeClickedEvent) = "$event.stopPropagation();closeClicked('Product groups')"
                     type="stroke"
                     nwnSvgIcon="product-groups"
                     [hideClose]="filter_model.product_group =='Product groups'"

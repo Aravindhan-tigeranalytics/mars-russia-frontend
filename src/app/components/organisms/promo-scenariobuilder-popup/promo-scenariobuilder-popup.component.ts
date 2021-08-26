@@ -26,6 +26,9 @@ export class PromoScenariobuilderPopupComponent extends ModalApply implements On
     if(data){
       this.isFiltered = true
     }
+    else{
+      this.isFiltered = false
+    }
   })
   this.simulatorService.ClearScearchText.asObservable().subscribe(data=>{
     this.searchText = ""

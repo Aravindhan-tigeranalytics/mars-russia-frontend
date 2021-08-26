@@ -27,11 +27,14 @@ export class PromoOptimizerPopupComponent extends ModalApply implements OnInit{
     }
 
     ngOnInit(): void {
-    // this.optimizerService.isAccAndProductFiltered.asObservable().subscribe(data=>{
-    //     if(data){
-    //         this.isFiltered = true
-    //     }
-    //     })
+        this.optimizerService.isAccAndProductFiltered.asObservable().subscribe(data=>{
+            if(data){
+                this.isFiltered = true
+            }
+            else{
+                this.isFiltered = false
+            }
+        })
         this.optimizerService.ClearScearchText.asObservable().subscribe(data=>{
         this.searchText = ""    
         })

@@ -7,8 +7,8 @@
     </div>
     <div>
         <ng-container *ngFor="let data of filterNames | appFilter: searchText : 'promo';">
-            <nwn-command-iconitem  type="{{data.type}}" nwnSvgIcon="{{data.nwnSvgIcon}}" [hideTick]="data.hideTick" (click)="openModal(data.id)">{{data.name}}</nwn-command-iconitem>
-            <!-- <nwn-command-iconitem  type="{{data.type}}" *ngIf="data.name != 'Set filter'" nwnSvgIcon="{{data.nwnSvgIcon}}" [ngClass]="{ 'disabled': isFiltered == false }" [hideTick]="data.hideTick" (click)="openModal(data.id)">{{data.name}}</nwn-command-iconitem> -->
+            <nwn-command-iconitem  type="{{data.type}}" *ngIf="data.name == 'Set filters'" nwnSvgIcon="{{data.nwnSvgIcon}}" [hideTick]="data.hideTick" (click)="openModal(data.id)">{{data.name}}</nwn-command-iconitem>
+            <nwn-command-iconitem  type="{{data.type}}" *ngIf="data.name != 'Set filters'" nwnSvgIcon="{{data.nwnSvgIcon}}" [ngClass]="{ 'disabled': isFiltered == false }" [hideTick]="data.hideTick" (click)="openModal(data.id)">{{data.name}}</nwn-command-iconitem>
         </ng-container>
         <!-- <nwn-command-iconitem type="stroke" nwnSvgIcon="variables" [hideTick]="true" (click)="openModal('optimize-function')"
             >Set optimize function
