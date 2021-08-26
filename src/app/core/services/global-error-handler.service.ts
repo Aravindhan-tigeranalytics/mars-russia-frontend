@@ -21,8 +21,13 @@ export class GlobalErrorHandler implements ErrorHandler {
         this.router.navigate(['/login'])
 
       }
-      console.log(error , "Actual error")
+      else{
+        // this.toastrService.error("error!!")
    
+
+      }
+      
+     
     
      throw error;
   }
