@@ -20,10 +20,10 @@
                 ></ngx-select-dropdown>
             </div>
             <div class="tableheaddrop">
-                <nwn-button type="tertiary" size="lg">
+                <nwn-button type="tertiary" size="lg" (click)="openModal()">
                     <!-- nwn-manage-metrics -->
                     <span class="mr-20">Metrics</span>
-                    <nwn-svg-icon (click) = "openModal()" nwnSvgIcon="chevron-down" size="lg" class="relative left-2"></nwn-svg-icon>
+                    <nwn-svg-icon nwnSvgIcon="chevron-down" size="lg" class="relative left-2"></nwn-svg-icon>
                 </nwn-button>
             </div>
         </div>

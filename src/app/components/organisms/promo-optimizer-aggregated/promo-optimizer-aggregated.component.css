@@ -113,3 +113,10 @@
     position: absolute;
     right: 2vw;
 }
+
+.vertical-line {
+    border-right: 4px solid #0000a0;
+    height: 80px;
+    padding-right: 3vw;
+    vertical-align: -webkit-baseline-middle;
+}

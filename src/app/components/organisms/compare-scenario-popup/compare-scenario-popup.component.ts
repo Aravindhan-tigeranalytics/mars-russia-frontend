@@ -38,24 +38,24 @@ export class CompareScenarioPopupComponent implements OnInit {
                     this.legendNames = []
                     if(this.loaded_scenario.length > 0){
                         this.CompareScenarioChartData = [
+                            { "group": "RSV v/o VAT"}, 
+                            { "group": "Customer Margin"},
                             { "group": "LSV"},
                             { "group": "Trade Expense"},
                             { "group": "NSV"},
                             { "group": "COGS"},
                             { "group": "MAC"}, 
-                            { "group": "RSV v/o VAT"}, 
-                            { "group": "Customer Margin"}
                         ]
                         for(let i = 0; i < this.loaded_scenario.length; i++){
                             this.legendNames.push({'name': this.loaded_scenario[i].scenario_name,'color': this.legendColors[i]})
                             let key:any = 'simulated_'+JSON.stringify(i+1)
-                            this.CompareScenarioChartData[0][key] = this.loaded_scenario[i]['simulated']['total']['lsv']
-                            this.CompareScenarioChartData[1][key] = this.loaded_scenario[i]['simulated']['total']['te']
-                            this.CompareScenarioChartData[2][key] = this.loaded_scenario[i]['simulated']['total']['nsv']
-                            this.CompareScenarioChartData[3][key] = this.loaded_scenario[i]['simulated']['total']['cogs']
-                            this.CompareScenarioChartData[4][key] = this.loaded_scenario[i]['simulated']['total']['mac']
-                            this.CompareScenarioChartData[5][key] = this.loaded_scenario[i]['simulated']['total']['total_rsv_w_o_vat']
-                            this.CompareScenarioChartData[6][key] = this.loaded_scenario[i]['simulated']['total']['rp']
+                            this.CompareScenarioChartData[0][key] = this.loaded_scenario[i]['simulated']['total']['total_rsv_w_o_vat']
+                            this.CompareScenarioChartData[1][key] = this.loaded_scenario[i]['simulated']['total']['rp']
+                            this.CompareScenarioChartData[2][key] = this.loaded_scenario[i]['simulated']['total']['lsv']
+                            this.CompareScenarioChartData[3][key] = this.loaded_scenario[i]['simulated']['total']['te']
+                            this.CompareScenarioChartData[4][key] = this.loaded_scenario[i]['simulated']['total']['nsv']
+                            this.CompareScenarioChartData[5][key] = this.loaded_scenario[i]['simulated']['total']['cogs']
+                            this.CompareScenarioChartData[6][key] = this.loaded_scenario[i]['simulated']['total']['mac']
                         }
                     }
                     // this.CompareScenarioChartData = [

@@ -12,6 +12,8 @@ import * as Utils from "../../../core/utils/util"
 export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit {
     @ViewChild('scrollOne') scrollOne: ElementRef;
     @ViewChild('scrollTwo') scrollTwo: ElementRef;
+    @ViewChild('scrollOneOP') scrollOneOP: ElementRef;
+    @ViewChild('scrollTwoOP') scrollTwoOP: ElementRef;
     translate_y: string = '';
     currentTranslateRate: string = '';
     constructor(private elRef: ElementRef,private restApi: OptimizerService,public modalService: ModalService) {}
@@ -19,6 +21,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
     public aggregatedGraphWidth: any;
+    public aggregatedGraphWidthOptimizer: any;
 
     public baseCalendar: any = []
     public stimulatedCalendar: any = []
@@ -34,12 +37,18 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
         "percent": 'unselected'
     }
 
+    aggregatedTabOptimizer:any = {
+        "absolute": 'selected',
+        "percent": 'unselected'
+    }
+
     weeklyTab:any = {
         "absolute": 'selected',
         "percent": 'unselected'
     }
     activeWeeklyTab: string = 'absolute'
     activeAggregatedTab: string = 'absolute'
+    activeAggregatedTabOptimizer: string = 'absolute'
 
     units:any
     base_units:any
@@ -66,9 +75,13 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     message2 :string
     message3 : string
 
+    baselineLiftChartData:any = []
+    plChartData:any = []
+
     ngOnInit(): void {
         this.weeklyTableWidth = window.innerWidth - 155;
         this.weeklyTableHeight = window.innerHeight - 150;
+        this.aggregatedGraphWidthOptimizer = window.innerWidth - 155;
         this.aggregatedGraphWidth = (window.innerWidth - 155) / 2;
         this.restApi.getOptimizerResponseObservabe().subscribe(data=>{
             if(data){
@@ -98,6 +111,18 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
 
             scrollOne.scrollLeft = scrollTwo.scrollLeft;
         }
+        else if(value == 'GraphOP'){
+            const scrollOne = this.scrollOneOP.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwoOP.nativeElement as HTMLElement;
+
+            scrollTwo.scrollLeft = scrollOne.scrollLeft;
+        }
+        else if(value == 'TableOP'){
+            const scrollOne = this.scrollOneOP.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwoOP.nativeElement as HTMLElement;
+
+            scrollOne.scrollLeft = scrollTwo.scrollLeft;
+        }
       }
 
     aggregatedSubTabClick(key : string){
@@ -116,6 +141,24 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             this.activeAggregatedTab = "percent"
         }
     }
+
+    aggregatedSubTabClickOP(key : string){
+        if(key == 'Absolute'){
+            this.aggregatedTabOptimizer = {
+                "absolute": 'selected',
+                "percent": 'unselected'
+            }
+            this.activeAggregatedTabOptimizer = "absolute"
+        }
+        else {
+            this.aggregatedTabOptimizer = {
+                "absolute": 'unselected',
+                "percent": 'selected'
+            }
+            this.activeAggregatedTabOptimizer = "percent"
+        }
+    }
+
     get_holiday_calendar(str){
         if(str){
             return str.split(",").map(d=>d.split("_").join(" "))
@@ -214,6 +257,25 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
         }
 
         let financial_metrics:any = this.optimizer_response.financial_metrics
+
+        this.baselineLiftChartData = [
+            {
+                group: 'Sales Units',
+                baseline1: [financial_metrics['base']['total']['units'], financial_metrics['base']['total']['increment_units']],
+                baseline2: [financial_metrics['simulated']['total']['units'],  financial_metrics['simulated']['total']['increment_units']],
+            },
+        ];
+
+        this.plChartData = [
+            { group: 'LSV', base: financial_metrics['base']['total']['lsv'], simulated: financial_metrics['simulated']['total']['lsv'] },
+            { group: 'Trade Expense', base: financial_metrics['base']['total']['te'], simulated: financial_metrics['simulated']['total']['te'] },
+            { group: 'NSV', base: financial_metrics['base']['total']['nsv'], simulated: financial_metrics['simulated']['total']['nsv'] },
+            { group: 'COGS', base: financial_metrics['base']['total']['cogs'], simulated: financial_metrics['simulated']['total']['cogs'] },
+            { group: 'MAC', base: financial_metrics['base']['total']['mac'], simulated: financial_metrics['simulated']['total']['mac'] },
+            { group: 'RSV v/o VAT', base: financial_metrics['base']['total']['total_rsv_w_o_vat'], simulated: financial_metrics['simulated']['total']['total_rsv_w_o_vat'] },
+            { group: 'Customer Margin', base: financial_metrics['base']['total']['rp'], simulated: financial_metrics['simulated']['total']['rp'] },
+        ]
+
         this.units = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['units'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['units'],false,false),
