@@ -15,6 +15,11 @@
         </div>
         <div class="pr-6">
             <nwn-tab-cta (click)="toggleTabs(2)" [type]="openTab === 2 ? 'selectedtab' : 'unselectedtab'"
+                >Calendar</nwn-tab-cta
+            >
+        </div>
+        <div class="pr-6">
+            <nwn-tab-cta (click)="toggleTabs(3)" [type]="openTab === 3 ? 'selectedtab' : 'unselectedtab'"
                 >Weekly</nwn-tab-cta
             >
         </div>
@@ -26,7 +31,224 @@
             </div>
         </div>
     </div>
-    <div id="agregated" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
+
+
+    <div id="agregatedView" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
+        <div class="flex flex-row justify-start border-b border-marsgray-300">
+            <div class="border-r border-marsgra-300 pr-6 py-5">
+                <div class="pt-5 pb-10">
+                    <h1 class="text-title-medium text-gray-700 font-medium">Baseline vs Incremental</h1>
+                </div>
+                <div class="pt-12 pr-8">
+                    <nwn-baseline-lift-chart [baselineliftdata]="baselineLiftChartData"></nwn-baseline-lift-chart>
+                </div>
+                <div class="flex flex-row flex space-x-4 my-6">
+                    <div>
+                        <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-100"
+                            >Incremental</nwn-legend-items
+                        >
+                    </div>
+                    <div>
+                        <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-300"
+                            >Base</nwn-legend-items
+                        >
+                    </div>
+                    <div>
+                        <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-600"
+                            >Simulated</nwn-legend-items
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="py-5 pl-6 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidthOptimizer }" (scroll)="updateScroll('GraphOP')" #scrollOneOP>
+                <div class="flex flex-row justify-between pt-5 pb-20 w-full">
+                    <h1 class="text-title-medium text-gray-700 font-medium">Mars & Customer P&L Metrics</h1>
+                    <div class="flex flex-row space-x-2">
+                        <!-- <div class="w-20 h-auto border border-marsgray-100 img-height">
+                            <img class="w-full h-auto" src="/assets/subbrand-img/orbit-otc.png" alt="" />
+                        </div> -->
+                        <!-- <div class="w-20 h-auto border border-marsgray-100">
+                            <img class="w-full h-auto" src="/assets/subbrand-img/twix.png" alt="" />
+                        </div>
+                        <div class="w-20 h-auto border border-marsgray-100">
+                            <img class="w-full h-auto" src="/assets/subbrand-img/american-heritage.png" alt="" />
+                        </div>
+                        <div class="flex items-center w-20 px-3 h-auto">
+                            <p class="text-body-standard text-marsgray-700 font-normal">+5</p>
+                        </div> -->
+                    </div>
+                </div>
+                <nwn-pl-chart [plchartdata]='plChartData'></nwn-pl-chart>
+                <div class="flex flex-row-reverse space-x-4 space-x-reverse my-6">
+                    <div>
+                        <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-600"
+                            >Simulated</nwn-legend-items
+                        >
+                    </div>
+                    <div>
+                        <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-300"
+                            >Base</nwn-legend-items
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-row justify-between items-center py-10">
+            <div class="flex flex-row flex-wrap border border-marsgray-300">
+                <div class="p-3" (click)="aggregatedSubTabClickOP('Absolute')">
+                    <nwn-toggle-cta type="{{aggregatedTab.absolute}}">Absolute change</nwn-toggle-cta>
+                </div>
+                <div class="p-3" (click)="aggregatedSubTabClickOP('Percentage')">
+                    <nwn-toggle-cta type="{{aggregatedTab.percent}}">Percentage change</nwn-toggle-cta>
+                </div>
+            </div>
+            <div class="flex flex-row flex-wrap space-x-4">
+                <div>
+                    <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bg-gray-500"
+                        >Base value</nwn-legend-items
+                    >
+                </div>
+                <div>
+                    <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bg-gray-700"
+                        >Simulated value</nwn-legend-items
+                    >
+                </div>
+                <div>
+                    <nwn-legend-items
+                        nwnLegendItems="twosquare"
+                        type="squaresm"
+                        colorVariantFirst="bgGreenAccent"
+                        colorVariantSecond="bgRed-600"
+                        >Simulated value</nwn-legend-items
+                    >
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row justify-start items-center py-5" *ngIf="incremental_units">
+            <div class="baselinemetrics min-w-[300px]">
+                <table class="border border-marsgray-200 text-left">
+                    <thead class="bg-white">
+                        <tr class="whitespace-nowrap">
+                            <th colspan="2" scope="colgroup">
+                                <nwn-cell-header type="headersm" color="bggray-100">Baseline vs Incremental</nwn-cell-header>
+                            </th>
+                        </tr>
+                        <tr class="whitespace-nowrap">
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >Baseline</nwn-cell-header
+                                >
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >Incremental Units</nwn-cell-header
+                                >
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr class="whitespace-nowrap">
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="base_units"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="incremental_units"></nwn-cell-item></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="marsplmetrics ml-7 scrollbar-x" (scroll)="updateScroll('TableOP')" #scrollTwoOP>
+                <table class="border border-marsgray-200 text-left">
+                    <thead class="bg-white">
+                        <tr class="whitespace-nowrap">
+                            <th colspan="8" scope="colgroup">
+                                <nwn-cell-header type="headersm" color="bggray-100">Mars P&L Metrics</nwn-cell-header>
+                            </th>
+                            <th colspan="5" scope="colgroup">
+                                <nwn-cell-header type="headersm" color="bggray-100"
+                                    >Customer P&L Metrics</nwn-cell-header
+                                >
+                            </th>
+                        </tr>
+                        <tr class="whitespace-nowrap">
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">LSV</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">NSV</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">MAC</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">MAC,%NSV</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >Trade expense</nwn-cell-header
+                                >
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >TE,%LSV</nwn-cell-header
+                                >
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >TE/Unit</nwn-cell-header
+                                >
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >ROI</nwn-cell-header
+                                >
+                            </th>
+                          
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">ASP</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">Promo ASP</nwn-cell-header>
+                            </th>
+                            
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">RSV w/o VAT</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >Customer Margin</nwn-cell-header
+                                >
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >Customer Margin,%RSV</nwn-cell-header
+                                >
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr class="whitespace-nowrap">
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="lsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="nsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="mac"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="mac_per_nsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="trade_expense"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="te_lsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="te_unit"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="roi"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="asp"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="promo_asp"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="rst_w_o_vat"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="customer_margin"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTabOptimizer" [nwnCellData]="customer_margin_rsv"></nwn-cell-item></td>
+                
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="agregated" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
         <div class="flex flex-row justify-between border-b border-marsgray-300">
             <div class="border-r border-marsgra-300 pr-6 scrollbar-x" [ngStyle]="{ 'width.px': aggregatedGraphWidth }" (scroll)="updateScroll('GraphBase')" #scrollOne>
                 <div class="pt-5">
@@ -345,7 +567,7 @@
             </div> -->
         </div>
     </div>
-    <div id="weekly" class="weekly" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
+    <div id="weekly" class="weekly" [ngClass]="{ hidden: openTab !== 3, block: openTab === 3 }">
         <div class="flex flex-row items-center justify-between py-5">
             <div class="flex flex-row flex-wrap border border-marsgray-300">
                 <div class="p-3" (click)="weeklySubTabClick('Absolute')">
