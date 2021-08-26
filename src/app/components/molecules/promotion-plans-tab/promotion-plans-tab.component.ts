@@ -31,7 +31,16 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
             
            console.log(element,"check promotion here")
             let base_value:any = element.base.weekly
-            this.scenario_names.push(element.scenario_name)
+            let ele:any = {
+                "id" : element.scenario_id,
+                "name" : element.scenario_name,
+                "comment" : element.scenario_comment,
+                "retailer" : {
+                    "account_name" : element.account_name,
+                    "product_group" : element.product_group
+                }
+            }
+            this.scenario_names.push(ele)
             element.simulated.weekly.forEach((data:any,index)=>{
                 console.log(data , "promotion plans tabs value")
 
