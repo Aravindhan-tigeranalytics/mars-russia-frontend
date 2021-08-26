@@ -62,6 +62,9 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
 
     weeklyData:any = []
     optimizer_response : any = null
+    message1 : string
+    message2 :string
+    message3 : string
 
     ngOnInit(): void {
         this.weeklyTableWidth = window.innerWidth - 155;
@@ -273,6 +276,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "arrow": financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['mac'] , financial_metrics['simulated']['total']['mac']) 
         }
+        this.message1 = Utils.generateMessage1(this.mac , "MAC")
         // debugger
 
         this.mac_per_nsv = {
@@ -292,6 +296,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "arrow": financial_metrics['simulated']['total']['te'] > financial_metrics['base']['total']['te'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference( financial_metrics['simulated']['total']['te'],financial_metrics['base']['total']['te'] )
         }
+        this.message3 = Utils.generateMessage2(this.trade_expense)
         this.te_lsv = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['te_percent_of_lsv'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['te_percent_of_lsv'],false,false),
@@ -349,6 +354,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "arrow": financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['rp'] , financial_metrics['simulated']['total']['rp'])
         }
+        this.message2 = Utils.generateMessage2(this.customer_margin)
         this.customer_margin_rsv = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['rp_percent'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent'],false,false),

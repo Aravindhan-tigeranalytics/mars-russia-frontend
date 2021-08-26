@@ -30,7 +30,7 @@ export class CompareScenarioPopupComponent implements OnInit {
     legendNames:any = []
     ngOnInit(): void {
         this.optimizer.getCompareScenarioObservable().subscribe(data=>{
-            debugger
+            // debugger
             if(data.length > 0){
                 console.log(data , "comparescenario datas")
                     this.loaded_scenario = data
