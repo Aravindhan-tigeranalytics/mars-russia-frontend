@@ -336,6 +336,7 @@ export class PromoOptimizerComponent implements OnInit {
             }
             let res = {...this.get_optimizer_form(),...$event['data']}
             this.optimize.optimizeResult(res).subscribe(data=>{
+                console.log(data , "optimizer response ")
                 this.toastr.success('Optimized Successfully','Success')
                 this.optimizer_response = data
                 this.optimize.setOptimizerResponseObservable(data)
@@ -439,6 +440,17 @@ export class PromoOptimizerComponent implements OnInit {
             this.openModal($event);
         }
     }
+    // _tranform_corporate_segement(corporate_segment){
+    //     if(corporate_segment.toLowerCase() == 'gum'){
+    //         return "Gum"
+
+    //     }
+    //     else{
+    //         return "Choco"
+
+    //     }
+
+    // }
     get_optimizer_form(){
         console.log(this.selected_retailer , "retailer selected")
         console.log(this.selected_product , "product selected")
@@ -514,6 +526,9 @@ export class PromoOptimizerComponent implements OnInit {
                 }).subscribe(data=>{
                     console.log(data , "response")
                    this.optimize.setoptimizerDataObservable(data)
+                },err=>{
+                    this.toastr.warning(err.detail)
+                    // console.log(err , "error")
                 })
             }
         }

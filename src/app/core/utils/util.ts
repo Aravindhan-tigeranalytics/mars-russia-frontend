@@ -1,3 +1,55 @@
+export function generateMessage1(metric , type){
+  // debugger
+  // arrow: "carret-up"
+  let message = ``
+  if(metric['arrow'] == "carret-up"){
+    message += `in increase in ${type} by ${metric['converted_difference']} ${metric['percent']}`
+
+  }
+  else if(metric['arrow'] == "carret-down"){
+    message += `in decrease in ${type} by ${metric['converted_difference']} ${metric['percent']}`
+
+  }
+  else {
+    message += `in unchanged ${type}`
+
+  }
+
+return message
+}
+export function generateMessage2(metric){
+  let message = `Retailer profit `
+  if(metric['arrow'] == "carret-up"){
+    message +=  `has increased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar`
+
+  }
+  else if(metric['arrow'] == "carret-down"){
+    message +=  `has decreased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar`
+
+  }
+  else {
+    message +=  `is unchanged`
+
+  }
+  return message
+}
+
+export function generateMessage3(metric){
+  let message = `Trade expense `
+  if(metric['arrow'] == "carret-up"){
+    message+= `has increased by ${metric['converted_difference']} ${metric['percent']}`
+
+  }
+  else if(metric['arrow'] == "carret-down"){
+    message+= `has reduced by ${metric['converted_difference']} ${metric['percent']}`
+  }
+  else{
+    message+= `is unchanged`
+  }
+  
+  return message
+}
+
 export function decodePromotion(promo_name:string){
   let obj ={
     "promo_mechanics" : "",
