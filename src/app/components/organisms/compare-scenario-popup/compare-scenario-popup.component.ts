@@ -38,7 +38,7 @@ export class CompareScenarioPopupComponent implements OnInit {
                     this.legendNames = []
                     if(this.loaded_scenario.length > 0){
                         this.CompareScenarioChartData = [
-                            { "group": "RSV v/o VAT"}, 
+                            { "group": "RSV w/o VAT"}, 
                             { "group": "Customer Margin"},
                             { "group": "LSV"},
                             { "group": "Trade Expense"},

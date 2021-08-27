@@ -272,7 +272,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             { group: 'NSV', base: financial_metrics['base']['total']['nsv'], simulated: financial_metrics['simulated']['total']['nsv'] },
             { group: 'COGS', base: financial_metrics['base']['total']['cogs'], simulated: financial_metrics['simulated']['total']['cogs'] },
             { group: 'MAC', base: financial_metrics['base']['total']['mac'], simulated: financial_metrics['simulated']['total']['mac'] },
-            { group: 'RSV v/o VAT', base: financial_metrics['base']['total']['total_rsv_w_o_vat'], simulated: financial_metrics['simulated']['total']['total_rsv_w_o_vat'] },
+            { group: 'RSV w/o VAT', base: financial_metrics['base']['total']['total_rsv_w_o_vat'], simulated: financial_metrics['simulated']['total']['total_rsv_w_o_vat'] },
             { group: 'Customer Margin', base: financial_metrics['base']['total']['rp'], simulated: financial_metrics['simulated']['total']['rp'] },
         ]
 
