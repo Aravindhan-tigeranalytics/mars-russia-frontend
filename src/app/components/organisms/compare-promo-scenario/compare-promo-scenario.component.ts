@@ -60,7 +60,8 @@ export class ComparePromoScenarioComponent implements OnInit {
         console.log($event , "Event")
     }
     openComparePopup(){
-        if(this.selected_id.length >= 2){
+        console.log(this.selected_id , "selected id..........................")
+        if(this.selected_id.length >= 1){
             this.optimize.setCompareScenarioIdObservable(this.selected_id)
             console.log(this.selected_id , "selected save id")
             this.modal.close('compare-promo-scenario')

@@ -49,7 +49,7 @@ export class CompareScenarioChartComponent implements OnInit,OnChanges {
     //         .attr('transform', `translate(${this.margin.left},${this.margin.top})`);
     // }
     private createSvg(): void {
-        debugger
+        // debugger
         d3.select('#plChartSVGCompare').remove();
         this.svg = d3
             .select('#marsCustomerMetricsCompare')
@@ -135,7 +135,7 @@ export class CompareScenarioChartComponent implements OnInit,OnChanges {
 
         // color palette = one color per subgroup
         const color = d3.scaleOrdinal().domain(subGroups).range(legendColors);
-        debugger
+        // debugger
         // Show the bars
         this.svg
             .append('g')
