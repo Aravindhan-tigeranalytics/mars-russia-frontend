@@ -39,6 +39,7 @@ export class PromoOptimizerComponent implements OnInit {
     filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
     "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
     product:Product[] = []
+    loadScenarioPopuptitle:any = 'Load scenario'
     constructor(private toastr: ToastrService,private modalService: ModalService,private optimize : OptimizerService,private restApi: SimulatorService) {
 
     }
@@ -58,6 +59,7 @@ export class PromoOptimizerComponent implements OnInit {
           this.restApi.getSignoutPopupObservable().subscribe(data=>{
             if(data != ''){
                 if(data.type == 'optimizer'){
+                    this.loadScenarioPopuptitle = 'My scenario'
                     this.openModal(data.id)
                 }
             }
@@ -437,6 +439,9 @@ export class PromoOptimizerComponent implements OnInit {
             this.isOptimiserFilterApplied = false
         }
         else{
+            if($event == 'load-scenario-promosimulator'){
+                this.loadScenarioPopuptitle = 'Load scenario'
+            }
             this.openModal($event);
         }
     }

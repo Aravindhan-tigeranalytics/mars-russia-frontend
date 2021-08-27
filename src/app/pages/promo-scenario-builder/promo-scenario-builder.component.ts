@@ -56,7 +56,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
     uploaded_file:any = null
     searchText = "";
     disable_save_download = true
-
+    loadScenarioPopuptitle:any = 'Load scenario'
     get ordersFormArray() {
         return this.form.controls.orders as FormArray;
       }
@@ -86,6 +86,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.restApi.getSignoutPopupObservable().subscribe(data=>{
             if(data != ''){
                 if(data.type == 'simulator'){
+                    this.loadScenarioPopuptitle = 'My scenario'
                     this.openModal(data.id)
                 }
             }
@@ -819,6 +820,9 @@ export class PromoScenarioBuilderComponent implements OnInit {
         }
         else{
             this.show_save = false
+            if($event == 'load-scenario-promosimulator'){
+                this.loadScenarioPopuptitle = 'Load scenario'
+            }
             this.openModal($event);
         }
     }

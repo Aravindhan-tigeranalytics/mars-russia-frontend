@@ -57,7 +57,7 @@
 </nwn-modal>
 <!-- load scenario promosimulator -->
 <nwn-modal id="load-scenario-promosimulator" class="hidden">
-    <nwn-load-scenario-promosimulator (loadPromotionEvent) = "loadOptimizer($event)"></nwn-load-scenario-promosimulator>
+    <nwn-load-scenario-promosimulator [title]="loadScenarioPopuptitle" (loadPromotionEvent) = "loadOptimizer($event)"></nwn-load-scenario-promosimulator>
 </nwn-modal>
 <!-- pricing scenario -->
 <nwn-modal id="pricing-scenario" class="hidden">
