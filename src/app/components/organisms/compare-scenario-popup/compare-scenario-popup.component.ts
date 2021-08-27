@@ -125,6 +125,7 @@ export class CompareScenarioPopupComponent implements OnInit {
         // id="compare-promo-scenario"
     }
     backClicked() {
+        this.openTab = 1
         this.optimizer.clearCompareScenarioObservable()
         this.modal.close('compare-scenario-popup')
         // this._location.back();
