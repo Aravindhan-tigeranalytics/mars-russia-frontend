@@ -25,7 +25,7 @@
 ::ng-deep .custom-slider .ngx-slider .ngx-slider-selection {
     @apply bg-marsblue-600 !important;
 }
-::ng-deep .custom-slider .ngx-slider .ngx-slider-pointer-max{
+::ng-deep .single-slider .ngx-slider .ngx-slider-pointer-max{
     opacity: 0 !important;
 
 }
