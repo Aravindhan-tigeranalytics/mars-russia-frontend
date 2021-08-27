@@ -358,7 +358,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "arrow": financial_metrics['simulated']['total']['te'] > financial_metrics['base']['total']['te'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference( financial_metrics['simulated']['total']['te'],financial_metrics['base']['total']['te'] )
         }
-        this.message3 = Utils.generateMessage2(this.trade_expense)
+        this.message3 = Utils.generateMessage3(this.trade_expense)
         this.te_lsv = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['te_percent_of_lsv'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['te_percent_of_lsv'],false,false),

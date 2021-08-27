@@ -40,8 +40,14 @@ export class PromotionDetailsComponent implements OnInit {
         floor: 0,
         ceil: 100,
         showSelectionBar: true,
+        disabled: true,
         translate: (value: number, label: LabelType): string => {
-            this.form.controls['tpr'].setValue(value);
+            console.log("ind=isde setting.............depth" , value)
+            if(value!=100){
+                this.form.controls['tpr'].setValue(value);
+
+            }
+          
             switch (label) {
                 case LabelType.Ceil:
                     return value + ' %';
@@ -56,8 +62,15 @@ export class PromotionDetailsComponent implements OnInit {
         floor: 0,
         ceil: 100,
         showSelectionBar: true,
+        disabled: true,
         translate: (value: number, label: LabelType): string => {
-            this.form.controls['co_inv'].setValue(value);
+            
+            console.log("ind=isde setting.............coinv" , value)
+            if(value!=100){
+                this.form.controls['co_inv'].setValue(value);
+
+            }
+           
  
             switch (label) {
                 case LabelType.Ceil:
@@ -101,6 +114,7 @@ export class PromotionDetailsComponent implements OnInit {
             )
                  setTimeout(()=>{
                 this.promo_generated = final
+                console.log(final , "final value")
         
             },500)
             
@@ -212,6 +226,18 @@ export class PromotionDetailsComponent implements OnInit {
                }
            }
     changePromotion(e:any){
+        if(e.value.length == 0){
+            this.coInvestment = Object.assign({}, this.coInvestment, {disabled: true})
+        this.discountdepth = Object.assign({}, this.discountdepth, {disabled: true});
+        this.valueDiscountdepth = 0
+        this.valueCoInvestment = 0
+
+        }
+        else{
+            this.coInvestment = Object.assign({}, this.coInvestment, {disabled: false})
+        this.discountdepth = Object.assign({}, this.discountdepth, {disabled: false});
+
+        }
         this.errMsg.mechanic = false
         this.form.controls['promo'].setValue(e.value);
         console.log(e.value , "selected value");

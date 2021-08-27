@@ -20,15 +20,15 @@ return message
 export function generateMessage2(metric){
   let message = `Retailer profit `
   if(metric['arrow'] == "carret-up"){
-    message +=  `has increased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar.`
+    message +=  `has increased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar`
 
   }
   else if(metric['arrow'] == "carret-down"){
-    message +=  `has decreased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar.`
+    message +=  `has decreased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar`
 
   }
   else {
-    message +=  `is unchanged.`
+    message +=  `is unchanged`
 
   }
   return message
