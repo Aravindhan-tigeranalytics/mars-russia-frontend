@@ -1,4 +1,4 @@
-import { Component,OnInit,Output , EventEmitter } from '@angular/core';
+import { Component,OnInit,Output ,Input, EventEmitter } from '@angular/core';
 import {OptimizerService, SimulatorService} from '@core/services'
 import { ListPromotion} from "@core/models"
 import { ModalService } from '@molecules/modal/modal.service';
@@ -9,6 +9,8 @@ import { ModalService } from '@molecules/modal/modal.service';
     styleUrls: ['./load-scenario-promosimulator.component.css'],
 })
 export class LoadScenarioPromosimulatorComponent implements OnInit {
+    @Input()
+    title : string | 'Load scenario' | 'My scenario' = 'Load scenario'
     selectedIndex!: number;
     openTab = 2;
     selected_promotion:any = null;

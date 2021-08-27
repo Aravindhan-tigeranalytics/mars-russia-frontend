@@ -20,13 +20,15 @@ export class CompareScenarioChartComponent implements OnInit,OnChanges {
         this.legenddata = []
      }
     ngOnChanges(changes: SimpleChanges) {
- 
         for (let property in changes) {
             if (property === 'cschartdata') {
               this.cschartdata = changes[property].currentValue
               this.legenddata = changes['legenddata'].currentValue
-              this.createSvg()
-              this.drawBars(this.cschartdata);
+              this.margin = { top: 10, right: 0, bottom: 20, left: 60 };
+              this.boundingWidth = 1200 - this.margin.left - this.margin.right;
+              this.boundingHeight = 400 - this.margin.top - this.margin.bottom;
+                this.createSvg()
+                this.drawBars(this.cschartdata);
             } 
         }
     }
@@ -37,7 +39,7 @@ export class CompareScenarioChartComponent implements OnInit,OnChanges {
 
     // private createSvg(): void {
     //     this.svg = d3
-    //         .select('#marsCustomerMetrics')
+    //         .select('#marsCustomerMetricsCompare')
     //         .append('svg')
     //         // Wrapper
     //         .attr('width', this.boundingWidth + this.margin.left + this.margin.right)
@@ -47,10 +49,11 @@ export class CompareScenarioChartComponent implements OnInit,OnChanges {
     //         .attr('transform', `translate(${this.margin.left},${this.margin.top})`);
     // }
     private createSvg(): void {
-        d3.select('#plChartSVG').remove();
+        debugger
+        d3.select('#plChartSVGCompare').remove();
         this.svg = d3
-            .select('#marsCustomerMetrics')
-            .append('svg').attr("id","plChartSVG")
+            .select('#marsCustomerMetricsCompare')
+            .append('svg').attr("id","plChartSVGCompare")
             // Wrapper
             .attr('width', this.boundingWidth + this.margin.left + this.margin.right)
             .attr('height', this.boundingHeight + this.margin.top + this.margin.bottom)
@@ -132,7 +135,7 @@ export class CompareScenarioChartComponent implements OnInit,OnChanges {
 
         // color palette = one color per subgroup
         const color = d3.scaleOrdinal().domain(subGroups).range(legendColors);
-
+        debugger
         // Show the bars
         this.svg
             .append('g')
