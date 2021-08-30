@@ -26,6 +26,7 @@ export class MinimumGapWavesComponent {
         ceil: this.ceil,
         step : this.steps,
         showSelectionBar: true,
+
         translate: (value: number, label: LabelType): string => {
             // console.log("value" , value)
             
@@ -45,7 +46,7 @@ export class MinimumGapWavesComponent {
     duration_min = (this.basepromo - 3) 
     duration_max = this.basepromo + 3
     value = "0"
-    minGapWaves:any = ''
+    minGapWaves:any = 0
 
     sliderChangeEvent($event){
         console.log(this.minGapWaves)

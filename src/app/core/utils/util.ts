@@ -35,7 +35,7 @@ export function generateMessage2(metric){
 }
 
 export function generateMessage3(metric){
-  let message = `Trade expense `
+  let message = ` Trade expense `
   if(metric['arrow'] == "carret-up"){
     message+= `has increased by ${metric['converted_difference']} ${metric['percent']}`
 
