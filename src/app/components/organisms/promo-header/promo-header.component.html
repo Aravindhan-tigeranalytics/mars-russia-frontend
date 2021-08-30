@@ -1,23 +1,24 @@
 <div class="bg-white">
     <div class="block w-full flex-row">
         <nwn-promotool-tab
-        *ngIf="groups.includes('promo') || groups.includes('admin')"
-            type="fill"
-            nwnSvgIcon="simulator"
-            [link]="'/promo/simulator'" 
-            
-            [active]="currentRoute === '/promo/simulator'"
-            >Promo scenario builder</nwn-promotool-tab
-        >
-        <nwn-promotool-tab
         *ngIf="groups.includes('optimizer') || groups.includes('admin')"
             type="fill"
             nwnSvgIcon="optimizer"
             [link]="'/promo/optimizer'" 
             
             [active]="currentRoute === '/promo/optimizer'"
-            >Promo optimizer</nwn-promotool-tab
-        >
+            >Promo optimizer
+        </nwn-promotool-tab>
+        <nwn-promotool-tab
+        *ngIf="groups.includes('promo') || groups.includes('admin')"
+            type="fill"
+            nwnSvgIcon="simulator"
+            [link]="'/promo/simulator'" 
+            
+            [active]="currentRoute === '/promo/simulator'"
+            >Promo scenario builder
+        </nwn-promotool-tab>
+
         <div data-letters="Y" id="userLogo" class="float-right" style="margin-top: 12px;cursor: pointer;" (click)="toggleDisplayDivIf()"></div>
 
             <div *ngIf="!isShowDivIf">
