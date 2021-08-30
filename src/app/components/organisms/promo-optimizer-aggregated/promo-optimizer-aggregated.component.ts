@@ -63,6 +63,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     te_unit:any
     roi:any
     cogs:any
+    lift_percent:any
     asp: any
     promo_asp:any
     rst_w_o_vat:any
@@ -433,6 +434,15 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['cogs'],financial_metrics['base']['total']['cogs']) + "%)",
             "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['cogs']-financial_metrics['base']['total']['cogs'],true,false) + ")",
             "color":  this.colorForDifference(financial_metrics['base']['total']['cogs'] , financial_metrics['simulated']['total']['cogs']),
+        }
+
+        this.lift_percent = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['lift'],false,true),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['lift'],false,true),
+            "arrow": financial_metrics['simulated']['total']['lift'] > financial_metrics['base']['total']['lift'] ?  'carret-up' : 'carret-down' ,
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['lift'],financial_metrics['base']['total']['lift']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['lift']-financial_metrics['base']['total']['lift'],false,true) + ")",
+            "color":  this.colorForDifference(financial_metrics['base']['total']['lift'] , financial_metrics['simulated']['total']['lift']),
         }
 
         let data = financial_metrics;
