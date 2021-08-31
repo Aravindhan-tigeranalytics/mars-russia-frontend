@@ -124,24 +124,40 @@ export class OptimizerService {
       this.uploadedScenarioObservable.next(data)
 
   }
+
+  diffArray(arr1, arr2) {
+    return arr1
+      .concat(arr2)
+      .filter(item => !arr1.includes(item) || !arr2.includes(item));
+  }
+
   public getUploadedScenarioObservable():Observable<UploadModel>{
       return this.uploadedScenarioObservable.asObservable()
   }
   public setCompareScenarioIdObservable(id:Array<number>){
-    
+    debugger
      let available_ids =  this.compareScenarioObservable.getValue().map(s=>s.scenario_id)
+     let id_unselected = this.diffArray(available_ids,id)
      id = id.filter(i=>!available_ids.includes(i))
+
     let obs$:Array<any>=[]
 
-    let compare_scenario = this.compareScenarioObservable.getValue()
+    const compare_scenario = this.compareScenarioObservable.getValue()
+    if(available_ids.length > 0){
+        if(id_unselected.length > 0){
+            for(let i = 0; i < id_unselected.length; i++){
+                var index = compare_scenario.findIndex((item:any) => item.scenario_id == id_unselected[i])
+                compare_scenario.splice(index, 1)
+            }
+        }
+    }
 
-
-    this.clearCompareScenarioObservable()
-    if(id.length > 0){
+    // this.clearCompareScenarioObservable()
+    if(id.length > 0 || id_unselected.length > 0){
         obs$ = id.map(v=> this.fetch_load_scenario_by_id(v))
         combineLatest(obs$).subscribe((data:any)=>{
-            compare_scenario = [...compare_scenario , ...data]
-            this.setCompareScenarioObservable(compare_scenario)
+            let temp_data = [...compare_scenario , ...data]
+            this.setCompareScenarioObservable(temp_data)
         })
     }
   }

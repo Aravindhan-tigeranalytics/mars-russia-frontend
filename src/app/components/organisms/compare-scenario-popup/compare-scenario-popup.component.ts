@@ -32,7 +32,7 @@ export class CompareScenarioPopupComponent implements OnInit {
         this.optimizer.getCompareScenarioObservable().subscribe(data=>{
             // debugger
             if(data.length > 0){
-                this.modal.open('compare-scenario-popup')
+                // this.modal.open('compare-scenario-popup')
                 console.log(data , "comparescenario datas")
                     this.loaded_scenario = data
                     this.CompareScenarioChartData = []
