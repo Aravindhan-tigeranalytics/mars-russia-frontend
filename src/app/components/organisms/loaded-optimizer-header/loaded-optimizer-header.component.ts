@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, ViewChild, OnInit,Input ,SimpleChanges } from '@angular/core';
+import { Router,NavigationEnd ,RoutesRecognized} from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -7,6 +8,7 @@ import {OptimizerModel , ProductWeek , OptimizerConfigModel, FilterModel, ListPr
 import * as Utils from "@core/utils"
 import * as $ from 'jquery';
 import { tickStep } from 'd3';
+import { filter, pairwise } from 'rxjs/operators';
 // import { Component, Output, EventEmitter, ViewChild, OnInit,Input } from '@angular/core';
 // import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 // import {OptimizerService} from '../../../core/services/optimizer.service'
@@ -69,12 +71,41 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     }
 
     optimizerMetrics:any = ''
-    constructor(public optimize:OptimizerService){}
-    ngOnInit() {
+    showAnimation = false
+    constructor(public optimize:OptimizerService,private router: Router,){
+       
+        router.events
+        .pipe(filter((e: any) => e instanceof RoutesRecognized),
+            pairwise()
+        ).subscribe((e: any) => {
+            console.log(e , "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            if(e.length > 0){
+                if((e[0] as RoutesRecognized).urlAfterRedirects == '/login'){
+                    this.showAnimation  = true
+                   
+                    this.triggerAnimation()
+                }
+                // console.log((e[0] as RoutesRecognized).urlAfterRedirects,"eeeeeeeeeeeeeeeenavigation ends............................"); // previous url     
+            }
+           
+        });
+
+    }
+    triggerAnimation(){
+        setTimeout(()=>{
+            $('#animated-tap').show();
+            $('#glowbg').addClass('fab-bg glow')
+        },1000)
+
         setTimeout(()=>{
             $('#animated-tap').hide();
             $('#glowbg').removeClass('fab-bg glow')
         },7000)
+    }
+    ngOnInit() {
+        $('#animated-tap').hide();
+        $('#glowbg').removeClass('fab-bg glow')
+       
         this.optimize.getoptimizerDataObservable().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe(data=>{

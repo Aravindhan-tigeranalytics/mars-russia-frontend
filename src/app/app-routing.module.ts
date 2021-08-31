@@ -69,7 +69,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: '/promo/simulator',
+        redirectTo: '/promo/optimizer',
         pathMatch: 'full'
     },
     {
