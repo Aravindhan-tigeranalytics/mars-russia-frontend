@@ -144,37 +144,42 @@
                 <table class="border border-marsgray-200 text-left">
                     <thead class="bg-white">
                         <tr class="whitespace-nowrap">
-                            <th colspan="8" scope="colgroup">
-                                <nwn-cell-header type="headersm" color="bggray-100">Mars P&L Metrics</nwn-cell-header>
+                            <th colspan="2" scope="colgroup">
+                                <nwn-cell-header type="headersm" color="bggray-100">Customer P&L Metrics</nwn-cell-header>
                             </th>
                             <th colspan="5" scope="colgroup">
-                                <nwn-cell-header type="headersm" color="bggray-100"
-                                    >Customer P&L Metrics</nwn-cell-header
-                                >
+                                <nwn-cell-header type="headersm" color="bggray-100">Mars P&L Metrics</nwn-cell-header>
                             </th>
                         </tr>
                         <tr class="whitespace-nowrap">
                             <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">RSV w/o VAT</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent" >Customer Margin</nwn-cell-header >
+                            </th>
+
+                            <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent">LSV</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent" >Trade expense</nwn-cell-header >
                             </th>
                             <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent">NSV</nwn-cell-header>
                             </th>
                             <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent">COGS</nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent">MAC</nwn-cell-header>
                             </th>
-                            <th colspan="1" scope="colgroup">
+                            <!-- <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent">MAC,%NSV</nwn-cell-header>
-                            </th>
-                            <th colspan="1" scope="colgroup">
-                                <nwn-cell-header type="subheadermd" color="bgtransparent"
-                                    >Trade expense</nwn-cell-header
-                                >
-                            </th>
-                            <th colspan="1" scope="colgroup">
-                                <nwn-cell-header type="subheadermd" color="bgtransparent"
-                                    >TE,%LSV</nwn-cell-header
-                                >
+                            </th> -->
+
+                            <!-- <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent" >TE,%LSV</nwn-cell-header >
                             </th>
                             <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent"
@@ -185,45 +190,42 @@
                                 <nwn-cell-header type="subheadermd" color="bgtransparent"
                                     >ROI</nwn-cell-header
                                 >
-                            </th>
+                            </th> -->
                           
-                            <th colspan="1" scope="colgroup">
+                            <!-- <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent">ASP</nwn-cell-header>
                             </th>
                             <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent">Promo ASP</nwn-cell-header>
-                            </th>
+                            </th> -->
                             
-                            <th colspan="1" scope="colgroup">
-                                <nwn-cell-header type="subheadermd" color="bgtransparent">RSV w/o VAT</nwn-cell-header>
-                            </th>
-                            <th colspan="1" scope="colgroup">
-                                <nwn-cell-header type="subheadermd" color="bgtransparent"
-                                    >Customer Margin</nwn-cell-header
-                                >
-                            </th>
-                            <th colspan="1" scope="colgroup">
+
+                            <!-- <th colspan="1" scope="colgroup">
                                 <nwn-cell-header type="subheadermd" color="bgtransparent"
                                     >Customer Margin,%RSV</nwn-cell-header
                                 >
-                            </th>
+                            </th> -->
                         </tr>
                     </thead>
                     <tbody class="bg-white">
                         <tr class="whitespace-nowrap">
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="rsvWithoutVat"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="customerMargin"></nwn-cell-item></td>
+
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="lsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="tradeExpence"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="nsv"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac"></nwn-cell-item></td>
-                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac_nsv"></nwn-cell-item></td>
-                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="tradeExpence"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="cogs"></nwn-cell-item></td>
+
+                            <!-- <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac_nsv"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="te_lsv"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="te_units"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="roi"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="asp"></nwn-cell-item></td>
-                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="promo_asp"></nwn-cell-item></td>
-                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="rsvWithoutVat"></nwn-cell-item></td>
-                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="customerMargin"></nwn-cell-item></td>
-                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="customermargin_rsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="promo_asp"></nwn-cell-item></td> -->
+
+                            <!-- <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="customermargin_rsv"></nwn-cell-item></td> -->
                 
                         </tr>
                     </tbody>

@@ -13,7 +13,7 @@ export class MarsCustomerPlMetricsComponent implements OnInit {
         responsive: true,
     };
 
-    public barChartLabels = ['LSV', 'Trade Expense', 'NVS', 'COGS', 'RSV v/o VAT', 'Customer Margin'];
+    public barChartLabels = ['LSV', 'Trade Expense', 'NVS', 'COGS', 'RSV w/o VAT', 'Customer Margin'];
     public barChartType = 'bar';
     public barChartLegend = true;
 

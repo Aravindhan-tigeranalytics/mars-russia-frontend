@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {OptimizerService} from "@core/services"
 import {OptimizerModel , ProductWeek , OptimizerConfigModel, FilterModel, ListPromotion} from "@core/models"
 import * as Utils from "@core/utils"
+import * as $ from 'jquery';
 import { tickStep } from 'd3';
 // import { Component, Output, EventEmitter, ViewChild, OnInit,Input } from '@angular/core';
 // import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -70,6 +71,10 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     optimizerMetrics:any = ''
     constructor(public optimize:OptimizerService){}
     ngOnInit() {
+        setTimeout(()=>{
+            $('#animated-tap').hide();
+            $('#glowbg').removeClass('fab-bg glow')
+        },7000)
         this.optimize.getoptimizerDataObservable().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe(data=>{

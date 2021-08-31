@@ -184,7 +184,7 @@
     <!-- <nwn-loaded-scenario-controls ></nwn-loaded-scenario-controls> -->
     <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
         <div class="flex flex-row space-x-2 items-center">
-            <div class="">
+            <!-- <div class="">
                 <nwn-button 
                     type="icon"
                     size="iconsm"
@@ -194,12 +194,13 @@
                     <nwn-svg-icon type="stroke" nwnSvgIcon="lightning-bolt"></nwn-svg-icon>
                     <p tooltipContent>Command interface</p>
                 </nwn-button>
-            </div>
-            <div class="">
+            </div> -->
+            <div class="fab-bg glow" id="glowbg">
                 <nwn-button type="icon" size="iconsm" [showTooltip]="true" (click)="sendMessage('user-guide-popup')">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="user-guide"></nwn-svg-icon>
                     <p tooltipContent>User guide</p>
                 </nwn-button>
+                <img id="animated-tap" class="click-finger" src="../../../../assets/gif/giphy.gif">
             </div>
         </div>
         <div class="flex flex-row">

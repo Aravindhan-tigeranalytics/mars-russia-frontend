@@ -62,7 +62,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     te_lsv : any
     te_unit:any
     roi:any
-
+    cogs:any
+    lift_percent:any
     asp: any
     promo_asp:any
     rst_w_o_vat:any
@@ -267,13 +268,13 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
         ];
 
         this.plChartData = [
+            { group: 'RSV w/o VAT', base: financial_metrics['base']['total']['total_rsv_w_o_vat'], simulated: financial_metrics['simulated']['total']['total_rsv_w_o_vat'] },
+            { group: 'Customer Margin', base: financial_metrics['base']['total']['rp'], simulated: financial_metrics['simulated']['total']['rp'] },
             { group: 'LSV', base: financial_metrics['base']['total']['lsv'], simulated: financial_metrics['simulated']['total']['lsv'] },
             { group: 'Trade Expense', base: financial_metrics['base']['total']['te'], simulated: financial_metrics['simulated']['total']['te'] },
             { group: 'NSV', base: financial_metrics['base']['total']['nsv'], simulated: financial_metrics['simulated']['total']['nsv'] },
             { group: 'COGS', base: financial_metrics['base']['total']['cogs'], simulated: financial_metrics['simulated']['total']['cogs'] },
             { group: 'MAC', base: financial_metrics['base']['total']['mac'], simulated: financial_metrics['simulated']['total']['mac'] },
-            { group: 'RSV v/o VAT', base: financial_metrics['base']['total']['total_rsv_w_o_vat'], simulated: financial_metrics['simulated']['total']['total_rsv_w_o_vat'] },
-            { group: 'Customer Margin', base: financial_metrics['base']['total']['rp'], simulated: financial_metrics['simulated']['total']['rp'] },
         ]
 
         this.units = {
@@ -424,6 +425,24 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent']-financial_metrics['base']['total']['rp_percent'],false,true) + ")",
             "arrow": financial_metrics['simulated']['total']['rp_percent'] > financial_metrics['base']['total']['rp_percent'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['rp_percent'] , financial_metrics['simulated']['total']['rp_percent'])
+        }
+
+        this.cogs = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['cogs'],true,false),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['cogs'],true,false),
+            "arrow": financial_metrics['simulated']['total']['cogs'] > financial_metrics['base']['total']['cogs'] ?  'carret-up' : 'carret-down' ,
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['cogs'],financial_metrics['base']['total']['cogs']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['cogs']-financial_metrics['base']['total']['cogs'],true,false) + ")",
+            "color":  this.colorForDifference(financial_metrics['base']['total']['cogs'] , financial_metrics['simulated']['total']['cogs']),
+        }
+
+        this.lift_percent = {
+            "converted_base": Utils.formatNumber(financial_metrics['base']['total']['lift'],false,true),
+            "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['lift'],false,true),
+            "arrow": financial_metrics['simulated']['total']['lift'] > financial_metrics['base']['total']['lift'] ?  'carret-up' : 'carret-down' ,
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['lift'],financial_metrics['base']['total']['lift']) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['lift']-financial_metrics['base']['total']['lift'],false,true) + ")",
+            "color":  this.colorForDifference(financial_metrics['base']['total']['lift'] , financial_metrics['simulated']['total']['lift']),
         }
 
         let data = financial_metrics;

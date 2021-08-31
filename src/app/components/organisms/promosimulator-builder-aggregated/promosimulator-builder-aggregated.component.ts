@@ -170,7 +170,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
         this.weeklyData = []
         if(data){
             this.plChartData = [
-                { group: 'RSV v/o VAT', base: data['base']['total']['total_rsv_w_o_vat'], simulated: data['simulated']['total']['total_rsv_w_o_vat'] },
+                { group: 'RSV w/o VAT', base: data['base']['total']['total_rsv_w_o_vat'], simulated: data['simulated']['total']['total_rsv_w_o_vat'] },
                 { group: 'Customer Margin', base: data['base']['total']['rp'], simulated: data['simulated']['total']['rp'] },
                 { group: 'LSV', base: data['base']['total']['lsv'], simulated: data['simulated']['total']['lsv'] },
                 { group: 'Trade Expense', base: data['base']['total']['te'], simulated: data['simulated']['total']['te'] },

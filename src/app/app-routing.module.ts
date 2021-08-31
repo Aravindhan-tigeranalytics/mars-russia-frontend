@@ -52,7 +52,7 @@ const routes: Routes = [
                 path: 'optimizer',
                 component: PromoOptimizerComponent
             },
-            { path: "", redirectTo: "simulator", pathMatch: "full" }
+            { path: "", redirectTo: "optimizer", pathMatch: "full" }
         ]
     },
     {

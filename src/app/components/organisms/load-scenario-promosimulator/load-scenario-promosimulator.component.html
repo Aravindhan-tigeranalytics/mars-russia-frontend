@@ -1,6 +1,11 @@
 <div class="w-[650px] bg-white mx-auto my-6">
     <div class="border-b border-marsgray-200">
-        <nwn-command-header type="stroke" nwnSvgIcon="plus">{{title}}</nwn-command-header>
+        <ng-container *ngIf="title == 'My scenario'">
+            <nwn-command-header type="stroke" nwnSvgIcon="my-scenarios">{{title}}</nwn-command-header>
+        </ng-container>
+        <ng-container *ngIf="title == 'Load scenario'">
+            <nwn-command-header type="stroke" nwnSvgIcon="plus">{{title}}</nwn-command-header>
+        </ng-container>
     </div>
     <div class="bg-gray-100 border-b border-marsgray-200">
         <div class="flex flex-row flex-wrap px-6">
