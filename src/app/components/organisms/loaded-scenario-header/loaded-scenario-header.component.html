@@ -81,6 +81,7 @@
                             [(ngModel)]="singleSelect"
                             [config]="config"
                             [options]="available_year"
+                            (change)="changeYear($event)"
                         ></ngx-select-dropdown>
                     </div>
                     <div *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center justify-start">

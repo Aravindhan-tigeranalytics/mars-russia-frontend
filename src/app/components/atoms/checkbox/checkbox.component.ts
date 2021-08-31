@@ -9,6 +9,8 @@ export class CheckboxComponent implements OnInit {
 @Input()
 value:any = ""
 @Input()
+disable:any =false
+@Input()
 checked:boolean = false
 @Output() valueChange = new EventEmitter();
 @Input()

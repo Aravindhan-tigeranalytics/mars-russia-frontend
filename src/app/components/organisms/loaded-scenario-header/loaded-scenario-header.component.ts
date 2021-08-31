@@ -302,7 +302,31 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
 
         // debugger
     }
-    changeQuarter(key:string){
+    changeYear(){
+        let y2 = ['Y2 Q1','Y2 Q2','Y2 Q3','Y2 Q4']
+        let y3 = ['Y3 Q1','Y3 Q2','Y3 Q3','Y3 Q4']
+        console.log(this.singleSelect , "single selecct")
+        if(this.singleSelect == "2 years"){
+            // debugger
+            this.quarter_year = [...this.quarter_year , ...y2]
+            this.quarter_year = this.quarter_year.filter(e=>!y3.includes(e))
+            this.quarter_year =[...new Set(this.quarter_year)]
+            return
+        }
+        if(this.singleSelect == "3 years"){
+            this.quarter_year = [...this.quarter_year , ...y2 , ...y3]
+            this.quarter_year =[...new Set(this.quarter_year)]
+            return
+        }
+        this.quarter_year = this.quarter_year.filter(e=>(!y3.includes(e) && (!y2.includes(e))))
+        this.quarter_year =[...new Set(this.quarter_year)]
+        console.log(this.quarter_year , "quarter year")
+    }
+    changeQuarter(key:string){  
+        if(key.includes("Y2") || key.includes("Y3")){
+            this.toastr.warning("Only one year data available")
+            return
+        }
         
         // debugger
         this.selected_quarter = key
