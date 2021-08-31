@@ -32,6 +32,7 @@ export class CompareScenarioPopupComponent implements OnInit {
         this.optimizer.getCompareScenarioObservable().subscribe(data=>{
             // debugger
             if(data.length > 0){
+                this.modal.open('compare-scenario-popup')
                 console.log(data , "comparescenario datas")
                     this.loaded_scenario = data
                     this.CompareScenarioChartData = []
@@ -67,6 +68,12 @@ export class CompareScenarioPopupComponent implements OnInit {
                     //     { "group": "RSV v/o VAT", "simulated_1": this.loaded_scenario[0]['simulated']['total']['total_rsv_w_o_vat'] }, 
                     //     { "group": "Customer Margin", "simulated_1": this.loaded_scenario[0]['simulated']['total']['rp'] }
                     // ]
+            }
+            else {
+                console.log("else")
+                this.modal.close('compare-scenario-popup')
+                this.loaded_scenario = [...this.loaded_scenario , ...[]]
+                console.log(this.loaded_scenario,"after else")
             }
             // data.forEach(n=>{
             //     this.optimizer.fetch_load_scenario_by_id(n).subscribe(data=>{
@@ -121,6 +128,7 @@ export class CompareScenarioPopupComponent implements OnInit {
         this.openTab = $tabNumber;
     }
     openAdd(){
+        this.modal.close('compare-scenario-popup')
         this.modal.open('compare-promo-scenario')
         // id="compare-promo-scenario"
     }

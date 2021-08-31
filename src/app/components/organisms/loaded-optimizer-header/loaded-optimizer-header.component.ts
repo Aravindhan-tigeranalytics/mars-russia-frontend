@@ -131,6 +131,9 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         })
         
     }
+    copyBaseline(){
+        console.log('copy baseline')
+    }
     closeClicked($event){
         this.filterResetEvent.emit($event)
     }
