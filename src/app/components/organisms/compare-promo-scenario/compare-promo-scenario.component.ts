@@ -65,7 +65,7 @@ export class ComparePromoScenarioComponent implements OnInit {
             this.optimize.setCompareScenarioIdObservable(this.selected_id)
             console.log(this.selected_id , "selected save id")
             this.modal.close('compare-promo-scenario')
-            this.modal.open('compare-scenario-popup')
+            // this.modal.open('compare-scenario-popup')
         }
         else{
             this.toastr.error("Please select atleast two scenarios to compare")

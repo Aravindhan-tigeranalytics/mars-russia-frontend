@@ -33,9 +33,9 @@ export class OptimizerService {
     private apiService: ApiService,private http: HttpClient
   ) { }
   public setCompareScenarioObservable(scenario : LoadedScenarioModel[]){
-      let compare_scenario = this.compareScenarioObservable.getValue()
-      compare_scenario = [...compare_scenario , ...scenario]
-      this.compareScenarioObservable.next(compare_scenario)
+    //   let compare_scenario = this.compareScenarioObservable.getValue()
+    //   compare_scenario = [...compare_scenario , ...scenario]
+      this.compareScenarioObservable.next(scenario)
 
   }
   public clearCompareScenarioObservable(){
@@ -128,14 +128,20 @@ export class OptimizerService {
       return this.uploadedScenarioObservable.asObservable()
   }
   public setCompareScenarioIdObservable(id:Array<number>){
+    
      let available_ids =  this.compareScenarioObservable.getValue().map(s=>s.scenario_id)
      id = id.filter(i=>!available_ids.includes(i))
     let obs$:Array<any>=[]
+
+    let compare_scenario = this.compareScenarioObservable.getValue()
+
+
+    this.clearCompareScenarioObservable()
     if(id.length > 0){
         obs$ = id.map(v=> this.fetch_load_scenario_by_id(v))
         combineLatest(obs$).subscribe((data:any)=>{
-            this.setCompareScenarioObservable(data)
-                  
+            compare_scenario = [...compare_scenario , ...data]
+            this.setCompareScenarioObservable(compare_scenario)
         })
     }
   }
