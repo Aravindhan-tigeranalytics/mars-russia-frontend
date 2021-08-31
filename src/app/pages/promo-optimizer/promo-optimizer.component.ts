@@ -4,9 +4,11 @@ import { ModalService } from '@molecules/modal/modal.service';
 import { CheckboxModel,ListPromotion,Product,FilterModel } from "../../core/models"
 // import {OptimizerService} from '../../core/services/optimizer.service'
 import {SimulatorService,OptimizerService} from "@core/services"
+import { Router,NavigationEnd ,RoutesRecognized} from '@angular/router';
 import * as $ from 'jquery';
 import * as FileSaver from 'file-saver';
 import { ToastrService } from 'ngx-toastr';
+import { filter, pairwise } from 'rxjs/operators';
 
 
 @Component({
@@ -40,8 +42,26 @@ export class PromoOptimizerComponent implements OnInit {
     "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
     product:Product[] = []
     loadScenarioPopuptitle:any = 'Load scenario'
-    constructor(private toastr: ToastrService,private modalService: ModalService,private optimize : OptimizerService,private restApi: SimulatorService) {
-
+    constructor(private router: Router,private toastr: ToastrService,private modalService: ModalService,private optimize : OptimizerService,private restApi: SimulatorService) {
+        // router.events.subscribe((val) => {
+        //     console.log(val , "navigation subscribe............................")
+        //     if (val instanceof NavigationEnd) {
+        //        console.log(val , "navigation ends............................")
+                 
+        //       }
+        // });
+        // router.events
+        // .pipe(filter((e: any) => e instanceof RoutesRecognized),
+        //     pairwise()
+        // ).subscribe((e: any) => {
+        //     console.log(e , "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        //     if(e.length > 0){
+        //         console.log((e[0] as RoutesRecognized).urlAfterRedirects,"eeeeeeeeeeeeeeeenavigation ends............................"); // previous url     
+        //     }
+           
+        // });
+    
+    
     }
 
     ngOnInit(): void {
