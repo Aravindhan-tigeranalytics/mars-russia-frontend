@@ -7,7 +7,7 @@
         <div class="flex flex-row flex-wrap px-6 pt-6 pb-3 bg-white">
            
             <div *ngFor="let year of quarter_year" class="mr-2 mb-2">
-                <nwn-simulated-filter-item (click) = "changeQuarter(year)" [selected_quarter]="selected_quarter" [key]="year" type="default" size="sfi">{{year}}</nwn-simulated-filter-item>
+                <nwn-simulated-filter-item (click) = "changeQuarter(year)" [selected_quarter]="selected_quarter" [key]="year" [type]="selected_quarter | weekTypePipe :weekly_map : year " size="sfi">{{year}}</nwn-simulated-filter-item>
             </div>
             <div  *ngIf="error" class="mr-2 mb-2 error">{{error}}</div>
             <!-- <div class="mr-2 mb-2">

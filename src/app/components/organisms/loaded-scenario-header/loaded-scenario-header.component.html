@@ -86,8 +86,9 @@
                     <div *ngIf="selected_quarter" class="flex flex-row flex-wrap items-center justify-start">
                         <div  class="mr-2 mb-2" *ngFor="let key of quarter_year; let first = first;">
                             <nwn-simulated-filter-item (click)="changeQuarter(key)" 
-                            [selected_quarter]="selected_quarter" [promotion_map]="promotion_map"
-                            [key]="key" type="default" size="sfi">{{key}}</nwn-simulated-filter-item>
+                            [selected_quarter]="selected_quarter" 
+                            [key]="key" [type]="selected_quarter | weekTypePipe :promotion_map : key "
+                             size="sfi">{{key}}</nwn-simulated-filter-item>
                         </div>
                        
                     </div>
