@@ -2,6 +2,10 @@
     <div class="relative">
         <input
             type="checkbox"
+            [ngClass]="{
+                'disabled ' : disable,
+                ' border-2 border-marsgray-300 checked:bg-marsblue-600 checked:border-transparent' : !disable
+            }"
             [value]="value"
             [checked] = "checked"   
             (change) = "checkValue($event)"
@@ -10,9 +14,9 @@
                 appearance-none
                 h-4
                 w-4
-                border-2 border-marsgray-300
-                checked:bg-marsblue-600
-                checked:border-transparent
+               
+                
+                
                 focus:outline-none
             "
             [(ngModel)]="checked"

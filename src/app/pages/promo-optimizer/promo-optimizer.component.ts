@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 import * as FileSaver from 'file-saver';
 import { ToastrService } from 'ngx-toastr';
 import { filter, pairwise } from 'rxjs/operators';
+import * as utils from "@core/utils"
 
 
 @Component({
@@ -417,6 +418,31 @@ export class PromoOptimizerComponent implements OnInit {
             console.log(err , "errror")
         })
         console.table($event)
+    }
+    validate_week(){
+        // if(this.weekly_map.length > 0){
+            
+            
+        //     let max_diff =utils.generate_consecutive_list_max_diff(this.weekly_map.map(d=>d.week).sort(function(a, b){return a - b}))
+           
+        //     let min_gap = this.week_validation['min_promo_gap'] > 0 ? this.week_validation['min_promo_gap'] : this.week_validation['max_promo_gap']
+            
+        //     if(!utils.check_validate_gap(min_gap , max_diff['min_diff'])){
+        //         this.error = "Gap between consecutive weeks should be greater or equal to minimum promo gap("+min_gap+")"
+        //         return 
+    
+        //     }
+        //     if(max_diff['max_len_consecutive'] > this.week_validation['max_consecutive_promo']){
+        //         this.error = "Consecutive week should not exceed maximum consecutive week("+this.week_validation['max_consecutive_promo']+")"
+        //         return 
+        //     }
+        //     if(this.weekly_map.length > this.week_validation['promo_max']){
+        //         this.error = "Length of the promotion should not be greater than maximum available promotion("+this.week_validation['promo_max']+")"
+        //         return 
+        //     }
+            
+             
+        // }
     }
     optimizeAndReset($event){
         console.log($event , "optimize and reset event")

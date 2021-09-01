@@ -18,7 +18,7 @@ export function generateMessage1(metric , type){
 return message
 }
 export function generateMessage2(metric){
-  let message = `Retailer profit `
+  let message = ` Retailer profit `
   if(metric['arrow'] == "carret-up"){
     message +=  `has increased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar`
 

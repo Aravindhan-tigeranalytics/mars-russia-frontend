@@ -75,3 +75,7 @@
   .glow {
     animation: glowing 1300ms infinite;
   }
+
+  .ml-auto{
+    margin-left: auto;
+  }
