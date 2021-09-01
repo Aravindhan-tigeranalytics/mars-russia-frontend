@@ -139,25 +139,39 @@ export class OptimizerService {
      let available_ids =  this.compareScenarioObservable.getValue().map(s=>s.scenario_id)
      let id_unselected = this.diffArray(available_ids,id)
      id = id.filter(i=>!available_ids.includes(i))
-     console.log(available_ids , "available ids" )
-     console.log(id_unselected , "id unselected")
-     console.log(id , "final id")
+     let compare_scenario = this.compareScenarioObservable.getValue()
+     this.clearCompareScenarioObservable()
+    //  console.log(available_ids , "available ids" )
+    //  console.log(id_unselected , "id unselected")
+    //  console.log(id , "final id")
 
     let obs$:Array<any>=[]
+   
 
-    let compare_scenario = this.compareScenarioObservable.getValue()
-    // // if(available_ids.length > 0){
-    //     if(id_unselected.length > 0){
-    //         for(let i = 0; i < id_unselected.length; i++){
-    //             compare_scenario = compare_scenario.filter((item:any) => item.scenario_id != id_unselected[i])
-    //             // compare_scenario.splice(index, 1)
-    //         }
-    //     }
-    // // }
+   
+
+    if(available_ids.length > 0){
+        if(id_unselected.length > 0){
+            for(let i = 0; i < id_unselected.length; i++){
+                compare_scenario = compare_scenario.filter((item:any) => item.scenario_id != id_unselected[i])
+                // compare_scenario.splice(index, 1)
+            }
+
+            // this.setCompareScenarioObservable(compare_scenario)
+        }
+    }
+    console.log(compare_scenario , "compare scenario")
+    
+
 
     // this.clearCompareScenarioObservable()
-    if(id.length > 0){
+    if(id.length > 0 ||  id_unselected.length > 0){
         obs$ = id.map(v=> this.fetch_load_scenario_by_id(v))
+        console.log(obs$ , "obseravable http")
+        if(obs$.length == 0){
+          this.setCompareScenarioObservable([...compare_scenario])
+
+        }
         combineLatest(obs$).subscribe((data:any)=>{
             // debugger
             let temp_data = [...compare_scenario , ...data]
