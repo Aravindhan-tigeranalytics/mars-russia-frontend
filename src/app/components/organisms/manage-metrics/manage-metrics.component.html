@@ -16,6 +16,12 @@
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Volume</nwn-command-multiselect> -->
         </div>
         <div class="border border-gray-200 px-2 bg-gray-100">
+            <nwn-cell-header type="headersm">Retailer metrics</nwn-cell-header>
+        </div>
+        <div *ngFor="let retailer of retailer_metrics | appFilter: searchText;">
+            <nwn-command-multiselect (valueChangeSelect) = "changeMetrics($event)" [leftBorder]="false" [value] = "retailer.value" [checked] = "retailer.checked" [hideClose]="true">{{retailer.value}}</nwn-command-multiselect>
+        </div>
+        <div class="border border-gray-200 px-2 bg-gray-100">
             <nwn-cell-header type="headersm">Mars matrics</nwn-cell-header>
         </div>
         <div>
@@ -38,11 +44,13 @@
                 >Customer Margin, %RSV</nwn-command-multiselect
             > -->
         </div>
+
+
         <div class="border border-gray-200 px-2 bg-gray-100">
-            <nwn-cell-header type="headersm">Retailer metrics</nwn-cell-header>
+            <nwn-cell-header type="headersm">Other metrics</nwn-cell-header>
         </div>
-        <div *ngFor="let retailer of retailer_metrics | appFilter: searchText;">
-            <nwn-command-multiselect (valueChangeSelect) = "changeMetrics($event)" [leftBorder]="false" [value] = "retailer.value" [checked] = "retailer.checked" [hideClose]="true">{{retailer.value}}</nwn-command-multiselect>
+        <div *ngFor="let other of other_metrics | appFilter: searchText;">
+            <nwn-command-multiselect (valueChangeSelect) = "changeMetrics($event)" [leftBorder]="false" [value] = "other.value" [checked] = "other.checked" [hideClose]="true">{{other.value}}</nwn-command-multiselect>
         </div>
     </div>
     <nwn-search-footer (click)="closeModal()" [showKeyBoardCtrl]="true" [showApply]="true"></nwn-search-footer>
