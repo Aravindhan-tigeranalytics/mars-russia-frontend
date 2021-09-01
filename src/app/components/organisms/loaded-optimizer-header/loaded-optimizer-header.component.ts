@@ -29,7 +29,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     param_gap_max = 0
     min_week= 0
     max_week = 0
-    selected_promotions = []
+    selected_promotions:any[] = []
 
     product_week : ProductWeek[] = []
     @Input()
@@ -133,6 +133,14 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     }
     copyBaseline(){
         console.log('copy baseline')
+        this.duration_max = this.optimizer_data?.data.param_max_consecutive_promo
+        this.duration_min = this.optimizer_data?.data.param_min_consecutive_promo
+        this.param_gap_min = this.optimizer_data?.data.param_promo_gap
+        this.param_gap_max = this.optimizer_data?.data.param_promo_gap
+        this.max_week = this.optimizer_data?.data.param_no_of_promo
+        this.min_week  = this.optimizer_data?.data.param_no_of_promo
+        this.selected_promotions = [...this.selected_promotions,...this.promotions]
+        this.set_week_validation_data()
     }
     closeClicked($event){
         this.filterResetEvent.emit($event)

@@ -72,7 +72,7 @@ export class CompareScenarioPopupComponent implements OnInit {
             else {
                 console.log("else")
                 this.modal.close('compare-scenario-popup')
-                this.loaded_scenario = [...this.loaded_scenario , ...[]]
+                // this.loaded_scenario = [...this.loaded_scenario , ...[]]
                 console.log(this.loaded_scenario,"after else")
             }
             // data.forEach(n=>{
@@ -89,11 +89,11 @@ export class CompareScenarioPopupComponent implements OnInit {
         })
 
         
-        this.optimizer.getCompareScenarioObservable().subscribe(data=>{
-            if(data.length > 0){
-                this.compare_scenario_data = data
-            }
-        })
+        // this.optimizer.getCompareScenarioObservable().subscribe(data=>{
+        //     if(data.length > 0){
+        //         this.compare_scenario_data = data
+        //     }
+        // })
         
         this.screenWidth = window.innerWidth - 2;
         this.screenHeight = window.innerHeight;

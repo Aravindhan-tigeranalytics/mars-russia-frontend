@@ -79,20 +79,25 @@ export class DurationPromoWavesComponent {
  
         for (let property in changes) {
             if (property === 'basepromo') {
+                this.basepromo = changes[property].currentValue
+
                 this.duration_min = (this.basepromo - 3) 
                 this.duration_max = this.basepromo + 3
+                // cons
                 if(this.duration_min < 0) {
                     this.duration_min = 0
                 }
                 // this.duration_min = 0 : ((this.basepromo - 3) < 0 ) 0
                 
-                if(this.duration_min > 0){
+                else if(this.duration_min > 0){
                     this.value = this.duration_min + " - " + this.duration_max
         
                 }
                 else{
                     this.value =  String(this.duration_max)
                 }
+                console.log(this.basepromo , "base promo")
+                console.log(this.value , "base promo generated value")
             } 
         }
     }

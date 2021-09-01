@@ -50,8 +50,7 @@ export class CompulsoryWeeksPopupComponent implements OnInit {
             return 
         }
         this.error = null as any
-        // console.log(max_diff , "maxdiff")
-        // console.log(this.weekly_map , "weekly map result...................")
+         
     }
         this.cumpulsoryWeekEvent.emit({
             "id" : "compulsory-weeks-popup",

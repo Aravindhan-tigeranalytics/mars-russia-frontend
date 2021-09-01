@@ -42,7 +42,7 @@ export class PromotionPlansTabComponent implements OnInit, AfterViewInit {
             }
             this.scenario_names.push(ele)
             element.simulated.weekly.forEach((data:any,index)=>{
-                console.log(data , "promotion plans tabs value")
+                // console.log(data , "promotion plans tabs value")
 
                 let promo = this.promotions.find(d=>d.week == data.week)
                 let simulated_promotion = Utils.genratePromotion(
