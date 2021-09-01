@@ -174,7 +174,10 @@ export function convertCurrency(value:any , per?:any , is_curr = true){
     return 0
   }
 
-  export function  percentageDifference(a: number, b: number){
+  export function  percentageDifference(a: number, b: number , debug = false){
+    // if(debug){
+    //   debugger
+    // }
     a  = parseFloat(a.toFixed(4));
     b  = parseFloat(b.toFixed(4));
     
@@ -185,7 +188,8 @@ export function convertCurrency(value:any , per?:any , is_curr = true){
         return (100).toFixed(2)
     }
     // return  (100 * Math.abs( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
-    return  (100 * ( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
+    // return  (100 * ( ( a - b ) / ( (a+b)/2 ) )).toFixed(2);
+    return (100 * ((a - b)/b)).toFixed(2);
 }
 
 export function formatNumber(number: any,currency: boolean,percentage: boolean,debug=false ){
