@@ -50,6 +50,93 @@ export function generateMessage3(metric){
   return message
 }
 
+
+export function generateMessageRandom(index: any,financial_metrics,metric1: any,metric2: any,metric3 :any){
+  let result1:any = ''
+  let result2:any = ''
+  let result3:any = ''
+  if(index == 2){
+    if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp']) {
+      result1 +=  'There is an increase of Retailer profit by '+ metric1['converted_difference'] + ' ' + metric1['percent']
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp']){
+      result1 +=  'There is an decrease of Retailer profit by '+ metric1['converted_difference'] + ' ' + metric1['percent']
+    }
+    else if(financial_metrics['simulated']['total']['rp'] == financial_metrics['base']['total']['rp']) {
+      result1 += 'There is an unchanged value for Retailer profit '
+    }
+
+
+    if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC by '+ metric2['converted_difference'] + ' ' + metric2['percent'] +'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC increased by '+ metric2['converted_difference'] + ' ' + metric2['percent'] +'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC decreased by '+ metric2['converted_difference'] + ' ' + metric2['percent']+'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] || financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
+      result2 += ' and MAC is unchanged.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] = financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
+      result2 += ' and MAC.'
+    }
+
+
+
+    if(financial_metrics['simulated']['total']['te'] > financial_metrics['base']['total']['te']) {
+      result3 +=  ' Trade expense has increased by '+ metric3['percent'] +' with the current optimized calendar results.'
+    }
+    else if(financial_metrics['simulated']['total']['te'] < financial_metrics['base']['total']['te']){
+      result3 +=  ' Trade expense has come down by '+ metric3['percent'] +' with the current optimized calendar results.'
+    }
+    else if(financial_metrics['simulated']['total']['te'] == financial_metrics['base']['total']['te']) {
+      result3 += ' Trade expense is unchanged with the current optimized calendar results.'
+    }
+
+    result1 = {
+      result1 :  result1,
+      result2 :  result2,
+      result3 :  result3
+    } 
+  }
+  else if(index == 3){
+    if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp']) {
+      result1 +=  'Opportunity to increase Retailer profit by '+metric1['converted_difference'] + ' ' +metric1['percent']
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp']){
+      result1 +=  'Opportunity to decrease Retailer profit by '+metric1['converted_difference'] + ' ' +metric1['percent']
+    }
+    else if(financial_metrics['simulated']['total']['rp'] == financial_metrics['base']['total']['rp']) {
+      result1 += 'There is an unchanged value for Retailer profit '
+    }
+
+
+    if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC by '+metric2['converted_difference'] + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC increased by '+ metric2['converted_difference'] + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC decreased by '+ metric2['converted_difference'] + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] || financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
+      result2 += ' and MAC is unchanged exists with this optimal calendar results.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] = financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
+      result2 += ' and MAC exists with this optimal calendar results.'
+    }
+    result1 = {
+      result1 :  result1,
+      result2 :  result2,
+      result3 :  result3
+    }
+  }
+  return result1
+}
+
 export function decodePromotion(promo_name:string){
   let obj ={
     "promo_mechanics" : "",

@@ -8,7 +8,8 @@
         padding: 10px;
         font-size: 14px;">
             <!-- <nwn-svg-icon style="vertical-align: middle;position: absolute;margin: -26px -22px;" type="stroke" size="lg" nwnSvgIcon="light-bulb"></nwn-svg-icon> -->
-            Optimized calendars results {{message1}}.<br/>{{message2}}.{{message3}}.
+            <ng-container *ngIf="index == 1">Optimized calendars results {{message1}}.<br/>{{message2}}.{{message3}}.</ng-container>
+            <ng-container *ngIf="index == 2 || index == 3">{{randomResult.result1}}{{randomResult.result2}}<br/>{{randomResult.result3}}</ng-container>
         </div>
     </div>
     <div class="flex flex-row flex-wrap border-b border-marsgray-300">
