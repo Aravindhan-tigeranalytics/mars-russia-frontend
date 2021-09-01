@@ -345,7 +345,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
         this.mac_per_nsv = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['mac_percent'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['mac_percent'],false,false),
-            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['mac_percent'],financial_metrics['base']['total']['mac_percent']) + "%)",
+            "percent": "(" + Utils.percentageDifference(financial_metrics['simulated']['total']['mac_percent'],financial_metrics['base']['total']['mac_percent'] , true) + "%)",
             "converted_difference": "(" + Utils.formatNumber(financial_metrics['simulated']['total']['mac_percent']-financial_metrics['base']['total']['mac_percent'],false,false) + ")",
             "arrow": financial_metrics['simulated']['total']['mac_percent'] > financial_metrics['base']['total']['mac_percent'] ?  'carret-up' : 'carret-down' ,
             "color": this.colorForDifference(financial_metrics['base']['total']['mac_percent'] , financial_metrics['simulated']['total']['mac_percent'])
