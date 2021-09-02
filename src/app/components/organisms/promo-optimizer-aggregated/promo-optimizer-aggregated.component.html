@@ -8,7 +8,8 @@
         padding: 10px;
         font-size: 14px;">
             <!-- <nwn-svg-icon style="vertical-align: middle;position: absolute;margin: -26px -22px;" type="stroke" size="lg" nwnSvgIcon="light-bulb"></nwn-svg-icon> -->
-            Optimized calendars results {{message1}}.<br/>{{message2}}.{{message3}}.
+            <ng-container *ngIf="index == 1">Optimized calendars results {{message1}}.<br/>{{message2}}.{{message3}}.</ng-container>
+            <ng-container *ngIf="index == 2 || index == 3">{{randomResult.result1}}{{randomResult.result2}}<br/>{{randomResult.result3}}</ng-container>
         </div>
     </div>
     <div class="flex flex-row flex-wrap border-b border-marsgray-300">
@@ -639,11 +640,14 @@
                         <th colspan="4" scope="colgroup" class="sticked freeze_vertical">
                             <nwn-cell-header type="headersm" color="bggray-100">Sales metrics</nwn-cell-header>
                         </th>
-                        <th colspan="8" scope="colgroup" class="sticked freeze_vertical">
-                            <nwn-cell-header type="headersm" color="bggray-100">Mars metrics</nwn-cell-header>
+                        <th colspan="5" scope="colgroup" class="sticked freeze_vertical">
+                            <nwn-cell-header type="headersm" color="bggray-100">Retailer metrics</nwn-cell-header>
                         </th>
                         <th colspan="6" scope="colgroup" class="sticked freeze_vertical">
-                            <nwn-cell-header type="headersm" color="bggray-100">Retailer metrics</nwn-cell-header>
+                            <nwn-cell-header type="headersm" color="bggray-100">Mars metrics</nwn-cell-header>
+                        </th>
+                        <th colspan="2" scope="colgroup" class="sticked freeze_vertical">
+                            <nwn-cell-header type="headersm" color="bggray-100">Others metrics</nwn-cell-header>
                         </th>
                     </tr>
                     <tr class="whitespace-nowrap">
@@ -661,6 +665,21 @@
                         </th>
                         <th class="sticked freeze_vertical" scope="col">
                             <nwn-cell-header type="subheadersm" color="bgwhite">Volume</nwn-cell-header>
+                        </th>
+                        <th class="sticked freeze_vertical" scope="col">
+                            <nwn-cell-header type="subheadersm" color="bgwhite">ASP</nwn-cell-header>
+                        </th>
+                        <th class="sticked freeze_vertical" scope="col">
+                            <nwn-cell-header type="subheadersm" color="bgwhite">Promo ASP</nwn-cell-header>
+                        </th>
+                        <th class="sticked freeze_vertical" scope="col">
+                            <nwn-cell-header type="subheadersm" color="bgwhite">RSV w/o VAT</nwn-cell-header>
+                        </th>
+                        <th class="sticked freeze_vertical" scope="col">
+                            <nwn-cell-header type="subheadersm" color="bgwhite">Customer Margin</nwn-cell-header>
+                        </th>
+                        <th class="sticked freeze_vertical" scope="col">
+                            <nwn-cell-header type="subheadersm" color="bgwhite">Customer Margin,%RSV</nwn-cell-header>
                         </th>
                         <th class="sticked freeze_vertical" scope="col">
                             <nwn-cell-header type="subheadersm" color="bgwhite">LSV</nwn-cell-header>
@@ -685,21 +704,6 @@
                         </th>
                         <th class="sticked freeze_vertical" scope="col">
                             <nwn-cell-header type="subheadersm" color="bgwhite">Lift %</nwn-cell-header>
-                        </th>
-                        <th class="sticked freeze_vertical" scope="col">
-                            <nwn-cell-header type="subheadersm" color="bgwhite">ASP</nwn-cell-header>
-                        </th>
-                        <th class="sticked freeze_vertical" scope="col">
-                            <nwn-cell-header type="subheadersm" color="bgwhite">Promo ASP</nwn-cell-header>
-                        </th>
-                        <th class="sticked freeze_vertical" scope="col">
-                            <nwn-cell-header type="subheadersm" color="bgwhite">RSV w/o VAT</nwn-cell-header>
-                        </th>
-                        <th class="sticked freeze_vertical" scope="col">
-                            <nwn-cell-header type="subheadersm" color="bgwhite">Customer Margin</nwn-cell-header>
-                        </th>
-                        <th class="sticked freeze_vertical" scope="col">
-                            <nwn-cell-header type="subheadersm" color="bgwhite">Customer Margin,%RSV</nwn-cell-header>
                         </th>
                     </tr>
                 </thead>

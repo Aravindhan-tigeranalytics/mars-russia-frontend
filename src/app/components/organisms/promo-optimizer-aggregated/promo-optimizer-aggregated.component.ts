@@ -16,6 +16,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     @ViewChild('scrollTwoOP') scrollTwoOP: ElementRef;
     translate_y: string = '';
     currentTranslateRate: string = '';
+    index = 0
+    randomResult:any = ''
     constructor(private elRef: ElementRef,private restApi: OptimizerService,public modalService: ModalService) {}
     
     public weeklyTableWidth: any;
@@ -88,6 +90,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             if(data){
                 console.log(data , "response data")
                 this.optimizer_response = data
+                this.index = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
                 this.getChartData()
 
             }
@@ -418,6 +421,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
             "color": this.colorForDifference(financial_metrics['base']['total']['rp'] , financial_metrics['simulated']['total']['rp'])
         }
         this.message2 = Utils.generateMessage2(this.customer_margin)
+
+        this.randomResult = Utils.generateMessageRandom(this.index,financial_metrics,this.customer_margin,this.mac,this.trade_expense)
         this.customer_margin_rsv = {
             "converted_base": Utils.formatNumber(financial_metrics['base']['total']['rp_percent'],false,false),
             "converted_simulated": Utils.formatNumber(financial_metrics['simulated']['total']['rp_percent'],false,false),

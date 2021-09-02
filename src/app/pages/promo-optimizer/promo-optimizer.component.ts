@@ -71,9 +71,7 @@ export class PromoOptimizerComponent implements OnInit {
         this.optimize.fetchVal().subscribe(data=>{
             this.product = data
             this._populateFilters(this.product)
-
           },error=>{
-              
             console.log(error , "error")
             throw error
           })
