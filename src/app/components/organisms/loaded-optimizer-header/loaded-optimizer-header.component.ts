@@ -103,6 +103,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         },7000)
     }
     ngOnInit() {
+    
         $('#animated-tap').hide();
         $('#glowbg').removeClass('fab-bg glow')
        
@@ -139,7 +140,8 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         this.param_gap_max = this.optimizer_data?.data.param_promo_gap
         this.max_week = this.optimizer_data?.data.param_no_of_promo
         this.min_week  = this.optimizer_data?.data.param_no_of_promo
-        this.selected_promotions = [...this.selected_promotions,...this.promotions]
+        this.selected_promotions = this.promotions
+        // this.selected_promotions = [...this.selected_promotions,...this.promotions]
         this.set_week_validation_data()
     }
     closeClicked($event){
@@ -470,12 +472,12 @@ this.checkboxMetrices.find(d=>{
 
             }
             if(d.id == "mac-per-popup"){
-                d.disabled = configData.config_mac_perc
+                // d.disabled = configData.config_mac_perc
                 d.checkHeadValue = "x" + configData.param_mac_perc
 
             }
             if(d.id == "rp-per-popup"){
-                d.disabled = configData.config_rp_perc
+                // d.disabled = configData.config_rp_perc
                 d.checkHeadValue = "x" + configData.param_rp_perc
 
             }
@@ -692,6 +694,7 @@ this.checkboxMetrices.find(d=>{
 
     ngOnDestroy(){
         console.log("destroying optimizer header")
+        this.optimize.setoptimizerDataObservable(null as any)
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
     }

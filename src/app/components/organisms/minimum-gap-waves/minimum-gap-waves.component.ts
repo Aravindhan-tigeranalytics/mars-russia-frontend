@@ -10,7 +10,7 @@ export class MinimumGapWavesComponent {
 
 
     @Input()
-    floor = 0
+    floor = 1
     @Input()
     ceil = 52
     @Input()
@@ -76,20 +76,21 @@ export class MinimumGapWavesComponent {
  
         for (let property in changes) {
             if (property === 'basepromo') {
-                this.duration_min = (this.basepromo - 3) 
-                this.duration_max = this.basepromo + 3
-                if(this.duration_min < 0) {
-                    this.duration_min = 0
-                }
+                this.value = "1"
+                // this.duration_min = (this.basepromo - 3) 
+                // this.duration_max = this.basepromo + 3
+                // if(this.duration_min < 0) {
+                //     this.duration_min = 0
+                // }
                 
                 
-                if(this.duration_min > 0){
-                    this.value = this.duration_min + " - " + this.duration_max
+                // if(this.duration_min > 0){
+                //     this.value = this.duration_min + " - " + this.duration_max
         
-                }
-                else{
-                    this.value =  String(this.duration_max)
-                }
+                // }
+                // else{
+                //     this.value =  String(this.duration_max)
+                // }
             } 
         }
     }

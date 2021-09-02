@@ -20,7 +20,7 @@
     </div>
     <div class="h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
         <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion_promo | appFilter: searchText : 'promo';">
-            <nwn-scenario-load-card (click)="toggleId(promotion.id)" [id] = "promotion" [showInfo]="true" [showCheckbox]="true" (infoClickedEvent)="infoClicked($event)" [showSubHead]="true">
+            <nwn-scenario-load-card [value] = "promotion.id" (changeCheckboxEvent)="toggleId($event)" [id] = "promotion" [showInfo]="true" [showCheckbox]="true" (infoClickedEvent)="infoClicked($event)" [showSubHead]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>
                     {{promotion.comments}}
@@ -30,7 +30,7 @@
     </div>
     <div class="h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
         <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion | appFilter: searchText : 'promo';">
-            <nwn-scenario-load-card (click)="toggleId(promotion.id)" [showCheckbox]="true" [showSubHead]="true">
+            <nwn-scenario-load-card [value] = "promotion.id" (changeCheckboxEvent)="toggleId($event)" [showCheckbox]="true" [showSubHead]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>
                     {{promotion.comments}}
@@ -40,7 +40,7 @@
     </div>
     <div class="h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3" [ngClass]="{ hidden: openTab !== 3, block: openTab === 3 }">
         <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion_optimizer;">
-            <nwn-scenario-load-card (click)="toggleId(promotion.id)" [showCheckbox]="true" [showSubHead]="true">
+            <nwn-scenario-load-card [value] = "promotion.id" (click)="changeCheckboxEvent($event)" [showCheckbox]="true" [showSubHead]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>
                     {{promotion.comments}}

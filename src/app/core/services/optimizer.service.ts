@@ -167,7 +167,7 @@ export class OptimizerService {
     // this.clearCompareScenarioObservable()
     if(id.length > 0 ||  id_unselected.length > 0){
         obs$ = id.map(v=> this.fetch_load_scenario_by_id(v))
-        console.log(obs$ , "obseravable http")
+        // console.log(obs$ , "obseravable http")
         if(obs$.length == 0){
           this.setCompareScenarioObservable([...compare_scenario])
 

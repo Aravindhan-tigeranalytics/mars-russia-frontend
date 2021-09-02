@@ -40,14 +40,21 @@ export class ComparePromoScenarioComponent implements OnInit {
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;0
     }
-    toggleId(id:number){
-        console.log(id)
-        if(this.selected_id.includes(id)){
-            this.selected_id = this.selected_id.filter(n=>n!=id)
+    toggleId($event){
+        console.log($event , "toggle event")
+        if($event.checked){
+            this.selected_id.push($event.value)
+
         }
         else{
-            this.selected_id.push(id)
+            this.selected_id = this.selected_id.filter(n=>n!=$event.value)
         }
+        // if(this.selected_id.includes(id)){
+        //     this.selected_id = this.selected_id.filter(n=>n!=id)
+        // }
+        // else{
+        //     this.selected_id.push(id)
+        // }
         console.log(this.selected_id , "selected id selecting")
 
     }

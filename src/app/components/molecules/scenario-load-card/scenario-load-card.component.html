@@ -2,7 +2,8 @@
     <div [ngClass]="{
         hidden: showCheckbox == false
     }" class="flex flex-row items-center m-1">    
-        <nwn-checkbox
+        <nwn-checkbox (valueChange) = "valueChange($event)"
+        [value] = "value"
                 [showLabel]="false"
                 [ngClass]="{
                     hidden: showCheckbox == false

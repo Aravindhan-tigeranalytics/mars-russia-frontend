@@ -33,6 +33,10 @@ export class ScenarioLoadCardComponent  implements OnInit{
     infoClickedEvent = new EventEmitter()
     @Output()
     deleteClickedEvent = new EventEmitter()
+    @Input()
+    value = null
+    @Output()
+    changeCheckboxEvent = new EventEmitter()
 
     infoClicked(){
         this.infoClickedEvent.emit(this.id)
@@ -41,5 +45,9 @@ export class ScenarioLoadCardComponent  implements OnInit{
     deleteClicked(){
         
         this.deleteClickedEvent.emit()
+    }
+    valueChange($event){
+        this.changeCheckboxEvent.emit($event)
+       
     }
 }
