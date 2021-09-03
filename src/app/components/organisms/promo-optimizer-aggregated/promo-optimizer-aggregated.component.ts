@@ -288,7 +288,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
 
         this.plChartData = [
             { group: 'RSV w/o VAT', base: financial_metrics['base']['total']['total_rsv_w_o_vat'], simulated: financial_metrics['simulated']['total']['total_rsv_w_o_vat'] },
-            { group: 'Customer Margin', base: financial_metrics['base']['total']['rp'], simulated: financial_metrics['simulated']['total']['rp'] },
+            { group: 'Trade Margin', base: financial_metrics['base']['total']['rp'], simulated: financial_metrics['simulated']['total']['rp'] },
             { group: 'LSV', base: financial_metrics['base']['total']['lsv'], simulated: financial_metrics['simulated']['total']['lsv'] },
             { group: 'Trade Expense', base: financial_metrics['base']['total']['te'], simulated: financial_metrics['simulated']['total']['te'] },
             { group: 'NSV', base: financial_metrics['base']['total']['nsv'], simulated: financial_metrics['simulated']['total']['nsv'] },

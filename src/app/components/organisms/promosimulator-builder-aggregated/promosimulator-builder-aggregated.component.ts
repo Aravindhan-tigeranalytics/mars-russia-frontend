@@ -175,7 +175,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
             console.log(this.product , "product image")
             this.plChartData = [
                 { group: 'RSV w/o VAT', base: data['base']['total']['total_rsv_w_o_vat'], simulated: data['simulated']['total']['total_rsv_w_o_vat'] },
-                { group: 'Customer Margin', base: data['base']['total']['rp'], simulated: data['simulated']['total']['rp'] },
+                { group: 'Trade Margin', base: data['base']['total']['rp'], simulated: data['simulated']['total']['rp'] },
                 { group: 'LSV', base: data['base']['total']['lsv'], simulated: data['simulated']['total']['lsv'] },
                 { group: 'Trade Expense', base: data['base']['total']['te'], simulated: data['simulated']['total']['te'] },
                 { group: 'NSV', base: data['base']['total']['nsv'], simulated: data['simulated']['total']['nsv'] },
@@ -192,12 +192,12 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
             ];
 
             this.baseline = {
-                "converted_base": Utils.formatNumber(data['base']['total']['predicted_units'],false,false),
-                "converted_simulated": Utils.formatNumber(data['simulated']['total']['predicted_units'],false,false),
-                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['predicted_units'],data['base']['total']['predicted_units']) + "%)",
-                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['predicted_units']-data['base']['total']['predicted_units'],false,false) + ")",
-                "arrow": data['simulated']['total']['predicted_units'] >  data['base']['total']['predicted_units']?  'carret-up' : 'carret-down' ,
-                "color": this.colorForDifference(data['base']['total']['predicted_units'] , data['simulated']['total']['predicted_units']) 
+                "converted_base": Utils.formatNumber(data['base']['total']['units'],false,false),
+                "converted_simulated": Utils.formatNumber(data['simulated']['total']['units'],false,false),
+                "percent": "(" + Utils.percentageDifference(data['simulated']['total']['units'],data['base']['total']['units']) + "%)",
+                "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['units']-data['base']['total']['units'],false,false) + ")",
+                "arrow": data['simulated']['total']['units'] >  data['base']['total']['units']?  'carret-up' : 'carret-down' ,
+                "color": this.colorForDifference(data['base']['total']['units'] , data['simulated']['total']['units']) 
             }
 
             
