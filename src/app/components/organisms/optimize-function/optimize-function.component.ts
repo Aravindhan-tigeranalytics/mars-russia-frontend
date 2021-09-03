@@ -16,7 +16,7 @@ export class OptimizeFunctionComponent extends ModalApply implements OnInit{
     @Output()
     objectiveEvent = new EventEmitter()
 
-objective_function = [{'name':'Maximize MAC'} ,{'name': 'Maximize RP' }, {'name' : 'Minimize TE'}]
+objective_function = [{'name':'Maximize MAC'} ,{'name': 'Maximize TM' }, {'name' : 'Minimize TE'}]
 constructor(public optimizerService: OptimizerService,public modalService: ModalService) {
     super()
 }

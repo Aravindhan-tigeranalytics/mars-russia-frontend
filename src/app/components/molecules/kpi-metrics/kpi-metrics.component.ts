@@ -37,8 +37,8 @@ export class KpiMetricsComponent implements OnInit, AfterViewInit {
     asp:CompareMetricModel = {"value" : [],"visible": false,key:"ASP"}
     promo_asp:CompareMetricModel = {"value" : [],"visible": false,key:"Promo ASP"}
     rsv_w_o_vat:CompareMetricModel = {"value" : [],"visible": false,key:"RSV w/o VAT"}
-    customer_margin:CompareMetricModel = {"value" : [],"visible": false,key:"Customer Margin"}
-    rp_percent:CompareMetricModel = {"value" : [],"visible": false,key:"Customer Margin,%RSV"}
+    customer_margin:CompareMetricModel = {"value" : [],"visible": false,key:"Trade Margin"}
+    rp_percent:CompareMetricModel = {"value" : [],"visible": false,key:"Trade Margin,%RSV"}
     all_metrics:Array<CompareMetricModel> = [this.base_units , this.units,this.increment_units , this.volume,
     this.nsv , this.lsv,this.mac , this.mac_per_nsv , this.promo_asp,this.te,this.te_per_lsv,this.te_per_unit,
     this.roi,this.lift,this.asp,this.rsv_w_o_vat,this.customer_margin,this.rp_percent
@@ -262,7 +262,7 @@ this.format = "percent"
                 this.lift.visible = true
                 this.asp.value.push(this._generate_obj(element , "asp"))
                 this.asp.visible = true
-                this.promo_asp.value.push(this._generate_obj(element , "asp"))
+                this.promo_asp.value.push(this._generate_obj(element , "avg_promo_selling_price"))
                 this.promo_asp.visible = true
                 this.rsv_w_o_vat.value.push(this._generate_obj(element , "total_rsv_w_o_vat"))
                 this.rsv_w_o_vat.visible = true
