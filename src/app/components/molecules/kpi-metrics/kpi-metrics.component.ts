@@ -262,7 +262,7 @@ this.format = "percent"
                 this.lift.visible = true
                 this.asp.value.push(this._generate_obj(element , "asp"))
                 this.asp.visible = true
-                this.promo_asp.value.push(this._generate_obj(element , "asp"))
+                this.promo_asp.value.push(this._generate_obj(element , "avg_promo_selling_price"))
                 this.promo_asp.visible = true
                 this.rsv_w_o_vat.value.push(this._generate_obj(element , "total_rsv_w_o_vat"))
                 this.rsv_w_o_vat.visible = true
