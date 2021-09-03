@@ -719,6 +719,14 @@ this.checkboxMetrices.find(d=>{
                 
                
             } 
+            if (property === 'status') {
+                this.status =  changes[property].currentValue
+                if(this.status == 'viewmore'){
+                    this.isExpand = true
+                }
+                console.log(changes[property].currentValue , " status changes........")
+
+            }
         }
     }
 }

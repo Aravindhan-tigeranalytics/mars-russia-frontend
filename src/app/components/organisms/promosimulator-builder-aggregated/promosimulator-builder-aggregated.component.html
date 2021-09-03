@@ -50,7 +50,7 @@
                     <h1 class="text-title-medium text-gray-700 font-medium">Mars & Customer P&L Metrics</h1>
                     <div class="flex flex-row space-x-2">
                         <div class="w-20 h-auto border border-marsgray-100 img-height">
-                            <img class="w-full h-auto" src="/assets/subbrand-img/orbit-otc.png" alt="" />
+                            <img class="w-full h-auto" [src]="product|imagePipe" alt="" />
                         </div>
                         <!-- <div class="w-20 h-auto border border-marsgray-100">
                             <img class="w-full h-auto" src="/assets/subbrand-img/twix.png" alt="" />
@@ -215,8 +215,8 @@
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="lsv"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="tradeExpence"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="nsv"></nwn-cell-item></td>
-                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="cogs"></nwn-cell-item></td>
+                            <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac"></nwn-cell-item></td>
 
                             <!-- <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="mac_nsv"></nwn-cell-item></td>
                             <td><nwn-cell-item [differenceFormat]="activeAggregatedTab" [nwnCellData]="te_lsv"></nwn-cell-item></td>
@@ -339,12 +339,6 @@
                             <nwn-cell-header type="subheadersm" color="bgwhite">Volume (In Tonnes)</nwn-cell-header>
                         </th>
                         <th class="sticked freeze_vertical" scope="col">
-                            <nwn-cell-header type="subheadersm" color="bgwhite">ASP</nwn-cell-header>
-                        </th>
-                        <th class="sticked freeze_vertical" scope="col">
-                            <nwn-cell-header type="subheadersm" color="bgwhite">Promo ASP</nwn-cell-header>
-                        </th>
-                        <th class="sticked freeze_vertical" scope="col">
                             <nwn-cell-header type="subheadersm" color="bgwhite">RSV w/o VAT</nwn-cell-header>
                         </th>
                         <th class="sticked freeze_vertical" scope="col">
@@ -353,6 +347,13 @@
                         <th class="sticked freeze_vertical" scope="col">
                             <nwn-cell-header type="subheadersm" color="bgwhite">Customer Margin,%RSV</nwn-cell-header>
                         </th>
+                        <th class="sticked freeze_vertical" scope="col">
+                            <nwn-cell-header type="subheadersm" color="bgwhite">ASP</nwn-cell-header>
+                        </th>
+                        <th class="sticked freeze_vertical" scope="col">
+                            <nwn-cell-header type="subheadersm" color="bgwhite">Promo ASP</nwn-cell-header>
+                        </th>
+                       
                         <th class="sticked freeze_vertical" scope="col">
                             <nwn-cell-header type="subheadersm" color="bgwhite">LSV</nwn-cell-header>
                         </th>
@@ -390,6 +391,11 @@
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.base_unit"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.incremental_unit"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_weight_in_tons"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_rsv_w_o_vat"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.retailer_margin"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.retailer_margin_percent_of_rsp"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.asp"></nwn-cell-item></td>
+                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.promo_asp"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_lsv"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_nsv"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.mars_mac_percent_of_nsv"></nwn-cell-item></td>
@@ -398,11 +404,8 @@
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.te_per_units"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.roi"></nwn-cell-item></td>
                         <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.lift_percent"></nwn-cell-item></td>
-                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.asp"></nwn-cell-item></td>
-                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.promo_asp"></nwn-cell-item></td>
-                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.total_rsv_w_o_vat"></nwn-cell-item></td>
-                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.retailer_margin"></nwn-cell-item></td>
-                        <td><nwn-cell-item [differenceFormat]="activeWeeklyTab" [nwnCellData]="week.retailer_margin_percent_of_rsp"></nwn-cell-item></td>
+        
+                      
                     </tr>
 
 <!-- 

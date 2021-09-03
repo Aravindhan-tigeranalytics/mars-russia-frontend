@@ -4,6 +4,7 @@ import {FormsModule , ReactiveFormsModule} from '@angular/forms'
 import {FilterPipe} from "./pipe/filter.pipe"
 import {SIPipe} from "./pipe/si.pipe"
 import {WeekType} from "./pipe/week-type.pipe"
+import {ImagePipe} from "./pipe/image.pipe"
 import { RouterModule } from '@angular/router';
 
 
@@ -12,7 +13,8 @@ import { RouterModule } from '@angular/router';
   declarations: [
     FilterPipe,
     SIPipe,
-    WeekType
+    WeekType,
+    ImagePipe
   ],
   imports: [
     CommonModule,
@@ -24,6 +26,7 @@ import { RouterModule } from '@angular/router';
     FilterPipe,
     SIPipe,
     WeekType,
+    ImagePipe,
     FormsModule,
     ReactiveFormsModule,
     RouterModule

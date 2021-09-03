@@ -392,8 +392,10 @@ export class PromoOptimizerComponent implements OnInit {
         // this.selected_retailer = 
         // console.log($event , "load event")
         this.optimize.setAccAndPPGFilteredFlagObservable(true)
+        
         this.optimize.fetch_optimizer_scenario_by_id($event["id"]).subscribe(data=>{
             if(data){
+                
                 console.log(data , "fetch response ..")
                 // this.optimizer_response = data
                 let promotion = this.optimize.getPromotionById($event["id"])
@@ -478,6 +480,9 @@ export class PromoOptimizerComponent implements OnInit {
                 this.optimize.setAccAndPPGFilteredFlagObservable(true)
                 this.isOptimiserFilterApplied = true
                 this.disable_save_download = false
+                // console.log(this.status , "current status")
+                this.status = "viewmore"
+                // console.log(this.status , "current status after chageong ")
             })
         }
         if($event.type == "reset"){
@@ -489,10 +494,11 @@ export class PromoOptimizerComponent implements OnInit {
         this.selected_product= null as any
         this._populateFilters(this.product)
 
-            this.status = "viewless"
+           
             this.optimize.setoptimizerDataObservable(null as any) 
 
             this.optimizer_response = null
+            this.status = "viewless"
             this.optimize.setOptimizerResponseObservable(null)
             this.scenarioTitle = "Untitled"
             this.restApi.setIsSaveScenarioLoadedObservable(null)
@@ -563,6 +569,9 @@ export class PromoOptimizerComponent implements OnInit {
             this.optimize.optimizeResult(this.get_optimizer_form()).subscribe(data=>{
                 this.optimize.setOptimizerResponseObservable(data)
                 this.isOptimiserFilterApplied = true
+                console.log(this.status , "current status")
+                this.status = "viewmore"
+                console.log(this.status , "current status after chageong ")
                
             })
            
@@ -656,6 +665,15 @@ export class PromoOptimizerComponent implements OnInit {
             }
             let p = this.product.find(e=>(e.account_name == this.selected_retailer)&&(e.product_group==this.selected_product))
             this.optimize.setAccAndPPGFilteredFlagObservable(true)
+            this.optimize.setOptimizerResponseObservable(null)
+
+            this.status = "viewless"
+
+            this.scenarioTitle = "Untitled"
+            this.restApi.setIsSaveScenarioLoadedObservable(null)
+            this.optimize.setAccAndPPGFilteredFlagObservable(false)
+
+            this.isOptimiserFilterApplied = false
             if(p){
                 this.optimize.fetch_optimizer_data({
                     "account_name" : p.account_name,

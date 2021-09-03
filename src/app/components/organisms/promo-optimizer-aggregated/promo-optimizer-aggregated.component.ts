@@ -95,11 +95,27 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
 
             }
             else{
-                this.optimizer_response = null
+                console.log("resetting .............")
+               this.resetData()
 
             }
             
         })
+    }
+    resetData(){
+        this.optimizer_response = null
+        this.weeklyData = []
+        this.baseCalendar = []
+        this.stimulatedCalendar = []
+        this.baselineLiftChartData = []
+        this.plChartData = []
+        console.table(this.weeklyData)
+        console.table(this.baseCalendar)
+        console.table(this.stimulatedCalendar)
+        console.table(this.baselineLiftChartData)
+        console.table(this.plChartData)
+    
+
     }
 
     updateScroll(value:any){
