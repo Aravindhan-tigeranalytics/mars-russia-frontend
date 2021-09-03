@@ -3,11 +3,11 @@ export function generateMessage1(metric , type){
   // arrow: "carret-up"
   let message = ``
   if(metric['arrow'] == "carret-up"){
-    message += `in increase in ${type} by ${metric['converted_difference']} ${metric['percent']}`
+    message += `in increase in ${type} by ${(metric['converted_difference']).replace(/[()]/g, '')} ${metric['percent']}`
 
   }
   else if(metric['arrow'] == "carret-down"){
-    message += `in decrease in ${type} by ${metric['converted_difference']} ${metric['percent']}`
+    message += `in decrease in ${type} by ${(metric['converted_difference']).replace(/[()]/g, '')} ${metric['percent']}`
 
   }
   else {
@@ -20,11 +20,11 @@ return message
 export function generateMessage2(metric){
   let message = ` Retailer profit `
   if(metric['arrow'] == "carret-up"){
-    message +=  `has increased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar`
+    message +=  `has increased by ${(metric['converted_difference']).replace(/[()]/g, '')} ${metric['percent']} as compared to the base calendar`
 
   }
   else if(metric['arrow'] == "carret-down"){
-    message +=  `has decreased by ${metric['converted_difference']} ${metric['percent']} as compared to the base calendar`
+    message +=  `has decreased by ${(metric['converted_difference']).replace(/[()]/g, '')} ${metric['percent']} as compared to the base calendar`
 
   }
   else {
@@ -37,11 +37,11 @@ export function generateMessage2(metric){
 export function generateMessage3(metric){
   let message = ` Trade expense `
   if(metric['arrow'] == "carret-up"){
-    message+= `has increased by ${metric['converted_difference']} ${metric['percent']}`
+    message+= `has increased by ${(metric['converted_difference']).replace(/[()]/g, '')} ${metric['percent']}`
 
   }
   else if(metric['arrow'] == "carret-down"){
-    message+= `has reduced by ${metric['converted_difference']} ${metric['percent']}`
+    message+= `has reduced by ${(metric['converted_difference']).replace(/[()]/g, '')} ${metric['percent']}`
   }
   else{
     message+= `is unchanged`
@@ -51,16 +51,18 @@ export function generateMessage3(metric){
 }
 
 
+
+
 export function generateMessageRandom(index: any,financial_metrics,metric1: any,metric2: any,metric3 :any){
   let result1:any = ''
   let result2:any = ''
   let result3:any = ''
   if(index == 2){
     if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp']) {
-      result1 +=  'There is an increase of Retailer profit by '+ metric1['converted_difference'] + ' ' + metric1['percent']
+      result1 +=  'There is an increase of Retailer profit by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
     }
     else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp']){
-      result1 +=  'There is an decrease of Retailer profit by '+ metric1['converted_difference'] + ' ' + metric1['percent']
+      result1 +=  'There is an decrease of Retailer profit by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
     }
     else if(financial_metrics['simulated']['total']['rp'] == financial_metrics['base']['total']['rp']) {
       result1 += 'There is an unchanged value for Retailer profit '
@@ -68,13 +70,13 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
 
 
     if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC by '+ metric2['converted_difference'] + ' ' + metric2['percent'] +'.'
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] +'.'
     }
     else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC increased by '+ metric2['converted_difference'] + ' ' + metric2['percent'] +'.'
+      result2 +=  ' and MAC increased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] +'.'
     }
     else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC decreased by '+ metric2['converted_difference'] + ' ' + metric2['percent']+'.'
+      result2 +=  ' and MAC decreased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent']+'.'
     }
     else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] || financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
       result2 += ' and MAC is unchanged.'
@@ -86,10 +88,10 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
 
 
     if(financial_metrics['simulated']['total']['te'] > financial_metrics['base']['total']['te']) {
-      result3 +=  ' Trade expense has increased by '+ metric3['percent'] +' with the current optimized calendar results.'
+      result3 +=  ' Trade expense has increased by '+ (metric3['percent']).replace(/[()]/g, '') +' with the current optimized calendar results.'
     }
     else if(financial_metrics['simulated']['total']['te'] < financial_metrics['base']['total']['te']){
-      result3 +=  ' Trade expense has come down by '+ metric3['percent'] +' with the current optimized calendar results.'
+      result3 +=  ' Trade expense has come down by '+ (metric3['percent']).replace(/[()]/g, '') +' with the current optimized calendar results.'
     }
     else if(financial_metrics['simulated']['total']['te'] == financial_metrics['base']['total']['te']) {
       result3 += ' Trade expense is unchanged with the current optimized calendar results.'
@@ -103,10 +105,10 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
   }
   else if(index == 3){
     if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp']) {
-      result1 +=  'Opportunity to increase Retailer profit by '+metric1['converted_difference'] + ' ' +metric1['percent']
+      result1 +=  'Opportunity to increase Retailer profit by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' +metric1['percent']
     }
     else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp']){
-      result1 +=  'Opportunity to decrease Retailer profit by '+metric1['converted_difference'] + ' ' +metric1['percent']
+      result1 +=  'Opportunity to decrease Retailer profit by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' +metric1['percent']
     }
     else if(financial_metrics['simulated']['total']['rp'] == financial_metrics['base']['total']['rp']) {
       result1 += 'There is an unchanged value for Retailer profit '
@@ -114,13 +116,13 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
 
 
     if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC by '+metric2['converted_difference'] + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
     }
     else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC increased by '+ metric2['converted_difference'] + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+      result2 +=  ' and MAC increased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
     }
     else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC decreased by '+ metric2['converted_difference'] + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+      result2 +=  ' and MAC decreased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
     }
     else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] || financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
       result2 += ' and MAC is unchanged exists with this optimal calendar results.'
