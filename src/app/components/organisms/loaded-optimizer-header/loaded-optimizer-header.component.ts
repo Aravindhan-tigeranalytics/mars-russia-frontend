@@ -299,16 +299,16 @@ this.checkboxMetrices.find(d=>{
                 }
             })
         }
-        else if(this.selected_objective.includes("RP")){
+        else if(this.selected_objective.includes("TM")){
             this.checkboxMetrices.find(d=>{
-                if(d.checkboxLabel == "Retailer profit"){
+                if(d.checkboxLabel == "Trade margin"){
                     d.disabled = true
 
                 }
                
             })
             this.checkboxMetrices.filter(d=>{
-                if(d.checkboxLabel!="Retailer profit"){
+                if(d.checkboxLabel!="Trade margin"){
                     d.disabled = false
                 }
             })
@@ -369,7 +369,7 @@ this.checkboxMetrices.find(d=>{
             ret = 'MAC'
         }
         if(id == 'retailer-popup'){
-            ret = 'RP'
+            ret = 'TM'
         }
         if(id == 'te-popup'){
             ret = 'Trade_Expense'
@@ -378,7 +378,7 @@ this.checkboxMetrices.find(d=>{
             ret = 'MAC_Perc'
         }
         if(id == 'rp-per-popup'){
-            ret = 'RP_Perc'
+            ret = 'TM_Perc'
         }
         return ret
     }
@@ -395,7 +395,7 @@ this.checkboxMetrices.find(d=>{
       let rp_rsv:number =  parseFloat(this.checkboxMetrices.find(d=>d.id == "rp-per-popup")['checkHeadValue'].split("x")[1])
     //   debugger
         // Utils.decodePromotion()
-        // checkboxMetrices "Fin_Pref_Order":['Trade_Expense',"RP_Perc",'MAC_Perc','RP','MAC'],
+        // checkboxMetrices "Fin_Pref_Order":['Trade_Expense',"TM_Perc",'MAC_Perc','TM','MAC'],
         // checkHeadValue: 'x0.50',
         // checkboxLabel: 'MAC',
         return {
@@ -543,7 +543,7 @@ this.checkboxMetrices.find(d=>{
         {
             id:"retailer-popup",
             checkHeadValue: 'x0.75',
-            checkboxLabel: 'Retailer profit',
+            checkboxLabel: 'Trade margin',
             disabled: false,
             checked : false,
            
@@ -567,7 +567,7 @@ this.checkboxMetrices.find(d=>{
         {
             id:"rp-per-popup",
             checkHeadValue: 'x1.00',
-            checkboxLabel: 'RP, % RSV',
+            checkboxLabel: 'TM, % RSV',
             disabled: false,
             checked : false,
              
