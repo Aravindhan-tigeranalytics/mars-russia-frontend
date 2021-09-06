@@ -398,31 +398,44 @@ this.checkboxMetrices.find(d=>{
         // checkboxMetrices "Fin_Pref_Order":['Trade_Expense',"TM_Perc",'MAC_Perc','TM','MAC'],
         // checkHeadValue: 'x0.50',
         // checkboxLabel: 'MAC',
+        let fin_pref_order:any = this.checkboxMetrices.map(d=>this.get_order_map(d.id)).reverse()
+        if(fin_pref_order.length > 0){
+            for(let i = 0;i < fin_pref_order.length; i++){
+                if(fin_pref_order[i] == 'TM'){
+                    fin_pref_order[i] = 'RP'
+                }
+                if(fin_pref_order[i] == 'TM_Perc'){
+                    fin_pref_order[i] = 'RP_Perc'
+                }
+            }
+        }
+        let objective_function:any = this.selected_objective.replace("Maximize " , "").replace("Minimize " , "")
+        if(objective_function == 'TM'){
+            objective_function = 'RP'
+        }
         return {
-            "fin_pref_order" : this.checkboxMetrices.map(d=>this.get_order_map(d.id)).reverse(),
-
-           "objective_function" : this.selected_objective.replace("Maximize " , "").replace("Minimize " , ""),
-    "param_max_consecutive_promo" : this.duration_max,
-    "param_min_consecutive_promo" : this.duration_min,
-    "param_promo_gap" : this.param_gap_max,
-    "param_total_promo_min" : this.min_week,
-    "param_total_promo_max":this.max_week,
-   "mars_tpr": decoded.map(d=>d.promo_depth),
-   "co_investment" : decoded.map(d=>d.co_investment),
-   "promo_mech" : decoded.map(d=>d.promo_mechanics),
-   "config_mac" : mac != 1,
-   "param_mac" : mac,
-   "config_rp" : rp != 1,
-   "param_rp" : rp,
-   "config_trade_expense" : te != 1,
-   "param_trade_expense" : te,
-   "config_mac_perc" : mac_nsv != 1,
-   "param_mac_perc" : mac_nsv,
-   "config_rp_perc" : rp_rsv != 1,
-   "param_rp_perc" : rp_rsv , 
-   "param_compulsory_no_promo_weeks" : this.ignored_week_val.map(d=>d.week),
-   "param_compulsory_promo_weeks" : this.cumpulsory_week_val.map(d=>d.week)
-
+            "fin_pref_order" : fin_pref_order,
+            "objective_function" : objective_function,
+            "param_max_consecutive_promo" : this.duration_max,
+            "param_min_consecutive_promo" : this.duration_min,
+            "param_promo_gap" : this.param_gap_max,
+            "param_total_promo_min" : this.min_week,
+            "param_total_promo_max":this.max_week,
+            "mars_tpr": decoded.map(d=>d.promo_depth),
+            "co_investment" : decoded.map(d=>d.co_investment),
+            "promo_mech" : decoded.map(d=>d.promo_mechanics),
+            "config_mac" : mac != 1,
+            "param_mac" : mac,
+            "config_rp" : rp != 1,
+            "param_rp" : rp,
+            "config_trade_expense" : te != 1,
+            "param_trade_expense" : te,
+            "config_mac_perc" : mac_nsv != 1,
+            "param_mac_perc" : mac_nsv,
+            "config_rp_perc" : rp_rsv != 1,
+            "param_rp_perc" : rp_rsv , 
+            "param_compulsory_no_promo_weeks" : this.ignored_week_val.map(d=>d.week),
+            "param_compulsory_promo_weeks" : this.cumpulsory_week_val.map(d=>d.week)
         }
     }
 
