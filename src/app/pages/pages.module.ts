@@ -13,10 +13,11 @@ import { PromoScenarioBuilderComponent } from './promo-scenario-builder/promo-sc
 import { PromoOptimizerComponent } from './promo-optimizer/promo-optimizer.component';
 import { PricingToolComponent } from './pricing-tool/pricing-tool.component';
 import { PromoToolComponent } from './promo-tool/promo-tool.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
     imports: [RouterModule,CommonModule,ComponentModule,SharedModule,AppRoutingModule],
-    declarations: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent, PromoToolComponent],
+    declarations: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent, PromoToolComponent, HomePageComponent],
     exports: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent],
     // imports: [ComponentModule, ],
     // declarations: [PromoScenarioBuilderComponent, PromoOptimizerComponent, PricingToolComponent, PromoToolComponent],
