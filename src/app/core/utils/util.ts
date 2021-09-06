@@ -18,7 +18,7 @@ export function generateMessage1(metric , type){
 return message
 }
 export function generateMessage2(metric){
-  let message = ` Retailer profit `
+  let message = ` Trade Margin `
   if(metric['arrow'] == "carret-up"){
     message +=  `has increased by ${(metric['converted_difference']).replace(/[()]/g, '')} ${metric['percent']} as compared to the base calendar`
 
@@ -59,13 +59,13 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
   let result3:any = ''
   if(index == 2){
     if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp']) {
-      result1 +=  'There is an increase of Retailer profit by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
+      result1 +=  'There is an increase of Trade margin by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
     }
     else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp']){
-      result1 +=  'There is an decrease of Retailer profit by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
+      result1 +=  'There is an decrease of Trade margin by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
     }
     else if(financial_metrics['simulated']['total']['rp'] == financial_metrics['base']['total']['rp']) {
-      result1 += 'There is an unchanged value for Retailer profit '
+      result1 += 'There is an unchanged value for Trade margin '
     }
 
 
@@ -105,13 +105,13 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
   }
   else if(index == 3){
     if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp']) {
-      result1 +=  'Opportunity to increase Retailer profit by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' +metric1['percent']
+      result1 +=  'Opportunity to increase Trade margin by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' +metric1['percent']
     }
     else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp']){
-      result1 +=  'Opportunity to decrease Retailer profit by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' +metric1['percent']
+      result1 +=  'Opportunity to decrease Trade margin by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' +metric1['percent']
     }
     else if(financial_metrics['simulated']['total']['rp'] == financial_metrics['base']['total']['rp']) {
-      result1 += 'There is an unchanged value for Retailer profit '
+      result1 += 'There is an unchanged value for Trade margin '
     }
 
 
