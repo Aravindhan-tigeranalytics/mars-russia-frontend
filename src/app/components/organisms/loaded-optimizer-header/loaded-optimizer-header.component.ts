@@ -73,7 +73,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     optimizerMetrics:any = ''
     showAnimation = false
     constructor(public optimize:OptimizerService,private router: Router,){
-       
+
         router.events
         .pipe(filter((e: any) => e instanceof RoutesRecognized),
             pairwise()
