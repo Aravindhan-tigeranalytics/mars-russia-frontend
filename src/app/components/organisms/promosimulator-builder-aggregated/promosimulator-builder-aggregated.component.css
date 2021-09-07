@@ -84,3 +84,10 @@
 .green {
     color : green
 }
+
+.multitext {
+    margin-left: 6vw;
+    vertical-align: middle;
+    padding: 10px;
+    font-size: 14px;
+}

@@ -75,7 +75,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     weeklyData:any = []
     optimizer_response : any = null
     message1 : string
-    message2 :string
+    message2 : string
     message3 : string
 
     baselineLiftChartData:any = []

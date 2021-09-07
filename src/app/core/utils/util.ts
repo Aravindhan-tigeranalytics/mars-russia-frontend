@@ -53,7 +53,7 @@ export function generateMessage3(metric){
 
 
 
-export function generateMessageRandom(index: any,financial_metrics,metric1: any,metric2: any,metric3 :any){
+export function generateMessageRandom(index: any,financial_metrics,metric1: any,metric2: any,metric3 :any,flag="optimizer"){
   let result1:any = ''
   let result2:any = ''
   let result3:any = ''
@@ -78,6 +78,9 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
     else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
       result2 +=  ' and MAC decreased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent']+'.'
     }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent']+'.'
+    }
     else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] || financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
       result2 += ' and MAC is unchanged.'
     }
@@ -86,15 +89,21 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
     }
 
 
-
+    let flagContent: any = ''
+    if(flag == 'optimizer'){
+      flagContent = 'optimized'
+    }
+    else {
+      flagContent = 'simulated'
+    }
     if(financial_metrics['simulated']['total']['te'] > financial_metrics['base']['total']['te']) {
-      result3 +=  ' Trade expense has increased by '+ (metric3['percent']).replace(/[()]/g, '') +' with the current optimized calendar results.'
+      result3 +=  ' Trade expense has increased by '+ (metric3['percent']).replace(/[()]/g, '') +' with the current '+ flagContent +' calendar results.'
     }
     else if(financial_metrics['simulated']['total']['te'] < financial_metrics['base']['total']['te']){
-      result3 +=  ' Trade expense has come down by '+ (metric3['percent']).replace(/[()]/g, '') +' with the current optimized calendar results.'
+      result3 +=  ' Trade expense has come down by '+ (metric3['percent']).replace(/[()]/g, '') +' with the current '+ flagContent +' calendar results.'
     }
     else if(financial_metrics['simulated']['total']['te'] == financial_metrics['base']['total']['te']) {
-      result3 += ' Trade expense is unchanged with the current optimized calendar results.'
+      result3 += ' Trade expense is unchanged with the current '+ flagContent +' calendar results.'
     }
 
     result1 = {
@@ -114,21 +123,32 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
       result1 += 'There is an unchanged value for Trade margin '
     }
 
+    let flagContent: any = ''
+    if(flag == 'optimizer'){
+      flagContent = 'optimal'
+    }
+    else {
+      flagContent = 'simulated'
+    }
+
 
     if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this '+ flagContent +' calendar results.'
     }
     else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC increased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+      result2 +=  ' and MAC increased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this '+ flagContent +' calendar results.'
     }
     else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
-      result2 +=  ' and MAC decreased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this optimal calendar results.'
+      result2 +=  ' and MAC decreased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this '+ flagContent +' calendar results.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] + ' exists with this '+ flagContent +' calendar results.'
     }
     else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] || financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
-      result2 += ' and MAC is unchanged exists with this optimal calendar results.'
+      result2 += ' and MAC is unchanged exists with this '+ flagContent +' calendar results.'
     }
     else if(financial_metrics['simulated']['total']['rp'] = financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
-      result2 += ' and MAC exists with this optimal calendar results.'
+      result2 += ' and MAC exists with this '+ flagContent +' calendar results.'
     }
     result1 = {
       result1 :  result1,
