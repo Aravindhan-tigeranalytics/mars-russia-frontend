@@ -19,7 +19,7 @@
             </div> -->
         </div>
         <div class="flex flex-row flex-wrap px-6 pt-4 pb-3 bg-white">
-            <div *ngFor="let product of selected_product_week" class="mr-1 mb-1">
+            <div *ngFor="let product of selected_product_week" class="mr-1 mb-1 w-[96px]">
                 <nwn-week-item (click) = "clickWeekly(product)" [cumpulsory_week_val] =  "cumpulsory_week_val"  [weekly_product] = "product" [weekly_map_ignored] = "weekly_map" >
                     <p weekValue>Week {{product.week}}</p>
                     <p dateValue>{{product.date}}</p>

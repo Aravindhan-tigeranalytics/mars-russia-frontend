@@ -7,6 +7,7 @@ import { PromoScenarioBuilderComponent } from '@pages/promo-scenario-builder/pro
 import { PromoOptimizerComponent } from '@pages/promo-optimizer/promo-optimizer.component';
 import { PricingToolComponent } from '@pages/pricing-tool/pricing-tool.component';
 import {AuthGuard} from "@core/services"
+import { HomePageComponent } from '@pages/home-page/home-page.component';
 
 // Routes
 // const routes: Routes = [
@@ -66,6 +67,10 @@ const routes: Routes = [
     {
         path: 'srm',
         component: PricingToolComponent
+    },
+    {
+        path: 'home-page',
+        component: HomePageComponent
     },
     {
         path: '',

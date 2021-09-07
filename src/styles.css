@@ -383,3 +383,12 @@ nwn-scenario-load-card .load-scenario-card {
   font-size: small;
   color: red;
 }
+
+#card-logo-pricing-tool .large-svg,
+#card-logo-promo-tool .large-svg,
+#card-logo-profit-pool .large-svg,
+#card-logo-pricing-capabilities .large-svg,
+#card-logo-srm-insight  .large-svg{
+  width: 3rem !important;
+  height: 3rem !important;
+}
