@@ -43,10 +43,10 @@
         <div
             class="border border-marsgray-300 cursor-pointer"
             *ngFor="let promotion of list_promotion_pricing | appFilter: searchText : 'promo';let i = index"
-            (click)="select(i)"
+            (click)="select(i,promotion)"
             [ngClass]="{ active: selectedIndex == i }"
         >
-            <nwn-scenario-load-card [showInfo]="true">
+            <nwn-scenario-load-card [id] = "promotion" (infoClickedEvent) = "infoClickedEvent($event)" [showInfo]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>{{promotion.comments}}</p>
             </nwn-scenario-load-card>

@@ -17,7 +17,7 @@ export interface ListPromotion {
     name: string,
     comments: string,
     scenario_type: string,
-    meta: boolean | MetaInfo,
+    meta: boolean | MetaInfo | Array<MetaInfo>,
     
     
     }

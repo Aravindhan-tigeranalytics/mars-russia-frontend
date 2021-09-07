@@ -122,6 +122,7 @@ import { OptimizeFunctionComponent } from '@organisms/optimize-function/optimize
 import {DeleteAlertComponent} from "@organisms/delete-alert/delete-alert.component"
 import { UserGuidePopupComponent } from '@organisms/user-guide-popup/user-guide-popup.component';
 import { FilterBasicOptimizerComponent } from '@organisms/filter-basic-optimizer/filter-basic-optimizer.component';
+import {ConfirmationPopupComponent} from "@organisms/confirmation-popup/confirmation-popup.component"
 
 
 @NgModule({
@@ -233,7 +234,8 @@ import { FilterBasicOptimizerComponent } from '@organisms/filter-basic-optimizer
         OptimizeFunctionComponent,
         DeleteAlertComponent,
         UserGuidePopupComponent,
-        FilterBasicOptimizerComponent
+        FilterBasicOptimizerComponent,
+        ConfirmationPopupComponent
     ],
     exports: [
         ButtonComponent,
@@ -345,7 +347,8 @@ import { FilterBasicOptimizerComponent } from '@organisms/filter-basic-optimizer
         NumberPromoWeeksComponent,
         SaveScenarioComponent,
         DeleteAlertComponent,
-        FilterBasicOptimizerComponent
+        FilterBasicOptimizerComponent,
+        ConfirmationPopupComponent
     ],
 })
 export class ComponentModule {}

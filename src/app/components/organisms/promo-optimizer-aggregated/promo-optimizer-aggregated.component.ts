@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { ModalService } from '@molecules/modal/modal.service';
 import { OptimizerService } from '../../../core/services/optimizer.service';
 import * as Utils from "../../../core/utils/util"
@@ -14,6 +14,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     @ViewChild('scrollTwo') scrollTwo: ElementRef;
     @ViewChild('scrollOneOP') scrollOneOP: ElementRef;
     @ViewChild('scrollTwoOP') scrollTwoOP: ElementRef;
+    @Input()
+    isUserConstraintChanged:boolean = false
     translate_y: string = '';
     currentTranslateRate: string = '';
     index = 0

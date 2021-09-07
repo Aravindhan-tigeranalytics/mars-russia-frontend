@@ -8,10 +8,13 @@
  [title]="scenarioTitle"
  [disable_save_download] = "disable_save_download"
   (modalEvent)="receiveMessage($event)"></nwn-loaded-optimizer-header>
-<!-- [simulated]="status" -->
+<!-- [simulated]="status" optimizer-summary-popup -->
 <div>
+    <!-- <div (click)="openModal('confirmation-popup')">confirmation</div> -->
     <nwn-summary-placeholder *ngIf="!isOptimiserFilterApplied"></nwn-summary-placeholder>
-    <nwn-promo-optimizer-aggregated *ngIf="isOptimiserFilterApplied" (modalEvent)="receiveMessage($event)"></nwn-promo-optimizer-aggregated>
+    <nwn-promo-optimizer-aggregated
+    [isUserConstraintChanged] = "isUserConstraintChanged"
+    *ngIf="isOptimiserFilterApplied" (modalEvent)="receiveMessage($event)"></nwn-promo-optimizer-aggregated>
 </div>
 
 <!-- Modals -->
@@ -66,7 +69,7 @@
 
 <!-- summary popup -->
 <nwn-modal id="optimizer-summary-popup" class="hidden">
-    <nwn-optimizer-summary-popup></nwn-optimizer-summary-popup>
+    <nwn-optimizer-summary-popup [constraint_difference] = "constraint_difference"  ></nwn-optimizer-summary-popup>
 </nwn-modal>
 
 <!-- User Guide Popup -->
@@ -83,4 +86,8 @@
 <!-- Command Interface filter -->
 <nwn-modal id="filter-basic-optimizer" class="hidden">
     <nwn-filter-basic-optimizer></nwn-filter-basic-optimizer>
+</nwn-modal>
+
+<nwn-modal id="confirmation-popup" class="hidden">
+    <nwn-confirmation-popup (confirmationEvent)="confirmationEvent($event)"></nwn-confirmation-popup>
 </nwn-modal>

@@ -8,15 +8,11 @@ import { ModalService } from '@molecules/modal/modal.service';
     styleUrls: ['./optimizer-summary-popup.component.css'],
 })
 export class OptimizerSummaryPopupComponent implements OnInit {
-    summaryInfoData:any =  [
-    {"converted_base": '1.05',"converted_simulated": '2.3'},
-    {"converted_base": '1.0',"converted_simulated": '2.3'},
-    {"converted_base": '1.0',"converted_simulated": '2.3'},
-    {"converted_base": '1.0',"converted_simulated": '2.3'},
-    {"converted_base": '1.1',"converted_simulated": '2.3'}
-    ]
+    @Input()
+    constraint_difference:any = null
     constructor(public modalService: ModalService){}
     ngOnInit(){
+        console.log(this.constraint_difference , "constraint difference....")
     
     }
 

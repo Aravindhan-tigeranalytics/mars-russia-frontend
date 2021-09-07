@@ -1,6 +1,8 @@
 <div class="px-12 py-5">
     <div class="text-left py-5">
-        <h1 class="text-heading font-extrabold inline-block align-middle">Summary</h1>
+        <h1 class="text-heading font-extrabold inline-block align-middle" (click) = "openModal('optimizer-summary-popup')">Summary
+            <nwn-svg-icon *ngIf="isUserConstraintChanged" style="display: inline-block;" type="stroke" size="lg" nwnSvgIcon="light-bulb"></nwn-svg-icon>
+        </h1>
         <!-- <div class="vertical-line inline-block"></div>
         <div class="vertical-line inline-block" style="padding-right: 5px !important;"></div> -->
         <div class="inline-block border border-gray-300" style="margin-left: 6vw;
