@@ -67,9 +67,10 @@
         <div class="flex flex-col border-b border-gray-300">
             <div class="flex flex-row flex-wrap items-center border-b border-marsgray-300">
                 <div class="mr-2">
-                    <nwn-metric-item (click)="sendMessage('optimize-function')" nwnMetricItem="defaultRight" [showRightValue]="false">
-                        <p rightHeadValue>{{selected_objective}}</p>
-                        <p rightMetricContent>Objective function</p>
+                    <nwn-metric-item (click)="sendMessage('optimize-function')" nwnMetricItem="defaultTop" [showRightValue]="false">
+                        <p topValue>{{ObjectiveFunction.min_or_max}}</p>
+                        <p topHeadValue>{{ObjectiveFunction.metric}}</p>
+                        <p topMetricContent>Objective function</p>
                     </nwn-metric-item>
                 </div>
                 <!-- <div class="mr-2">
