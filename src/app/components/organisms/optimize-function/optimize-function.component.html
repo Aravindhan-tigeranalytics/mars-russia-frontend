@@ -6,7 +6,7 @@
         <nwn-command-search [value]="searchText" [hideClose]="true" [placeholder]="placeholder" (inputChangeEvent) = "inputChangeEvent($event)"></nwn-command-search>
     </div>
     <div>
-        <nwn-command-iconitem (click) = "selectObjective(objective.name)" *ngFor = "let objective of objective_function | appFilter: searchText : 'promo';" type="stroke" nwnSvgIcon="trending-up" [hideTick]="true"
+        <nwn-command-iconitem (click) = "selectObjective(objective.value)" *ngFor = "let objective of objective_function | appFilter: searchText : 'promo';" type="stroke" nwnSvgIcon="{{objective.nwnSvgIcon}}" [hideTick]="true"
             >{{objective.name}}</nwn-command-iconitem
         >
         <!-- <nwn-command-iconitem type="stroke" nwnSvgIcon="trending-up" [hideTick]="true"

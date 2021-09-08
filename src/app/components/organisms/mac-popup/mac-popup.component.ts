@@ -79,7 +79,7 @@ export class MacPopupComponent {
         if(label == 'MAC, % NSV'){
             ret = 'mac-per-popup'
         }
-        if(label == 'RP, % RSV'){
+        if(label == 'TM, % RSV'){
             ret = 'rp-per-popup'
         }
         return ret
