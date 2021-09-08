@@ -99,7 +99,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
         // this.loadStimulatedData()
         this.optimize.getSimulatedDataObservable().subscribe((data: any) => {
             if(data){
-                this.index = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                this.index = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
                 // console.log(data , "holiday information with data")
                 this.convertToGraphNTableData(data)
 
@@ -346,10 +346,10 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "color":  this.colorForDifference(data['base']['total']['rp_percent'] , data['simulated']['total']['rp_percent']),
             }
 
-            this.message1 = Utils.generateMessage1(this.mac , "MAC")
-            this.message3 = Utils.generateMessage3(this.tradeExpence)
-            this.message2 = Utils.generateMessage2(this.customerMargin)
-            this.randomResult = Utils.generateMessageRandom(this.index,data,this.customerMargin,this.mac,this.tradeExpence,"simulator")
+            // this.message1 = Utils.generateMessage1(this.mac , "MAC")
+            // this.message3 = Utils.generateMessage3(this.tradeExpence)
+            // this.message2 = Utils.generateMessage2(this.customerMargin)
+            this.randomResult = Utils.generateMessageRandomSimulator(this.index,data,this.customerMargin,this.mac,this.baseline)
 
             this.cogs = {
                 "converted_base": Utils.formatNumber(data['base']['total']['cogs'],true,false),

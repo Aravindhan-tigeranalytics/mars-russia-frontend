@@ -159,6 +159,99 @@ export function generateMessageRandom(index: any,financial_metrics,metric1: any,
   return result1
 }
 
+export function generateMessageRandomSimulator(index: any,financial_metrics,metric1: any,metric2: any,metric3 :any){
+  let result1:any = ''
+  let result2:any = ''
+  let result3:any = ''
+  if(index == 1){
+    if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp']) {
+      result1 +=  'Simulated scenario results in an increase of Trade margin by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp']){
+      result1 +=  'Simulated scenario results in an decrease of Trade margin by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
+    }
+    else if(financial_metrics['simulated']['total']['rp'] == financial_metrics['base']['total']['rp']) {
+      result1 += 'Simulated scenario results has a unchanged value for Trade margin '
+    }
+
+
+    if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] +'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC increased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] +'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC decreased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent']+'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent']+'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] || financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
+      result2 += ' and MAC is unchanged.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] = financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
+      result2 += ' and MAC.'
+    }
+
+
+
+    if(financial_metrics['simulated']['total']['units'] > financial_metrics['base']['total']['units']) {
+      result3 +=  ' There is an increase in units by '+ (metric3['percent']).replace(/[()]/g, '') 
+    }
+    else if(financial_metrics['simulated']['total']['units'] < financial_metrics['base']['total']['units']){
+      result3 +=  ' There is an drop in units by '+ (metric3['percent']).replace(/[()]/g, '')
+    }
+    else if(financial_metrics['simulated']['total']['units'] == financial_metrics['base']['total']['units']) {
+      result3 += ' There is an unchanged value for units.'
+    }
+
+    result1 = {
+      result1 :  result1,
+      result2 :  result2,
+      result3 :  result3
+    } 
+  }
+  else if(index == 2){
+    if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp']) {
+      result1 +=  'Simulated scenario results in an increase of Trade margin by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp']){
+      result1 +=  'Simulated scenario results in an decrease of Trade margin by '+ (metric1['converted_difference']).replace(/[()]/g, '') + ' ' + metric1['percent']
+    }
+    else if(financial_metrics['simulated']['total']['rp'] == financial_metrics['base']['total']['rp']) {
+      result1 += 'Simulated scenario results has a unchanged value for Trade margin '
+    }
+
+
+    if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] +'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] > financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC increased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent'] +'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC decreased by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent']+'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] < financial_metrics['base']['total']['mac']) {
+      result2 +=  ' and MAC by '+ (metric2['converted_difference']).replace(/[()]/g, '') + ' ' + metric2['percent']+'.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] > financial_metrics['base']['total']['rp'] || financial_metrics['simulated']['total']['rp'] < financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
+      result2 += ' and MAC is unchanged.'
+    }
+    else if(financial_metrics['simulated']['total']['rp'] = financial_metrics['base']['total']['rp'] && financial_metrics['simulated']['total']['mac'] == financial_metrics['base']['total']['mac']) {
+      result2 += ' and MAC.'
+    }
+
+    result1 = {
+      result1 :  result1,
+      result2 :  result2,
+      result3 :  result3
+    } 
+  }
+  return result1
+}
+
 export function decodePromotion(promo_name:string){
   let obj ={
     "promo_mechanics" : "",
