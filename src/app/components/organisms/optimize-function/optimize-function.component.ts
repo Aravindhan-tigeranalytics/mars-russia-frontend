@@ -19,14 +19,14 @@ export class OptimizeFunctionComponent extends ModalApply implements OnInit{
 objective_function = [
   {'name':'Maximize MAC','nwnSvgIcon': 'trending-up', 'value': 'Maximize MAC'},
   {'name':'Maximize Trade Margin', 'nwnSvgIcon': 'trending-up', 'value': 'Maximize TM'},
-  {'name':'Minimize Trade Expense','nwnSvgIcon': 'trending-down', 'value': 'Maximize TE'}
+  {'name':'Minimize Trade Expense','nwnSvgIcon': 'trending-down', 'value': 'Minimize TE'}
 ]
 constructor(public optimizerService: OptimizerService,public modalService: ModalService) {
     super()
 }
 selectObjective(objective){
     this.objective_value = objective
-    this.objectiveEvent.emit(objective)
+    // this.objectiveEvent.emit(objective)
     // console.log(objective , "objective function")
 }
 
@@ -36,6 +36,10 @@ ngOnInit(){
         })
 }
 apply(){
+    console.log(this.objective_value , "objective function")
+    if(!this.objective_value){
+        throw "Choose objective function"
+    }
     this.objectiveEvent.emit(this.objective_value)
 
 }

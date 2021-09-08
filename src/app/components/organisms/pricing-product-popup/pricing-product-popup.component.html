@@ -36,25 +36,25 @@
             <div class="grid">
               <div>
                   <nwn-metric-item-popup>
-                      <p metricPopHead>{{meta.pricing?.lpi}}</p>
+                      <p metricPopHead>{{meta.pricing?.lpi | number : '1.2-2'}} ₽</p>
                       <p metricPopContent>List price (simulated)</p>
                   </nwn-metric-item-popup>
               </div>
               <div>
                   <nwn-metric-item-popup>
-                      <p metricPopHead>{{meta.pricing?.rsp}}</p>
+                      <p metricPopHead>{{meta.pricing?.rsp | number : '1.2-2'}} ₽</p>
                       <p metricPopContent>RSP w/o VAT (simulated)</p>
                   </nwn-metric-item-popup>
               </div>
               <div>
                   <nwn-metric-item-popup>
-                      <p metricPopHead>{{meta.pricing?.cogs}}</p>
+                      <p metricPopHead>{{meta.pricing?.cogs | number : '1.2-2'}} ₽</p>
                       <p metricPopContent>COGS (simulated)</p>
                   </nwn-metric-item-popup>
               </div>
               <div>
                   <nwn-metric-item-popup>
-                      <p metricPopHead>{{meta.pricing?.elasticity}}</p>
+                      <p metricPopHead>{{meta.pricing?.elasticity | number : '1.2-2'}}</p>
                       <p metricPopContent>Price elasticity (base)</p>
                   </nwn-metric-item-popup>
               </div>
