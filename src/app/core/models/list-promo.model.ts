@@ -6,6 +6,7 @@ export interface PricingPromoModel{
 }
 
 export interface MetaInfo {
+    id?: number,
     retailer : string,
     product_group : string,
     pricing : boolean | PricingPromoModel

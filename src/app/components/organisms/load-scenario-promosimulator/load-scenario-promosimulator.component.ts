@@ -1,6 +1,6 @@
 import { Component,OnInit,Output ,Input, EventEmitter } from '@angular/core';
 import {OptimizerService, SimulatorService} from '@core/services'
-import { ListPromotion} from "@core/models"
+import { ListPromotion, MetaInfo} from "@core/models"
 import { ModalService } from '@molecules/modal/modal.service';
 
 @Component({
@@ -13,9 +13,10 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
     title : string | 'Load scenario' | 'My scenario' = 'Load scenario'
     selectedIndex!: number;
     openTab = 2;
-    selected_promotion:any = null;
+    selected_promotion:ListPromotion = null as any;
     promotion_viewed:ListPromotion = null as any
     searchText = ''
+    metaInfo : MetaInfo[] = []
     @Output()
     loadPromotionEvent = new EventEmitter()
 
@@ -77,6 +78,9 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
        
 
     }
+    openPrice(){
+        this.modal.open('product-choose')
+    }
     infoClickedEvent($event){
         this.promotion_viewed = $event
         console.log($event , "id of promotion ")
@@ -93,7 +97,26 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
         this.selected_promotion = promotion
         console.log(promotion , "selected promotion...")
     }
+    pricingChooseEvent($event){
+        this.modal.close('product-choose')
+        console.log($event , "Event pricing tool")
+        console.log(this.selected_promotion , "selected promotion")
+        this.loadPromotionEvent.emit(this.selected_promotion)
+
+    }
     loadScenario(){
+        console.log(this.selected_promotion , "selected promotions")
+        if(Array.isArray(this.selected_promotion.meta)){
+            if(this.selected_promotion.meta.length > 1){
+
+                this.metaInfo = []
+                this.metaInfo = [...this.metaInfo , ...this.selected_promotion.meta]
+                this.modal.open('product-choose')
+                return
+
+            }
+        }
+
         this.loadPromotionEvent.emit(this.selected_promotion)
         this.modal.close('load-scenario-promosimulator')
 

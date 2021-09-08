@@ -123,6 +123,7 @@ import {DeleteAlertComponent} from "@organisms/delete-alert/delete-alert.compone
 import { UserGuidePopupComponent } from '@organisms/user-guide-popup/user-guide-popup.component';
 import { FilterBasicOptimizerComponent } from '@organisms/filter-basic-optimizer/filter-basic-optimizer.component';
 import {ConfirmationPopupComponent} from "@organisms/confirmation-popup/confirmation-popup.component"
+import {PricingProductPopupComponent} from "@organisms/pricing-product-popup/pricing-product-popup.component"
 
 
 @NgModule({
@@ -235,7 +236,8 @@ import {ConfirmationPopupComponent} from "@organisms/confirmation-popup/confirma
         DeleteAlertComponent,
         UserGuidePopupComponent,
         FilterBasicOptimizerComponent,
-        ConfirmationPopupComponent
+        ConfirmationPopupComponent,
+        PricingProductPopupComponent
     ],
     exports: [
         ButtonComponent,
@@ -348,7 +350,8 @@ import {ConfirmationPopupComponent} from "@organisms/confirmation-popup/confirma
         SaveScenarioComponent,
         DeleteAlertComponent,
         FilterBasicOptimizerComponent,
-        ConfirmationPopupComponent
+        ConfirmationPopupComponent,
+        PricingProductPopupComponent
     ],
 })
 export class ComponentModule {}

@@ -9,7 +9,35 @@ import { ListPromotion } from '@core/models';
 export class PromoSimulatorScenarioComponent {
 
     @Input()
-    promotion_viewed : ListPromotion = null as any
+    promotion_viewed : ListPromotion = {
+        "id" : 1,
+        "name" : 'name',
+        "comments" : "comments",
+        "scenario_type" : "pricing",
+        "meta" : [
+            {
+                "retailer" : "ret1",
+                "product_group" : "ORBIT OTC",
+                "pricing" : {
+                    "cogs" : 23.33,
+                    "lpi" : 23.45,
+                    "rsp" : 22.33,
+                    "elasticity" : -2.03
+                }
+            },
+            {
+                "retailer" : "ret1",
+                "product_group" : "ORBIT XXL",
+                "pricing" : {
+                    "cogs" : 23.33,
+                    "lpi" : 23.45,
+                    "rsp" : 22.33,
+                    "elasticity" : -2.03
+                }
+            }
+        ]
+    }
+    leng = [1]
     @Output()
     deleteClicked =  new EventEmitter()
     @Output()
@@ -19,6 +47,9 @@ export class PromoSimulatorScenarioComponent {
 
         // console.log(this.promotion_viewed , "delete event")
     }
+    isArray(obj : any ) {
+        return Array.isArray(obj)
+     }
 
     buttonClickedEvent($event){
         console.log($event , "button clicked at delete alert")
