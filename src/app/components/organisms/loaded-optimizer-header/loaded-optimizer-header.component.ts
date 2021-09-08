@@ -72,6 +72,11 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
 
     optimizerMetrics:any = ''
     showAnimation = false
+
+    ObjectiveFunction: any = {
+        min_or_max : '',
+        metric : ''
+    }
     constructor(public optimize:OptimizerService,private router: Router,){
 
         router.events
@@ -336,6 +341,18 @@ this.checkboxMetrices.find(d=>{
     objectiveEvent($event){
         this.modalClose.emit("optimize-function")
         this.selected_objective = $event
+        let temp = this.selected_objective.split(' ')
+        this.ObjectiveFunction.min_or_max = temp[0]
+        if(temp[1] == "TM"){
+            this.ObjectiveFunction.metric = 'Trade Margin'
+        }
+        else if(temp[1] == "TE"){
+            this.ObjectiveFunction.metric = 'Trade Expense'
+        }
+        else {
+            this.ObjectiveFunction.metric = temp[1]
+        }
+        
         this.toggle_disable(this.selected_objective)
         
         console.log(this.selected_objective , "selected objective  selected")

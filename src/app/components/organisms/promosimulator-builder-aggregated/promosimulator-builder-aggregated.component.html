@@ -1,10 +1,10 @@
 <div class="px-12 py-5">
     <div class="text-left py-5">
-        <h1 class="text-heading font-extrabold inline-block">Summary</h1>
-        <!-- <ul class="bullted-list">
-            <li [ngClass]="{ red: tradeExpence.color == 'red', green: tradeExpence.color == 'green' }">{{message1}}</li>
-            <li [ngClass]="{ red: mac.color == 'red', green: mac.color == 'green' }">{{message2}}</li>
-        </ul> -->
+        <h1 class="text-heading font-extrabold inline-block align-middle">Summary</h1>
+        <div class="inline-block border border-gray-300 multitext">
+            <ng-container *ngIf="index == 1">Simulated calendars results {{message1}}.<br/>{{message2}}.{{message3}}.</ng-container>
+            <ng-container *ngIf="index == 2 || index == 3">{{randomResult.result1}}{{randomResult.result2}}<br/>{{randomResult.result3}}</ng-container>
+        </div>
     </div>
     <div class="flex flex-row flex-wrap border-b border-marsgray-300">
         <div class="pr-6">

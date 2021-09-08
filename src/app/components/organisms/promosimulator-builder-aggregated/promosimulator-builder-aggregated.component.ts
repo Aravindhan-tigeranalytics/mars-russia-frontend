@@ -14,6 +14,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     @ViewChild('scrollTwo') scrollTwo: ElementRef;
     translate_y: string = '';
     currentTranslateRate: string = '';
+    index = 0
+    randomResult:any = ''
     constructor(private elRef: ElementRef,public restApi: SimulatorService,public optimize:OptimizerService) {}
 
     public weeklyTableWidth: any;
@@ -21,6 +23,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     public aggregatedGraphWidth: any;
     message1 : string= ''
     message2 : string = ''
+    message3 : string = ''
 
     plChartData:any = [];
     baselineLiftChartData:any = []
@@ -96,6 +99,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
         // this.loadStimulatedData()
         this.optimize.getSimulatedDataObservable().subscribe((data: any) => {
             if(data){
+                this.index = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
                 // console.log(data , "holiday information with data")
                 this.convertToGraphNTableData(data)
 
@@ -226,9 +230,9 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['nsv']-data['base']['total']['nsv'],true,false) + ")",
                 "color": this.colorForDifference(data['base']['total']['nsv'],data['simulated']['total']['nsv']),
             }
-            this.message2 = ""
+            // this.message2 = ""
             let macper = Utils.percentageDifference(data['simulated']['total']['mac'],data['base']['total']['mac'])
-            this.message2 += "MAC is "
+            // this.message2 += "MAC is "
 
             this.mac = {
                 "converted_base": Utils.formatNumber(data['base']['total']['mac'],true,false),
@@ -238,18 +242,19 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['mac']-data['base']['total']['mac'],true,false) + ")",
                 "color":  this.colorForDifference(data['base']['total']['mac'] , data['simulated']['total']['mac'] ),
             }
-            if(Number(macper)<0){
-                this.message2 += "decreased by " +macper+ "%"
+            // if(Number(macper)<0){
+            //     this.message2 += "decreased by " +macper+ "%"
 
-            }
-            else if(Number(macper) > 0){
-                this.message2 += "increased by " +macper+ "%"
+            // }
+            // else if(Number(macper) > 0){
+            //     this.message2 += "increased by " +macper+ "%"
 
-            }
-            else{
-                this.message2 += "not changed"
+            // }
+            // else{
+            //     this.message2 += "not changed"
 
-            }
+            // }
+
             this.mac_nsv = {
                 "converted_base": Utils.formatNumber(data['base']['total']['mac_percent'],true,true),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['mac_percent'],true,true),
@@ -259,9 +264,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "color":  this.colorForDifference(data['base']['total']['mac_percent'] , data['simulated']['total']['mac_percent']),
             }
 
-            this.message1 = ''
             let teper = Utils.percentageDifference(data['simulated']['total']['te'],data['base']['total']['te'])
-            this.message1 += "Trade expense is "
 
             this.tradeExpence = {
                 "converted_base": Utils.formatNumber(data['base']['total']['te'],true,false),
@@ -271,18 +274,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['te']-data['base']['total']['te'],true,false) + ")",
                 "color": this.colorForDifference( data['simulated']['total']['te'],data['base']['total']['te']),
             }
-            if(Number(teper)<0){
-                this.message1 += "decreased by " +teper+ "%"
 
-            }
-            else if(Number(teper) > 0){
-                this.message1 += "increased by " +teper+ "%"
-
-            }
-            else{
-                this.message1 += "not changed"
-
-            }
             this.te_lsv = {
                 "converted_base": Utils.formatNumber(data['base']['total']['te_percent_of_lsv'],true,true),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['te_percent_of_lsv'],true,true),
@@ -318,14 +310,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "percent": "(" + Utils.percentageDifference(data['simulated']['total']['asp'],data['base']['total']['asp']) + "%)",
                 "converted_difference": "(" + Utils.formatNumber(Math.round(data['simulated']['total']['asp'])-Math.round(data['base']['total']['asp']),true,false) + ")"
             }
-            // this.asp = {
-            //     "converted_base": Utils.formatNumber(data['base']['total']['asp'],true,false),
-            //     "converted_simulated": Utils.formatNumber(data['simulated']['total']['asp'],true,false),
-            //     "arrow": data['simulated']['total']['asp'] > data['base']['total']['asp'] ?  'carret-up' : 'carret-down' ,
-            //     "percent": "(" + Utils.percentageDifference(data['simulated']['total']['asp'],data['base']['total']['asp']) + "%)",
-            //     "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['asp']-data['base']['total']['asp'],true,false) + ")",
-            //     "color":  this.colorForDifference(data['base']['total']['asp'] , data['simulated']['total']['asp']),
-            // }
+
             this.promo_asp = {
                 "converted_base": Utils.formatNumber(data['base']['total']['avg_promo_selling_price'],true,false),
                 "converted_simulated": Utils.formatNumber(data['simulated']['total']['avg_promo_selling_price'],true,false),
@@ -360,6 +345,11 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['rp_percent']-data['base']['total']['rp_percent'],false,true) + ")",
                 "color":  this.colorForDifference(data['base']['total']['rp_percent'] , data['simulated']['total']['rp_percent']),
             }
+
+            this.message1 = Utils.generateMessage1(this.mac , "MAC")
+            this.message3 = Utils.generateMessage3(this.tradeExpence)
+            this.message2 = Utils.generateMessage2(this.customerMargin)
+            this.randomResult = Utils.generateMessageRandom(this.index,data,this.customerMargin,this.mac,this.tradeExpence,"simulator")
 
             this.cogs = {
                 "converted_base": Utils.formatNumber(data['base']['total']['cogs'],true,false),
