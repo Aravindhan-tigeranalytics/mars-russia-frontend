@@ -101,7 +101,11 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
         this.modal.close('product-choose')
         console.log($event , "Event pricing tool")
         console.log(this.selected_promotion , "selected promotion")
-        this.loadPromotionEvent.emit(this.selected_promotion)
+        this.loadPromotionEvent.emit({
+            "promotion" : this.selected_promotion,
+            "price_id" : $event
+        })
+        this.modal.close('load-scenario-promosimulator')
 
     }
     loadScenario(){
@@ -117,7 +121,10 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
             }
         }
 
-        this.loadPromotionEvent.emit(this.selected_promotion)
+        this.loadPromotionEvent.emit({
+            "promotion" : this.selected_promotion,
+            // "price_id" : $event
+        })
         this.modal.close('load-scenario-promosimulator')
 
         // load-scenario-promosimulator

@@ -393,21 +393,21 @@ export class PromoOptimizerComponent implements OnInit {
     }
     loadOptimizer($event){
         this.isOptimiserFilterApplied = false
-        this.filter_model["retailer"] =  $event['meta']['retailer']
-        this.filter_model["product_group"] =  $event['meta']['product_group']
-        this.productChange({"value" : $event['meta']['product_group'] , "checked" : true})
-            this.retailerChange({"value" : $event['meta']['retailer'] , "checked" : true})
+        this.filter_model["retailer"] =  $event['promotion']['meta']['retailer']
+        this.filter_model["product_group"] =  $event['promotion']['meta']['product_group']
+        this.productChange({"value" : $event['promotion']['meta']['product_group'] , "checked" : true})
+            this.retailerChange({"value" : $event['promotion']['meta']['retailer'] , "checked" : true})
         // this.selected_product = $event['meta']['product_group']
         // this.selected_retailer = 
         // console.log($event , "load event")
         this.optimize.setAccAndPPGFilteredFlagObservable(true)
         
-        this.optimize.fetch_optimizer_scenario_by_id($event["id"]).subscribe(data=>{
+        this.optimize.fetch_optimizer_scenario_by_id($event['promotion']["id"]).subscribe(data=>{
             if(data){
                 
                 console.log(data , "fetch response ..")
                 // this.optimizer_response = data
-                let promotion = this.optimize.getPromotionById($event["id"])
+                let promotion = this.optimize.getPromotionById($event['promotion']["id"])
                 data["meta"] = promotion
                 console.log(data , "data with promotion details")
                 this.optimize.setoptimizerDataObservable(data)

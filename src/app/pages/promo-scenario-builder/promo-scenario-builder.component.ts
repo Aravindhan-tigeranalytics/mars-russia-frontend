@@ -571,6 +571,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         
     }
     generateListPromotion(){
+        // debugger
         this.promotion_viewed = {
             "id" : this.loaded_scenario.scenario_id,
             "name" : this.loaded_scenario.scenario_name,
@@ -585,8 +586,13 @@ export class PromoScenarioBuilderComponent implements OnInit {
 
     }
     loadPromotionEvent($event){
-        console.log($event.id , "Event id bfore calling")
-        this.optimize.fetch_load_scenario_by_id($event.id).subscribe(data=>{
+        let pricing = null
+        if("price_id" in $event){
+            pricing= $event['price_id']
+
+        }
+    
+        this.optimize.fetch_load_scenario_by_id($event['promotion'].id , pricing ).subscribe(data=>{
             console.log(data , "fetch loaded scenario response")
             this.loaded_scenario = data
             this.loaded_scenario.scenario_comment = $event.comments

@@ -276,8 +276,12 @@ export class OptimizerService {
     })
       // http://localhost:8000/api/scenario/list-saved-promo/39/
   }
-  fetch_load_scenario_by_id(id:number){
-    return this.apiService.get<LoadedScenarioModel>('api/scenario/list-saved-promo/' + id)
+  fetch_load_scenario_by_id(id:number , pricing_id= null){
+    let arg= String(id)
+    if(pricing_id){
+    arg  = id + "/" + pricing_id
+    }
+    return this.apiService.get<LoadedScenarioModel>('api/scenario/list-saved-promo/' + arg)
       // http://localhost:8000/api/scenario/list-saved-promo/39/
   }
   fetch_optimizer_scenario_by_id(id){
