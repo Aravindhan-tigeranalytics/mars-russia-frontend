@@ -12,6 +12,7 @@ import { User } from '@core/models';
 export class SideBarComponent implements OnInit {
     user$ : Observable<User>
     login_route =['/login']
+    homePage = ['/home-page']
     hide_side = false
     is_logged_in = false
     constructor(private authService : AuthService,private router: Router){
@@ -19,7 +20,7 @@ export class SideBarComponent implements OnInit {
             if (val instanceof NavigationEnd) {
                 // console.log(val, 'VAL OF ROUTER ');
                 // console.log(val.url, 'VAL OF ROUTER ');
-                if (this.login_route.includes(val.url)) {
+                if (this.login_route.includes(val.url) || this.homePage.includes(val.url)) {
                   // this.hideNav()
                   this.hide_side = true;
                 } else {
