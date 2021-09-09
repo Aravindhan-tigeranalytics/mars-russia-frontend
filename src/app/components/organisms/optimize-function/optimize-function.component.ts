@@ -26,7 +26,7 @@ constructor(public optimizerService: OptimizerService,public modalService: Modal
 }
 selectObjective(objective){
     this.objective_value = objective
-    // this.objectiveEvent.emit(objective)
+    this.objectiveEvent.emit(objective)
     // console.log(objective , "objective function")
 }
 

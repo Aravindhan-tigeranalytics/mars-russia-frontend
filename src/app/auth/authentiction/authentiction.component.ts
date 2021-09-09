@@ -28,7 +28,9 @@ export class AuthentictionComponent implements OnInit {
         this.authService.setUser(data as User)
         // this.user  = data as User
         // let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl')
-        this.router.navigate(['promo/optimizer']);
+        this.authService.setShowArrow(true)
+        this.router.navigate(['home-page']);
+        
 
         // console.log(data, "LOGIN DATA")
       },
