@@ -70,11 +70,12 @@ const routes: Routes = [
     },
     {
         path: 'home-page',
-        component: HomePageComponent
+        component: HomePageComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: '',
-        redirectTo: '/promo/optimizer',
+        redirectTo: '/home-page',
         pathMatch: 'full'
     },
     {

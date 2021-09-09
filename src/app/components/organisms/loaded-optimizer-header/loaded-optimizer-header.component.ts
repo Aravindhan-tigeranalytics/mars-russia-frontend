@@ -3,7 +3,7 @@ import { Router,NavigationEnd ,RoutesRecognized} from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import {takeUntil} from "rxjs/operators"
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import {OptimizerService} from "@core/services"
+import {AuthService, OptimizerService} from "@core/services"
 import {OptimizerModel , ProductWeek , OptimizerConfigModel, FilterModel, ListPromotion} from "@core/models"
 import * as Utils from "@core/utils"
 import * as $ from 'jquery';
@@ -77,23 +77,23 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         min_or_max : '',
         metric : ''
     }
-    constructor(public optimize:OptimizerService,private router: Router,){
+    constructor(public optimize:OptimizerService,private router: Router,public auth:AuthService){
 
-        router.events
-        .pipe(filter((e: any) => e instanceof RoutesRecognized),
-            pairwise()
-        ).subscribe((e: any) => {
-            console.log(e , "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-            if(e.length > 0){
-                if((e[0] as RoutesRecognized).urlAfterRedirects == '/login'){
-                    this.showAnimation  = true
+        // router.events
+        // .pipe(filter((e: any) => e instanceof RoutesRecognized),
+        //     pairwise()
+        // ).subscribe((e: any) => {
+        //     console.log(e , "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        //     if(e.length > 0){
+        //         if((e[0] as RoutesRecognized).urlAfterRedirects == '/login'){
+        //             this.showAnimation  = true
                    
-                    this.triggerAnimation()
-                }
-                // console.log((e[0] as RoutesRecognized).urlAfterRedirects,"eeeeeeeeeeeeeeeenavigation ends............................"); // previous url     
-            }
+        //             this.triggerAnimation()
+        //         }
+        //         // console.log((e[0] as RoutesRecognized).urlAfterRedirects,"eeeeeeeeeeeeeeeenavigation ends............................"); // previous url     
+        //     }
            
-        });
+        // });
 
     }
     triggerAnimation(){
@@ -111,6 +111,10 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
     
         $('#animated-tap').hide();
         $('#glowbg').removeClass('fab-bg glow')
+        if(this.auth.getShowArrow()){
+            this.triggerAnimation()
+            this.auth.setShowArrow(false)
+        }
        
         this.optimize.getoptimizerDataObservable().pipe(
             takeUntil(this.unsubscribe$)

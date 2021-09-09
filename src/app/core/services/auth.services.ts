@@ -17,6 +17,7 @@ import {environment} from '../../../environments/environment'
 export class AuthService {
   isLoggedInObservable = new BehaviorSubject<boolean>(false);
   userObservable = new BehaviorSubject<User>(null as any);
+  showarrow = false
 
   constructor(private http: HttpClient, private router: Router) {
     let token = localStorage.getItem('token');
@@ -29,6 +30,12 @@ export class AuthService {
   getUser():Observable<User>{
 
     return this.userObservable.asObservable()
+  }
+  setShowArrow(value:boolean){
+    this.showarrow = value
+  }
+  getShowArrow():boolean{
+    return this.showarrow
   }
   setUser(user:User){
     this.userObservable.next(user)
