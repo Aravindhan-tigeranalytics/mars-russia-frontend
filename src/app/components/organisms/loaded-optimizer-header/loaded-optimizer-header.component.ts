@@ -262,6 +262,7 @@ this.ignored_week = 0
 
     }
     configChangeEvent($event){
+        // debugger
         console.log($event , "config change event")
         this.modalClose.emit($event["id"])
        

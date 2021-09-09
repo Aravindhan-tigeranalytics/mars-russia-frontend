@@ -1,3 +1,4 @@
+
 .default-week-item {
     @apply px-2 py-2 space-y-1 text-left relative border border-marsgray-300 hover:bg-marsgray-100;
 }
@@ -18,4 +19,8 @@
     height: 0;
     border-top: 15px solid #f87171;
     border-right: 15px solid transparent;
+}
+
+.week-item{
+    min-width: 95px;
 }

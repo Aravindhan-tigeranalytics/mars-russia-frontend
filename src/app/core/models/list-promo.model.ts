@@ -6,6 +6,7 @@ export interface PricingPromoModel{
 }
 
 export interface MetaInfo {
+    id?: number,
     retailer : string,
     product_group : string,
     pricing : boolean | PricingPromoModel
@@ -17,7 +18,7 @@ export interface ListPromotion {
     name: string,
     comments: string,
     scenario_type: string,
-    meta: boolean | MetaInfo,
+    meta: boolean | MetaInfo | Array<MetaInfo>,
     
     
     }

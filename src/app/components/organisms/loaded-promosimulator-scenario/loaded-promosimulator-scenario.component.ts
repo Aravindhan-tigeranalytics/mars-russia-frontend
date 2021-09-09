@@ -35,5 +35,8 @@ export class LoadedPromosimulatorScenarioComponent {
   closeModalPopup(){
     this.modalService.close('loaded-promosimulator-scenario')
   }
+  isArray(obj : any ) {
+    return Array.isArray(obj)
+ }
 
 }

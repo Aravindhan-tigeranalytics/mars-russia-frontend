@@ -38,6 +38,15 @@ export class PromoOptimizerComponent implements OnInit {
     save_scenario_error:any = null
     optimizer_response : any = null
     disable_save_download = true
+    form_value:any = null
+    isUserConstraintChanged : boolean = false
+    constraint_difference:any  = {
+        "mac" : '',
+        "te" : '',
+        "rp" : '',
+        "mac_percent" : '',
+        "rp_percent" : ''
+    }
 
     filter_model : FilterModel = {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
     "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
@@ -384,21 +393,21 @@ export class PromoOptimizerComponent implements OnInit {
     }
     loadOptimizer($event){
         this.isOptimiserFilterApplied = false
-        this.filter_model["retailer"] =  $event['meta']['retailer']
-        this.filter_model["product_group"] =  $event['meta']['product_group']
-        this.productChange({"value" : $event['meta']['product_group'] , "checked" : true})
-            this.retailerChange({"value" : $event['meta']['retailer'] , "checked" : true})
+        this.filter_model["retailer"] =  $event['promotion']['meta']['retailer']
+        this.filter_model["product_group"] =  $event['promotion']['meta']['product_group']
+        this.productChange({"value" : $event['promotion']['meta']['product_group'] , "checked" : true})
+            this.retailerChange({"value" : $event['promotion']['meta']['retailer'] , "checked" : true})
         // this.selected_product = $event['meta']['product_group']
         // this.selected_retailer = 
         // console.log($event , "load event")
         this.optimize.setAccAndPPGFilteredFlagObservable(true)
         
-        this.optimize.fetch_optimizer_scenario_by_id($event["id"]).subscribe(data=>{
+        this.optimize.fetch_optimizer_scenario_by_id($event['promotion']["id"]).subscribe(data=>{
             if(data){
                 
                 console.log(data , "fetch response ..")
                 // this.optimizer_response = data
-                let promotion = this.optimize.getPromotionById($event["id"])
+                let promotion = this.optimize.getPromotionById($event['promotion']["id"])
                 data["meta"] = promotion
                 console.log(data , "data with promotion details")
                 this.optimize.setoptimizerDataObservable(data)
@@ -420,10 +429,7 @@ export class PromoOptimizerComponent implements OnInit {
         console.table($event)
     }
     validate_week(week_array , event_data){
-        // $event['data']['param_compulsory_promo_weeks']
-        //     $event['data']['param_promo_gap']
-        //     $event['data']['param_max_consecutive_promo']
-        //     $event['data']['param_total_promo_max']
+      
         if(week_array.length > 0){
             
             
@@ -432,7 +438,7 @@ export class PromoOptimizerComponent implements OnInit {
             let min_gap = event_data['param_promo_gap']            
             if(!utils.check_validate_gap(min_gap , max_diff['min_diff'])){
                 this.toastr.error("Gap between consecutive weeks should be greater or equal to minimum promo gap("+min_gap+")")
-                // this.error = "Gap between consecutive weeks should be greater or equal to minimum promo gap("+min_gap+")"
+                
                 return true
     
             }
@@ -451,42 +457,117 @@ export class PromoOptimizerComponent implements OnInit {
         }
         return false
     }
+
+    handleInfeasible(){
+        this.openModal('confirmation-popup')
+        // this.toastr.warning("The solution is infeasible")
+    }
+    confirmationEvent($event){
+        this.closeModal('confirmation-popup')
+        if($event){
+            this.form_value = {...this.form_value , ...{"config_automation" : true}}
+            this._optimize(this.form_value)
+
+        }
+        else{
+            this.optimize.setAccAndPPGFilteredFlagObservable(true)
+            this.optimize.setOptimizerResponseObservable(null)
+
+            this.status = "viewless"
+
+            this.scenarioTitle = "Untitled"
+            this.restApi.setIsSaveScenarioLoadedObservable(null)
+            this.optimize.setAccAndPPGFilteredFlagObservable(false)
+
+            this.isOptimiserFilterApplied = false
+
+        }
+        // console.log($event , "confimation event...")
+
+    }
+    update_contraint_diff(updated_constraint ,current_constraint ){
+        this.constraint_difference['mac'] = {
+            "converted_base" : current_constraint['param_mac'],
+            'converted_simulated' : updated_constraint['constrain_params']['MAC']
+        }
+        this.constraint_difference['rp'] = {
+            "converted_base" : current_constraint['param_rp'],
+            'converted_simulated' : updated_constraint['constrain_params']['RP']
+        }
+        this.constraint_difference['te'] = {
+            "converted_base" : current_constraint['param_trade_expense'],
+            'converted_simulated' : updated_constraint['constrain_params']['Trade_Expense']
+        }
+        this.constraint_difference['mac_percent'] = {
+            "converted_base" : current_constraint['param_mac_perc'],
+            'converted_simulated' : updated_constraint['constrain_params']['MAC_Perc']
+        }
+        this.constraint_difference['rp_percent'] = {
+            "converted_base" : current_constraint['param_rp_perc'],
+            'converted_simulated' : updated_constraint['constrain_params']['RP_Perc']
+        }
+
+    }
+    _optimize(formdata){
+
+        this.optimize.optimizeResult(formdata).subscribe(data=>{
+            if(data['opt_pop_up_flag_final'] == 0){
+            this.handleInfeasible()
+            return
+            }
+            else if(data['opt_pop_up_flag_final'] == 2){
+                this.isUserConstraintChanged = true
+                this.update_contraint_diff(data['opt_pop_up_config_final'] ,formdata )
+
+                // this.constraint_difference = {
+                //     "updated_constraint" : ,
+                //     "current_constraint" : formdata
+                // }
+                console.log(this.constraint_difference , "constraint difference...")
+
+            }
+            else{
+                this.isUserConstraintChanged = false
+
+            }
+            console.log(formdata , "formdata user config")
+            console.log(data.opt_pop_up_config_final , "formdata recommended")
+            console.log(data , "optimizer response ")
+            this.toastr.success('Optimized Successfully','Success')
+            this.optimizer_response = data
+            this.optimize.setOptimizerResponseObservable(data)
+            this.optimize.setAccAndPPGFilteredFlagObservable(true)
+            this.isOptimiserFilterApplied = true
+            this.disable_save_download = false
+            // console.log(this.status , "current status")
+            this.status = "viewmore"
+            // console.log(this.status , "current status after chageong ")
+        })
+    }
     optimizeAndReset($event){
-        console.log($event , "optimize and reset event")
+        
         if($event.type == 'optimize'){
-            if(!$event['data']['objective_function']){
+            this.form_value = $event['data']
+            if(!this.form_value['objective_function']){
                 this.toastr.error('Set Objective function to optimize ');
                 return
             }
-            if($event['data']['mars_tpr'].length == 0){
+            if(this.form_value['mars_tpr'].length == 0){
                 this.toastr.error('Please select atleast one promotion');
                 return
     
             }
-            if(this.validate_week($event['data']['param_compulsory_promo_weeks'] ,$event['data'] )){
+            if(this.validate_week(this.form_value['param_compulsory_promo_weeks'] ,this.form_value )){
                 return
 
             }
-            // $event['data']['param_compulsory_promo_weeks']
-            // $event['data']['param_promo_gap']
-            // $event['data']['param_max_consecutive_promo']
-            // $event['data']['param_total_promo_max']
-            let res = {...this.get_optimizer_form(),...$event['data']}
-            this.optimize.optimizeResult(res).subscribe(data=>{
-                console.log(data , "optimizer response ")
-                this.toastr.success('Optimized Successfully','Success')
-                this.optimizer_response = data
-                this.optimize.setOptimizerResponseObservable(data)
-                this.optimize.setAccAndPPGFilteredFlagObservable(true)
-                this.isOptimiserFilterApplied = true
-                this.disable_save_download = false
-                // console.log(this.status , "current status")
-                this.status = "viewmore"
-                // console.log(this.status , "current status after chageong ")
-            })
+           
+            this.form_value = {...this.get_optimizer_form(),...this.form_value}
+           this._optimize(this.form_value)
         }
         if($event.type == "reset"){
             console.log("resetting")
+            this.form_value = null
             this.selected_brand = null as any
         this.selected_brand_format = null as any
         this.selected_category= null as any
@@ -625,6 +706,7 @@ export class PromoOptimizerComponent implements OnInit {
             "config_sales": false,
             "config_trade_expense": false,
             "config_units": false,
+            "config_automation" : false,
             "param_gsv": 0,
             "param_mac": 0,
             "param_mac_perc": 0,

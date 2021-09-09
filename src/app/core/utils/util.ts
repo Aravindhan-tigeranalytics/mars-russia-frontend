@@ -197,10 +197,10 @@ export function generateMessageRandomSimulator(index: any,financial_metrics,metr
 
 
     if(financial_metrics['simulated']['total']['units'] > financial_metrics['base']['total']['units']) {
-      result3 +=  ' There is an increase in units by '+ (metric3['percent']).replace(/[()]/g, '') 
+      result3 +=  ' There is an increase in units by '+ (metric3['converted_difference']).replace(/[()]/g, '') + ' ' + metric3['percent']+'.'
     }
     else if(financial_metrics['simulated']['total']['units'] < financial_metrics['base']['total']['units']){
-      result3 +=  ' There is an drop in units by '+ (metric3['percent']).replace(/[()]/g, '')
+      result3 +=  ' There is an drop in units by '+ (metric3['converted_difference']).replace(/[()]/g, '')+ ' ' + metric3['percent']+'.'
     }
     else if(financial_metrics['simulated']['total']['units'] == financial_metrics['base']['total']['units']) {
       result3 += ' There is an unchanged value for units.'

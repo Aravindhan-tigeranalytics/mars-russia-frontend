@@ -70,7 +70,7 @@ export class MacPopupComponent {
         if(label == 'MAC'){
             ret = 'mac-popup'
         }
-        if(label == 'Retailer profit'){
+        if(label == 'Trade margin'){
             ret = 'retailer-popup'
         }
         if(label == 'Trade expense'){

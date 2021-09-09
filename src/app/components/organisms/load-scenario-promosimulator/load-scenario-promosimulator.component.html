@@ -1,5 +1,6 @@
 <div class="w-[650px] bg-white mx-auto my-6">
     <div class="border-b border-marsgray-200">
+        <!-- <div (click)="openPrice()">test pricing</div> -->
         <ng-container *ngIf="title == 'My scenario'">
             <nwn-command-header type="stroke" nwnSvgIcon="my-scenarios">{{title}}</nwn-command-header>
         </ng-container>
@@ -43,10 +44,10 @@
         <div
             class="border border-marsgray-300 cursor-pointer"
             *ngFor="let promotion of list_promotion_pricing | appFilter: searchText : 'promo';let i = index"
-            (click)="select(i)"
+            (click)="select(i,promotion)"
             [ngClass]="{ active: selectedIndex == i }"
         >
-            <nwn-scenario-load-card [showInfo]="true">
+            <nwn-scenario-load-card [id] = "promotion" (infoClickedEvent) = "infoClickedEvent($event)" [showInfo]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>{{promotion.comments}}</p>
             </nwn-scenario-load-card>
@@ -73,6 +74,10 @@
     <nwn-promo-simulator-scenario (confirmatonEventModal)="modalConfirmation($event)" (deleteClicked) = "deleteClickedEvent($event)" [promotion_viewed] = "promotion_viewed" ></nwn-promo-simulator-scenario>
 </nwn-modal>
 
+<!-- <nwn-modal id="promo-simulator-popup" class="hidden">
+    <nwn-promo-simulator-scenario ></nwn-promo-simulator-scenario>
+</nwn-modal> -->
+
 <nwn-modal id="pricing-scenario-popup" class="hidden">
     <nwn-loaded-pricing-scenario></nwn-loaded-pricing-scenario>
 </nwn-modal>
@@ -86,3 +91,9 @@
 <nwn-modal id="delete-scenario" class="hidden">
     <nwn-delete-alert [selected_promotion] = "selected_promotion" (confirmatonEvent) = "confirmationDelete($event)"></nwn-delete-alert>
 </nwn-modal>
+
+<nwn-modal id="product-choose" class="hidden">
+    <nwn-pricing-product-popup (pricingChooseEvent) = "pricingChooseEvent($event)" [metaInfo] = "metaInfo"></nwn-pricing-product-popup>
+</nwn-modal>
+
+<!-- 'nwn-pricing-product-popup -->
