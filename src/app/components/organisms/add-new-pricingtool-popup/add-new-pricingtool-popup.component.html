@@ -1,0 +1,62 @@
+<div class="w-[650px] bg-white mx-auto my-6">
+    <div class="border-b border-marsgray-200">
+        <nwn-command-header type="stroke" nwnSvgIcon="plus">Add more</nwn-command-header>
+    </div>
+
+    <div class="border-b border-marsgray-200">
+        <nwn-command-search [hideClose]="true"></nwn-command-search>
+    </div>
+    <div class="h-[448px] scrollbar-y bg-white">
+        <div>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
+                >Walmart</nwn-command-multiselect
+            >
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
+                >Milkyway XXL</nwn-command-multiselect
+            >
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
+                >Skittles XXL</nwn-command-multiselect
+            >
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
+                >Winter Fresh XXL</nwn-command-multiselect
+            >
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
+                >Bounty XXL</nwn-command-multiselect
+            >
+        </div>
+        <div>
+            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
+                >Target</nwn-command-multiselect
+            >
+            <nwn-command-multiselect
+                [leftBorder]="false"
+                [hideClose]="true"
+                [cmdMultiselectSub]="true"
+                [disabled]="true"
+                >Milkyway XXL</nwn-command-multiselect
+            >
+            <nwn-command-multiselect
+                [leftBorder]="false"
+                [hideClose]="true"
+                [cmdMultiselectSub]="true"
+                [disabled]="true"
+                >Skittles XXL</nwn-command-multiselect
+            >
+            <nwn-command-multiselect
+                [leftBorder]="false"
+                [hideClose]="true"
+                [cmdMultiselectSub]="true"
+                [disabled]="true"
+                >Winter Fresh XXL</nwn-command-multiselect
+            >
+            <nwn-command-multiselect
+                [leftBorder]="false"
+                [hideClose]="true"
+                [cmdMultiselectSub]="true"
+                [disabled]="true"
+                >Bounty XXL</nwn-command-multiselect
+            >
+        </div>
+    </div>
+    <nwn-search-footer [showKeyBoardCtrl]="true" [showAdd]="true" type="primary"></nwn-search-footer>
+</div>

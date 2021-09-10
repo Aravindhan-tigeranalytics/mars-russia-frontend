@@ -10,4 +10,6 @@ export class SimulatedFilterItemComponent {
     type: 'default' | 'active' | 'filled' | 'filled-active' = 'default';
     @Input()
     size: 'sfi' = 'sfi';
+    @Input()
+    showClose: boolean = false;
 }

@@ -3,14 +3,16 @@
         <nwn-menu-item
             type="stroke"
             nwnSvgIcon="pricing-tool"
-            [active]="currentRoute === '/pricing-tool'"
-            href="/pricing-tool"
+            [active]="currentRoute === '/pricing-tool/pricing-scenario-builder'"
+            href="/pricing-tool/pricing-scenario-builder"
             >Pricing tool</nwn-menu-item
         >
         <nwn-menu-item
             type="stroke"
             nwnSvgIcon="promo-tool"
-            [active]="currentRoute === '/promo-tool/promo-scenario-builder'"
+            [active]="
+                currentRoute === '/promo-tool/promo-scenario-builder' || currentRoute === '/promo-tool/promo-optimizer'
+            "
             href="/promo-tool/promo-scenario-builder"
             >Promo tool</nwn-menu-item
         >

@@ -1,0 +1,30 @@
+<div class="py-4 px-1 flex flex-col space-y-3 hover:bg-marsgray-200">
+    <div class="text-center">
+        <p class="text-marsyellow-800 text-caption">+4</p>
+    </div>
+    <div class="flex flex-row items-center justify-between space-x-6">
+        <nwn-button type="icon" size="iconsm" (click)="decrement()">
+            <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
+        </nwn-button>
+
+        <input
+            class="
+                text-title-medium text-marsgray-700
+                w-16
+                h-10
+                p-2
+                rounded-none
+                border border-marsgray-300
+                focus:border-marsgray-500 focus:outline-none
+                bg-marsgray-50
+                text-center
+            "
+            type="number"
+            value="{{ counter }}"
+        />
+        <nwn-button type="icon" size="iconsm" (click)="increment()">
+            <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
+        </nwn-button>
+    </div>
+    <p class="text-body text-marsgray-500 ml-1"><ng-content></ng-content></p>
+</div>
