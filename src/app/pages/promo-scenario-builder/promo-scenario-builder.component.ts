@@ -503,7 +503,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             }
 
             this.optimize.getPromoSimulateData(form).subscribe(data=>{
-                this.toastr.success('Simulted Successfully', 'Success')
+                this.toastr.success('Simulated Successfully', 'Success')
                 this.optimize.setSimulatedDataObservable(data)
                 if($event.action == 'Simulate'){
                  this.isFilterApplied = true

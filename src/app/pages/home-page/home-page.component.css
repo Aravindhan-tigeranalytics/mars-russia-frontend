@@ -16,3 +16,6 @@
 .cursor-pt {
     cursor: pointer;
 }
+.text-xl{
+    font-size: 1.2rem;
+}
