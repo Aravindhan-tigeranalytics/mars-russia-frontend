@@ -16,6 +16,8 @@ export class SimulatedFilterItemComponent  implements OnInit{
     selected_quarter:string=''
     @Input()
     promotion_map : any[]
+    @Input()
+    showClose: boolean = false;
     ngOnInit(){
         // if(this.key == this.selected_quarter){
         //     this.type = 'active'

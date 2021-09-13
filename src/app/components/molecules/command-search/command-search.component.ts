@@ -7,7 +7,7 @@ import { Component, Input , Output , EventEmitter } from '@angular/core';
 })
 export class CommandSearchComponent {
     @Input()
-    placeholder = 'Search promo metrics';
+    placeholder = 'Search';
     @Input()
     closesvgClass = 'absolute right-4 top-6 text-black stroke-current';
     @Input()

@@ -8,6 +8,7 @@ import { PromoOptimizerComponent } from '@pages/promo-optimizer/promo-optimizer.
 import { PricingToolComponent } from '@pages/pricing-tool/pricing-tool.component';
 import {AuthGuard} from "@core/services"
 import { HomePageComponent } from '@pages/home-page/home-page.component';
+import { PricingScenarioBuilderComponent } from '@pages/pricing-scenario-builder/pricing-scenario-builder.component';
 
 // Routes
 // const routes: Routes = [
@@ -61,8 +62,14 @@ const routes: Routes = [
         component: PricingToolComponent
     },
     {
-        path: 'pricing',
-        component: PricingToolComponent
+        path: 'pricing-tool',
+        component: PricingToolComponent,
+        children: [
+            {
+                path: 'pricing-scenario-builder',
+                component: PricingScenarioBuilderComponent,
+            },
+        ],
     },
     {
         path: 'srm',

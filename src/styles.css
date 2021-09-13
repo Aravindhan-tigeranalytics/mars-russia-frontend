@@ -370,6 +370,7 @@ nwn-scenario-load-card .load-scenario-card {
     border-radius: 5px !important;
 }
 
+<<<<<<< HEAD
 #compare-scenario-br button{
   background-color: unset !important;
 }
@@ -392,3 +393,7 @@ nwn-scenario-load-card .load-scenario-card {
   width: 3rem !important;
   height: 3rem !important;
 }
+=======
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+>>>>>>> component-templates

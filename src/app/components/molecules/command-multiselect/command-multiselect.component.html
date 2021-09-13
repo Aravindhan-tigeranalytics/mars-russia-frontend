@@ -1,7 +1,22 @@
 <div
-    class="flex flex-row h-12 bg-white hover:bg-marsgray-50 items-center space-x-4 justify-between px-6 py-4"
+    class="
+        flex flex-row
+        h-12
+        bg-white
+        hover:bg-marsgray-50
+        border-l-2
+        hover:border-marsblue-500
+        items-center
+        space-x-4
+        justify-between
+        px-6
+        py-4
+    "
     [ngClass]="{
-        'left-border': leftBorder == true
+        'left-border': leftBorder == true,
+        'cmd-multiselect-head': cmdMultiselectHead == true,
+        'cmd-mutiselect-sub': cmdMultiselectSub == true,
+        disabled: disabled == true
     }"
 >
     <nwn-checkbox [showLabel]="true" [value]= "value" [checked] = "checked" (valueChange)='valueChange($event)'><ng-content></ng-content></nwn-checkbox>

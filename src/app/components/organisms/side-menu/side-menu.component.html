@@ -3,9 +3,8 @@
         <nwn-menu-item
             type="stroke"
             nwnSvgIcon="pricing-tool"
-           
-           
-            routerLink="pricing" 
+            [active]="currentRoute === '/pricing-tool/pricing-scenario-builder'"
+            href="/pricing-tool/pricing-scenario-builder"
             >Pricing tool</nwn-menu-item
         >
         <!-- href="/pricing-tool" -->
@@ -13,9 +12,10 @@
         <nwn-menu-item
             type="stroke"
             nwnSvgIcon="promo-tool"
-            routerLink="promo" 
-           
-           
+            [active]="
+                currentRoute === '/promo-tool/promo-scenario-builder' || currentRoute === '/promo-tool/promo-optimizer'
+            "
+            href="/promo-tool/promo-scenario-builder"
             >Promo tool</nwn-menu-item
         >
         <!-- [active]="currentRoute === '/promo-tool/promo-scenario-builder'" -->
