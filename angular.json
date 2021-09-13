@@ -6,7 +6,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "angular-tailwind-storybook": {
+        "mars-wrigley": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -43,15 +43,14 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/angular-tailwind-storybook",
+                        "outputPath": "dist/mars-wrigley",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.css"],
-                        "scripts": [],
-                        "aot": false
+                        "styles": ["src/custom-theme.scss", "src/styles.css"],
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {
@@ -59,12 +58,12 @@
                                 {
                                     "type": "initial",
                                     "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumError": "2mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
                                     "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
+                                    "maximumError": "7kb"
                                 }
                             ],
                             "fileReplacements": [
@@ -90,10 +89,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "angular-tailwind-storybook:build:production"
+                            "browserTarget": "mars-wrigley:build:production"
                         },
                         "development": {
-                            "browserTarget": "angular-tailwind-storybook:build:development"
+                            "browserTarget": "mars-wrigley:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -101,11 +100,11 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "angular-tailwind-storybook:build"
+                        "browserTarget": "mars-wrigley:build"
                     }
                 }
             }
         }
     },
-    "defaultProject": "angular-tailwind-storybook"
+    "defaultProject": "mars-wrigley"
 }

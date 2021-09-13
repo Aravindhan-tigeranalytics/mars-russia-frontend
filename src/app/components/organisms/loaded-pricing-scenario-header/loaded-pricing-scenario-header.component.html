@@ -1,0 +1,226 @@
+<div class="bg-marsgray-100 px-12">
+    <div class="flex flex-row items-center justify-between border-b border-gray-300 py-2">
+        <div class="flex flex-row flex-wrap content-start items-center justify-start">
+            <div class="mr-2 mb-2">
+                <nwn-filter-item
+                    type="stroke"
+                    nwnSvgIcon="retailers"
+                    [hideClose]="true"
+                    (click)="sendMessage('filter-retailer')"
+                    >Retailers</nwn-filter-item
+                >
+            </div>
+            <div class="mr-2 mb-2">
+                <nwn-filter-item
+                    type="stroke"
+                    nwnSvgIcon="categories"
+                    [hideClose]="true"
+                    (click)="sendMessage('filter-categories')"
+                    >Categories</nwn-filter-item
+                >
+            </div>
+            <div class="mr-2 mb-2">
+                <nwn-filter-item
+                    type="stroke"
+                    nwnSvgIcon="strategic-cells"
+                    [hideClose]="true"
+                    (click)="sendMessage('filter-stragetic-cells')"
+                    >Strategic cells</nwn-filter-item
+                >
+            </div>
+            <div class="mr-2 mb-2">
+                <nwn-filter-item
+                    type="stroke"
+                    nwnSvgIcon="brands"
+                    [hideClose]="true"
+                    (click)="sendMessage('filter-brands')"
+                    >Brands</nwn-filter-item
+                >
+            </div>
+            <div class="mr-2 mb-2">
+                <nwn-filter-item
+                    type="stroke"
+                    nwnSvgIcon="brand-formats"
+                    [hideClose]="true"
+                    (click)="sendMessage('filter-brand-formats')"
+                    >Brand formats</nwn-filter-item
+                >
+            </div>
+            <div class="mr-2 mb-2">
+                <nwn-filter-item
+                    type="stroke"
+                    nwnSvgIcon="product-groups"
+                    [hideClose]="true"
+                    (click)="sendMessage('filter-product-groups')"
+                    >Product groups</nwn-filter-item
+                >
+            </div>
+        </div>
+        <div>
+            <nwn-loaded-scenarioitem title="Untitled scenario" subtitle="Pricing scenario"></nwn-loaded-scenarioitem>
+        </div>
+    </div>
+
+    <div id="close-expand-header" class="flex flex-col translate-x-1" *ngIf="!isExpand">
+        <div class="flex flex-col border-b border-gray-300">
+            <div class="flex flex-row items-start space-x-2">
+                <div class="py-4">
+                    <nwn-button type="icon" size="iconsm" (click)="sendMessage('addnew-pricngtool')">
+                        <nwn-svg-icon type="stroke" nwnSvgIcon="plus" size="lg"></nwn-svg-icon>
+                    </nwn-button>
+                </div>
+                <div class="flex flex-col py-4">
+                    <div class="tablist flex flex-row items-center overflow-hidden">
+                        <div class="tab px-2 py-1" *ngFor="let product of products; let i = index">
+                            <p class="text-title-small font-semibold text-marsgray-400">{{ product.productName }}</p>
+                        </div>
+                    </div>
+                    <div class="tabpanel flex flex-row items-center px-2 py-3 bg-marsgray-200">
+                        <div class="mr-2 cursor-pointer" *ngFor="let productItem of productItems; let i = index">
+                            <nwn-pricing-product-item [showClose]="true" type="active">
+                                {{ productItem.productItemName }}
+                            </nwn-pricing-product-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-row flex-wrap justify-between items-center">
+                <div class="flex flex-row flex-wrap items-center">
+                    <div class="mr-12">
+                        <nwn-pricing-metric></nwn-pricing-metric>
+                    </div>
+                    <div class="mr-12">
+                        <nwn-pricing-metric></nwn-pricing-metric>
+                    </div>
+                    <div class="mr-12">
+                        <nwn-pricing-metric></nwn-pricing-metric>
+                    </div>
+                    <div class="mr-12">
+                        <nwn-price-elasticity>Price elasticity</nwn-price-elasticity>
+                    </div>
+                    <div class="mr-12">
+                        <nwn-competition>Price elasticity</nwn-competition>
+                    </div>
+                </div>
+
+                <div class="flex flex-row items-center space-x-4">
+                    <div class="flex flex-row items-center">
+                        <div class="bg-marsgray-500 w-5 h-5 mr-2"></div>
+                        <p class="text-body text-marsgray-500">Input metric</p>
+                    </div>
+                    <div class="flex flex-row items-center">
+                        <div class="bg-marsyellow-800 w-5 h-5 mr-2"></div>
+                        <p class="text-body text-marsgray-500">Baseline metric</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
+        <div class="flex flex-row space-x-2 items-center">
+            <div class="flex flex-row space-x-2 border-r border-marsgray-300 pr-2">
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                    <nwn-svg-icon type="stroke" nwnSvgIcon="download"> </nwn-svg-icon>
+                    <p tooltipContent>Download weekly input</p>
+                </nwn-button>
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                    <nwn-svg-icon
+                        type="stroke"
+                        nwnSvgIcon="upload"
+                        (click)="sendMessage('upload-weekly-promotions')"
+                    ></nwn-svg-icon>
+                    <p tooltipContent>Upload weekly input</p>
+                </nwn-button>
+            </div>
+            <div class="">
+                <nwn-button
+                    type="icon"
+                    size="iconsm"
+                    [showTooltip]="true"
+                    (click)="sendMessage('promo-scenariobuilder-popup')"
+                >
+                    <nwn-svg-icon type="stroke" nwnSvgIcon="lightning-bolt"></nwn-svg-icon>
+                    <p tooltipContent>Command interface</p>
+                </nwn-button>
+            </div>
+        </div>
+        <div class="flex flex-row">
+            <div class="flex flex-row space-x-4 items-center">
+                <nwn-button type="link" size="sm"> Reset </nwn-button>
+                <nwn-button type="primary" size="sm"> Simulate </nwn-button>
+                <nwn-button type="icon" size="iconsm" (click)="sendMessage('save-scenario')" [showTooltip]="true">
+                    <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
+                    <p tooltipContent>Save scenario</p>
+                </nwn-button>
+                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                    <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
+                    <p tooltipContent>Download scenario</p>
+                </nwn-button>
+                <div class="relative">
+                    <nwn-button type="icon" size="iconsm" (click)="toggleDisplayDivIf()" [showTooltip]="true">
+                        <nwn-svg-icon type="stroke" nwnSvgIcon="more-horizontal"></nwn-svg-icon>
+                        <p tooltipContent>More actions</p>
+                    </nwn-button>
+                    <div *ngIf="!isShowDivIf">
+                        <div class="absolute z-50 top-10 right-0 bg-white shadow-sm w-[186px] h-auto">
+                            <div class="border-b">
+                                <nwn-button
+                                    type="sideBorder"
+                                    size="sideBorderSize"
+                                    class="w-full"
+                                    (click)="sendMessage('load-scenario-pricingtool-popup')"
+                                >
+                                    <nwn-svg-icon
+                                        class="mr-0.5"
+                                        type="stroke"
+                                        nwnSvgIcon="plus"
+                                        size="lg"
+                                    ></nwn-svg-icon>
+                                    Load scenario
+                                </nwn-button>
+                            </div>
+                            <div class="">
+                                <nwn-button
+                                    type="sideBorder"
+                                    size="sideBorderSize"
+                                    class="w-full"
+                                    (click)="sendMessage('compare-pricing-scenario')"
+                                >
+                                    <nwn-svg-icon
+                                        class="mr-0.5"
+                                        type="stroke"
+                                        nwnSvgIcon="arrow-compare"
+                                        size="lg"
+                                    ></nwn-svg-icon>
+                                    Compare scenario
+                                </nwn-button>
+                            </div>
+                        </div>
+                        <div
+                            class="
+                                fixed
+                                top-0
+                                left-0
+                                right-0
+                                z-[49]
+                                bg-marsgray-900 bg-opacity-0
+                                firefox:bg-opacity-0
+                                h-full
+                                w-full
+                            "
+                            (click)="toggleDisplayDivIf()"
+                        ></div>
+                        <!-- backdrop-filter backdrop-blur-xs -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isExpand">
+    <nwn-status-bar nwnStatusBar="viewmore" (click)="expandHeader()">View More</nwn-status-bar>
+</div>
+<div *ngIf="!isExpand">
+    <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
+</div>

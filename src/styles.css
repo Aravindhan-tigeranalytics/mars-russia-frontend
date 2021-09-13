@@ -171,3 +171,6 @@ nwn-scenario-load-card .load-scenario-card {
     border: 2px solid #a5a5a5 !important;
     border-radius: 5px !important;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
