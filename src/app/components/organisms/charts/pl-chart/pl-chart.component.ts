@@ -12,6 +12,7 @@ export class PlChartComponent implements OnInit {
         { group: 'Trade Expense', base: '8000000', simulated: '10000000' },
         { group: 'NSV', base: '2000000', simulated: '4000000' },
         { group: 'COGS', base: '18000000', simulated: '20000000' },
+        { group: 'MAC', base: '18000000', simulated: '20000000' },
         { group: 'RSV v/o VAT', base: '14000000', simulated: '16000000' },
         { group: 'Customer Margin', base: '2000000', simulated: '4000000' },
     ];
