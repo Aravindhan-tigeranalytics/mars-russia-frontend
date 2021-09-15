@@ -10,7 +10,8 @@ import { FormsModule } from '@angular/forms';
 // import { ChartsModule } from 'ng2-charts';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-// import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 // Atoms
 import { ButtonComponent } from '@atoms/button/button.component';
@@ -140,12 +141,17 @@ import { LoadScenarioPricingtoolPopupComponent } from './organisms/load-scenario
 import { PricingScenarioPricingtoolPopupComponent } from './organisms/pricing-scenario-pricingtool-popup/pricing-scenario-pricingtool-popup.component';
 import { LoadedPricingScenarioPricingtoolComponent } from './organisms/loaded-pricing-scenario-pricingtool/loaded-pricing-scenario-pricingtool.component';
 import { PricingProductItemComponent } from './atoms/pricing-product-item/pricing-product-item.component';
+import { ProductTabsComponent } from './atoms/product-tabs/product-tabs.component';
 
 
 @NgModule({
     imports: [RouterModule,SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, 
         // ChartsModule,
-         SelectDropDownModule,DragDropModule],
+         SelectDropDownModule,DragDropModule,
+         SelectDropDownModule,
+         DragDropModule,
+         MatDatepickerModule,
+         MatFormFieldModule],
 
 // @NgModule({
     // imports: [
@@ -157,6 +163,7 @@ import { PricingProductItemComponent } from './atoms/pricing-product-item/pricin
     //     SelectDropDownModule,
     //     DragDropModule,
     // ],
+      
     declarations: [
         ButtonComponent,
         LinkComponent,
@@ -281,6 +288,7 @@ import { PricingProductItemComponent } from './atoms/pricing-product-item/pricin
         PricingScenarioPricingtoolPopupComponent,
         LoadedPricingScenarioPricingtoolComponent,
         PricingProductItemComponent,
+        ProductTabsComponent,
     ],
     exports: [
         ButtonComponent,
@@ -403,6 +411,7 @@ import { PricingProductItemComponent } from './atoms/pricing-product-item/pricin
         PricingScenarioBuilderTabsComponent,
         PricingProductItemComponent,
         AddNewPricingtoolPopupComponent,
+        ProductTabsComponent,
     ],
 })
 export class ComponentModule {}

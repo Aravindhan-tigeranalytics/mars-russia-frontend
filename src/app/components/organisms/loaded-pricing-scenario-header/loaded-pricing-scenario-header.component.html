@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <div id="close-expand-header" class="flex flex-col translate-x-1" *ngIf="!isExpand">
+    <div id="close-expand-header" class="flex flex-col translate-x-1" *ngIf="isExpand">
         <div class="flex flex-col border-b border-gray-300">
             <div class="flex flex-row items-start space-x-2">
                 <div class="py-4">
@@ -71,14 +71,96 @@
                 </div>
                 <div class="flex flex-col py-4">
                     <div class="tablist flex flex-row items-center overflow-hidden">
-                        <div class="tab px-2 py-1" *ngFor="let product of products; let i = index">
+                        <!-- <div class="tab px-2 py-1" *ngFor="let product of products; let i = index">
                             <p class="text-title-small font-semibold text-marsgray-400">{{ product.productName }}</p>
+                        </div> -->
+                        <nwn-product-tabs
+                            (click)="toggleTabs(1)"
+                            [type]="openTab === 1 ? 'selectedtabproduct' : 'unselectedtabproduct'"
+                            >Walmart</nwn-product-tabs
+                        >
+                        <nwn-product-tabs
+                            (click)="toggleTabs(2)"
+                            [type]="openTab === 2 ? 'selectedtabproduct' : 'unselectedtabproduct'"
+                            >Target</nwn-product-tabs
+                        >
+                        <!-- <div class="tab px-2 py-1">
+                            <p class="text-title-small font-semibold text-marsgray-400">Walmart</p>
+                        </div>
+                        <div class="tab px-2 py-1">
+                            <p class="text-title-small font-semibold text-marsgray-400">Target</p>
+                        </div>
+                        <div class="tab px-2 py-1">
+                            <p class="text-title-small font-semibold text-marsgray-400">Kohl’s</p>
+                        </div>
+                        <div class="tab px-2 py-1">
+                            <p class="text-title-small font-semibold text-marsgray-400">Home Depot</p>
+                        </div>
+                        <div class="tab px-2 py-1">
+                            <p class="text-title-small font-semibold text-marsgray-400">Publix</p>
+                        </div>
+                        <div class="tab px-2 py-1">
+                            <p class="text-title-small font-semibold text-marsgray-400">Dollar Tree</p>
+                        </div>
+                        <div class="tab px-2 py-1">
+                            <p class="text-title-small font-semibold text-marsgray-400">Costco</p>
+                        </div>
+                        <div class="tab px-2 py-1">
+                            <p class="text-title-small font-semibold text-marsgray-400">Target</p>
+                        </div> -->
+                    </div>
+                    <div
+                        class="tabpanel flex flex-row items-center px-2 py-3 bg-marsgray-200"
+                        [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }"
+                    >
+                        <div class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="active">
+                                Milkyway XXL
+                            </nwn-pricing-product-item>
+                        </div>
+                        <div class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="default">
+                                Skittles XXL
+                            </nwn-pricing-product-item>
+                        </div>
+                        <div class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="filled-active">
+                                Juicy Fruit XXL
+                            </nwn-pricing-product-item>
+                        </div>
+                        <div class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="default">
+                                Bounty XXL
+                            </nwn-pricing-product-item>
+                        </div>
+                        <div class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="default">
+                                Orbit XXL
+                            </nwn-pricing-product-item>
                         </div>
                     </div>
-                    <div class="tabpanel flex flex-row items-center px-2 py-3 bg-marsgray-200">
-                        <div class="mr-2 cursor-pointer" *ngFor="let productItem of productItems; let i = index">
+                    <div
+                        class="tabpanel flex flex-row items-center px-2 py-3 bg-marsgray-200"
+                        [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }"
+                    >
+                        <div class="mr-2 cursor-pointer">
                             <nwn-pricing-product-item [showClose]="true" type="active">
-                                {{ productItem.productItemName }}
+                                Milkyway XXL
+                            </nwn-pricing-product-item>
+                        </div>
+                        <div class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="filled-active">
+                                Skittles XXL
+                            </nwn-pricing-product-item>
+                        </div>
+                        <div class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="default">
+                                Juicy Fruit XXL
+                            </nwn-pricing-product-item>
+                        </div>
+                        <div class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="default">
+                                Bounty XXL
                             </nwn-pricing-product-item>
                         </div>
                     </div>
@@ -98,12 +180,11 @@
                     <div class="mr-12">
                         <nwn-price-elasticity>Price elasticity</nwn-price-elasticity>
                     </div>
-                    <div class="mr-12">
-                        <nwn-competition>Price elasticity</nwn-competition>
+                    <div class="">
+                        <nwn-competition></nwn-competition>
                     </div>
                 </div>
-
-                <div class="flex flex-row items-center space-x-4">
+                <div class="flex flex-row items-center space-x-4 mx-3 my-5">
                     <div class="flex flex-row items-center">
                         <div class="bg-marsgray-500 w-5 h-5 mr-2"></div>
                         <p class="text-body text-marsgray-500">Input metric</p>
@@ -218,9 +299,9 @@
         </div>
     </div>
 </div>
-<div *ngIf="isExpand">
+<div *ngIf="!isExpand">
     <nwn-status-bar nwnStatusBar="viewmore" (click)="expandHeader()">View More</nwn-status-bar>
 </div>
-<div *ngIf="!isExpand">
+<div *ngIf="isExpand">
     <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
 </div>
