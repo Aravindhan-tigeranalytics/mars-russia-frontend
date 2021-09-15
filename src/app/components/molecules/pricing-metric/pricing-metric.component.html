@@ -1,65 +1,41 @@
-<div class="hover:bg-gray-200 px-2 py-3">
+<div class="hover:bg-gray-200 px-2 py-3 flex flex-col space-y-1">
     <div>
         <p class="text-marsgray-700 text-body">date</p>
         <!-- <mat-form-field appearance="fill">
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" />
+            <mat-label>Choose a date</mat-label> -->
+        <!-- #docregion toggle -->
+        <!-- <input matInput [matDatepicker]="picker">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field> -->
+            <mat-datepicker #picker></mat-datepicker> -->
+        <!-- #enddocregion toggle -->
+        <!-- </mat-form-field> -->
     </div>
     <p class="text-marsyellow-800 text-caption">$18.02</p>
-    <div class="flex flex-row items-center justify-between space-x-2">
-        <div class="flex flex-row items-center justify-between space-x-2">
-            <input
-                class="
-                    text-title-medium text-marsgray-700
-                    w-16
-                    h-9
-                    px-2
-                    py-1
-                    rounded-none
-                    border border-marsgray-300
-                    focus:border-marsgray-500 focus:outline-none
-                    bg-marsgray-50
-                    text-center
-                "
-                type="number"
-                value="{{ counterPer }}"
-            />
-            <div class="flex flex-col">
-                <nwn-button type="icon" size="iconsm" (click)="incrementPer()">
-                    <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
-                </nwn-button>
-                <nwn-button type="icon" size="iconsm" (click)="decrementPer()">
-                    <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
-                </nwn-button>
+    <div class="flex flex-row items-center justify-between">
+        <div class="flex flex-row items-center justify-between space-x-2 pr-1 border-r border-marsgray-300">
+            <input class="enabledInput" type="number" value="{{ counterPer }}" />
+            <div class="">
+                <div class="flex flex-col space-y-1">
+                    <nwn-button type="icon" size="no-size" class="leading-0" (click)="incrementPer()">
+                        <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
+                    </nwn-button>
+                    <nwn-button type="icon" size="no-size" class="leading-0" (click)="decrementPer()">
+                        <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
+                    </nwn-button>
+                </div>
             </div>
         </div>
         <div class="flex flex-row items-center justify-between space-x-2">
-            <input
-                class="
-                    text-title-medium text-marsgray-700
-                    w-16
-                    h-9
-                    px-2
-                    py-1
-                    rounded-none
-                    border border-marsgray-300
-                    focus:border-marsgray-500 focus:outline-none
-                    bg-marsgray-50
-                    text-center
-                "
-                type="number"
-                value="{{ counter }}"
-            />
-            <div class="flex flex-col">
-                <nwn-button type="icon" size="iconsm" (click)="increment()">
-                    <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
-                </nwn-button>
-                <nwn-button type="icon" size="iconsm" (click)="decrement()">
-                    <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
-                </nwn-button>
+            <input class="disabledInput" disabled type="number" value="{{ counter }}" />
+            <div class="hidden">
+                <div class="flex flex-col space-y-1">
+                    <nwn-button type="icon" size="no-size" class="leading-0" (click)="increment()">
+                        <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
+                    </nwn-button>
+                    <nwn-button type="icon" size="no-size" class="leading-0" (click)="decrement()">
+                        <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
+                    </nwn-button>
+                </div>
             </div>
         </div>
     </div>
