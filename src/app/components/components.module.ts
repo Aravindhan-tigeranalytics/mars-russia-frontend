@@ -143,7 +143,9 @@ import { PricingProductItemComponent } from './atoms/pricing-product-item/pricin
 
 
 @NgModule({
-    imports: [RouterModule,SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, ChartsModule, SelectDropDownModule,DragDropModule],
+    imports: [RouterModule,SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, 
+        // ChartsModule,
+         SelectDropDownModule,DragDropModule],
 
 // @NgModule({
     // imports: [

@@ -21,13 +21,14 @@
                     <nwn-menu-item
                         type="stroke"
                         nwnSvgIcon="pricing-tool"
-                        (click) = "redirectPage()"
+                       
+                        [link]="'/pricing-tool'" 
 
                        
                         
                         >Pricing tools</nwn-menu-item
                     >
-                    <!-- href="/pricing-tool" [link]="'/pricing'"  -->
+                    <!-- href="/pricing-tool" [link]="'/pricing'"  (click) = "redirectPage()" -->
                     <!-- [active]="currentRoute === '/pricing-tool'" -->
                     <nwn-menu-item
                         type="stroke"

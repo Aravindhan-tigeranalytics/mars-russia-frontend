@@ -58,10 +58,6 @@ const routes: Routes = [
         ]
     },
     {
-        path: 'profit',
-        component: PricingToolComponent
-    },
-    {
         path: 'pricing-tool',
         component: PricingToolComponent,
         children: [
@@ -69,8 +65,14 @@ const routes: Routes = [
                 path: 'pricing-scenario-builder',
                 component: PricingScenarioBuilderComponent,
             },
+            { path: "", redirectTo: "pricing-scenario-builder", pathMatch: "full" }
         ],
     },
+    {
+        path: 'profit',
+        component: PricingToolComponent
+    },
+   
     {
         path: 'srm',
         component: PricingToolComponent

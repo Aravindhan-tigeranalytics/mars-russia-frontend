@@ -67,6 +67,7 @@ import {
         useClass : GlobalErrorHandler
       }
     ],
+    bootstrap: [AppComponent],
   })
 
 // @NgModule({
