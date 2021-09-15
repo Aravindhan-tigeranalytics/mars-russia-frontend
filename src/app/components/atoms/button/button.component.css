@@ -18,7 +18,7 @@
     @apply p-2 flex space-x-2 items-center focus:outline-none;
 }
 .no-size {
-    @apply p-0;
+    @apply p-0 leading-0;
 }
 .side-border-size {
     @apply px-5 py-3 font-normal text-body text-marsgray-700 inline-flex items-center;
@@ -47,7 +47,7 @@
     @apply text-marsgray-700 text-transparent bg-transparent hover:bg-transparent;
 }
 .icon-btn {
-    @apply text-marsgray-700 bg-transparent hover:bg-marsgray-200;
+    @apply bg-transparent hover:bg-marsgray-200;
 }
 .no-style {
     @apply bg-transparent border-none focus:outline-none;

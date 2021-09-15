@@ -1,0 +1,10 @@
+.tablist > div {
+    @apply cursor-pointer;
+}
+.tab:hover {
+    @apply bg-marsgray-200;
+}
+
+.active nwn-pricing-product-item .sfi {
+    @apply border-marsblue-500 text-marsblue-500 !important;
+}

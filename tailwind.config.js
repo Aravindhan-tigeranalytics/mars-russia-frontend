@@ -21,6 +21,9 @@ module.exports = {
             8: '8px',
         },
         extend: {
+            lineHeight: {
+                0: '0',
+            },
             backdropBlur: {
                 xs: '2px',
             },

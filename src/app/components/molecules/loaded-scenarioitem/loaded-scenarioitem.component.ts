@@ -8,4 +8,6 @@ import { Component, Input } from '@angular/core';
 export class LoadedScenarioitemComponent {
     @Input()
     title: string = 'Galaxy promo scenario';
+    @Input()
+    subtitle: string = 'Promo Scenario';
 }

@@ -10,4 +10,10 @@ export class CommandMultiselectComponent {
     hideClose: boolean = false;
     @Input()
     leftBorder: boolean = false;
+    @Input()
+    cmdMultiselectHead: boolean = false;
+    @Input()
+    cmdMultiselectSub: boolean = false;
+    @Input()
+    disabled: boolean = false;
 }

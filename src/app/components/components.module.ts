@@ -5,9 +5,10 @@ import { CommonModule } from '@angular/common';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
-import { ChartsModule } from 'ng2-charts';
+// import { ChartsModule } from 'ng2-charts';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+// import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 // Atoms
 import { ButtonComponent } from '@atoms/button/button.component';
@@ -100,9 +101,9 @@ import { SaveScenarioComponent } from './organisms/save-scenario/save-scenario.c
 import { UploadItemsDirective } from './atoms/upload-items/upload-items.directive';
 import { UploadItemsComponent } from './atoms/upload-items/upload-items.component';
 import { UploadWeeklyPromotionsComponent } from './organisms/upload-weekly-promotions/upload-weekly-promotions.component';
-import { BaselineLiftComponent } from './molecules/baseline-lift/baseline-lift.component';
+// import { BaselineLiftComponent } from './molecules/baseline-lift/baseline-lift.component';
 import { PromosimulatorBuilderAggregatedComponent } from './organisms/promosimulator-builder-aggregated/promosimulator-builder-aggregated.component';
-import { MarsCustomerPlMetricsComponent } from './molecules/mars-customer-pl-metrics/mars-customer-pl-metrics.component';
+// import { MarsCustomerPlMetricsComponent } from './molecules/mars-customer-pl-metrics/mars-customer-pl-metrics.component';
 import { PlChartComponent } from '@organisms/charts/pl-chart/pl-chart.component';
 import { BaselineLiftChartComponent } from '@organisms/charts/baseline-lift-chart/baseline-lift-chart.component';
 import { KpiMetricsComponent } from '@molecules/kpi-metrics/kpi-metrics.component';
@@ -115,6 +116,20 @@ import { PromoOptimizerAggregatedComponent } from '@organisms/promo-optimizer-ag
 import { CalendarChartComponent } from '@organisms/charts/calendar-chart/calendar-chart.component';
 import { CalendarSimulatedChartComponent } from '@organisms/charts/calendar-simulated-chart/calendar-simulated-chart.component';
 import { PromotionDetailsComponent } from './organisms/promotion-details/promotion-details.component';
+import { PricingHeaderComponent } from './organisms/pricing-header/pricing-header.component';
+import { LoadedPricingScenarioHeaderComponent } from './organisms/loaded-pricing-scenario-header/loaded-pricing-scenario-header.component';
+import { PricingScenarioBuilderTabsComponent } from './organisms/pricing-scenario-builder-tabs/pricing-scenario-builder-tabs.component';
+import { PricingScenarioBuilderPopupComponent } from './organisms/pricing-scenario-builder-popup/pricing-scenario-builder-popup.component';
+import { ComparePricingScenarioComponent } from './organisms/compare-pricing-scenario/compare-pricing-scenario.component';
+import { ManageMetricsPricingtoolComponent } from './organisms/manage-metrics-pricingtool/manage-metrics-pricingtool.component';
+import { AddNewPricingtoolPopupComponent } from './organisms/add-new-pricingtool-popup/add-new-pricingtool-popup.component';
+import { CompetitionComponent } from './molecules/competition/competition.component';
+import { PriceElasticityComponent } from './molecules/price-elasticity/price-elasticity.component';
+import { PricingMetricComponent } from './molecules/pricing-metric/pricing-metric.component';
+import { LoadScenarioPricingtoolPopupComponent } from './organisms/load-scenario-pricingtool-popup/load-scenario-pricingtool-popup.component';
+import { PricingScenarioPricingtoolPopupComponent } from './organisms/pricing-scenario-pricingtool-popup/pricing-scenario-pricingtool-popup.component';
+import { LoadedPricingScenarioPricingtoolComponent } from './organisms/loaded-pricing-scenario-pricingtool/loaded-pricing-scenario-pricingtool.component';
+import { PricingProductItemComponent } from './atoms/pricing-product-item/pricing-product-item.component';
 
 @NgModule({
     imports: [
@@ -122,7 +137,7 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         NgxSliderModule,
         NgSelectModule,
         FormsModule,
-        ChartsModule,
+        // ChartsModule,
         SelectDropDownModule,
         DragDropModule,
     ],
@@ -211,9 +226,9 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         UploadItemsComponent,
         UploadWeeklyPromotionsComponent,
         ModalComponent,
-        BaselineLiftComponent,
+        // BaselineLiftComponent,
         PromosimulatorBuilderAggregatedComponent,
-        MarsCustomerPlMetricsComponent,
+        // MarsCustomerPlMetricsComponent,
         SelectOptionComponent,
         D3ChartComponent,
         PlChartComponent,
@@ -228,6 +243,20 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         CalendarChartComponent,
         CalendarSimulatedChartComponent,
         PromotionDetailsComponent,
+        PricingHeaderComponent,
+        LoadedPricingScenarioHeaderComponent,
+        PricingScenarioBuilderTabsComponent,
+        PricingScenarioBuilderPopupComponent,
+        ComparePricingScenarioComponent,
+        ManageMetricsPricingtoolComponent,
+        AddNewPricingtoolPopupComponent,
+        CompetitionComponent,
+        PriceElasticityComponent,
+        PricingMetricComponent,
+        LoadScenarioPricingtoolPopupComponent,
+        PricingScenarioPricingtoolPopupComponent,
+        LoadedPricingScenarioPricingtoolComponent,
+        PricingProductItemComponent,
     ],
     exports: [
         ButtonComponent,
@@ -302,14 +331,15 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         ComparePromoScenarioComponent,
         TextInputComponent,
         TextInputDirective,
+        SaveScenarioComponent,
         UploadItemsDirective,
         UploadItemsComponent,
         NgxSliderModule,
         UploadWeeklyPromotionsComponent,
         NgxSliderModule,
         AddPromotionComponent,
-        BaselineLiftComponent,
-        MarsCustomerPlMetricsComponent,
+        // BaselineLiftComponent,
+        // MarsCustomerPlMetricsComponent,
         PromosimulatorBuilderAggregatedComponent,
         PromoOptimizerAggregatedComponent,
         SelectOptionComponent,
@@ -325,7 +355,14 @@ import { PromotionDetailsComponent } from './organisms/promotion-details/promoti
         CalendarChartComponent,
         CalendarSimulatedChartComponent,
         NumberPromoWavesComponent,
+        ComparePricingScenarioComponent,
         PromotionDetailsComponent,
+        PricingHeaderComponent,
+        LoadedPricingScenarioHeaderComponent,
+        LoadScenarioPricingtoolPopupComponent,
+        PricingScenarioBuilderTabsComponent,
+        PricingProductItemComponent,
+        AddNewPricingtoolPopupComponent,
     ],
 })
 export class ComponentModule {}
