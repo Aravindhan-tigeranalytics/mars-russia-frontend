@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 @Component({
     selector: 'nwn-pricing-metric',
@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 export class PricingMetricComponent {
     constructor() {}
 
-    counterPer = 0;
+    counterPer = 18.02;
 
     incrementPer() {
         this.counterPer++;
@@ -19,7 +19,7 @@ export class PricingMetricComponent {
         this.counterPer--;
     }
 
-    counter = 0;
+    counter = 1.05;
 
     increment() {
         this.counter++;
@@ -28,16 +28,4 @@ export class PricingMetricComponent {
     decrement() {
         this.counter--;
     }
-
-    // dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    //     // Only highligh dates inside the month view.
-    //     if (view === 'month') {
-    //         const date = cellDate.getDate();
-
-    //         // Highlight the 1st and 20th day of each month.
-    //         return date === 1 || date === 20 ? 'example-custom-date-class' : '';
-    //     }
-
-    //     return '';
-    // };
 }
