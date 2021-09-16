@@ -8,3 +8,55 @@
 .active nwn-pricing-product-item .sfi {
     @apply border-marsblue-500 text-marsblue-500 !important;
 }
+
+::ng-deep .mat-tab-header-pagination-before {
+    /* position: absolute !important;
+    width: 26px !important;
+    height: 100% !important;
+    right: 22px !important;
+    background-color: rgba(244, 244, 245, 1) !important;
+    box-shadow: none !important; */
+    order: 2;
+}
+::ng-deep .mat-tab-header-pagination-after {
+    order: 3;
+}
+
+::ng-deep .mat-tab-label-container {
+    order: 1;
+}
+
+::ng-deep .mat-tab-label:hover {
+    @apply bg-marsgray-200 text-marsblue-500 opacity-100 !important;
+}
+
+::ng-deep .mat-tab-label-active {
+    @apply bg-marsgray-200 opacity-100 !important;
+}
+
+::ng-deep .mat-tab-label-active .mat-tab-label-content {
+    @apply text-marsblue-500 opacity-100 !important;
+}
+
+::ng-deep .mat-tab-label {
+    cursor: pointer !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 600 !important;
+    min-width: 109px !important;
+    height: auto !important;
+    opacity: 1 !important;
+    --tw-text-opacity: 1 !important;
+    color: rgba(161, 161, 170, var(--tw-text-opacity)) !important;
+}
+
+.width-of-tab {
+    width: calc(100% - 44px);
+}
+::ng-deep .mat-tab-header-pagination-chevron {
+    @apply border-marsgray-900 !important;
+}

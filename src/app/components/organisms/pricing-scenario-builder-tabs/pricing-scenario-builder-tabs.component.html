@@ -17,13 +17,7 @@
 
     <div id="graphical-summary" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
         <div class="flex graphical-summary-dropdown py-8">
-            <ngx-select-dropdown
-                tabindex="0"
-                [multiple]="false"
-                [(ngModel)]="singleSelect"
-                [config]="config"
-                [options]="productsValues"
-            ></ngx-select-dropdown>
+            <nwn-graphical-summary-dropdown></nwn-graphical-summary-dropdown>
         </div>
         <div class="flex flex-row justify-start border-b border-t border-marsgray-300">
             <div class="border-r border-marsgra-300 pr-6 py-5">
@@ -117,7 +111,7 @@
             </div>
         </div>
         <div class="flex flex-row justify-start items-center py-5">
-            <div class="baselinemetrics min-w-[243px]">
+            <div class="baselinemetrics min-w-[243px] flex flex-row justify-center">
                 <table class="border border-marsgray-200 text-left">
                     <thead class="bg-white">
                         <tr class="whitespace-nowrap">
@@ -140,7 +134,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="price-marsplmetrics ml-14 scrollbar-x">
+            <div class="price-marsplmetrics ml-20 scrollbar-x">
                 <table class="border border-marsgray-200 text-left">
                     <thead class="bg-white">
                         <tr class="whitespace-nowrap">
