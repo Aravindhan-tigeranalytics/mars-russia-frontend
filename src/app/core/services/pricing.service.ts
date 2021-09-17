@@ -4,6 +4,7 @@ import { ApiService } from './api.service'
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { PricingModel } from '@core/models';
 
 
 @Injectable({
@@ -16,7 +17,7 @@ export class PricingService{
 
 
     }
-    getPricingMetric(ids:any[]){
+    getPricingMetric(ids:any[]):Observable<PricingModel[]>{
        
        return this.apiService.get("api/scenario/scenario-metrics/" , ids )
     }

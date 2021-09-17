@@ -10,10 +10,16 @@
         <!-- #enddocregion toggle -->
         <!-- </mat-form-field> -->
     </div>
-    <p class="text-marsyellow-800 text-caption">$18.02</p>
+    <p class="text-marsyellow-800 text-caption">{{counterPer}} ₽</p>
     <div class="flex flex-row items-center justify-between">
         <div class="flex flex-row items-center justify-between space-x-2 pr-1 border-r border-marsgray-300">
-            <input class="enabledInput" type="number" value="{{ counterPer }}" />
+            <input (click) = "changeEnabled('abs')"
+            
+            [ngClass]="{
+                'disabledInput': enabled === 'per',
+                'enabledInput': enabled === 'abs'}"
+
+            type="number" value="{{ counterPer }}" />
             <div class="">
                 <div class="flex flex-col space-y-1">
                     <nwn-button type="icon" size="no-size" class="leading-0" (click)="incrementPer()">
@@ -26,7 +32,13 @@
             </div>
         </div>
         <div class="flex flex-row items-center justify-between space-x-2">
-            <input class="disabledInput" disabled type="number" value="{{ counter }}" />
+            <input (click) = "changeEnabled('per')"
+            [ngClass]="{
+                'disabledInput': enabled === 'abs',
+                'enabledInput': enabled === 'per'}"
+            
+             type="number" value="{{ counter }}" />
+             <!-- class="disabledInput" disabled -->
             <div class="hidden">
                 <div class="flex flex-col space-y-1">
                     <nwn-button type="icon" size="no-size" class="leading-0" (click)="increment()">
@@ -39,5 +51,5 @@
             </div>
         </div>
     </div>
-    <p class="text-body text-marsgray-500">List Price</p>
+    <p class="text-body text-marsgray-500">{{label}}</p>
 </div>

@@ -74,16 +74,16 @@
                         <!-- <div class="tab px-2 py-1" *ngFor="let product of products; let i = index">
                             <p class="text-title-small font-semibold text-marsgray-400">{{ product.productName }}</p>
                         </div> -->
-                        <nwn-product-tabs
-                            (click)="toggleTabs(1)"
-                            [type]="openTab === 1 ? 'selectedtabproduct' : 'unselectedtabproduct'"
-                            >Walmart</nwn-product-tabs
+                        <nwn-product-tabs *ngFor="let retailer of unique_retailers;let i = index"
+                            (click)="toggleTabs(i)"
+                            [type]="openTab === i ? 'selectedtabproduct' : 'unselectedtabproduct'"
+                            >{{retailer.account_name}}</nwn-product-tabs
                         >
-                        <nwn-product-tabs
+                        <!-- <nwn-product-tabs
                             (click)="toggleTabs(2)"
                             [type]="openTab === 2 ? 'selectedtabproduct' : 'unselectedtabproduct'"
                             >Target</nwn-product-tabs
-                        >
+                        > -->
                         <!-- <div class="tab px-2 py-1">
                             <p class="text-title-small font-semibold text-marsgray-400">Walmart</p>
                         </div>
@@ -109,16 +109,18 @@
                             <p class="text-title-small font-semibold text-marsgray-400">Target</p>
                         </div> -->
                     </div>
+                <ng-container  *ngFor="let retailer of unique_retailers;let i = index">
+                   
                     <div
                         class="tabpanel flex flex-row items-center px-2 py-3 bg-marsgray-200"
-                        [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }"
+                        [ngClass]="{ hidden: openTab !== i, block: openTab === i }"
                     >
-                        <div class="mr-2 cursor-pointer">
-                            <nwn-pricing-product-item [showClose]="true" type="active">
-                                Milkyway XXL
+                        <div  *ngFor="let product of retailer?.products;" class="mr-2 cursor-pointer">
+                            <nwn-pricing-product-item [showClose]="true" type="active" (click)="changeProduct(i , product.product_group)">
+                               {{product.product_group}}
                             </nwn-pricing-product-item>
                         </div>
-                        <div class="mr-2 cursor-pointer">
+                        <!-- <div class="mr-2 cursor-pointer">
                             <nwn-pricing-product-item [showClose]="true" type="default">
                                 Skittles XXL
                             </nwn-pricing-product-item>
@@ -137,9 +139,10 @@
                             <nwn-pricing-product-item [showClose]="true" type="default">
                                 Orbit XXL
                             </nwn-pricing-product-item>
-                        </div>
+                        </div> -->
                     </div>
-                    <div
+                </ng-container>
+                    <!-- <div
                         class="tabpanel flex flex-row items-center px-2 py-3 bg-marsgray-200"
                         [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }"
                     >
@@ -163,25 +166,25 @@
                                 Bounty XXL
                             </nwn-pricing-product-item>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="flex flex-row flex-wrap justify-between items-center">
                 <div class="flex flex-row flex-wrap items-center">
                     <div class="mr-12">
-                        <nwn-pricing-metric></nwn-pricing-metric>
+                        <nwn-pricing-metric [label] = "'List price'" [counterPer]="lpi"></nwn-pricing-metric>
                     </div>
                     <div class="mr-12">
-                        <nwn-pricing-metric></nwn-pricing-metric>
+                        <nwn-pricing-metric [label] = "'RSP'" [counterPer]="rsp"></nwn-pricing-metric>
                     </div>
                     <div class="mr-12">
-                        <nwn-pricing-metric></nwn-pricing-metric>
+                        <nwn-pricing-metric [label] = "'COGS'" [counterPer]="cogs"></nwn-pricing-metric>
                     </div>
                     <div class="mr-12">
-                        <nwn-price-elasticity>Price elasticity</nwn-price-elasticity>
+                        <nwn-price-elasticity [counter] = "elasticity">Price elasticity</nwn-price-elasticity>
                     </div>
                     <div class="">
-                        <nwn-competition></nwn-competition>
+                        <nwn-competition (toggleEvent) = "toggleEvent($event)"></nwn-competition>
                     </div>
                 </div>
                 <div class="flex flex-row items-center space-x-4 mx-3 my-5">

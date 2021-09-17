@@ -1,4 +1,6 @@
-<nwn-loaded-pricing-scenario-header (modalEvent)="receiveMessage($event)"></nwn-loaded-pricing-scenario-header>
+<nwn-loaded-pricing-scenario-header
+[pricingArray] = "pricingArray"
+(modalEvent)="receiveMessage($event)"></nwn-loaded-pricing-scenario-header>
 
 <div>
     <nwn-pricing-scenario-builder-tabs (modalEvent)="receiveMessage($event)"></nwn-pricing-scenario-builder-tabs>

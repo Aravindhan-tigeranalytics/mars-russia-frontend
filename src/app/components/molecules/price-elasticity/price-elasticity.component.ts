@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Input } from "@angular/core";
+import { Component, } from '@angular/core';
 
 @Component({
     selector: 'nwn-price-elasticity',
@@ -8,6 +9,7 @@ import { Component } from '@angular/core';
 export class PriceElasticityComponent {
     constructor() {}
 
+    @Input()
     counter = 0;
 
     increment() {

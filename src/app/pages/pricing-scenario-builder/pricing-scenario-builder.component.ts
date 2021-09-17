@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ModalService } from '@molecules/modal/modal.service';
 import {OptimizerService,SimulatorService,PricingService} from '@core/services'
-import { CheckboxModel, FilterModel, Product } from '@core/models';
+import { CheckboxModel, FilterModel, PricingModel, Product } from '@core/models';
 
 @Component({
     selector: 'nwn-pricing-scenario-builder',
@@ -27,6 +27,8 @@ export class PricingScenarioBuilderComponent implements OnInit {
     brands_format:Array<CheckboxModel> = []
     brands:Array<CheckboxModel> = []
     product_group:Array<CheckboxModel> = []
+
+    pricingArray:PricingModel[] = []
     constructor(private modalService: ModalService,public restApi: SimulatorService,
         private optimize : OptimizerService,private pricing : PricingService) {}
 
@@ -41,10 +43,8 @@ export class PricingScenarioBuilderComponent implements OnInit {
             console.log(error , "error")
             throw error
           })
-          let arr = [358,359,370,371]
-          this.pricing.getPricingMetric(arr).subscribe(data=>{
-              console.log(data , "pricin metics data...")
-          })
+        //   let arr = [358,359,370,371]
+       
     }
     _populateFilters(products : Product[]){
         // debugger
@@ -285,9 +285,15 @@ export class PricingScenarioBuilderComponent implements OnInit {
                     (this.selected_retailer.includes(e.account_name)) &&
                     (this.selected_product.includes(e.product_group))
                 
-                )
+                ).map(d=>d.id)
                 console.log(selected , "selected product for api")
                 // this.filter_model = {...this.filter_model , ...{"product_group" : this.selected_product}}
+
+                // let arr = [358]
+                this.pricing.getPricingMetric(selected).subscribe(data=>{
+                    this.pricingArray = [...this.pricingArray , ...data]
+                    console.log(data , "pricin metics data...")
+                })
                
             }
         }

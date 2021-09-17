@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'nwn-competition',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompetitionComponent implements OnInit {
 
+  @Output() toggleEvent = new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+  toggle($event){
+    this.toggleEvent.emit($event)
+    console.log($event , "toggle event...")
   }
 
 }

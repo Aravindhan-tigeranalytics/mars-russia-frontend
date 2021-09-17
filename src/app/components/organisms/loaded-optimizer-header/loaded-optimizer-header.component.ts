@@ -189,6 +189,10 @@ this.checkboxMetrices.forEach(element => {
 element.checkHeadValue =  'x1.0',
 element.disable = false,
 element.checked = false
+this.ObjectiveFunction= {
+    min_or_max : '',
+    metric : ''
+}
 
 
 

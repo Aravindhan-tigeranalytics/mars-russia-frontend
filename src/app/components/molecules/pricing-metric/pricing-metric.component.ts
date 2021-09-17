@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component , Input } from '@angular/core';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 @Component({
@@ -8,8 +8,26 @@ import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 })
 export class PricingMetricComponent {
     constructor() {}
-
+    @Input()
     counterPer = 18.02;
+    @Input()
+    label = "List Price"
+
+    enabled = "abs"
+
+
+    changeEnabled(type){
+        this.enabled = type
+        // if(type == 'per'){
+        //     this.enabled = type
+
+        // }
+        // else{
+
+
+        // }
+
+    }
 
     incrementPer() {
         this.counterPer++;
@@ -19,7 +37,7 @@ export class PricingMetricComponent {
         this.counterPer--;
     }
 
-    counter = 1.05;
+    counter = 0;
 
     increment() {
         this.counter++;
