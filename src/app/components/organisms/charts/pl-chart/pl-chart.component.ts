@@ -19,7 +19,7 @@ export class PlChartComponent implements OnInit {
 
     private svg: any;
     private margin = { top: 10, right: 0, bottom: 20, left: 60 };
-    private boundingWidth = 1200 - this.margin.left - this.margin.right;
+    private boundingWidth = 1267 - this.margin.left - this.margin.right;
     private boundingHeight = 400 - this.margin.top - this.margin.bottom;
 
     public ngOnInit(): void {
