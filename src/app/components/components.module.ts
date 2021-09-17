@@ -13,6 +13,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+// Datepicker
+import { DpDatePickerModule } from 'ng2-date-picker';
+import { MyDatePickerModule } from 'mydatepicker';
+
+// Tabs
+import { MatTabsModule } from '@angular/material/tabs';
+
 // Atoms
 import { ButtonComponent } from '@atoms/button/button.component';
 import { LinkComponent } from '@atoms/link/link.component';
@@ -142,29 +149,26 @@ import { PricingScenarioPricingtoolPopupComponent } from './organisms/pricing-sc
 import { LoadedPricingScenarioPricingtoolComponent } from './organisms/loaded-pricing-scenario-pricingtool/loaded-pricing-scenario-pricingtool.component';
 import { PricingProductItemComponent } from './atoms/pricing-product-item/pricing-product-item.component';
 import { ProductTabsComponent } from './atoms/product-tabs/product-tabs.component';
+import { CalendarComponent } from './atoms/calendar/calendar.component';
+import { GraphicalSummaryDropdownComponent } from './molecules/graphical-summary-dropdown/graphical-summary-dropdown.component';
+import { SubTabsComponent } from './molecules/sub-tabs/sub-tabs.component';
+
+// Scrollable Directive
+import { ScrollableDirective } from './molecules/sub-tabs/scrollable.directive';
 
 
 @NgModule({
     imports: [RouterModule,SharedModule,CommonModule, NgxSliderModule, NgSelectModule, FormsModule, 
         // ChartsModule,
-         SelectDropDownModule,DragDropModule,
-         SelectDropDownModule,
-         DragDropModule,
-         MatDatepickerModule,
-         MatFormFieldModule],
-
-// @NgModule({
-    // imports: [
-    //     CommonModule,
-    //     NgxSliderModule,
-    //     NgSelectModule,
-    //     FormsModule,
-    //     // ChartsModule,
-    //     SelectDropDownModule,
-    //     DragDropModule,
-    // ],
-      
+        SelectDropDownModule,
+        DragDropModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        DpDatePickerModule,
+        MatTabsModule,
+    ],
     declarations: [
+        ScrollableDirective,
         ButtonComponent,
         LinkComponent,
         CommandSearchComponent,
@@ -289,6 +293,9 @@ import { ProductTabsComponent } from './atoms/product-tabs/product-tabs.componen
         LoadedPricingScenarioPricingtoolComponent,
         PricingProductItemComponent,
         ProductTabsComponent,
+        CalendarComponent,
+        GraphicalSummaryDropdownComponent,
+        SubTabsComponent,
     ],
     exports: [
         ButtonComponent,
@@ -412,6 +419,9 @@ import { ProductTabsComponent } from './atoms/product-tabs/product-tabs.componen
         PricingProductItemComponent,
         AddNewPricingtoolPopupComponent,
         ProductTabsComponent,
+        DpDatePickerModule,
+        CalendarComponent,
+        MatTabsModule,
     ],
 })
 export class ComponentModule {}

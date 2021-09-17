@@ -290,6 +290,20 @@ input[type='checkbox']:checked + svg {
     width: 100%;
     overflow-y: hidden;
 }
+.hidden-scroll.scrollbar-x::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+    background-color: transparent;
+}
+.hidden-scroll.scrollbar-x::-webkit-scrollbar {
+    background-color: transparent;
+    height: 0px;
+}
+.hidden-scroll.scrollbar-x::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border: 2px solid transparent;
+}
+
 /* table freeze */
 
 table,
@@ -393,4 +407,4 @@ nwn-scenario-load-card .load-scenario-card {
   height: 3rem !important;
 }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */

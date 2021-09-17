@@ -1,4 +1,4 @@
-import { Component , Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 @Component({
@@ -8,6 +8,9 @@ import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 })
 export class PricingMetricComponent {
     constructor() {}
+    @Input()
+    percentage = false;
+
     @Input()
     counterPer = 18.02;
     @Input()
@@ -46,4 +49,27 @@ export class PricingMetricComponent {
     decrement() {
         this.counter--;
     }
+
+    config = {
+        weekDayFormat: 'd',
+        weekDayFormatter: (num) => {
+            if (num === 0) {
+                return 'S';
+            } else if (num === 1) {
+                return 'M';
+            } else if (num === 2) {
+                return 'T';
+            } else if (num === 3) {
+                return 'W';
+            } else if (num === 4) {
+                return 'T';
+            } else if (num === 5) {
+                return 'F';
+            } else if (num === 6) {
+                return 'S';
+            } else {
+                return 'S';
+            }
+        },
+    };
 }
