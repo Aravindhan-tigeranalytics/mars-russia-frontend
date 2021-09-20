@@ -8,6 +8,7 @@ import * as d3 from 'd3';
 })
 export class PlChartComponent implements OnInit,OnChanges {
     @Input() plchartdata: any[];
+    @Input() tooltipText : string = 'Simulated'
 
     private svg: any;
     private margin = { top: 10, right: 0, bottom: 20, left: 60 };
@@ -198,6 +199,7 @@ export class PlChartComponent implements OnInit,OnChanges {
                 d3.select('#pl-chart-tooltip').select('#group').text(d3.select(datum.target.parentNode).attr('groupType') + ' (Base)');
             }
             else {
+                
                 // d3.select('#pl-chart-tooltip').select('#base').text('Simulated : '+dollarFormat(index.value));
                 d3.select('#pl-chart-tooltip').select('#base').text(dollarFormat(index.value));
                 d3.select('#pl-chart-tooltip')
