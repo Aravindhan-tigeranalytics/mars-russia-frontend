@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, ViewChild, OnInit, Input,SimpleChanges } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { PricingModel } from '@core/models';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'nwn-loaded-pricing-scenario-header',
@@ -9,7 +10,15 @@ import { PricingModel } from '@core/models';
 })
 export class LoadedPricingScenarioHeaderComponent implements OnInit {
     selectedIndex!: number;
-    constructor() {}
+    constructor( private formBuilder: FormBuilder,) {
+        this.pricingForm = this.formBuilder.group({
+            // e.account_name  :new FormGroup({
+            products : this.formBuilder.array([])
+        // })
+
+    })
+    this.lenta  = this.pricingForm.get('products') as FormArray
+}
     @Input()
     pricingArray : PricingModel[] = []
     unique_retailers : any[] = []
@@ -18,12 +27,21 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     cogs = 0
     elasticity = 0
     currentProduct:any = null
+    pricingForm : FormGroup
+    lenta : FormArray
+    selected_main_product : string;
+    selected_sub_product : string;
+    displayProduct:any[]= []
 
     @Output()
     modalEvent = new EventEmitter<string>();
 
     sendMessage(modalType: string): void {
         this.modalEvent.emit(modalType);
+    }
+    selectMainProduct(product){
+        this.selected_main_product = product
+        console.log(this.selected_main_product , "selected main product...")
     }
 
     // sho and hide more action menu
@@ -38,6 +56,10 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     expandHeader() {
         this.isExpand = !this.isExpand;
     }
+    // get lenta():FormArray{
+    //     // debugger
+    //     return 
+    // }
 
     products: any[] = [
         {
@@ -114,36 +136,100 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
             'product_group' : 'orbit xxl'
         }]
         }
+        // {
+        //     'account_name' : e.account_name,
+        //     'products' : [{
+        //         "product_group" : e.product_group,
+        //         "list_price" : Number((e.list_price).toFixed(2)),
+        //         'rsp' : Number((e.retail_median_base_price_w_o_vat).toFixed(2)),
+        //         "cogs" : Number((e.list_price - (e.list_price * e.gmac)).toFixed(2)) ,
+        //         'elasticity' : Number((e.base_price_elasticity).toFixed(2)),
+        //         'net_elasticity':Number((e.net_elasticity).toFixed(2)),
+        //     }]
+        // }
         let arr:any[] = []
         this.pricingArray.forEach(e=>{
-            if(arr.find(d=>d.account_name == e.account_name)){
-               let p =  arr.find(d=>d.account_name == e.account_name)
-               if(!p['products'].find(val=>val.product_group == e.product_group)){
-                p['products'].push({
-                    "product_group" : e.product_group,
-                    "list_price" :Number((e.list_price).toFixed(2)),
-                        'rsp' : Number((e.retail_median_base_price_w_o_vat).toFixed(2)),
-                        "cogs" :  Number((e.list_price - (e.list_price * e.gmac)).toFixed(2)) ,
-                        'elasticity' :  Number((e.base_price_elasticity).toFixed(2)),
-                        'net_elasticity':Number((e.net_elasticity).toFixed(2)),
-                })
+            let arr = this.lenta
+            if(arr.length > 0){
+               
+                
+             //    if(arr)
+           if(arr.length > 0 && !arr.value.find(d=>(d.product_group === e.product_group) && (d.account_name == e.account_name))){
+               
+            
+            arr.push(
+                 this.formBuilder.group({
+                    account_name : [e.account_name],
+                     product_group : [e.product_group],
+                     list_price: [0],
+                     cogs: [0],
+                     elasticity : [0],
+                     net_elasticity : [0],
+
+                 })
+               )
+
+           }
+                
+            //  }
+            // if(arr.find(d=>d.account_name == e.account_name)){
+            //     // debugger
+                
+            //    let p =  arr.find(d=>d.account_name == e.account_name)
+            //    if(!p['products'].find(val=>val.product_group == e.product_group)){
+            //     p['products'].push({
+            //         "product_group" : e.product_group,
+            //         "list_price" :Number((e.list_price).toFixed(2)),
+            //             'rsp' : Number((e.retail_median_base_price_w_o_vat).toFixed(2)),
+            //             "cogs" :  Number((e.list_price - (e.list_price * e.gmac)).toFixed(2)) ,
+            //             'elasticity' :  Number((e.base_price_elasticity).toFixed(2)),
+            //             'net_elasticity':Number((e.net_elasticity).toFixed(2)),
+            //     })
                    
-               }
+            //    }
               
 
             }
             else{
-                arr.push({
-                    'account_name' : e.account_name,
-                    'products' : [{
-                        "product_group" : e.product_group,
-                        "list_price" : Number((e.list_price).toFixed(2)),
-                        'rsp' : Number((e.retail_median_base_price_w_o_vat).toFixed(2)),
-                        "cogs" : Number((e.list_price - (e.list_price * e.gmac)).toFixed(2)) ,
-                        'elasticity' : Number((e.base_price_elasticity).toFixed(2)),
-                        'net_elasticity':Number((e.net_elasticity).toFixed(2)),
-                    }]
-                })
+                this.lenta.push(this.formBuilder.group({
+                    account_name : [e.account_name],
+                    product_group : [e.product_group],
+                    list_price: [0],
+                    cogs: [0],
+                    elasticity : [0],
+                    net_elasticity : [0],
+
+                }))
+                // this.pricingForm = this.formBuilder.group({
+                //         // e.account_name  :new FormGroup({
+                //         products : this.formBuilder.array([])
+                //     // })
+
+                // })
+                // this.pricingForm.addControl(
+                //     e.account_name  , new FormGroup({
+                //         products : this.formBuilder.array([this.formBuilder.group({
+                //             product_group : [e.product_group],
+                //             list_price: [0],
+                //             cogs: [0],
+                //             elasticity : [0],
+                //             net_elasticity : [0],
+
+                //         })])
+                //     })
+                // )
+                // arr.push({
+                //     'account_name' : e.account_name,
+                //     'products' : [{
+                //         "product_group" : e.product_group,
+                //         "list_price" : Number((e.list_price).toFixed(2)),
+                //         'rsp' : Number((e.retail_median_base_price_w_o_vat).toFixed(2)),
+                //         "cogs" : Number((e.list_price - (e.list_price * e.gmac)).toFixed(2)) ,
+                //         'elasticity' : Number((e.base_price_elasticity).toFixed(2)),
+                //         'net_elasticity':Number((e.net_elasticity).toFixed(2)),
+                //     }]
+                // })
+                
             }
             
         })
@@ -161,6 +247,16 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
         
 
         console.log(arr , "final array unique")
+        console.log(this.pricingForm , "pricing form values")
+        // console.log)
+     
+        // pricingForm.get('Lenta').controls.get('products')'
+        this.displayProduct = this.pricingForm.controls.products.value.map(d=>d.account_name)
+        this.displayProduct =  [...new Set(this.displayProduct)]
+        // debugger
+        // console.log(Object.keys(this.pricingForm.controls) , "Object.keys(this.pricingForm.controls)")
+        // console.log(Object.keys(this.pricingForm.value) , "Object.keys(this.pricingForm.value)")
+
 
     }
     toggleEvent($event){
@@ -190,7 +286,12 @@ this.currentProduct = this.unique_retailers[index]['products'].find(d=>d.product
         
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+
+        this.pricingForm.valueChanges.subscribe(data=>{
+            console.log(data , "values changes form prcing form....")
+        })
+    }
     ngOnChanges(changes : SimpleChanges) :void{
         for (let property in changes) {
             if (property === 'pricingArray') {

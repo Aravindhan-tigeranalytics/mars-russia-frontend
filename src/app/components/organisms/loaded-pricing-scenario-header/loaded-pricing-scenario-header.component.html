@@ -63,14 +63,33 @@
 
     <div id="close-expand-header" class="flex flex-col translate-x-1" *ngIf="isExpand">
         <div class="flex flex-col border-b border-gray-300">
+            <form [formGroup]="pricingForm"> 
             <div class="flex flex-row items-start space-x-2 width-of-tab">
                 <div class="py-4">
                     <nwn-button type="icon" size="iconsm" (click)="sendMessage('addnew-pricngtool')">
                         <nwn-svg-icon type="stroke" nwnSvgIcon="plus" size="lg"></nwn-svg-icon>
                     </nwn-button>
                 </div>
-                <mat-tab-group [disableRipple]="true" class="flex flex-col py-4 w-full">
-                    <mat-tab id="main-tab" label="Walmart">
+                <mat-tab-group  *ngIf="displayProduct.length > 0"  [disableRipple]="true" class="flex flex-col py-4 w-full">
+
+                    <mat-tab *ngFor="let product of displayProduct" id="main-tab" (click)="selectMainProduct(product)" label="{{product}}">
+                        <!-- {{pricingForm.get(product).value.products.length}} -->
+                        <!-- {{pricingForm.get(product).value}} -->
+                        <nwn-sub-tabs [products]="pricingForm.get('products').value | subFilter : product"></nwn-sub-tabs>
+                        <div formArrayName="products" *ngFor="let item of pricingForm.get('products')['controls']; let i = index;">
+                            <!-- <div *ngFor="let item of pricingForm.get(product).controls.products.controls; let i=index"> -->
+                                <!-- {{item}} -->
+                                
+                            <div [formGroupName]="i">
+                        <input type="text"   formControlName="list_price">
+                        <input type="text"   formControlName="cogs">
+                        <input type="text"   formControlName="elasticity">
+                    </div>
+                    {{ pricingForm.controls.products.controls[i].controls.account_name.value }}
+                    {{ pricingForm.controls.products.controls[i].controls.product_group.value }}
+                </div>
+                    </mat-tab>
+                    <!-- <mat-tab id="main-tab" label="Walmart">
                         <nwn-sub-tabs></nwn-sub-tabs>
                     </mat-tab>
                     <mat-tab label="Target">
@@ -132,27 +151,15 @@
                     </mat-tab>
                     <mat-tab label="Costco">
                         <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
+                    </mat-tab> -->
                 </mat-tab-group>
             </div>
+            <!-- {{pricingForm.controls}}   -->
+            <!-- <div *ngIf="(pricingForm.values | json) != '{}'"> -->
+                <!-- {{pricingForm.controls  | keyvalue}}  -->
+            <!-- </div> -->
             <div class="flex flex-row flex-wrap justify-between items-end pb-4">
-                <div class="flex flex-row flex-wrap items-end">
-                    <div class="mr-12">
-                        <nwn-pricing-metric [label] = "'List price'" [counterPer]="lpi"></nwn-pricing-metric>
-                    </div>
-                    <div class="mr-12">
-                        <nwn-pricing-metric [label] = "'RSP'" [counterPer]="rsp" [percentage]="true"></nwn-pricing-metric>
-                    </div>
-                    <div class="mr-12">
-                        <nwn-pricing-metric [label] = "'COGS'" [counterPer]="cogs"></nwn-pricing-metric>
-                    </div>
-                    <div class="mr-12">
-                        <nwn-price-elasticity [counter] = "elasticity">Price elasticity</nwn-price-elasticity>
-                    </div>
-                    <div class="">
-                        <nwn-competition (toggleEvent) = "toggleEvent($event)"></nwn-competition>
-                    </div>
-                </div>
+                <!-- add snippets here -->
                 <div class="flex flex-row items-end space-x-4 mx-3 my-5">
                     <div class="flex flex-row items-center">
                         <div class="bg-marsgray-500 w-5 h-5 mr-2"></div>
@@ -164,6 +171,7 @@
                     </div>
                 </div>
             </div>
+        </form>
         </div>
         <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
             <div class="flex flex-row space-x-2 items-center">

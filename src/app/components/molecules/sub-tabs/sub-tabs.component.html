@@ -6,10 +6,10 @@
         #list="appScrollable"
         [scrollUnit]="150"
     >
-        <div class="mr-2 cursor-pointer">
-            <nwn-pricing-product-item [showClose]="true" type="active"> Milkyway XXL </nwn-pricing-product-item>
+        <div *ngFor="let product of products" class="mr-2 cursor-pointer">
+            <nwn-pricing-product-item [showClose]="true" type="active"> {{product}} </nwn-pricing-product-item>
         </div>
-        <div class="mr-2 cursor-pointer">
+        <!-- <div class="mr-2 cursor-pointer">
             <nwn-pricing-product-item [showClose]="true" type="default"> Skittles XXL </nwn-pricing-product-item>
         </div>
         <div class="mr-2 cursor-pointer">
@@ -73,7 +73,7 @@
         </div>
         <div class="mr-2 cursor-pointer">
             <nwn-pricing-product-item [showClose]="true" type="default"> Orbit XXL </nwn-pricing-product-item>
-        </div>
+        </div> -->
         <div class="sticky right-0 h-[34px] bg-marsgray-200">
             <div class="flex flex=col align-middle justify-center h-full">
                 <div class="flex flex-row items-center h-full pl-2 pr-1">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit,Input, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
     selector: 'nwn-sub-tabs',
@@ -6,6 +6,9 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
     styleUrls: ['./sub-tabs.component.css'],
 })
 export class SubTabsComponent implements OnInit {
+
+    @Input()
+    products:any[] = []
     constructor() {
         // this.scrollable = any;
     }
