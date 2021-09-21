@@ -13,6 +13,8 @@
     <!-- <div (click)="openModal('confirmation-popup')">confirmation</div> -->
     <nwn-summary-placeholder *ngIf="!isOptimiserFilterApplied"></nwn-summary-placeholder>
     <nwn-promo-optimizer-aggregated
+    [filter_model] = "filter_model" 
+
     [isUserConstraintChanged] = "isUserConstraintChanged"
     *ngIf="isOptimiserFilterApplied" (modalEvent)="receiveMessage($event)"></nwn-promo-optimizer-aggregated>
 </div>

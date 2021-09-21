@@ -16,6 +16,8 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
     @ViewChild('scrollTwoOP') scrollTwoOP: ElementRef;
     @Input()
     isUserConstraintChanged:boolean = false
+    @Input()
+    filter_model:any = null
     translate_y: string = '';
     currentTranslateRate: string = '';
     index = 0
@@ -82,6 +84,7 @@ export class PromoOptimizerAggregatedComponent implements OnInit, AfterViewInit 
 
     baselineLiftChartData:any = []
     plChartData:any = []
+    product:any;
 
     ngOnInit(): void {
         this.weeklyTableWidth = window.innerWidth - 155;

@@ -199,6 +199,10 @@ this.ip_val = {...{
 },
 ...this.ip_val}
 console.log(this.ip_val , "setting ip val to 1")
+this.ObjectiveFunction= {
+    min_or_max : '',
+    metric : ''
+}
 this.cumpulsory_week = 0
 this.cumpulsory_week_val= []
 this.ignored_week_val = []

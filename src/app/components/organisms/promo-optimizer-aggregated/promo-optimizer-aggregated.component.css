@@ -120,3 +120,8 @@
     padding-right: 3vw;
     vertical-align: -webkit-baseline-middle;
 }
+.img-height{
+    width: 80px;
+    height: 80px;
+    border: unset;
+}

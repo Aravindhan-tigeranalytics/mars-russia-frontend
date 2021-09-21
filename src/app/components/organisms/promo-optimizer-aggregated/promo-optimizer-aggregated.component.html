@@ -33,7 +33,9 @@
         <div class="pr-6 image-right">
             <div class="flex flex-row-reverse space-x-2">
                 <div class="w-20 h-auto border border-marsgray-100 img-height">
-                    <img class="w-full h-auto" src="/assets/subbrand-img/orbit-otc.png" alt="" />
+                    <!-- {{filter_model.product_group}} --> 
+                    <!-- <img class="w-full h-auto" src="/assets/subbrand-img/orbit-otc.png" alt="" /> -->
+                    <img class="w-full h-auto" [src]="filter_model.product_group|imagePipe" alt="" /> 
                 </div>
             </div>
         </div>
