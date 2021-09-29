@@ -11,6 +11,8 @@ export class SubTabFilter implements PipeTransform {
     // // }
     // console.log(items, "subFilter items ")
     // console.log(product , "subFilter product")
+    console.log(items , "iems in pipe")
+    console.log(product , "product in pipe")
 
     return items.filter(d=>d.account_name == product).map(d=>d.product_group)
     

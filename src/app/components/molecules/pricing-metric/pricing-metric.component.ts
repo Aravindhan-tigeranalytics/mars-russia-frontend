@@ -1,12 +1,20 @@
 import { Component, Input } from '@angular/core';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+ 
+import { ControlValueAccessor,NG_VALUE_ACCESSOR, } from '@angular/forms'
 
 @Component({
     selector: 'nwn-pricing-metric',
     templateUrl: './pricing-metric.component.html',
     styleUrls: ['./pricing-metric.component.css'],
+    providers: [
+        {
+          provide: NG_VALUE_ACCESSOR,
+          multi:true,
+          useExisting: PricingMetricComponent
+        }
+      ]
 })
-export class PricingMetricComponent {
+export class PricingMetricComponent implements ControlValueAccessor {
     constructor() {}
     @Input()
     percentage = false;
@@ -15,8 +23,28 @@ export class PricingMetricComponent {
     counterPer = 18.02;
     @Input()
     label = "List Price"
+    @Input()
+    base = 0
 
     enabled = "abs"
+
+    togglePercent(percent){
+        
+        console.log(percent)
+        if(percent == "skip"){
+            console.log("inside if")
+            return
+        }
+        this.percentage = percent
+        
+       
+        // this.percentage = !this.percentage
+        console.log(this.percentage , "curr percent ")
+    }
+
+    onChange = (quantity) => {};
+
+  onTouched = () => {};
 
 
     changeEnabled(type){
@@ -31,23 +59,56 @@ export class PricingMetricComponent {
         // }
 
     }
+    writeValue(quantity: number) {
+        this.counterPer = quantity;
+      }
+    
+      registerOnChange(onChange: any) {
+        this.onChange = onChange;
+      }
+    
+      registerOnTouched(onTouched: any) {
+        this.onTouched = onTouched;
+      }
 
     incrementPer() {
         this.counterPer++;
+        console.log(this.counterPer , "counter per")
+        console.log(this.base , "base value")
+        this.counter = this.convertPercent(this.counterPer , this.base)
+        this.onChange(this.counterPer)
     }
 
     decrementPer() {
         this.counterPer--;
+        let per = ((this.counterPer - this.base)/this.base) * 100
+        this.counter = this.convertPercent(this.counterPer , this.base)
+        this.onChange(this.counterPer)
     }
 
     counter = 0;
 
     increment() {
+       
         this.counter++;
+        this.counterPer = this.convertAbsolute(this.counterPer , this.counter)
+        this.onChange(this.counterPer)
     }
 
     decrement() {
         this.counter--;
+        this.counterPer = this.convertAbsolute(this.counterPer , this.counter)
+        this.onChange(this.counterPer)
+    }
+    convertAbsolute(base , per){
+        let abs = base + (base * per)/100
+        return Number(abs.toFixed(2))
+
+    }
+    convertPercent(inc , base){
+        let per = ((inc - base)/base) * 100
+        return Number(per.toFixed(2))
+
     }
 
     config = {

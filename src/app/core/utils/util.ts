@@ -394,6 +394,19 @@ export function convertCurrency(value:any , per?:any , is_curr = true){
     return (100 * ((a - b)/b)).toFixed(2);
 }
 
+export function colorForDifference(base:any, simulated:any){
+  if(simulated > base){
+      return 'green'
+  }
+  else if(simulated < base){
+      return 'red'
+  }
+  else if(base == simulated){
+      return 'neutral'
+  }
+  return 'green'
+}
+
 export function formatNumber(number: any,currency: boolean,percentage: boolean,debug=false ){
   // if(debug){
   //   debugger

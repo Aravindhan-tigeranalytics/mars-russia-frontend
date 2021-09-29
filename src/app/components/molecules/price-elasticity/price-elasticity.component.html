@@ -1,6 +1,6 @@
 <div class="py-4 px-1 flex flex-col space-y-3 hover:bg-marsgray-200">
     <div class="text-center">
-        <p class="text-marsyellow-800 text-caption">{{counter}}</p>
+        <p class="text-marsyellow-800 text-caption">{{base}}</p>
     </div>
     <div class="flex flex-row items-center justify-between space-x-6">
         <nwn-button type="icon" size="iconsm" (click)="decrement()">
@@ -26,5 +26,5 @@
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
         </nwn-button>
     </div>
-    <p class="text-body text-marsgray-500 ml-1"><ng-content></ng-content></p>
+    <p class="text-center text-body text-marsgray-500 ml-1"><ng-content></ng-content></p>
 </div>

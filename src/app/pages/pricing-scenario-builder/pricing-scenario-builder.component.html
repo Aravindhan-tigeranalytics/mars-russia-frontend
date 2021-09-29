@@ -1,6 +1,9 @@
 <nwn-loaded-pricing-scenario-header
 [pricingArray] = "pricingArray"
-(modalEvent)="receiveMessage($event)"></nwn-loaded-pricing-scenario-header>
+(modalEvent)="receiveMessage($event)"
+(simulateResetEvent) = "simulateReset($event)"
+></nwn-loaded-pricing-scenario-header>
+<!-- <nwn-summary-placeholder ></nwn-summary-placeholder> -->
 
 <div>
     <nwn-pricing-scenario-builder-tabs (modalEvent)="receiveMessage($event)"></nwn-pricing-scenario-builder-tabs>
@@ -45,12 +48,10 @@
 </nwn-modal>
 <!-- add new pricingtool details -->
 <nwn-modal id="addnew-pricngtool" class="hidden">
-    <nwn-add-new-pricingtool-popup></nwn-add-new-pricingtool-popup>
+    <nwn-add-new-pricingtool-popup [retailers] = "retailers" [product] = "product"></nwn-add-new-pricingtool-popup>
 </nwn-modal>
 <!-- save download -->
-<nwn-modal id="save-scenario" class="hidden">
-    <nwn-save-scenario></nwn-save-scenario>
-</nwn-modal>
+
 <!-- upload weekly promotions -->
 <nwn-modal id="upload-weekly-promotions" class="hidden">
     <nwn-upload-weekly-promotions></nwn-upload-weekly-promotions>

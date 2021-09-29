@@ -93,3 +93,4 @@ export interface LoadedScenarioModel {
         weekly : Array<PromoSimulatedWeeklyModel>
     }
   }
+

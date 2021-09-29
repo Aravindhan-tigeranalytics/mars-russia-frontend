@@ -9,13 +9,13 @@
         <!-- [ngClass]="{ 'bg-marsgray-100': active }" -->
         <div
             class="border border-marsgray-300 cursor-pointer"
-            *ngFor="let loadPricingSimulatorItem of loadPricingSimulatorItems; let i = index"
+            *ngFor="let loadPricingSimulatorItem of list_promotion; let i = index"
             (click)="select(i)"
             [ngClass]="{ active: selectedIndex == i }"
         >
             <nwn-scenario-load-card [showInfo]="true">
-                <p slcHead>{{ loadPricingSimulatorItem.slcHead }}</p>
-                <p slcContent>{{ loadPricingSimulatorItem.slcContent }}</p>
+                <p slcHead>{{ loadPricingSimulatorItem.name }}</p>
+                <p slcContent>{{ loadPricingSimulatorItem.comments }}</p>
             </nwn-scenario-load-card>
         </div>
     </div>

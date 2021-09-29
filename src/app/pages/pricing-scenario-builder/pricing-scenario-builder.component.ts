@@ -46,6 +46,10 @@ export class PricingScenarioBuilderComponent implements OnInit {
         //   let arr = [358,359,370,371]
        
     }
+    // saveScenario($event){
+    //     console.log($event , "save scenrio event")
+    //     this.pricing
+    // }
     _populateFilters(products : Product[]){
         // debugger
        this.retailers = [...new Set(products.map(item => item.account_name))].map(e=>({"value" : e,"checked" : false}));
@@ -78,7 +82,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
         this.modalService.close(id);
     }
     receiveMessage($event: any) {
-        console.log('recieved');
+        console.log($event , 'recieved');
         this.openModal($event);
     }
     retailerChange(event:CheckboxModel){
@@ -88,6 +92,18 @@ export class PricingScenarioBuilderComponent implements OnInit {
             // debugger
             this.selected_retailer = [...this.selected_retailer, event.value]
             // this.filter_model.retailer = this.selected_retailer
+            // debugger
+            // this.retailers = this.retailers.map(a => {
+                
+            //     var returnValue = {...a};
+              
+            //     if (a.value == event.value) {
+            //         returnValue ={...a ,"checked" : true}
+                
+            //     }
+              
+            //     return returnValue
+            //   })
             this.retailers.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
 
             this.categories = [...new Set(this.product.filter(val=>this.selected_retailer.includes(val.account_name)).map(item => item.corporate_segment))].map(e=>({"value" : e,"checked" : (this.selected_category.includes(e))}));
@@ -108,6 +124,8 @@ export class PricingScenarioBuilderComponent implements OnInit {
 
 
         }
+
+        console.log(this.retailers , "retailers ")
         
        
     }
@@ -296,6 +314,19 @@ export class PricingScenarioBuilderComponent implements OnInit {
                 })
                
             }
+        }
+    }
+    simulateReset($event){
+        if($event.type == 'simulate'){
+            console.log(this.pricingArray.map(d=>d.tpr_discount = 0) , "disounts..")
+            
+            let form = {"pricing" : this.pricingArray , ...$event.data}
+            console.log(form, "simulate from data...")
+            this.pricing.calculatePricingMetrics(form).subscribe(data=>{
+                console.log(data , "price simulated response...")
+
+                this.pricing.setPricingSimulatedObservable(data)
+            })
         }
     }
 

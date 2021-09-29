@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit,Input, ElementRef, ViewChild , Output , EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'nwn-sub-tabs',
@@ -9,8 +9,16 @@ export class SubTabsComponent implements OnInit {
 
     @Input()
     products:any[] = []
+
+    @Output()
+    subProductSelectEvent = new EventEmitter()
+
     constructor() {
         // this.scrollable = any;
+    }
+    selectSubProduct(product){
+        this.subProductSelectEvent.emit(product)
+
     }
 
     ngOnInit(): void {}

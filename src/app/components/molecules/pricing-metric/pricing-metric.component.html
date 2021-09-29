@@ -11,67 +11,67 @@
         </div>
         <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
     </div>
-    <p class="text-marsyellow-800 text-caption">$18.02</p>
-    <div *ngIf="percentage === false">
+    <p class="text-marsyellow-800 text-caption">{{base}} ₽</p>
+    <div (click) = "togglePercent(true)" *ngIf="percentage === false">
         <div class="flex flex-row items-center justify-between">
             <div class="flex flex-row items-center justify-between mr-2 border-r border-marsgray-300">
                 <input class="enabledInput" type="number" value="{{ counterPer }}" />
                 <div class="mx-2">
-                    <div class="flex flex-col space-y-1">
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="incrementPer()">
+                    <div class="flex flex-col space-y-1" >
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();incrementPer()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
                         </nwn-button>
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="decrementPer()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();decrementPer()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
                         </nwn-button>
                     </div>
                 </div>
             </div>
-            <div class="flex flex-row items-center justify-between space-x-2">
-                <input class="disabledInput" disabled type="number" value="{{ counter }}" />
+            <div  class="flex flex-row items-center justify-between space-x-2">
+                <input class="disabledInput" disabled type="number" value="{{ counter }}" />  %
                 <div class="hidden">
                     <div class="flex flex-col space-y-1">
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="increment()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();increment()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
                         </nwn-button>
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="decrement()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();decrement()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
                         </nwn-button>
                     </div>
                 </div>
             </div>
         </div>
-        <p class="text-body text-marsgray-500">List Price</p>
+        <p class="text-body text-marsgray-500">{{label}}</p>
     </div>
-    <div *ngIf="percentage === true">
-        <div class="flex flex-row items-center justify-between">
+    <div (click) = "togglePercent(false)" *ngIf="percentage === true">
+        <div  class="flex flex-row items-center justify-between">
             <div class="flex flex-row items-center justify-between space-x-2 mr-2 border-r border-marsgray-300">
                 <input class="disabledInput" disabled type="number" value="{{ counterPer }}" />
                 <div class="hidden">
                     <div class="flex flex-col space-y-1">
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="incrementPer()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();incrementPer()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
                         </nwn-button>
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="decrementPer()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();decrementPer()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
                         </nwn-button>
                     </div>
                 </div>
             </div>
             <div class="flex flex-row items-center justify-between">
-                <input class="enabledInput" type="number" value="{{ counter }}" />
+                <input class="enabledInput" type="number" value="{{ counter }}" />  %
                 <div class="mx-2">
                     <div class="flex flex-col space-y-1">
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="increment()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();increment()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
                         </nwn-button>
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="decrement()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();decrement()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
                         </nwn-button>
                     </div>
                 </div>
             </div>
         </div>
-        <p class="text-body text-marsgray-500">List Price</p>
+        <p class="text-body text-marsgray-500">{{label}}</p>
     </div>
 </div>

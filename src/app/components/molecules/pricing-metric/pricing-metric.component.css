@@ -82,3 +82,11 @@ input::-webkit-inner-spin-button {
 ::ng-deep dp-day-calendar .dp-selected {
     @apply text-white bg-marsblue-500 !important;
 }
+::ng-deep .dp-picker-input:focus {
+   border: none;
+   outline: none;
+}
+::ng-deep .dp-calendar-month{
+    width: 50px!important;
+    height: 50px!important;
+}

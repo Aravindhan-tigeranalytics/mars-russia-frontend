@@ -70,26 +70,15 @@
                         <nwn-svg-icon type="stroke" nwnSvgIcon="plus" size="lg"></nwn-svg-icon>
                     </nwn-button>
                 </div>
-                <mat-tab-group  *ngIf="displayProduct.length > 0"  [disableRipple]="true" class="flex flex-col py-4 w-full">
+                <mat-tab-group [disableRipple]="true" class="flex flex-col py-4 w-full">
+                    <!-- (selectedTabChange)="onTabChanged($event);"  *ngIf="displayProduct.length > 0"   -->
 
-                    <mat-tab *ngFor="let product of displayProduct" id="main-tab" (click)="selectMainProduct(product)" label="{{product}}">
-                        <!-- {{pricingForm.get(product).value.products.length}} -->
-                        <!-- {{pricingForm.get(product).value}} -->
-                        <nwn-sub-tabs [products]="pricingForm.get('products').value | subFilter : product"></nwn-sub-tabs>
-                        <div formArrayName="products" *ngFor="let item of pricingForm.get('products')['controls']; let i = index;">
-                            <!-- <div *ngFor="let item of pricingForm.get(product).controls.products.controls; let i=index"> -->
-                                <!-- {{item}} -->
-                                
-                            <div [formGroupName]="i">
-                        <input type="text"   formControlName="list_price">
-                        <input type="text"   formControlName="cogs">
-                        <input type="text"   formControlName="elasticity">
-                    </div>
-                    {{ pricingForm.controls.products.controls[i].controls.account_name.value }}
-                    {{ pricingForm.controls.products.controls[i].controls.product_group.value }}
-                </div>
-                    </mat-tab>
-                    <!-- <mat-tab id="main-tab" label="Walmart">
+                    <!-- <mat-tab *ngFor="let product of displayProduct" id="main-tab" label="{{product}}">
+        
+                        <nwn-sub-tabs (subProductSelectEvent)="subProductSelectEvent($event)" [products]="pricingForm.get('products').value | subFilter : product"></nwn-sub-tabs>
+                       
+                    </mat-tab> -->
+                    <mat-tab id="main-tab" label="Walmart">
                         <nwn-sub-tabs></nwn-sub-tabs>
                     </mat-tab>
                     <mat-tab label="Target">
@@ -119,7 +108,7 @@
                     <mat-tab label="Kohl’s">
                         <nwn-sub-tabs></nwn-sub-tabs>
                     </mat-tab>
-                    <mat-tab label="Home Depot">
+                    <!-- <mat-tab label="Home Depot">
                         <nwn-sub-tabs></nwn-sub-tabs>
                     </mat-tab>
                     <mat-tab label="Publix">
@@ -160,6 +149,43 @@
             <!-- </div> -->
             <div class="flex flex-row flex-wrap justify-between items-end pb-4">
                 <!-- add snippets here -->
+                <!-- <div formArrayName="products" *ngFor="let item of pricingForm.get('products')['controls']; let i = index;">
+                    <ng-container *ngIf="pricingForm.controls.products.controls[i].controls.retailer.value  === currentProduct">
+                    
+                <div [formGroupName]="i">
+            <input type="text"   formControlName="list_price">
+            <input type="text"   formControlName="cogs">
+            <input type="text"   formControlName="elasticity">
+        </div>
+    </ng-container>
+    </div> -->
+
+    <div class="flex flex-row flex-wrap items-end">
+        <ng-container formArrayName="products" *ngFor="let item of pricingForm.get('products')['controls']; let i = index;">
+        <ng-container *ngIf="pricingForm.controls.products.controls[i].controls.retailer.value  === currentProduct">
+            <ng-container [formGroupName]="i">
+        <div class="mr-12">
+            <nwn-pricing-metric [base] = "item.controls.list_price.value"  formControlName="inc_list_price"></nwn-pricing-metric>
+        </div>
+        <div class="mr-12">
+            <nwn-pricing-metric [base] = "item.controls.cogs.value"   [label] = "'COGS'" formControlName="inc_cogs" ></nwn-pricing-metric>
+            <!-- [percentage]="true" -->
+        </div>
+        <div class="mr-12">
+            <nwn-pricing-metric [base] = "item.controls.rsp.value" [label] = "'Retail price'" formControlName="inc_rsp"></nwn-pricing-metric>
+        </div>
+        <div class="mr-12">
+            <!-- {{item.controls.follow_competition.value}} comp value -->
+            <nwn-price-elasticity [base] = "item.controls.elasticity.value" *ngIf="!item.controls.follow_competition.value" formControlName="inc_elasticity">Price elasticity</nwn-price-elasticity>
+            <nwn-price-elasticity [base] = "item.controls.net_elasticity.value" *ngIf="item.controls.follow_competition.value" formControlName="inc_net_elasticity">Price elasticity</nwn-price-elasticity>
+        </div>
+        <div class="">
+            <nwn-competition formControlName="follow_competition"></nwn-competition>
+        </div>
+    </ng-container>
+        </ng-container>
+    </ng-container>
+    </div>
                 <div class="flex flex-row items-end space-x-4 mx-3 my-5">
                     <div class="flex flex-row items-center">
                         <div class="bg-marsgray-500 w-5 h-5 mr-2"></div>
@@ -204,7 +230,7 @@
             <div class="flex flex-row">
                 <div class="flex flex-row space-x-4 items-center">
                     <nwn-button type="link" size="sm"> Reset </nwn-button>
-                    <nwn-button type="primary" size="sm"> Simulate </nwn-button>
+                    <nwn-button type="primary" size="sm" (click) = "simulatePrice()"> Simulate </nwn-button>
                     <nwn-button type="icon" size="iconsm" (click)="sendMessage('save-scenario')" [showTooltip]="true">
                         <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                         <p tooltipContent>Save scenario</p>
@@ -382,3 +408,8 @@
 <div *ngIf="isExpand">
     <nwn-status-bar nwnStatusBar="viewless" (click)="expandHeader()">View Less</nwn-status-bar>
 </div>
+
+
+<nwn-modal id="save-scenario" class="hidden">
+    <nwn-save-scenario (saveScenarioEvent) = "saveScenario($event)"></nwn-save-scenario>
+</nwn-modal>

@@ -25,7 +25,7 @@
                     <h1 class="text-title-medium text-gray-700 font-medium">Baseline vs Lift</h1>
                 </div>
                 <div class="pt-12 pr-8">
-                    <nwn-baseline-lift-chart></nwn-baseline-lift-chart>
+                    <nwn-baseline-lift-chart [baselineliftdata]="baselineLiftChartData"></nwn-baseline-lift-chart>
                 </div>
                 <div class="flex flex-row flex-wrap space-x-4 my-6">
                     <div>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <nwn-pl-chart></nwn-pl-chart>
+                <nwn-pl-chart [plchartdata]='plChartData'></nwn-pl-chart>
                 <div class="flex flex-row-reverse space-x-4 space-x-reverse my-6">
                     <div>
                         <nwn-legend-items nwnLegendItems="onesquare" type="squaresm" color="bgLBlue-300"
@@ -129,7 +129,7 @@
                     </thead>
                     <tbody class="bg-white">
                         <tr class="whitespace-nowrap">
-                            <td><nwn-cell-item></nwn-cell-item></td>
+                            <td><nwn-cell-item [nwnCellData]="units"></nwn-cell-item></td>
                         </tr>
                     </tbody>
                 </table>
@@ -177,13 +177,13 @@
                     </thead>
                     <tbody class="bg-white">
                         <tr class="whitespace-nowrap">
-                            <td><nwn-cell-item></nwn-cell-item></td>
-                            <td><nwn-cell-item></nwn-cell-item></td>
-                            <td><nwn-cell-item></nwn-cell-item></td>
-                            <td><nwn-cell-item></nwn-cell-item></td>
-                            <td><nwn-cell-item></nwn-cell-item></td>
-                            <td><nwn-cell-item></nwn-cell-item></td>
-                            <td><nwn-cell-item></nwn-cell-item></td>
+                            <td><nwn-cell-item [nwnCellData]="lsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [nwnCellData]="trade_expense"></nwn-cell-item></td>
+                            <td><nwn-cell-item [nwnCellData]="nsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [nwnCellData]="cogs"></nwn-cell-item></td>
+                            <td><nwn-cell-item [nwnCellData]="mac"></nwn-cell-item></td>
+                            <td><nwn-cell-item [nwnCellData]="rsv"></nwn-cell-item></td>
+                            <td><nwn-cell-item [nwnCellData]="cutomer_margin"></nwn-cell-item></td>
                         </tr>
                     </tbody>
                 </table>
@@ -323,29 +323,32 @@
                         </th>
                     </tr>
                 </thead>
+                <!-- <div *ngFor="let item of tabular_data | keyvalue">
+                    {{item.key}}:{{item.value}}
+                  </div> -->
                 <tbody class="bg-white">
-                    <tr class="whitespace-nowrap">
+                    <tr *ngFor="let item of tabular_data | keyvalue" class="whitespace-nowrap">
                         <th scope="row" class="sticked freeze_horizontal">
-                            <nwn-cell-header type="subheaderlg" color="bg-transparent">All</nwn-cell-header>
+                            <nwn-cell-header type="subheaderlg" color="bg-transparent">{{item.key}}</nwn-cell-header>
                         </th>
 
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
-                        <td><nwn-cell-item></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.units"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.volume"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.lsv"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.nsv"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.mac_nsv"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.te"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.te_lsv"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.te_unit"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.roi"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.lift"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.asp"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.promo_asp"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.rsv_w_o_vat"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.customer_margin"></nwn-cell-item></td>
+                        <td><nwn-cell-item [nwnCellData]="item.value.customer_margin_rsv"></nwn-cell-item></td>
                     </tr>
-                    <tr class="whitespace-nowrap">
+                    <!-- <tr class="whitespace-nowrap">
                         <th scope="row" class="sticked freeze_horizontal">
                             <nwn-cell-header type="subheaderlg" color="bg-transparent">Milkyway XXL</nwn-cell-header>
                         </th>
@@ -365,8 +368,8 @@
                         <td><nwn-cell-item></nwn-cell-item></td>
                         <td><nwn-cell-item></nwn-cell-item></td>
                         <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
-                    <tr class="whitespace-nowrap">
+                    </tr> -->
+                    <!-- <tr class="whitespace-nowrap">
                         <th scope="row" class="sticked freeze_horizontal">
                             <nwn-cell-header type="subheaderlg" color="bg-transparent">Skittles XXL</nwn-cell-header>
                         </th>
@@ -470,7 +473,7 @@
                         <td><nwn-cell-item></nwn-cell-item></td>
                         <td><nwn-cell-item></nwn-cell-item></td>
                         <td><nwn-cell-item></nwn-cell-item></td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>

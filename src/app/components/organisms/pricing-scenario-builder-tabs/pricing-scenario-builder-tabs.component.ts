@@ -1,4 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { PriceSimulated } from '@core/models';
+import {PricingService} from "@core/services"
+import  * as Utils from "@core/utils"
 
 @Component({
     selector: 'nwn-pricing-scenario-builder-tabs',
@@ -8,16 +11,292 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 export class PricingScenarioBuilderTabsComponent implements OnInit {
     translate_y: string = '';
     currentTranslateRate: string = '';
-    constructor(private elRef: ElementRef) {}
+    constructor(private elRef: ElementRef , private pricingService : PricingService) {}
 
     public weeklyTableWidth: any;
     public weeklyTableHeight: any;
     public aggregatedGraphWidth: any;
+    baselineLiftChartData:any = []
+    plChartData:any = []
+    units:any
+    lsv:any
+    nsv:any
+    cogs:any
+    mac:any
+    rsv:any
+    cutomer_margin :any
+    trade_expense :any
+    tabular_data :any = null as any
 
     ngOnInit(): void {
         this.weeklyTableWidth = window.innerWidth - 155;
         this.weeklyTableHeight = window.innerHeight - 400;
         this.aggregatedGraphWidth = window.innerWidth - 155;
+        // this.tabular_data = this.generateMock()
+        this.pricingService.getPricingSimulatedObservable().subscribe(data=>{
+            if(data){
+                console.log(data , "priing simulated")
+                this.generateGraphTableData(data)
+
+            }
+            else{
+
+
+            }
+        })
+        this.baselineLiftChartData = [
+            {
+                group: 'Sales Units',
+                baseline1: [10, 20],
+                baseline2: [15,  13],
+            },
+        ];
+    }
+    genrate_table(data:PriceSimulated){
+        let table_data = {
+            // "All" : {
+                
+
+            // }
+        }
+        data.base.forEach((d , i)=>{
+            if(d.product in table_data){
+                table_data[d.product]["units"]["base"] = table_data[d.product]["units"]["base"] + data.base[i].total.units 
+                table_data[d.product]["units"]["simulated"] = table_data[d.product]["units"]["simulated"] + data.simulated[i].total.units 
+
+                table_data[d.product]["volume"]["base"] = table_data[d.product]["volume"]["base"] + data.base[i].total.volume 
+                table_data[d.product]["volume"]["simulated"] = table_data[d.product]["volume"]["simulated"] + data.simulated[i].total.volume
+
+                table_data[d.product]["lsv"]["base"] = table_data[d.product]["lsv"]["base"] + data.base[i].total.lsv 
+                table_data[d.product]["lsv"]["simulated"] = table_data[d.product]["lsv"]["simulated"] + data.simulated[i].total.lsv 
+
+                table_data[d.product]["nsv"]["base"] = table_data[d.product]["nsv"]["base"] + data.base[i].total.nsv 
+                table_data[d.product]["nsv"]["simulated"] = table_data[d.product]["nsv"]["simulated"] + data.simulated[i].total.nsv 
+
+                table_data[d.product]["te"]["base"] = table_data[d.product]["te"]["base"] + data.base[i].total.te 
+                table_data[d.product]["te"]["simulated"] = table_data[d.product]["te"]["simulated"] + data.simulated[i].total.te 
+
+                table_data[d.product]["rsv_w_o_vat"]["base"] = table_data[d.product]["rsv_w_o_vat"]["base"] + data.base[i].total.total_rsv_w_o_vat
+                table_data[d.product]["rsv_w_o_vat"]["simulated"] = table_data[d.product]["rsv_w_o_vat"]["simulated"] + data.simulated[i].total.total_rsv_w_o_vat
+    
+            }
+            else{
+                table_data[d.product] = {
+                    "units" : {
+                        "base" : data.base[i].total.units,
+                        "simulated" : data.simulated[i].total.units
+                    },
+                    "volume" : {
+                        "base" : data.base[i].total.volume,
+                        "simulated" : data.simulated[i].total.volume
+                    },
+                    "lsv" : {
+                        "base" : data.base[i].total.lsv,
+                        "simulated" : data.simulated[i].total.lsv
+                    },
+                    "nsv" : {
+                        "base" : data.base[i].total.nsv,
+                        "simulated" : data.simulated[i].total.nsv
+                    },
+                    "mac_nsv" : {
+                        "base" : data.base[i].total.mac_percent,
+                        "simulated" : data.simulated[i].total.mac_percent
+                    },
+                    "te" : {
+                        "base" : data.base[i].total.te,
+                        "simulated" : data.simulated[i].total.te
+                    },
+                    "te_lsv" : {
+                        "base" : data.base[i].total.te_percent_of_lsv,
+                        "simulated" : data.simulated[i].total.te_percent_of_lsv
+                    },
+                    "te_unit" : {
+                        "base" : data.base[i].total.te_per_unit,
+                        "simulated" : data.simulated[i].total.te_per_unit
+                    },
+                    "roi" : {
+                        "base" : data.base[i].total.roi,
+                        "simulated" : data.simulated[i].total.roi
+                    },
+                    "lift" : {
+                        "base" : data.base[i].total.lift,
+                        "simulated" : data.simulated[i].total.lift
+                    },
+                    "asp" : {
+                        "base" : data.base[i].total.asp,
+                        "simulated" : data.simulated[i].total.asp
+                    },
+                    "promo_asp" : {
+                        "base" : data.base[i].total.asp,
+                        "simulated" : data.simulated[i].total.asp
+                    },
+                    "rsv_w_o_vat" : {
+                        "base" : data.base[i].total.total_rsv_w_o_vat,
+                        "simulated" : data.simulated[i].total.total_rsv_w_o_vat
+                    },
+                    "customer_margin" : {
+                        "base" : data.base[i].total.rp,
+                        "simulated" : data.simulated[i].total.rp
+                    },
+                    "customer_margin_rsv" : {
+                        "base" : data.base[i].total.rp_percent,
+                        "simulated" : data.simulated[i].total.rp_percent
+                    },
+                }
+
+                
+            }
+
+        })
+        console.log(table_data , "TABLE DATA OBJECT...")
+        for (let key in table_data) {
+            table_data[key]['units'] = this.genrateCellData(table_data[key]['units']['base'],table_data[key]['units']['simulated'] )
+            table_data[key]['volume'] = this.genrateCellData(table_data[key]['volume']['base'],table_data[key]['volume']['simulated'] )
+            table_data[key]['lsv'] = this.genrateCellData(table_data[key]['lsv']['base'],table_data[key]['lsv']['simulated'] )
+            table_data[key]['nsv'] = this.genrateCellData(table_data[key]['nsv']['base'],table_data[key]['nsv']['simulated'] )
+            table_data[key]['mac_nsv'] = this.genrateCellData(table_data[key]['mac_nsv']['base'],table_data[key]['mac_nsv']['simulated'] )
+            table_data[key]['te'] = this.genrateCellData(table_data[key]['te']['base'],table_data[key]['te']['simulated'] )
+            table_data[key]['te_lsv'] = this.genrateCellData(table_data[key]['te_lsv']['base'],table_data[key]['te_lsv']['simulated'] )
+            table_data[key]['te_unit'] = this.genrateCellData(table_data[key]['te_unit']['base'],table_data[key]['te_unit']['simulated'] )
+            table_data[key]['roi'] = this.genrateCellData(table_data[key]['roi']['base'],table_data[key]['roi']['simulated'] )
+            table_data[key]['lift'] = this.genrateCellData(table_data[key]['lift']['base'],table_data[key]['lift']['simulated'] )
+            table_data[key]['asp'] = this.genrateCellData(table_data[key]['asp']['base'],table_data[key]['asp']['simulated'] )
+            table_data[key]['promo_asp'] = this.genrateCellData(table_data[key]['promo_asp']['base'],table_data[key]['promo_asp']['simulated'] )
+            table_data[key]['rsv_w_o_vat'] = this.genrateCellData(table_data[key]['rsv_w_o_vat']['base'],table_data[key]['rsv_w_o_vat']['simulated'] )
+            table_data[key]['customer_margin'] = this.genrateCellData(table_data[key]['customer_margin']['base'],table_data[key]['customer_margin']['simulated'] )
+            table_data[key]['customer_margin_rsv'] = this.genrateCellData(table_data[key]['customer_margin_rsv']['base'],table_data[key]['customer_margin_rsv']['simulated'] )
+            
+            // if (table_data.hasOwnProperty(key)) {
+            //     debugger
+                 
+            // }
+        }   
+        console.log(table_data , "TABLE DATA OBJECT CONVERTED...")
+        return table_data
+       
+    }
+
+    generateGraphTableData(data : PriceSimulated){
+        this.tabular_data = this.genrate_table(data)
+        
+       
+        let base_predicted = 0
+        let simulated_prediced = 0
+        let inc_base = 0
+        let inc_sim = 0
+        let rsv_base , rsv_sim , rp_base ,rp_sim , lsv_base , lsv_sim , te_base , te_sim,
+            nsv_base , nsv_sim , cogs_base,cogs_sim,mac_base , mac_sim;
+        rsv_base = rsv_sim = rp_base =rp_sim = lsv_base = lsv_sim = te_base = te_sim=
+            nsv_base = nsv_sim = cogs_base=cogs_sim=mac_base = mac_sim= 0
+        data.base.forEach((d , i)=>{
+          
+            base_predicted+=data.base[i].total.units
+            simulated_prediced+=data.simulated[i].total.units
+            inc_base+=data.base[i].total.increment_units
+            inc_sim+=data.simulated[i].total.increment_units
+            rsv_base+=data.base[i].total.total_rsv_w_o_vat
+            rsv_sim+=data.simulated[i].total.total_rsv_w_o_vat
+            rp_base+=data.base[i].total.rp
+            rp_sim+=data.simulated[i].total.rp
+            lsv_base+=data.base[i].total.lsv
+            lsv_sim+=data.simulated[i].total.lsv
+            te_base+=data.base[i].total.te
+            te_sim+=data.simulated[i].total.te
+            nsv_base+=data.base[i].total.nsv
+            nsv_sim+=data.simulated[i].total.nsv
+            cogs_base+=data.base[i].total.cogs
+            cogs_sim+=data.simulated[i].total.cogs
+            mac_base+=data.base[i].total.mac
+            mac_sim+=data.simulated[i].total.mac
+
+
+        })
+        this.plChartData = [
+            { group: 'RSV w/o VAT', base: rsv_base, simulated: rsv_sim },
+            { group: 'Trade Margin', base: rp_base, simulated: rp_sim},
+            { group: 'LSV', base: lsv_base, simulated: lsv_sim },
+            { group: 'Trade Expense', base: te_base, simulated: te_sim },
+            { group: 'NSV', base: nsv_base, simulated: nsv_sim },
+            { group: 'COGS', base: cogs_base ,  simulated: cogs_sim },
+            { group: 'MAC', base: mac_base, simulated:mac_sim},
+        ]
+
+        this.baselineLiftChartData = this.baselineLiftChartData.map(a=>{
+            var ret = {...a}
+            ret.baseline1 = [base_predicted,inc_base] ,
+            ret.baseline2  = [simulated_prediced,inc_sim]
+            return ret
+        })
+        this.units = {
+            "converted_base": Utils.formatNumber(base_predicted,false,false),
+            "converted_simulated": Utils.formatNumber(simulated_prediced,false,false),
+            "percent": "(" + Utils.percentageDifference(simulated_prediced,base_predicted) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(simulated_prediced-base_predicted,false,false) + ")",
+            "arrow": simulated_prediced > base_predicted ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(base_predicted , simulated_prediced) 
+        }
+        this.lsv = {
+            "converted_base": Utils.formatNumber(lsv_base,false,false),
+            "converted_simulated": Utils.formatNumber(lsv_sim,false,false),
+            "percent": "(" + Utils.percentageDifference(lsv_sim,lsv_base) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(lsv_sim-lsv_base,false,false) + ")",
+            "arrow": lsv_sim > lsv_base ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(lsv_base , lsv_sim) 
+        }
+        this.trade_expense = {
+            "converted_base": Utils.formatNumber(te_base,false,false),
+            "converted_simulated": Utils.formatNumber(te_sim,false,false),
+            "percent": "(" + Utils.percentageDifference(te_sim,te_base) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(te_sim-te_base,false,false) + ")",
+            "arrow": te_sim > te_base ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(te_sim,te_base ) 
+        }
+        this.nsv = {
+            "converted_base": Utils.formatNumber(nsv_base,false,false),
+            "converted_simulated": Utils.formatNumber(nsv_sim,false,false),
+            "percent": "(" + Utils.percentageDifference(nsv_sim,nsv_base) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(nsv_sim-nsv_base,false,false) + ")",
+            "arrow": nsv_sim > nsv_base ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(nsv_base , nsv_sim) 
+        }
+        this.cogs = {
+            "converted_base": Utils.formatNumber(cogs_base,false,false),
+            "converted_simulated": Utils.formatNumber(cogs_sim,false,false),
+            "percent": "(" + Utils.percentageDifference(cogs_sim,cogs_base) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(cogs_sim-cogs_base,false,false) + ")",
+            "arrow": cogs_sim > cogs_base ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(cogs_base , cogs_sim) 
+        }
+        this.mac = {
+            "converted_base": Utils.formatNumber(mac_base,false,false),
+            "converted_simulated": Utils.formatNumber(mac_sim,false,false),
+            "percent": "(" + Utils.percentageDifference(mac_sim,mac_base) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(mac_sim-mac_base,false,false) + ")",
+            "arrow": mac_sim > mac_base ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(mac_base , mac_sim) 
+        }
+        this.rsv = {
+            "converted_base": Utils.formatNumber(rsv_base,false,false),
+            "converted_simulated": Utils.formatNumber(rsv_sim,false,false),
+            "percent": "(" + Utils.percentageDifference(rsv_sim,rsv_base) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(rsv_sim-rsv_base,false,false) + ")",
+            "arrow": rsv_sim > rsv_base ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(rsv_base , rsv_sim) 
+        }
+        this.cutomer_margin = {
+            "converted_base": Utils.formatNumber(rp_base,false,false),
+            "converted_simulated": Utils.formatNumber(rp_sim,false,false),
+            "percent": "(" + Utils.percentageDifference(rp_sim,rp_base) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(rp_sim-rp_base,false,false) + ")",
+            "arrow": rp_sim > rp_base ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(rp_base , rp_sim) 
+        }
+        
+
+        console.log(this.plChartData , "plchatdata....")
+        console.log(this.baselineLiftChartData , "baselinechart after simulated")
+
+      
     }
 
     @ViewChild('tabularSummary', { static: false }) tabularSummary: any;
@@ -109,5 +388,47 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
     openTab = 1;
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;
+    }
+    genrateCellData(base_predicted ,simulated_prediced ){
+         
+        return  {
+            "converted_base": Utils.formatNumber(base_predicted,false,false),
+            "converted_simulated": Utils.formatNumber(simulated_prediced,false,false),
+            "percent": "(" + Utils.percentageDifference(simulated_prediced,base_predicted) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(simulated_prediced-base_predicted,false,false) + ")",
+            "arrow": simulated_prediced > base_predicted ?  'carret-up' : 'carret-down',
+            "color": Utils.colorForDifference(base_predicted , simulated_prediced) 
+        }
+
+    }
+    generateTableularUnits(){
+        return {
+            "units" : this.genrateCellData(1,1),
+            "volume" : this.genrateCellData(1,1),
+            "lsv" : this.genrateCellData(1,1),
+            "nsv" : this.genrateCellData(1,1),
+            "mac_nsv" : this.genrateCellData(1,1),
+            "te" : this.genrateCellData(1,1),
+            "te_lsv" : this.genrateCellData(1,1),
+            "te_unit" : this.genrateCellData(1,1),
+            "roi" : this.genrateCellData(1,1),
+            "lift" : this.genrateCellData(1,1),
+            "asp" : this.genrateCellData(1,1),
+            "promo_asp" : this.genrateCellData(1,1),
+            "rsv_w_o_vat" : this.genrateCellData(1,1),
+            "customer_margin" : this.genrateCellData(1,1),
+            "customer_margin_rsv" : this.genrateCellData(1,1)
+        }
+    }
+
+    generateMock(){
+      
+        return {
+            "All" : this.generateTableularUnits(),
+             "ORBIT OTC" : this.generateTableularUnits(),
+             "ORBIT XXL" : this.generateTableularUnits(),
+             "BIG BARS" : this.generateTableularUnits()
+
+        }
     }
 }

@@ -6,12 +6,21 @@
     <div class="border-b border-marsgray-200">
         <nwn-command-search [hideClose]="true"></nwn-command-search>
     </div>
+   
+    <!-- {{product}} Products
+    <hr>
+    {{retailers}} Retailers -->
     <div class="h-[448px] scrollbar-y bg-white">
         <div>
-            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
-                >Walmart</nwn-command-multiselect
+            <ng-container *ngFor="let retailer of retailers">
+            <nwn-command-multiselect [value] = "retailer.value" [checked]="retailer.checked" [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
+                >{{retailer.value}}</nwn-command-multiselect
             >
-            <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
+            <nwn-command-multiselect *ngFor="let p of product | subFilter : retailer.value" [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
+                >{{p}}</nwn-command-multiselect
+            >
+        </ng-container>
+            <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
                 >Milkyway XXL</nwn-command-multiselect
             >
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
@@ -22,9 +31,9 @@
             >
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
                 >Bounty XXL</nwn-command-multiselect
-            >
+            > -->
         </div>
-        <div>
+        <!-- <div>
             <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
                 >Target</nwn-command-multiselect
             >
@@ -56,7 +65,7 @@
                 [disabled]="true"
                 >Bounty XXL</nwn-command-multiselect
             >
-        </div>
+        </div> -->
     </div>
     <nwn-search-footer [showKeyBoardCtrl]="true" [showAdd]="true" type="primary"></nwn-search-footer>
 </div>

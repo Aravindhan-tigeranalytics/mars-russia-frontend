@@ -1,8 +1,11 @@
 import { Component, Output, EventEmitter, ViewChild, OnInit, Input,SimpleChanges } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { PricingModel } from '@core/models';
+import { ListPromotion, PricingModel } from '@core/models';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
-
+import { ModalService } from '@molecules/modal/modal.service';
+import {PricingService,OptimizerService,} from "@core/services"
+import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery';
 @Component({
     selector: 'nwn-loaded-pricing-scenario-header',
     templateUrl: './loaded-pricing-scenario-header.component.html',
@@ -10,7 +13,10 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 })
 export class LoadedPricingScenarioHeaderComponent implements OnInit {
     selectedIndex!: number;
-    constructor( private formBuilder: FormBuilder,) {
+    constructor( private formBuilder: FormBuilder,
+        private toastr: ToastrService,private pricingService : PricingService ,
+        private modalService: ModalService,
+        private optimizeService : OptimizerService) {
         this.pricingForm = this.formBuilder.group({
             // e.account_name  :new FormGroup({
             products : this.formBuilder.array([])
@@ -36,12 +42,95 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     @Output()
     modalEvent = new EventEmitter<string>();
 
+    @Output()
+    simulateResetEvent = new EventEmitter<any>()
+
+
+    saveScenario($event){
+        if($event['type'] == "saveas"){
+            $event['name']
+            $event['comments']
+            let form = {
+                "name" : $event['name'],
+                "comments" : $event["comments"],
+                'value':this.pricingForm.value
+
+
+            }
+            this.pricingService.savePricingScenario(form).subscribe(data=>{
+                if(data){
+                    this.toastr.success('Scenario Saved Successfully','Success')
+                    this.modalService.close('save-scenario')
+                    let promotion : ListPromotion = {
+                        "id" : data['saved_id'],
+                        "name" : $event['name'],
+                        "comments" : $event['comments'],
+                        "scenario_type" : "pricing",
+                    "meta" : this.getMetaArray(this.pricingForm.value)
+    
+                    }
+                    
+                    console.log(data , "pricing data returnresponse")
+                    console.log(promotion , "saved promotion...")
+
+                    this.optimizeService.addPromotionList(promotion)
+
+                }
+                
+            })
+           
+
+        }
+
+
+    }
+    getMetaArray(pricing_form){
+        let res:any= []
+        pricing_form['products'].forEach(element => {
+            res.push({
+                "retailer" : element.account_name,
+                "product_group" : element.product_group,
+                "pricing" : {
+                    "lpi" : element.inc_list_price,
+                    "rsp" : element.inc_rsp,
+                    "cogs" : element.inc_cogs,
+                    "elasticity" : element.inc_elasticity,
+                }
+            })
+            
+        });
+        return res
+
+        // let res = []
+        // for i
+        // return [{
+        //     "retailer" : '0',
+        //     "product_group" : '0',
+        //     "pricing" : false
+        // }]
+
+    }
+
     sendMessage(modalType: string): void {
         this.modalEvent.emit(modalType);
+    }
+    subProductSelectEvent(event){
+        console.log(event , "sub product event...")
+        this.selected_sub_product = event
+        this.currentProduct = this.selected_main_product + this.selected_sub_product
+        console.log(this.selected_sub_product , "selected sub product")
     }
     selectMainProduct(product){
         this.selected_main_product = product
         console.log(this.selected_main_product , "selected main product...")
+    }
+    onTabChanged(e){
+        this.selected_main_product = this.displayProduct[e.index]
+        this.currentProduct = this.selected_main_product + this.selected_sub_product
+        // console.log(this.displayProduct[e.index] , "display producr") 
+        // e.index
+        console.log(e, "tab event...")
+        console.log(this.selected_main_product)
     }
 
     // sho and hide more action menu
@@ -126,127 +215,72 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     groupPricing(){
         this.unique_retailers = []
 
-        let d={
-            "account_name" : 'lenta',
-            "products" :[{
-                "product_group" : 'orbit otx',
-                // 'list_price' : 9.0
-            },
-        {
-            'product_group' : 'orbit xxl'
-        }]
-        }
-        // {
-        //     'account_name' : e.account_name,
-        //     'products' : [{
-        //         "product_group" : e.product_group,
-        //         "list_price" : Number((e.list_price).toFixed(2)),
-        //         'rsp' : Number((e.retail_median_base_price_w_o_vat).toFixed(2)),
-        //         "cogs" : Number((e.list_price - (e.list_price * e.gmac)).toFixed(2)) ,
-        //         'elasticity' : Number((e.base_price_elasticity).toFixed(2)),
-        //         'net_elasticity':Number((e.net_elasticity).toFixed(2)),
-        //     }]
-        // }
-        let arr:any[] = []
         this.pricingArray.forEach(e=>{
             let arr = this.lenta
             if(arr.length > 0){
-               
-                
-             //    if(arr)
            if(arr.length > 0 && !arr.value.find(d=>(d.product_group === e.product_group) && (d.account_name == e.account_name))){
                
             
             arr.push(
                  this.formBuilder.group({
+                    retailer : [e.account_name + e.product_group],
                     account_name : [e.account_name],
-                     product_group : [e.product_group],
-                     list_price: [0],
-                     cogs: [0],
-                     elasticity : [0],
-                     net_elasticity : [0],
+                    product_group : [e.product_group],
+                    list_price: [Number((e.list_price).toFixed(2))],
+                    inc_list_price : [Number((e.list_price).toFixed(2))],
+                    cogs: [Number(e.cogs).toFixed(2)],
+                    inc_cogs: [Number(e.cogs).toFixed(2)],
+                    elasticity : [Number((e.base_price_elasticity).toFixed(2))],
+                    net_elasticity : [Number((e.net_elasticity).toFixed(2))],
+                    inc_net_elasticity : [Number((e.net_elasticity).toFixed(2))],
+                    inc_elasticity : [Number((e.base_price_elasticity).toFixed(2))],
+                    rsp: [Number((e.retail_median_base_price_w_o_vat).toFixed(2))],
+                    inc_rsp: [Number((e.retail_median_base_price_w_o_vat).toFixed(2))],
+                    follow_competition: [false],
 
                  })
                )
 
            }
                 
-            //  }
-            // if(arr.find(d=>d.account_name == e.account_name)){
-            //     // debugger
-                
-            //    let p =  arr.find(d=>d.account_name == e.account_name)
-            //    if(!p['products'].find(val=>val.product_group == e.product_group)){
-            //     p['products'].push({
-            //         "product_group" : e.product_group,
-            //         "list_price" :Number((e.list_price).toFixed(2)),
-            //             'rsp' : Number((e.retail_median_base_price_w_o_vat).toFixed(2)),
-            //             "cogs" :  Number((e.list_price - (e.list_price * e.gmac)).toFixed(2)) ,
-            //             'elasticity' :  Number((e.base_price_elasticity).toFixed(2)),
-            //             'net_elasticity':Number((e.net_elasticity).toFixed(2)),
-            //     })
-                   
-            //    }
-              
 
             }
             else{
                 this.lenta.push(this.formBuilder.group({
+                    retailer : [e.account_name + e.product_group],
                     account_name : [e.account_name],
                     product_group : [e.product_group],
-                    list_price: [0],
-                    cogs: [0],
-                    elasticity : [0],
-                    net_elasticity : [0],
+                    list_price: [Number((e.list_price).toFixed(2))],
+                    inc_list_price : [Number((e.list_price).toFixed(2))],
+                    cogs: [Number(e.cogs).toFixed(2)],
+                    inc_cogs: [Number(e.cogs).toFixed(2)],
+                    elasticity : [Number((e.base_price_elasticity).toFixed(2))],
+                    net_elasticity : [Number((e.net_elasticity).toFixed(2))],
+                    inc_net_elasticity : [Number((e.net_elasticity).toFixed(2))],
+                    inc_elasticity : [Number((e.base_price_elasticity).toFixed(2))],
+                    rsp: [Number((e.retail_median_base_price_w_o_vat).toFixed(2))],
+                    inc_rsp: [Number((e.retail_median_base_price_w_o_vat).toFixed(2))],
+                    follow_competition: [false],
 
                 }))
-                // this.pricingForm = this.formBuilder.group({
-                //         // e.account_name  :new FormGroup({
-                //         products : this.formBuilder.array([])
-                //     // })
-
-                // })
-                // this.pricingForm.addControl(
-                //     e.account_name  , new FormGroup({
-                //         products : this.formBuilder.array([this.formBuilder.group({
-                //             product_group : [e.product_group],
-                //             list_price: [0],
-                //             cogs: [0],
-                //             elasticity : [0],
-                //             net_elasticity : [0],
-
-                //         })])
-                //     })
-                // )
-                // arr.push({
-                //     'account_name' : e.account_name,
-                //     'products' : [{
-                //         "product_group" : e.product_group,
-                //         "list_price" : Number((e.list_price).toFixed(2)),
-                //         'rsp' : Number((e.retail_median_base_price_w_o_vat).toFixed(2)),
-                //         "cogs" : Number((e.list_price - (e.list_price * e.gmac)).toFixed(2)) ,
-                //         'elasticity' : Number((e.base_price_elasticity).toFixed(2)),
-                //         'net_elasticity':Number((e.net_elasticity).toFixed(2)),
-                //     }]
-                // })
                 
             }
             
         })
-        this.unique_retailers = arr
+       
+        this.unique_retailers = this.lenta.value
+        console.log(this.unique_retailers , "unique retailers/...")
         if(this.unique_retailers.length > 0){
-            this.currentProduct = this.unique_retailers[0]['products'][0]
-            this.formatPrice(this.currentProduct)
-            // this.lpi = first['list_price']
-            // this.rsp = first['rsp']
-            // this.cogs = first['cogs']
-            // this.elasticity = first['elasticity']
-
+            this.currentProduct = this.unique_retailers[0]['retailer']
+            this.selected_main_product = this.unique_retailers[0]['account_name']
+            this.selected_sub_product = this.unique_retailers[0]['product_group']
+            this.currentProduct = this.selected_main_product + this.selected_sub_product
+            
         }
       
         
 
-        console.log(arr , "final array unique")
+        // console.log(arr , "final array unique")
         console.log(this.pricingForm , "pricing form values")
         // console.log)
      
@@ -278,6 +312,13 @@ this.currentProduct = this.unique_retailers[index]['products'].find(d=>d.product
         // this.elasticity = product['elasticity']
 
     }
+    simulatePrice(){
+        this.simulateResetEvent.emit({
+            "type" : 'simulate',
+            'data' : this.pricingForm.value
+        })
+
+    }
     formatPrice(product){
         this.lpi = Number(product['list_price'].toFixed(2));
         this.rsp = Number(product['rsp'].toFixed(2));
@@ -286,11 +327,37 @@ this.currentProduct = this.unique_retailers[index]['products'].find(d=>d.product
         
     }
 
-    ngOnInit() {
+    getTabLength(){
+        // debugger
+        var itemsLength = $(".mat-tab-label").length;
+        var itemSize = $(".mat-tab-label").outerWidth(true);
+        var getMenuSize  = itemsLength * itemSize!
+        var getMenuWrapperSize =  $(".mat-tab-label-container").outerWidth();
+        if(getMenuSize > getMenuWrapperSize!){
+            $(".mat-tab-header-pagination").css('display' , 'flex')
+        }
+        else{
+            $(".mat-tab-header-pagination").css('display' , 'none')
+        }
+        
 
-        this.pricingForm.valueChanges.subscribe(data=>{
-            console.log(data , "values changes form prcing form....")
-        })
+        // mat-tab-header-pagination-chevron
+        // mat-tab-header-pagination-chevron
+        console.log(getMenuWrapperSize , "menu wrapper ")
+        console.log(getMenuSize , "get menu size...")
+    }
+    ngAfterViewInit() {
+        this.getTabLength()
+        
+    }
+
+    ngOnInit() {
+        
+        
+
+        // this.pricingForm.valueChanges.subscribe(data=>{
+        //     console.log(data , "values changes form prcing form....")
+        // })
     }
     ngOnChanges(changes : SimpleChanges) :void{
         for (let property in changes) {
