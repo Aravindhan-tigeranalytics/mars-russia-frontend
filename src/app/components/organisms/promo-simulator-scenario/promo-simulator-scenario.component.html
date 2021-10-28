@@ -34,19 +34,19 @@
         <div *ngIf="promotion_viewed?.meta.pricing" class="grid grid-cols-2">
             <div>
                 <nwn-metric-item-popup>
-                    <p metricPopHead>{{promotion_viewed?.meta?.pricing?.lpi | number : '1.2-2' }} ₽</p>
+                    <p metricPopHead>{{promotion_viewed?.meta?.pricing?.lpi | number : '1.2-2' }} {{symbol}}</p>
                     <p metricPopContent>List price (simulated)</p>
                 </nwn-metric-item-popup>
             </div>
             <div>
                 <nwn-metric-item-popup>
-                    <p metricPopHead>{{promotion_viewed?.meta?.pricing?.rsp | number : '1.2-2'}} ₽</p>
+                    <p metricPopHead>{{promotion_viewed?.meta?.pricing?.rsp | number : '1.2-2'}} {{symbol}}</p>
                     <p metricPopContent>RSP w/o VAT (simulated)</p>
                 </nwn-metric-item-popup>
             </div>
             <div>
                 <nwn-metric-item-popup>
-                    <p metricPopHead>{{promotion_viewed?.meta?.pricing?.cogs | number : '1.2-2'}} ₽</p>
+                    <p metricPopHead>{{promotion_viewed?.meta?.pricing?.cogs | number : '1.2-2'}} {{symbol}}</p>
                     <p metricPopContent>COGS (simulated)</p>
                 </nwn-metric-item-popup>
             </div>
@@ -79,19 +79,19 @@
         <div *ngIf="meta.pricing" class="grid grid-cols-2">
             <div>
                 <nwn-metric-item-popup>
-                    <p metricPopHead>{{meta.pricing?.lpi | number : '1.2-2'}} ₽</p>
+                    <p metricPopHead>{{meta.pricing?.lpi | number : '1.2-2'}} {{symbol}}</p>
                     <p metricPopContent>List price (simulated)</p>
                 </nwn-metric-item-popup>
             </div>
             <div>
                 <nwn-metric-item-popup>
-                    <p metricPopHead>{{meta.pricing?.rsp | number : '1.2-2'}} ₽</p>
+                    <p metricPopHead>{{meta.pricing?.rsp | number : '1.2-2'}} {{symbol}}</p>
                     <p metricPopContent>RSP w/o VAT (simulated)</p>
                 </nwn-metric-item-popup>
             </div>
             <div>
                 <nwn-metric-item-popup>
-                    <p metricPopHead>{{meta.pricing?.cogs| number : '1.2-2'}} ₽</p>
+                    <p metricPopHead>{{meta.pricing?.cogs| number : '1.2-2'}} {{symbol}}</p>
                     <p metricPopContent>COGS (simulated)</p>
                 </nwn-metric-item-popup>
             </div>

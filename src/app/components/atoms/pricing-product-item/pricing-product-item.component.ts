@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,Output , EventEmitter } from '@angular/core';
+// import { timeStamp } from 'console';
 
 @Component({
     selector: 'nwn-pricing-product-item',
@@ -12,4 +13,12 @@ export class PricingProductItemComponent {
     size: 'sfi' = 'sfi';
     @Input()
     showClose: boolean = false;
+
+    @Output()
+    closeClickedEvent = new EventEmitter()
+
+    closeClicked($event){
+        this.closeClickedEvent.emit($event)
+
+    }
 }

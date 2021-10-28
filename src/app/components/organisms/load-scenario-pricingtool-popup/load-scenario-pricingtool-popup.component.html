@@ -10,7 +10,7 @@
         <div
             class="border border-marsgray-300 cursor-pointer"
             *ngFor="let loadPricingSimulatorItem of list_promotion; let i = index"
-            (click)="select(i)"
+            (click)="select(i,loadPricingSimulatorItem)"
             [ngClass]="{ active: selectedIndex == i }"
         >
             <nwn-scenario-load-card [showInfo]="true">
@@ -19,5 +19,5 @@
             </nwn-scenario-load-card>
         </div>
     </div>
-    <nwn-search-footer [showKeyBoardCtrl]="true" [showLoad]="true"></nwn-search-footer>
+    <nwn-search-footer (click) = "loadScenario()" [showKeyBoardCtrl]="true" [showLoad]="true"></nwn-search-footer>
 </div>

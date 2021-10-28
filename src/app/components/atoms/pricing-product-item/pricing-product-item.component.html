@@ -12,6 +12,6 @@
         <ng-content></ng-content>
     </p>
     <nwn-button type="icon" size="no-size" class="leading-0" [ngClass]="{ hidden: showClose == false }">
-        <nwn-svg-icon size="md" nwnSvgIcon="close"></nwn-svg-icon>
+        <nwn-svg-icon (click) = "closeClicked($event)" size="md" nwnSvgIcon="close"></nwn-svg-icon>
     </nwn-button>
 </div>

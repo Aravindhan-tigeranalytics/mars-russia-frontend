@@ -20,8 +20,9 @@ input::-webkit-inner-spin-button {
     bg-marsgray-50
     text-center;
     font-size: 18px;
-    text-align: center!important
+    text-align: center!important;
     /* border-radius: 5px; */
+    height : 2rem;
 }
 .disabledInput {
     @apply text-title-medium text-marsgray-700
@@ -132,10 +133,49 @@ input::-webkit-inner-spin-button {
   
   .input-icon-right > input {
     padding-left: 0;
-    padding-right: 25px;
-    text-align: right;
+    padding-right: 10px;
+    text-align: center;
   }  
 
   .border-l{
       border-left-width: 1px;
+  }
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    /* border-bottom: 1px dotted black; If you want dots under the hoverable text */
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: grey;
+    /* rgba(255, 255, 255, var(--tw-bg-opacity)) */
+    color: black;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+  }
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent grey transparent;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
   }

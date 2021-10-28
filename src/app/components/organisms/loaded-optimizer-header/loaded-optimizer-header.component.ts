@@ -369,17 +369,18 @@ this.checkboxMetrices.find(d=>{
     }
     optimizeReset(type){
         if(type=="optimize"){
+            let form = this.optimizerData()
+           
+
+            if(this.info_promotion.scenario_type == "pricing"){
+                form = {...this.optimizerData() , ...{"pricing" : this.info_promotion.meta[0].pricing}}
+
+            }
             this.optimizeAndResetEvent.emit({
                 "type" : 'optimize',
-                'data' : this.optimizerData()
+                'data' : form
             })
-            // this.isExpand = true
-            // this.modalEvent.emit('Optimize');
-            // if(modalType == 'Optimize'){
-            //     this.isExpand = true
-    
-            // }
-            // this.modalEvent.emit(modalType);
+            
         }
         if(type == 'reset'){
             this.optimizeAndResetEvent.emit({
@@ -409,6 +410,7 @@ this.checkboxMetrices.find(d=>{
         return ret
     }
     optimizerData(){
+    console.log(this.info_promotion , "info promotions....")
        let decoded =  this.selected_promotions.map(d=>Utils.decodePromotion(d))
 
        console.log(this.checkboxMetrices, "check box metrices")
@@ -461,7 +463,7 @@ this.checkboxMetrices.find(d=>{
             "config_rp_perc" : rp_rsv != 1,
             "param_rp_perc" : rp_rsv , 
             "param_compulsory_no_promo_weeks" : this.ignored_week_val.map(d=>d.week),
-            "param_compulsory_promo_weeks" : this.cumpulsory_week_val.map(d=>d.week)
+            "param_compulsory_promo_weeks" : this.cumpulsory_week_val.map(d=>d.week),
         }
     }
 

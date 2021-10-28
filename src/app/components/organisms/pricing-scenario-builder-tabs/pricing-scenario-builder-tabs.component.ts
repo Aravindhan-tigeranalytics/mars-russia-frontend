@@ -1,7 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { PriceSimulated } from '@core/models';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Output,EventEmitter } from '@angular/core';
+import { CheckboxModel, HierarchyCheckBoxModel, PriceSimulated } from '@core/models';
 import {PricingService} from "@core/services"
 import  * as Utils from "@core/utils"
+import { timeStamp } from 'console';
+import { retry } from 'rxjs/operators';
 
 @Component({
     selector: 'nwn-pricing-scenario-builder-tabs',
@@ -11,6 +13,9 @@ import  * as Utils from "@core/utils"
 export class PricingScenarioBuilderTabsComponent implements OnInit {
     translate_y: string = '';
     currentTranslateRate: string = '';
+    format = "absolute"
+    abs_selected:string = "selected"
+    per_selected:string = "unselected"
     constructor(private elRef: ElementRef , private pricingService : PricingService) {}
 
     public weeklyTableWidth: any;
@@ -19,6 +24,7 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
     baselineLiftChartData:any = []
     plChartData:any = []
     units:any
+    inc_units:any
     lsv:any
     nsv:any
     cogs:any
@@ -27,6 +33,11 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
     cutomer_margin :any
     trade_expense :any
     tabular_data :any = null as any
+    hierarchy_model:HierarchyCheckBoxModel[] = []
+    price_simulated : PriceSimulated
+    
+    @Output()
+    modalEvent = new EventEmitter()
 
     ngOnInit(): void {
         this.weeklyTableWidth = window.innerWidth - 155;
@@ -36,7 +47,9 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
         this.pricingService.getPricingSimulatedObservable().subscribe(data=>{
             if(data){
                 console.log(data , "priing simulated")
-                this.generateGraphTableData(data)
+                this.price_simulated = data
+                this.generateGraphTableData(this.price_simulated)
+                this.genrateHierachy()
 
             }
             else{
@@ -44,13 +57,189 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
 
             }
         })
-        this.baselineLiftChartData = [
-            {
-                group: 'Sales Units',
-                baseline1: [10, 20],
-                baseline2: [15,  13],
-            },
-        ];
+       
+    }
+    filterApply($event){
+
+        
+        
+
+
+// debugger
+let selected:any =  [].concat.apply([],
+    this.hierarchy_model.filter(d=>d.checked).map(
+    d=>d.child.filter(d=>d.checked).map(
+        d=>(
+            {"retailer" : (d.id as string).split(d.value)[0] , "product" : d.value}
+            )
+        ) 
+        ) as any[]
+)
+      
+console.log(selected , "selected....")
+// debugger
+let filtered :PriceSimulated = {"base" : [] , "simulated" : []};
+
+filtered['base'] = this.price_simulated.base.filter(d=>selected.filter(s=>(s.retailer == d.account_name) && (s.product == d.product)).length > 0)
+// this.price_simulated.base.filter(d=>selected.includes(s=>(s.retailer == d.account_name) && (s.product == d.product)))
+// this.price_simulated.base.filter(d=>selected.includes(s=>(s.retailer == d.account_name) && (s.product == d.product)))
+filtered['simulated']  = this.price_simulated.simulated.filter(d=>selected.filter(s=>(s.retailer == d.account_name) && (s.product == d.product)).length > 0)
+// this.price_simulated.simulated.filter(d=>selected.includes(s=>(s.retailer == d.account_name) && (s.product == d.product)))
+// this.hierarchy_model.filter(d=>d.checked)
+        // this.hierarchy_model.filter(d=>d.checked)
+        // this.price_simulated.base.forEach((d,i)=>{
+
+        //     this.price_simulated.base[i].account_name
+
+        // })
+        // let filtered:PriceSimulated = this.price_simulated.base.filter()
+
+        console.log(filtered , "filteed data ...")
+
+        this.generateGraphTableData(filtered)
+        this.modalEvent.emit({
+            "type" : "close",
+            "id" : "summary-aggregate"
+        })
+
+    }
+
+    _applyAll($event : HierarchyCheckBoxModel){
+         
+        this.hierarchy_model.forEach(d=>{
+            d.checked = $event.checked
+            d.child.forEach(v=>{
+                v.checked = $event.checked
+            })
+        })
+        console.log(this.hierarchy_model , "apply alll methd")
+    }
+
+    _checkIfAllChildFalse(childern : CheckboxModel[]){
+        // debugger
+        let ret = true
+
+        childern.forEach(d=>{
+            console.log(d.checked , "checked d")
+            ret = d.checked
+            if(d.checked){
+                return
+            }
+             
+             console.log(ret , "setting retur n in llop")
+        })
+        console.log(ret , "return value")
+        return ret
+
+    }
+
+     
+    hierarchyProductChange($event){
+        console.log($event , "hiererachy change event in tabs starting")
+        console.log(this.hierarchy_model , "starting")
+         
+        if('product' in $event){  
+            
+            if($event.product.checked){
+                let hier = this.hierarchy_model.filter(d=>d.value == $event.retailer.value)[0]
+                hier.child.filter(d=>d.value == $event.product.value)[0].checked = true
+                if(this._checkIfAllChildFalse(hier.child)){
+                    // hier.checked = true
+
+                }
+                else{
+                    // hier.checked = false
+                }
+            }
+            else{
+                let hier = this.hierarchy_model.filter(d=>d.value == $event.retailer.value)[0]
+                hier.child.filter(d=>d.value == $event.product.value)[0].checked = false
+                if(this._checkIfAllChildFalse(hier.child)){
+                    // hier.checked = true
+
+                }
+                else{
+                    // hier.checked = false
+                }
+                
+
+
+            }
+
+        }
+        else{  
+            if($event.value == "All"){
+                this._applyAll($event)
+            }
+            else{
+                let hier = this.hierarchy_model.filter(d=>d.value == $event.value)[0]
+                hier.checked = $event.checked
+                // if(!$event.checked){
+                    hier.child.forEach(v=>{
+                        v.checked = $event.checked
+                    })
+
+
+                // }
+            }
+            
+            
+            
+            
+        }
+        console.log($event , "hiererachy change event in tabs ending")
+        console.log(this.hierarchy_model , "ending")
+
+
+    }
+    genrateHierachy(){ 
+        this.hierarchy_model = []
+        this.hierarchy_model.push({"value" : "All" , "checked" : true,"child" : []})
+        this.price_simulated.base.forEach(d=>{
+            let hmodel = this.hierarchy_model.find(v=>v.value == d.account_name)
+            if(hmodel){
+                if(!hmodel.child.find(hm=>hm.value ==  d.product)){
+                    hmodel.child.push({
+                        "id" : d.account_name + d.product,
+                        
+                        "value" : d.product,
+                        "checked" : true,
+                    })
+
+                }
+                
+
+            }
+            else{
+                this.hierarchy_model.push({
+                    "value" : d.account_name,
+                    "checked" : true,
+                   
+                    "child" :[{
+                        "id" : d.account_name + d.product,
+                        "value" : d.product,
+                        "checked" : true
+                    }]
+                })
+
+            }
+       
+
+        })
+        
+        console.log(this.hierarchy_model , "hierarchy model in tabs")
+
+        // this.hierarchy_model.push(
+        //     {...d , ...{"child" : products.filter(p=>p.account_name == d.value)
+        //     .map(m=>({"value" : m.product_group , "checked" : false,"id" : m.id}))}})
+
+    }
+    openModal(modal){
+        this.modalEvent.emit({
+            "type" : "open",
+            "id" : modal
+        })
+
     }
     genrate_table(data:PriceSimulated){
         let table_data = {
@@ -175,6 +364,124 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
         return table_data
        
     }
+    toggleAbsolute(type){
+        if(type == "abs"){
+            this.abs_selected = "selected"
+            this.per_selected = "unselected"
+            this.format = "absolute"
+                    }
+                    else{
+                        this.per_selected = "selected"
+            this.abs_selected = "unselected"
+            this.format = "percent"
+                        
+                    }
+    }
+
+    selectionChanged($event:any){
+        console.log($event , "selection evet")
+        console.log(this.tabular_data , "tabular ata ")
+        // {
+        //     _id: 'totalvalue',
+        //     index: 0,
+        //     name: 'Total value',
+        // },
+        // {
+        //     _id: 'perton',
+        //     index: 1,
+        //     name: 'Per ton',
+        // },
+        // {
+        //     _id: 'perunit',
+        //     index: 1,
+        //     name: 'Per unit',
+        // },
+
+        // "base" : base_predicted,
+        // "simulated" : simulated_prediced,
+        // "converted_base": Utils.formatNumber(base_predicted,false,false),
+        // "converted_simulated": Utils.formatNumber(simulated_prediced,false,false),
+        // "percent": "(" + Utils.percentageDifference(simulated_prediced,base_predicted) + "%)",
+        // "converted_difference": "(" + Utils.formatNumber(simulated_prediced-base_predicted,false,false) + ")",
+        // "arrow": simulated_prediced > base_predicted ?  'carret-up' : 'carret-down',
+        // "color": Utils.colorForDifference(base_predicted , simulated_prediced) 
+        if($event.value._id == "perton"){
+
+            for (let key in this.tabular_data) {
+                ['te' , 'rsv_w_o_vat','customer_margin','lsv','nsv'].forEach(metric=>{
+
+                    let keytonbase = this.tabular_data[key][metric]['base']/this.tabular_data[key]['volume']['base']
+                    let keytonsim = this.tabular_data[key][metric]['simulated']/this.tabular_data[key]['volume']['simulated']
+                    let diff = keytonsim - keytonbase
+                    
+                    
+                    // debugger
+                   this.tabular_data[key][metric]["converted_base"] = Utils.formatNumber(keytonbase,false,false)
+                   this.tabular_data[key][metric]["converted_simulated"] = Utils.formatNumber(keytonsim,false,false)
+                   this.tabular_data[key][metric]["converted_difference"] = "(" + Utils.formatNumber(diff,false,false) + ")"
+                //    this.tabular_data[key]['te']["converted_simulated"] = Utils.formatNumber(keytonsim,false,false)
+
+                })
+                
+               
+            //    table_data[key]['te']
+            }
+            // this.tabular_data
+            console.log(this.tabular_data , "tabular data ")
+            
+        }
+        else if($event.value._id == "perunit"){
+            // [this.trade_expense].forEach(data=>{
+            //    console.log(data , "perunit")
+
+            // })
+            for (let key in this.tabular_data) {
+                ['te' , 'rsv_w_o_vat','customer_margin','lsv','nsv'].forEach(metric=>{
+                
+                let keytonbase = this.tabular_data[key][metric]['base']/this.tabular_data[key]['units']['base']
+                let keytonsim = this.tabular_data[key][metric]['simulated']/this.tabular_data[key]['units']['simulated']
+                let diff = keytonsim - keytonbase
+                
+                
+                // debugger
+               this.tabular_data[key][metric]["converted_base"] = Utils.formatNumber(keytonbase,false,false)
+               this.tabular_data[key][metric]["converted_simulated"] = Utils.formatNumber(keytonsim,false,false)
+               this.tabular_data[key][metric]["converted_difference"] = "(" + Utils.formatNumber(diff,false,false) + ")"
+            //    this.tabular_data[key]['te']["converted_simulated"] = Utils.formatNumber(keytonsim,false,false)
+            //    table_data[key]['te']
+            })
+        }
+            // this.tabular_data
+            console.log(this.tabular_data , "tabular data ")
+            
+        }
+        else{
+            for (let key in this.tabular_data) {
+                ['te' , 'rsv_w_o_vat','customer_margin','lsv','nsv'].forEach(metric=>{
+                
+                let keytonbase = this.tabular_data[key][metric]['base'] 
+                let keytonsim = this.tabular_data[key][metric]['simulated']
+                let diff = keytonsim - keytonbase
+                
+                
+                // debugger
+               this.tabular_data[key][metric]["converted_base"] = Utils.formatNumber(keytonbase,false,false)
+               this.tabular_data[key][metric]["converted_simulated"] = Utils.formatNumber(keytonsim,false,false)
+               this.tabular_data[key][metric]["converted_difference"] = "(" + Utils.formatNumber(diff,false,false) + ")"
+            //    this.tabular_data[key]['te']["converted_simulated"] = Utils.formatNumber(keytonsim,false,false)
+            //    table_data[key]['te']
+            })
+        }
+            // [this.trade_expense].forEach(data=>{
+            //      console.log(data , "totalvalue")
+ 
+            //  })
+             
+
+        }
+        
+
+    }
 
     generateGraphTableData(data : PriceSimulated){
         this.tabular_data = this.genrate_table(data)
@@ -220,20 +527,36 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
             { group: 'COGS', base: cogs_base ,  simulated: cogs_sim },
             { group: 'MAC', base: mac_base, simulated:mac_sim},
         ]
+        this.baselineLiftChartData = [
+            {
+                group: 'Sales Units',
+                baseline1: [base_predicted, inc_base],
+                baseline2: [simulated_prediced,  inc_sim],
+            },
+        ];
 
-        this.baselineLiftChartData = this.baselineLiftChartData.map(a=>{
-            var ret = {...a}
-            ret.baseline1 = [base_predicted,inc_base] ,
-            ret.baseline2  = [simulated_prediced,inc_sim]
-            return ret
-        })
+        // this.baselineLiftChartData = this.baselineLiftChartData.map(a=>{
+        //     var ret = {...a}
+        //     ret.baseline1 = [base_predicted,inc_base] ,
+        //     ret.baseline2  = [simulated_prediced,inc_sim]
+        //     return ret
+        // })
         this.units = {
+            // "base"
             "converted_base": Utils.formatNumber(base_predicted,false,false),
             "converted_simulated": Utils.formatNumber(simulated_prediced,false,false),
             "percent": "(" + Utils.percentageDifference(simulated_prediced,base_predicted) + "%)",
             "converted_difference": "(" + Utils.formatNumber(simulated_prediced-base_predicted,false,false) + ")",
             "arrow": simulated_prediced > base_predicted ?  'carret-up' : 'carret-down',
             "color": Utils.colorForDifference(base_predicted , simulated_prediced) 
+        }
+        this.inc_units = {
+            "converted_base": Utils.formatNumber(inc_base,false,false),
+            "converted_simulated": Utils.formatNumber(inc_sim,false,false),
+            "percent": "(" + Utils.percentageDifference(inc_sim,inc_base) + "%)",
+            "converted_difference": "(" + Utils.formatNumber(inc_sim-inc_base,false,false) + ")",
+            "arrow": inc_sim > inc_base ?  'carret-up' : 'carret-down',
+            "color":Utils.colorForDifference(inc_base , inc_sim)
         }
         this.lsv = {
             "converted_base": Utils.formatNumber(lsv_base,false,false),
@@ -244,6 +567,8 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
             "color": Utils.colorForDifference(lsv_base , lsv_sim) 
         }
         this.trade_expense = {
+            "base" : te_base,
+            "simulated" : te_sim,
             "converted_base": Utils.formatNumber(te_base,false,false),
             "converted_simulated": Utils.formatNumber(te_sim,false,false),
             "percent": "(" + Utils.percentageDifference(te_sim,te_base) + "%)",
@@ -293,8 +618,8 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
         }
         
 
-        console.log(this.plChartData , "plchatdata....")
-        console.log(this.baselineLiftChartData , "baselinechart after simulated")
+        // console.log(this.plChartData , "plchatdata....")
+        // console.log(this.baselineLiftChartData , "baselinechart after simulated")
 
       
     }
@@ -379,7 +704,7 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
             name: 'Per ton',
         },
         {
-            _id: 'oerunit',
+            _id: 'perunit',
             index: 1,
             name: 'Per unit',
         },
@@ -392,6 +717,8 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
     genrateCellData(base_predicted ,simulated_prediced ){
          
         return  {
+            "base" : base_predicted,
+            "simulated" : simulated_prediced,
             "converted_base": Utils.formatNumber(base_predicted,false,false),
             "converted_simulated": Utils.formatNumber(simulated_prediced,false,false),
             "percent": "(" + Utils.percentageDifference(simulated_prediced,base_predicted) + "%)",

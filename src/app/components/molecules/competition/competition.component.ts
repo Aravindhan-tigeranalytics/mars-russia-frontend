@@ -39,9 +39,13 @@ export class CompetitionComponent implements ControlValueAccessor{
 
   
   toggle($event){
-    // this.toggleEvent.emit($event)
-    this.onChange($event.checked)
     console.log($event , "toggle event...")
+    console.log(this.follow_competition , "before..")
+    // this.toggleEvent.emit($event)
+    this.follow_competition = $event.checked
+    this.onChange(this.follow_competition)
+    console.log(this.follow_competition , "after ")
+   
   }
 
 }

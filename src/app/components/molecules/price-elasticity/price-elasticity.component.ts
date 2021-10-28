@@ -18,8 +18,10 @@ import { ControlValueAccessor,NG_VALUE_ACCESSOR, } from '@angular/forms'
 export class PriceElasticityComponent implements ControlValueAccessor  {
     constructor() {}
 
+    @Input() showBase = true
+
     @Input()
-    counter = 0;
+    counter:number = 0;
     @Input()
     base = 0
 
@@ -29,8 +31,11 @@ export class PriceElasticityComponent implements ControlValueAccessor  {
 
 
     increment() {
+      console.log("increment clicked")
+      console.log(this.counter , "counter values...")
         this.counter++;
         this.counter = Number((this.counter).toFixed(2))
+        console.log(this.counter)
         this.onChange(this.counter)
     }
 
@@ -40,11 +45,18 @@ export class PriceElasticityComponent implements ControlValueAccessor  {
         this.onChange(this.counter)
     }
     writeValue(quantity: number) {
+      
+      // console.log("priceelasticitycomponentwritevalue" , quantity)
         this.counter = quantity;
+        // console.log("priceelasticitycomponentwritevalueccc" , this.counter)
+
       }
     
       registerOnChange(onChange: any) {
         this.onChange = onChange;
+        // if (this.counter == null) {
+        //   this.onChange(0);
+        //  }
       }
     
       registerOnTouched(onTouched: any) {

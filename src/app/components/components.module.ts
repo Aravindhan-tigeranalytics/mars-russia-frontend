@@ -12,6 +12,8 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatTreeModule} from "@angular/material/tree"
+import {MatExpansionModule} from '@angular/material/expansion';
 
 // Datepicker
 import { DpDatePickerModule } from 'ng2-date-picker';
@@ -155,6 +157,11 @@ import { SubTabsComponent } from './molecules/sub-tabs/sub-tabs.component';
 
 // Scrollable Directive
 import { ScrollableDirective } from './molecules/sub-tabs/scrollable.directive';
+import {PricingMetricInputComponent} from "./molecules/pricing-metric-input/pricing-metric-input.component"
+import {ApplyAllPopupComponent} from "./molecules/apply-all-popup/apply-all-popup.component"
+import {PricingMetricIpComponent} from "./molecules/pricing-metric-ip/pricing-metric-ip.component"
+import {MatNativeDateModule} from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -163,8 +170,13 @@ import { ScrollableDirective } from './molecules/sub-tabs/scrollable.directive';
         SelectDropDownModule,
         DragDropModule,
         MatDatepickerModule,
+    MatNativeDateModule,
         MatFormFieldModule,
+        MatInputModule,
+        MatTreeModule,
+        MatExpansionModule,
         DpDatePickerModule,
+        // MyDatePickerModule,
         MatTabsModule,
     ],
     declarations: [
@@ -296,6 +308,9 @@ import { ScrollableDirective } from './molecules/sub-tabs/scrollable.directive';
         CalendarComponent,
         GraphicalSummaryDropdownComponent,
         SubTabsComponent,
+        PricingMetricInputComponent,
+        PricingMetricIpComponent,
+        ApplyAllPopupComponent
     ],
     exports: [
         ButtonComponent,
@@ -420,8 +435,15 @@ import { ScrollableDirective } from './molecules/sub-tabs/scrollable.directive';
         AddNewPricingtoolPopupComponent,
         ProductTabsComponent,
         DpDatePickerModule,
+        MatDatepickerModule,
+       MatNativeDateModule,
+       MatInputModule,
+       MatFormFieldModule,
+
+        // MyDatePickerModule,
         CalendarComponent,
         MatTabsModule,
+        ApplyAllPopupComponent
     ],
 })
 export class ComponentModule {}

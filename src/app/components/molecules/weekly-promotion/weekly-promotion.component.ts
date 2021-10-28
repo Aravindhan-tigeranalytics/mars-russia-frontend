@@ -61,7 +61,7 @@ export class WeeklyPromotionComponent implements OnInit {
             // else{
             //     this.type = 'default'
             // }
-            console.log(changes , "updated value promotion map")
+            // console.log(changes , "updated value promotion map")
             
         }
      

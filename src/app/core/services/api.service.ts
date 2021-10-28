@@ -36,9 +36,14 @@ export class ApiService {
   }
 
   put(path: string, body: Object = {}): Observable<any> {
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ' + localStorage.getItem('token')
+   });
     return this.http.put(
       `${this.api_path}${path}`,
-      JSON.stringify(body)
+      JSON.stringify(body),
+      { headers: reqHeader},
     ).pipe(catchError(this.formatErrors));
   }
 

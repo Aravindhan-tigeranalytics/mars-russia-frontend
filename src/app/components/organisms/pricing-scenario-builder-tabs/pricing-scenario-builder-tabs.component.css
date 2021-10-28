@@ -106,3 +106,7 @@
 ::ng-deep .tabular-select-dropdown .ngx-dropdown-container .ngx-dropdown-list-container .search-container {
     @apply hidden !important;
 }
+
+.tabular-select-dropdown{
+    flex:auto
+}

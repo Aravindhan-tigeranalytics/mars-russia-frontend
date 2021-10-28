@@ -1,4 +1,4 @@
-<div class="bg-marsgray-100 px-12">
+<div  class="bg-marsgray-100 px-12">
     <div class="flex flex-row items-center justify-between border-b border-gray-300 py-2">
         <div class="flex flex-row flex-wrap content-start items-center justify-start">
             <div class="mr-2 mb-2">
@@ -7,7 +7,9 @@
                     nwnSvgIcon="retailers"
                     [hideClose]="true"
                     (click)="sendMessage('filter-retailer')"
-                    >Retailers</nwn-filter-item
+                    >
+                    <span *ngIf="count_ret.retailers"> ({{count_ret.retailers}})</span> Retailers
+                    </nwn-filter-item
                 >
             </div>
             <div class="mr-2 mb-2">
@@ -51,18 +53,26 @@
                     type="stroke"
                     nwnSvgIcon="product-groups"
                     [hideClose]="true"
-                    (click)="sendMessage('filter-product-groups')"
-                    >Product groups</nwn-filter-item
+                    (click)="sendMessage('addnew-pricngtool')" 
+                    >
+                    
+                    <span *ngIf="count_ret.products"> ({{count_ret.products}})</span>
+                    Product groups</nwn-filter-item
                 >
+                <!-- (click)="sendMessage('filter-product-groups')" -->
             </div>
         </div>
         <div>
-            <nwn-loaded-scenarioitem title="Untitled scenario" subtitle="Pricing scenario"></nwn-loaded-scenarioitem>
+            
+            <nwn-loaded-scenarioitem *ngIf="!chosen_promotion" title="Untitled" subtitle="Pricing scenario"></nwn-loaded-scenarioitem>
+            <nwn-loaded-scenarioitem  *ngIf="chosen_promotion" [title]="chosen_promotion.name" subtitle="Pricing scenario"></nwn-loaded-scenarioitem>
         </div>
     </div>
-
-    <div id="close-expand-header" class="flex flex-col translate-x-1" *ngIf="isExpand">
-        <div class="flex flex-col border-b border-gray-300">
+<ng-container *ngIf="displayProduct.length > 0">
+    <div style="max-height: 425px;overflow-y: auto;" id="close-expand-header"   class="flex flex-col translate-x-1" >
+        <!--  overflow-y: auto; -->
+        <!-- *ngIf="isExpand" -->
+        <div *ngIf="treemode"  class="flex flex-col border-b border-gray-300">
             <form [formGroup]="pricingForm"> 
             <div class="flex flex-row items-start space-x-2 width-of-tab">
                 <div class="py-4">
@@ -70,84 +80,48 @@
                         <nwn-svg-icon type="stroke" nwnSvgIcon="plus" size="lg"></nwn-svg-icon>
                     </nwn-button>
                 </div>
-                <mat-tab-group [disableRipple]="true" class="flex flex-col py-4 w-full">
-                    <!-- (selectedTabChange)="onTabChanged($event);"  *ngIf="displayProduct.length > 0"   -->
+                <mat-tab-group (selectedTabChange)="onTabChanged($event);"  *ngIf="displayProduct.length > 0" [disableRipple]="true" class="flex flex-col py-4 w-full">
+                    <!--    -->
 
-                    <!-- <mat-tab *ngFor="let product of displayProduct" id="main-tab" label="{{product}}">
+                    <mat-tab *ngFor="let product of displayProduct" id="main-tab" >
+
+                        <ng-template mat-tab-label>
+                            <div class="flex flex-row">
+                                {{product}}
+                            <nwn-button style="align-self:center;padding-left:3px" type="icon" size="no-size" class="leading-0" [ngClass]="{ hidden: showClose == false }">
+                                <nwn-svg-icon size="md" nwnSvgIcon="close" 
+                                (click)="$event.stopPropagation();removeRetailer(product)"></nwn-svg-icon>
+                            </nwn-button>
+                            </div>
+                             
+                            
+                          </ng-template>
         
-                        <nwn-sub-tabs (subProductSelectEvent)="subProductSelectEvent($event)" [products]="pricingForm.get('products').value | subFilter : product"></nwn-sub-tabs>
+                        <nwn-sub-tabs (removeProductEvent)="removeProductEvent($event , product)" (subProductSelectEvent)="subProductSelectEvent($event)" [products]="pricingForm.get('products').value | subFilter : product"></nwn-sub-tabs>
                        
-                    </mat-tab> -->
-                    <mat-tab id="main-tab" label="Walmart">
-                        <nwn-sub-tabs></nwn-sub-tabs>
                     </mat-tab>
-                    <mat-tab label="Target">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Kohl’s">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Home Depot">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Publix">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Dollar Tree">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Costco">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab id="main-tab" label="Walmart">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Target">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Kohl’s">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <!-- <mat-tab label="Home Depot">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Publix">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Dollar Tree">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Costco">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab id="main-tab" label="Walmart">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Target">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Kohl’s">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Home Depot">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Publix">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Dollar Tree">
-                        <nwn-sub-tabs></nwn-sub-tabs>
-                    </mat-tab>
-                    <mat-tab label="Costco">
+                    <!-- <mat-tab *ngFor="let f of ret" id="main-tab" >
+                         
+                        <ng-template mat-tab-label>
+                            <div class="flex flex-row">
+                                {{f}}
+                            <nwn-button style="align-self:center;padding-left:3px" type="icon" size="no-size" class="leading-0" [ngClass]="{ hidden: showClose == false }">
+                                <nwn-svg-icon size="md" nwnSvgIcon="close"></nwn-svg-icon>
+                            </nwn-button>
+                            </div>
+                             
+                            
+                          </ng-template>
                         <nwn-sub-tabs></nwn-sub-tabs>
                     </mat-tab> -->
+                    <!--   -->
                 </mat-tab-group>
             </div>
             <!-- {{pricingForm.controls}}   -->
             <!-- <div *ngIf="(pricingForm.values | json) != '{}'"> -->
                 <!-- {{pricingForm.controls  | keyvalue}}  -->
             <!-- </div> -->
-            <div class="flex flex-row flex-wrap justify-between items-end pb-4">
+            <div class="flex flex-row justify-between items-end border-b  pb-4">
                 <!-- add snippets here -->
                 <!-- <div formArrayName="products" *ngFor="let item of pricingForm.get('products')['controls']; let i = index;">
                     <ng-container *ngIf="pricingForm.controls.products.controls[i].controls.retailer.value  === currentProduct">
@@ -160,33 +134,108 @@
     </ng-container>
     </div> -->
 
-    <div class="flex flex-row flex-wrap items-end">
+    <!-- <div class="flex flex-row flex-wrap items-end"> -->
         <ng-container formArrayName="products" *ngFor="let item of pricingForm.get('products')['controls']; let i = index;">
         <ng-container *ngIf="pricingForm.controls.products.controls[i].controls.retailer.value  === currentProduct">
             <ng-container [formGroupName]="i">
-        <div class="mr-12">
-            <nwn-pricing-metric [base] = "item.controls.list_price.value"  formControlName="inc_list_price"></nwn-pricing-metric>
+        <div class="mr-3 border-r">
+            <nwn-pricing-metric [base] = "item.controls.list_price.value"  formControlName="inc_list_price">
+                <dp-date-picker formControlName="list_price_date" mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+            </nwn-pricing-metric>
         </div>
-        <div class="mr-12">
-            <nwn-pricing-metric [base] = "item.controls.cogs.value"   [label] = "'COGS'" formControlName="inc_cogs" ></nwn-pricing-metric>
-            <!-- [percentage]="true" -->
+        <div class="mr-3 border-r">
+            <nwn-pricing-metric [base] = "item.controls.cogs.value"   [label] = "'COGS'" formControlName="inc_cogs" >
+                <dp-date-picker formControlName="cogs_date" mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+            </nwn-pricing-metric>
+            
         </div>
-        <div class="mr-12">
-            <nwn-pricing-metric [base] = "item.controls.rsp.value" [label] = "'Retail price'" formControlName="inc_rsp"></nwn-pricing-metric>
+        <div class="mr-3 border-r">
+            <nwn-pricing-metric [base] = "item.controls.rsp.value" [label] = "'Retail price'" formControlName="inc_rsp">
+                <dp-date-picker formControlName="rsp_date" mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+            </nwn-pricing-metric>
         </div>
-        <div class="mr-12">
-            <!-- {{item.controls.follow_competition.value}} comp value -->
-            <nwn-price-elasticity [base] = "item.controls.elasticity.value" *ngIf="!item.controls.follow_competition.value" formControlName="inc_elasticity">Price elasticity</nwn-price-elasticity>
-            <nwn-price-elasticity [base] = "item.controls.net_elasticity.value" *ngIf="item.controls.follow_competition.value" formControlName="inc_net_elasticity">Price elasticity</nwn-price-elasticity>
+       
+        <div class="mr-3 border-r">
+             
+            <nwn-price-elasticity [base] = "item.controls.elasticity.value" *ngIf="!item.controls.follow_competition.value" formControlName="inc_elasticity">
+                <p>Follow Competition</p>
+
+                <nwn-competition formControlName="follow_competition"></nwn-competition>
+            </nwn-price-elasticity>
+            <nwn-price-elasticity [base] = "item.controls.net_elasticity.value" *ngIf="item.controls.follow_competition.value" formControlName="inc_net_elasticity">
+                <p>Follow Competition</p>
+
+                <nwn-competition formControlName="follow_competition"></nwn-competition>
+            </nwn-price-elasticity>
         </div>
-        <div class="">
+       
+        <!-- <div class="">
             <nwn-competition formControlName="follow_competition"></nwn-competition>
-        </div>
+        </div> -->
     </ng-container>
         </ng-container>
     </ng-container>
-    </div>
-                <div class="flex flex-row items-end space-x-4 mx-3 my-5">
+    <!-- </div> -->
+   
+<!-- 
+    <div class="flex flex-row items-end">
+        
+        <div class="mr-1">
+            <nwn-pricing-metric [base] = "0"  [label] = "'List price'" ></nwn-pricing-metric>
+        </div>
+        <div class="mr-1">
+            <nwn-pricing-metric [base] = "0"   [label] = "'Cogs'"   ></nwn-pricing-metric>
+            
+        </div>
+        <div class="mr-1">
+            <nwn-pricing-metric [base] = "0" [label] = "'Retail price'"></nwn-pricing-metric>
+        </div>
+        <div class="mr-1">
+            <nwn-pricing-metric [base] = "0" [label] = "'Promo price'"></nwn-pricing-metric>
+        </div>
+        <div class="mr-1">
+             
+            <nwn-price-elasticity [base] = "0" >Price elasticity</nwn-price-elasticity>
+           
+        </div>
+        <div class="mr-3">
+            <div class="flex flex-col items-end space-y-4 ">
+             
+            <div class="flex flex-row items-center">
+                <div class="bg-marsgray-500 w-5 h-5 mr-2"></div>
+                <p class="text-body text-marsgray-500" (click) = "addRet()">Input metric</p>
+            </div>
+            <div class="flex flex-row items-center">
+                <div class="bg-marsyellow-800 w-5 h-5 mr-2"></div>
+                <p class="text-body text-marsgray-500">Baseline metric</p>
+            </div>
+        </div>
+            
+        </div>
+        
+    </div> -->
+                <!-- <div class="flex flex-row items-end space-x-4 mx-3 my-5">
+                    <div class="flex flex-row items-center">
+                        <div class="bg-marsgray-500 w-5 h-5 mr-2"></div>
+                        <p class="text-body text-marsgray-500" (click) = "addRet()">Input metric</p>
+                    </div>
+                    <div class="flex flex-row items-center">
+                        <div class="bg-marsyellow-800 w-5 h-5 mr-2"></div>
+                        <p class="text-body text-marsgray-500">Baseline metric</p>
+                    </div>
+                </div> -->
+            </div>
+            <div class="flex flex-row flex-wrap items-center justify-between space-x-2 border-b border-gray-300">
+                <div class="mr-3">
+                    <nwn-pricing-metric [base] = "0" [label] = "'Promo price'">
+                        <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+                    </nwn-pricing-metric>
+                </div>
+
+
+                 
+                    <div class="flex flex-row items-center space-x-4">
+                     
                     <div class="flex flex-row items-center">
                         <div class="bg-marsgray-500 w-5 h-5 mr-2"></div>
                         <p class="text-body text-marsgray-500">Input metric</p>
@@ -196,10 +245,324 @@
                         <p class="text-body text-marsgray-500">Baseline metric</p>
                     </div>
                 </div>
-            </div>
+                    
+               
+
+
+
+                </div>
         </form>
         </div>
-        <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
+
+        <!-- tree mode start-->
+        <!-- <div class="flex flex-row w-full justify-between space-x-2 items-end">
+
+            <div class="mr-1">
+                Product group
+                 
+            </div>
+            <div class="mr-1">
+                List price
+                 
+            </div>
+            <div class="mr-1">
+               RSV w/o VAT
+            </div>
+            <div class="mr-1">
+               Price elasticity
+             </div>
+             <div class="mr-1">
+                Promo price
+              </div>
+
+        </div> -->
+
+
+        <mat-accordion *ngIf="!treemode" class="example-headers-align" multi>
+            <form [formGroup]="pricingForm">
+            <mat-expansion-panel  *ngFor="let product of displayProduct"  [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                   
+                        <!-- <div class="act">
+                        {{product}}
+                        <nwn-button (click)="$event.stopPropagation();removeRetailer(product)" type="icon" size="iconsm">
+                            <nwn-svg-icon size="md" nwnSvgIcon="close"></nwn-svg-icon>
+                        </nwn-button>
+                    </div> -->
+                    <ul class="tabs group">
+                        <li class="active">
+                            <a> {{product}}  </a>
+                            <!-- <nwn-button (click)="$event.stopPropagation();removeRetailer(product)" type="icon" size="iconsm"> -->
+                               
+                            <!-- </nwn-button></li>  -->
+                        
+                      </ul>
+                 
+                 
+                </mat-panel-title>
+              
+               
+                
+              </mat-expansion-panel-header>
+              <!-- <ng-container *ngFor="let ret of rets"> -->
+
+                <table class="w-full border border-marsgray-200 text-left">
+                    <thead class="bg-white">
+                        <tr class="whitespace-nowrap">
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheaderlg" color="bggray-100">
+                                     Product group
+                                </nwn-cell-header>
+                                 
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheaderpds" color="bggray-100">
+                                    <div class="flex flex-row justify-between">
+                                        <div>List price<span class="currspan">(₽)</span></div>
+                                        <nwn-checkbox [value] = "'List price'" [showTooltip]="true" (valueChange) = "applyallOpen($event,product)"  [spacex] = "'space-x-1'"  style="align-self: center;" [showLabel]="true"> 
+                                            <span class="applyall"></span>
+                                        <p tooltipContent>Apply to all</p>
+                                        </nwn-checkbox>
+                                        
+                                    </div>
+                                </nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheaderpds" color="bggray-100">
+                                    <div class="flex flex-row justify-between">
+                                        <div>COGS<span class="currspan">(₽)</span></div>
+                                        <nwn-checkbox [value] = "'Cogs'"  [showTooltip]="true" (valueChange) = "applyallOpen($event,product)" [spacex] = "'space-x-1'"  style="align-self: center;" [showLabel]="true"> 
+                                            <span class="applyall"></span>
+                                        <p tooltipContent>Apply to all</p>
+                                        </nwn-checkbox>
+                                        
+                                    </div>
+                                </nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheaderpds" color="bggray-100">
+                                    <div class="flex flex-row justify-between">
+                                        <div>Retail price <span class="currspan">(₽)</span></div>
+                                        <nwn-checkbox (valueChange) = "applyallOpen($event,product)" [value] = "'Retail price'"  [showTooltip]="true" [spacex] = "'space-x-1'"  style="align-self: center;" [showLabel]="true"> 
+                                            <span class="applyall"></span>
+                                        <p tooltipContent>Apply to all</p>
+                                        </nwn-checkbox>
+                                        
+                                    </div>
+                                </nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheaderpds" color="bggray-100">
+                                    <div class="flex flex-row justify-between">
+                                        <div>Elasticity</div>
+                                        <nwn-checkbox  (valueChange) = "applyallOpen($event,product)" [value] = "'Elasticity'"  [showTooltip]="true" [spacex] = "'space-x-1'"  style="align-self: center;" [showLabel]="true"> 
+                                            <span class="applyall"></span>
+                                        <p tooltipContent>Apply to all</p>
+                                        </nwn-checkbox>
+                                        
+                                    </div>
+                                </nwn-cell-header>
+                            </th>
+                            <th colspan="1" scope="colgroup">
+                                <nwn-cell-header type="subheaderpds" color="bggray-100">
+                                    <div class="flex flex-row justify-between">
+                                        <div>Promo price<span class="currspan">(₽)</span></div>
+                                        <nwn-checkbox [showTooltip]="true"  (valueChange) = "applyallOpen($event,product)" [value] = "'Promo price'"  [spacex] = "'space-x-1'"  style="align-self: center;" [showLabel]="true"> 
+                                            <span class="applyall"></span>
+<p tooltipContent>Apply to all</p>
+
+                                            <!-- <p tooltipContent>Apply to all</p> -->
+                                        </nwn-checkbox>
+                                            <!-- <div>
+                                                <div class="btn-tooltip">
+                                                     tool tip
+                                                </div>
+                                            </div> -->
+                                    </div>
+                                </nwn-cell-header>
+                            </th>
+                        </tr>
+                    </thead>
+        
+                        <tbody class="bg-white">
+                          
+                            <!-- <ng-container formArrayName="products" *ngFor="let item of pricingForm.get('products')['controls']; let i = index;">
+                                <ng-container *ngIf="pricingForm.controls.products.controls[i].controls.retailer.value  === product">
+                                    <ng-container [formGroupName]="i"> -->
+                            <tr formArrayName="products" *ngFor="let item of pricingForm.get('products')['controls']; let i = index;" class="whitespace-nowrap">
+                               <!-- <tr *ngFor="let a of rets">   -->
+                                <ng-container *ngIf="pricingForm.controls.products.controls[i].controls.account_name.value  === product">
+                                    <ng-container [formGroupName]="i">
+                                <td class="p-1">
+                                    {{pricingForm.controls.products.controls[i].controls.product_group.value}}
+                                    <!-- <nwn-filter-item
+                                    type="stroke"
+                                    nwnSvgIcon="product-groups"
+                                    [hideClose]="false"
+                                    (closeClickedEvent)="removeProductEvent(i , product)"
+                                    
+                                    >
+
+                                     
+                                    {{pricingForm.controls.products.controls[i].controls.product_group.value}}
+                                </nwn-filter-item> -->
+                                   </td>
+                                <td>
+                        <!-- <nwn-pricing-metric-input [disable] = "item.controls.disable_list_price.value" [base] = "item.controls.list_price.value" formControlName="inc_list_price"  >  
+                            <dp-date-picker formControlName="list_price_date" [disabled] = "item.controls.disable_list_price.value" mode="day" theme="p-30" placeholder="--/--/----" ></dp-date-picker>
+                        </nwn-pricing-metric-input> -->
+                        <div>
+                            <!-- {{product}} -> i {{i}} -->
+                        <nwn-pricing-metric-ip [base] = "item.controls.list_price.value" formControlName="inc_list_price">
+                            <svg (click)="open(dayPickerlp)" width="17" height="17" viewBox="0 0 17 17" fill="red" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M13.5423 2.91683H12.209V2.25016C12.209 2.07335 12.1387 1.90378 12.0137 1.77876C11.8887 1.65373 11.7191 1.5835 11.5423 1.5835C11.3655 1.5835 11.1959 1.65373 11.0709 1.77876C10.9459 1.90378 10.8757 2.07335 10.8757 2.25016V2.91683H6.87565V2.25016C6.87565 2.07335 6.80541 1.90378 6.68039 1.77876C6.55536 1.65373 6.3858 1.5835 6.20898 1.5835C6.03217 1.5835 5.8626 1.65373 5.73758 1.77876C5.61256 1.90378 5.54232 2.07335 5.54232 2.25016V2.91683H4.20898C3.67855 2.91683 3.16984 3.12754 2.79477 3.50262C2.4197 3.87769 2.20898 4.3864 2.20898 4.91683V12.9168C2.20898 13.4473 2.4197 13.956 2.79477 14.331C3.16984 14.7061 3.67855 14.9168 4.20898 14.9168H13.5423C14.0728 14.9168 14.5815 14.7061 14.9565 14.331C15.3316 13.956 15.5423 13.4473 15.5423 12.9168V4.91683C15.5423 4.3864 15.3316 3.87769 14.9565 3.50262C14.5815 3.12754 14.0728 2.91683 13.5423 2.91683ZM14.209 12.9168C14.209 13.0936 14.1387 13.2632 14.0137 13.3882C13.8887 13.5133 13.7191 13.5835 13.5423 13.5835H4.20898C4.03217 13.5835 3.8626 13.5133 3.73758 13.3882C3.61256 13.2632 3.54232 13.0936 3.54232 12.9168V8.25016H14.209V12.9168ZM14.209 6.91683H3.54232V4.91683C3.54232 4.74002 3.61256 4.57045 3.73758 4.44543C3.8626 4.3204 4.03217 4.25016 4.20898 4.25016H5.54232V4.91683C5.54232 5.09364 5.61256 5.26321 5.73758 5.38823C5.8626 5.51326 6.03217 5.5835 6.20898 5.5835C6.3858 5.5835 6.55536 5.51326 6.68039 5.38823C6.80541 5.26321 6.87565 5.09364 6.87565 4.91683V4.25016H10.8757V4.91683C10.8757 5.09364 10.9459 5.26321 11.0709 5.38823C11.1959 5.51326 11.3655 5.5835 11.5423 5.5835C11.7191 5.5835 11.8887 5.51326 12.0137 5.38823C12.1387 5.26321 12.209 5.09364 12.209 4.91683V4.25016H13.5423C13.7191 4.25016 13.8887 4.3204 14.0137 4.44543C14.1387 4.57045 14.209 4.74002 14.209 4.91683V6.91683Z"
+                                    [ngClass]="{'fill-def' : !pricingForm.controls.products.controls[i].controls.list_price_date.value,
+                                    'fill-blue' : pricingForm.controls.products.controls[i].controls.list_price_date.value
+                                }"
+                                />
+                            </svg>
+                            <dp-date-picker formControlName="list_price_date" style="width: 0px;" #dayPickerlp mode="day"   placeholder=""  ></dp-date-picker>
+                            <p class="date-picker-para" *ngIf="pricingForm.controls.products.controls[i].controls.list_price_date.value" dateContent> 
+                                {{pricingForm.controls.products.controls[i].controls.list_price_date.value | date: 'MMM d, y'}}
+                                <nwn-svg-icon (click) = "removeDate(i , 'list_price_date')" size="md" nwnSvgIcon="close"></nwn-svg-icon>
+                            </p>
+                            <p *ngIf="!pricingForm.controls.products.controls[i].controls.list_price_date.value" dateContent> select date</p>
+
+                        </nwn-pricing-metric-ip>
+                    </div>
+                    
+                        </td>
+                        <td>
+                            <div>
+                                <nwn-pricing-metric-ip [base] = "item.controls.cogs.value" formControlName="inc_cogs">
+                                    <svg (click)="open(dayPickercogs)" width="17" height="17" viewBox="0 0 17 17" fill="red" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M13.5423 2.91683H12.209V2.25016C12.209 2.07335 12.1387 1.90378 12.0137 1.77876C11.8887 1.65373 11.7191 1.5835 11.5423 1.5835C11.3655 1.5835 11.1959 1.65373 11.0709 1.77876C10.9459 1.90378 10.8757 2.07335 10.8757 2.25016V2.91683H6.87565V2.25016C6.87565 2.07335 6.80541 1.90378 6.68039 1.77876C6.55536 1.65373 6.3858 1.5835 6.20898 1.5835C6.03217 1.5835 5.8626 1.65373 5.73758 1.77876C5.61256 1.90378 5.54232 2.07335 5.54232 2.25016V2.91683H4.20898C3.67855 2.91683 3.16984 3.12754 2.79477 3.50262C2.4197 3.87769 2.20898 4.3864 2.20898 4.91683V12.9168C2.20898 13.4473 2.4197 13.956 2.79477 14.331C3.16984 14.7061 3.67855 14.9168 4.20898 14.9168H13.5423C14.0728 14.9168 14.5815 14.7061 14.9565 14.331C15.3316 13.956 15.5423 13.4473 15.5423 12.9168V4.91683C15.5423 4.3864 15.3316 3.87769 14.9565 3.50262C14.5815 3.12754 14.0728 2.91683 13.5423 2.91683ZM14.209 12.9168C14.209 13.0936 14.1387 13.2632 14.0137 13.3882C13.8887 13.5133 13.7191 13.5835 13.5423 13.5835H4.20898C4.03217 13.5835 3.8626 13.5133 3.73758 13.3882C3.61256 13.2632 3.54232 13.0936 3.54232 12.9168V8.25016H14.209V12.9168ZM14.209 6.91683H3.54232V4.91683C3.54232 4.74002 3.61256 4.57045 3.73758 4.44543C3.8626 4.3204 4.03217 4.25016 4.20898 4.25016H5.54232V4.91683C5.54232 5.09364 5.61256 5.26321 5.73758 5.38823C5.8626 5.51326 6.03217 5.5835 6.20898 5.5835C6.3858 5.5835 6.55536 5.51326 6.68039 5.38823C6.80541 5.26321 6.87565 5.09364 6.87565 4.91683V4.25016H10.8757V4.91683C10.8757 5.09364 10.9459 5.26321 11.0709 5.38823C11.1959 5.51326 11.3655 5.5835 11.5423 5.5835C11.7191 5.5835 11.8887 5.51326 12.0137 5.38823C12.1387 5.26321 12.209 5.09364 12.209 4.91683V4.25016H13.5423C13.7191 4.25016 13.8887 4.3204 14.0137 4.44543C14.1387 4.57045 14.209 4.74002 14.209 4.91683V6.91683Z"
+                                            [ngClass]="{'fill-def' : !pricingForm.controls.products.controls[i].controls.cogs_date.value,
+                                            'fill-blue' : pricingForm.controls.products.controls[i].controls.cogs_date.value
+                                        }"
+                                        />
+                                    </svg>
+                                    <dp-date-picker formControlName="cogs_date" style="width: 0px;" #dayPickercogs mode="day"   placeholder=""  ></dp-date-picker>
+                                    <p class="date-picker-para" *ngIf="pricingForm.controls.products.controls[i].controls.cogs_date.value" dateContent> 
+                                        {{pricingForm.controls.products.controls[i].controls.cogs_date.value | date: 'MMM d, y'}}
+                                        <nwn-svg-icon (click) = "removeDate(i,'cogs_date')" size="md" nwnSvgIcon="close"></nwn-svg-icon>
+                                    </p>
+                                    <p *ngIf="!pricingForm.controls.products.controls[i].controls.cogs_date.value" dateContent> select date</p>
+        
+                                </nwn-pricing-metric-ip>
+                            </div>
+                            <!-- <nwn-pricing-metric-input [disable] = "item.controls.disable_cogs.value"  id="priceid" [base] = "item.controls.cogs.value" formControlName="inc_cogs" >
+                                <dp-date-picker  [disabled] = "item.controls.disable_cogs.value" formControlName="cogs_date" mode="day" theme="p-30" placeholder="--/--/----" ></dp-date-picker>
+                            </nwn-pricing-metric-input> -->
+                            
+                            </td>
+                            <td>
+                                <div>
+                                    <nwn-pricing-metric-ip [base] = "item.controls.rsp.value" formControlName="inc_rsp">
+                                        <svg (click)="open(dayPickerrsp)" width="17" height="17" viewBox="0 0 17 17" fill="red" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M13.5423 2.91683H12.209V2.25016C12.209 2.07335 12.1387 1.90378 12.0137 1.77876C11.8887 1.65373 11.7191 1.5835 11.5423 1.5835C11.3655 1.5835 11.1959 1.65373 11.0709 1.77876C10.9459 1.90378 10.8757 2.07335 10.8757 2.25016V2.91683H6.87565V2.25016C6.87565 2.07335 6.80541 1.90378 6.68039 1.77876C6.55536 1.65373 6.3858 1.5835 6.20898 1.5835C6.03217 1.5835 5.8626 1.65373 5.73758 1.77876C5.61256 1.90378 5.54232 2.07335 5.54232 2.25016V2.91683H4.20898C3.67855 2.91683 3.16984 3.12754 2.79477 3.50262C2.4197 3.87769 2.20898 4.3864 2.20898 4.91683V12.9168C2.20898 13.4473 2.4197 13.956 2.79477 14.331C3.16984 14.7061 3.67855 14.9168 4.20898 14.9168H13.5423C14.0728 14.9168 14.5815 14.7061 14.9565 14.331C15.3316 13.956 15.5423 13.4473 15.5423 12.9168V4.91683C15.5423 4.3864 15.3316 3.87769 14.9565 3.50262C14.5815 3.12754 14.0728 2.91683 13.5423 2.91683ZM14.209 12.9168C14.209 13.0936 14.1387 13.2632 14.0137 13.3882C13.8887 13.5133 13.7191 13.5835 13.5423 13.5835H4.20898C4.03217 13.5835 3.8626 13.5133 3.73758 13.3882C3.61256 13.2632 3.54232 13.0936 3.54232 12.9168V8.25016H14.209V12.9168ZM14.209 6.91683H3.54232V4.91683C3.54232 4.74002 3.61256 4.57045 3.73758 4.44543C3.8626 4.3204 4.03217 4.25016 4.20898 4.25016H5.54232V4.91683C5.54232 5.09364 5.61256 5.26321 5.73758 5.38823C5.8626 5.51326 6.03217 5.5835 6.20898 5.5835C6.3858 5.5835 6.55536 5.51326 6.68039 5.38823C6.80541 5.26321 6.87565 5.09364 6.87565 4.91683V4.25016H10.8757V4.91683C10.8757 5.09364 10.9459 5.26321 11.0709 5.38823C11.1959 5.51326 11.3655 5.5835 11.5423 5.5835C11.7191 5.5835 11.8887 5.51326 12.0137 5.38823C12.1387 5.26321 12.209 5.09364 12.209 4.91683V4.25016H13.5423C13.7191 4.25016 13.8887 4.3204 14.0137 4.44543C14.1387 4.57045 14.209 4.74002 14.209 4.91683V6.91683Z"
+                                                [ngClass]="{'fill-def' : !pricingForm.controls.products.controls[i].controls.rsp_date.value,
+                                                'fill-blue' : pricingForm.controls.products.controls[i].controls.rsp_date.value
+                                            }"
+                                            />
+                                        </svg>
+                                        <dp-date-picker formControlName="rsp_date" style="width: 0px;" #dayPickerrsp mode="day"   placeholder=""  ></dp-date-picker>
+                                        <p class="date-picker-para" *ngIf="pricingForm.controls.products.controls[i].controls.rsp_date.value" dateContent> 
+                                            {{pricingForm.controls.products.controls[i].controls.rsp_date.value | date: 'MMM d, y'}}
+                                            <nwn-svg-icon (click) = "removeDate(i , 'rsp_date')" size="md" nwnSvgIcon="close"></nwn-svg-icon>
+                                        </p>
+                                        <p *ngIf="!pricingForm.controls.products.controls[i].controls.rsp_date.value" dateContent> select date</p>
+            
+                                    </nwn-pricing-metric-ip>
+                                </div>
+                        <!-- <nwn-pricing-metric-input [disable] = "item.controls.disable_rsp.value" [base] = "item.controls.rsp.value" formControlName="inc_rsp" >
+                            <dp-date-picker [disabled] = "item.controls.disable_rsp.value" formControlName="rsp_date" mode="day"  placeholder="--/--/----"></dp-date-picker>
+                        </nwn-pricing-metric-input> -->
+                        </td>
+                        <td>
+                            <div>
+                                <nwn-price-elasticity [showBase] = "false" [base] = "item.controls.elasticity.value" *ngIf="!item.controls.follow_competition.value" formControlName="inc_elasticity">
+                                    
+
+                                    <nwn-competition formControlName="follow_competition"></nwn-competition>
+                                    <p>Follow Competition</p>
+                                </nwn-price-elasticity>
+                                <nwn-price-elasticity [showBase] = "false" [base] = "item.controls.net_elasticity.value" *ngIf="item.controls.follow_competition.value" formControlName="inc_net_elasticity">
+                                    
+
+                                    <nwn-competition formControlName="follow_competition"></nwn-competition>
+                                    <p>Follow Competition</p>
+                                </nwn-price-elasticity>
+                            </div>
+                            <!-- {{item.controls.follow_competition.value}} value -->
+
+                            <!-- <nwn-price-elasticity [base] = "item.controls.elasticity.value" *ngIf="!item.controls.follow_competition.value" formControlName="inc_elasticity">
+                
+                                <nwn-competition formControlName="follow_competition"></nwn-competition>
+                           
+                            </nwn-price-elasticity>
+                            <nwn-price-elasticity [base] = "item.controls.net_elasticity.value" *ngIf="item.controls.follow_competition.value" formControlName="inc_net_elasticity">
+                                
+                                <nwn-competition formControlName="follow_competition"></nwn-competition>
+                                 
+                            </nwn-price-elasticity> -->
+
+                            <!-- <nwn-price-elasticity formControlName="inc_elasticity">
+                
+                                <nwn-competition formControlName="follow_competition"></nwn-competition>
+                            </nwn-price-elasticity> -->
+                            <!-- <nwn-pricing-metric-input [base] = "0" >
+                                <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+                            </nwn-pricing-metric-input> -->
+                            </td>
+        
+                            <td>
+                                <div>
+                                    <nwn-pricing-metric-ip [base] = "item.controls.promo_price.value" formControlName="inc_promo_price">
+            
+                                    </nwn-pricing-metric-ip>
+                                </div>
+                                <!-- <nwn-pricing-metric-input [base] = "0" >
+                                    <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+                                </nwn-pricing-metric-input> -->
+                                </td>
+                                </ng-container>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                        <!-- <tr class="whitespace-nowrap">
+                            <th colspan="1" scope="colgroup" class="text-center">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >Baseline Units</nwn-cell-header
+                                >
+                            </th>
+                            <th colspan="1" scope="colgroup" class="text-center">
+                                <nwn-cell-header type="subheadermd" color="bgtransparent"
+                                    >Incremental Units</nwn-cell-header
+                                >
+                            </th>
+                        </tr> -->
+                  
+                    </table>
+        
+               
+               
+        <!-- </ng-container> -->
+           
+            
+            
+            </mat-expansion-panel>
+        </form>
+          </mat-accordion>  
+
+        
+          
+           <!-- tree mode stop-->
+        <!-- <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2">
             <div class="flex flex-row space-x-2 items-center">
                 <div class="flex flex-row space-x-2 border-r border-marsgray-300 pr-2">
                     <nwn-button type="icon" size="iconsm" [showTooltip]="true">
@@ -293,18 +656,31 @@
                                 "
                                 (click)="toggleDisplayDivIf()"
                             ></div>
-                            <!-- backdrop-filter backdrop-blur-xs -->
+                             
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
-    <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2" *ngIf="!isExpand">
+    <div class="flex flex-row w-full justify-end space-x-2 bg-marsgray-100 py-2" >
+             
+        <div class="flex flex-row items-center">
+            <div class="bg-marsgray-500 w-5 h-5 mr-2"></div>
+            <p class="text-body text-marsgray-500" (click) = "addRet()">Input metric</p>
+        </div>
+        <div class="flex flex-row items-center">
+            <div class="bg-marsyellow-800 w-5 h-5 mr-2"></div>
+            <p class="text-body text-marsgray-500">Baseline metric</p>
+        </div>
+    </div>
+</ng-container>
+
+    <div class="flex flex-row w-full justify-between space-x-2 bg-marsgray-100 py-2" >
         <div class="flex flex-row space-x-2 items-center">
             <div class="flex flex-row space-x-2 border-r border-marsgray-300 pr-2">
-                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button (click)="downloadWeekly()" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="download"> </nwn-svg-icon>
                     <p tooltipContent>Download weekly input</p>
                 </nwn-button>
@@ -332,12 +708,12 @@
         <div class="flex flex-row">
             <div class="flex flex-row space-x-4 items-center">
                 <nwn-button type="link" size="sm"> Reset </nwn-button>
-                <nwn-button type="primary" size="sm"> Simulate </nwn-button>
+                <nwn-button type="primary" size="sm" (click) = "simulatePrice()"> Simulate </nwn-button>
                 <nwn-button type="icon" size="iconsm" (click)="sendMessage('save-scenario')" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save"></nwn-svg-icon>
                     <p tooltipContent>Save scenario</p>
                 </nwn-button>
-                <nwn-button type="icon" size="iconsm" [showTooltip]="true">
+                <nwn-button (click)="downloadPricing()" type="icon" size="iconsm" [showTooltip]="true">
                     <nwn-svg-icon type="stroke" nwnSvgIcon="save-download"></nwn-svg-icon>
                     <p tooltipContent>Download scenario</p>
                 </nwn-button>
@@ -413,3 +789,109 @@
 <nwn-modal id="save-scenario" class="hidden">
     <nwn-save-scenario (saveScenarioEvent) = "saveScenario($event)"></nwn-save-scenario>
 </nwn-modal>
+
+<!-- load scenario pricingtool popup -->
+<nwn-modal id="load-scenario-pricingtool-popup" class="hidden">
+    <nwn-load-scenario-pricingtool-popup (load_scenario_event) = "load_scenario_event($event)"></nwn-load-scenario-pricingtool-popup>
+</nwn-modal>
+
+<nwn-modal id="apply-all-popup" class="hidden">
+    <apply-all-popup (applyCloseEvent)= "applyCloseEvent($event)" [metric] = "applyAllMetric" [group]="currentProductGroup"></apply-all-popup>
+</nwn-modal>
+
+<nwn-modal id="upload-weekly-promotions" class="hidden">
+    <nwn-upload-weekly-promotions (closeModal)="closeModal($event)" (fileUpload) = "fileUpload($event)"></nwn-upload-weekly-promotions>
+</nwn-modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+<mat-accordion *ngIf="!treemode" class="example-headers-align" multi>
+    <mat-expansion-panel  *ngFor="let pan of panels"  [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+         {{pan}}
+        </mat-panel-title>
+      
+       
+        
+      </mat-expansion-panel-header>
+      <ng-container *ngFor="let ret of rets">
+      <div class="flex flex-row justify-center items-end border-b">
+          <div style="align-self: center;padding-right: 15px;">
+        
+            <nwn-filter-item
+            type="stroke"
+            nwnSvgIcon="retailers"
+            [hideClose]="false"
+            
+            >
+             {{ret}}
+        </nwn-filter-item>
+        </div>
+
+<img style="width: 75px;height: 35px;" src="/assets/subbrand-img/orbit-otc.png" alt="" />
+
+      </div>
+      <div class="flex flex-row justify-between items-end">
+
+        
+  
+      <div class="mr-3 border-r">
+        
+
+      </div>
+      <div class="mr-3 border-r">
+        <nwn-pricing-metric-input [base] = "0" [label] = "'Promo price'">
+            <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+        </nwn-pricing-metric-input>
+      
+
+      </div>
+      <div class="mr-3 border-r">
+        <nwn-pricing-metric-input [base] = "0" [label] = "'Promo price'">
+            <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+        </nwn-pricing-metric-input>
+      
+
+      </div>
+      <div class="mr-3 border-r">
+        <nwn-price-elasticity [base] = "0"  >
+         
+            <nwn-competition ></nwn-competition>
+        </nwn-price-elasticity>
+
+      </div>
+      <div class="mr-3">
+        <nwn-pricing-metric [base] = "0" [label] = "'Promo price'">
+            <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+        </nwn-pricing-metric>
+      
+
+      </div>
+    
+    </div>
+</ng-container>
+   
+    
+    
+    </mat-expansion-panel>
+
+  </mat-accordion>  -->

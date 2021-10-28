@@ -9,14 +9,23 @@
                 />
             </svg>
         </div>
-        <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker>
+        <ng-content></ng-content>
+        <!-- <dp-date-picker mode="day" theme="p-30" placeholder="--/--/----" [config]="config"></dp-date-picker> -->
+        <!-- {{percentage}} -->
     </div>
     <p class="text-marsyellow-800 text-caption">{{base}} ₽</p>
-    <div (click) = "togglePercent(true)" *ngIf="percentage === false">
+    <div  *ngIf="percentage === false">
         <div class="flex flex-row items-center justify-between">
-            <div class="flex flex-row items-center justify-between mr-2 border-r border-marsgray-300">
-                <input class="enabledInput" type="number" value="{{ counterPer }}" />
-                <div class="mx-2">
+            <div (click) = "toggleEnable()" class="flex flex-row items-center justify-between mr-2 border-r border-marsgray-300">
+                <!-- class="enabledInput"  -->
+                <input
+                [ngClass]="{ 'enabledInput': absenable === true,
+                'disabledInput': absenable === false
+            
+            }"
+                
+                type="number" value="{{ counterPer }}" />
+                <!-- <div class="mx-2">
                     <div class="flex flex-col space-y-1" >
                         <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();incrementPer()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
@@ -25,16 +34,26 @@
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
                         </nwn-button>
                     </div>
-                </div>
+                </div> -->
             </div>
-            <div  class="flex flex-row items-center justify-between space-x-2">
-                <input class="disabledInput" disabled type="number" value="{{ counter }}" />  %
-                <div class="hidden">
+            <div (click) = "toggleEnable()"  class="flex flex-row items-center justify-between border-l space-x-2">
+                <div class="input-icon input-icon-right">
+                    <!-- class="disabledInput" -->
+                <input
+                [ngClass]="{ 'disabledInput': absenable === true,
+                'enabledInput': absenable === false
+            
+            }"
+                 type="number" value="{{ counter }}" /> 
+                <i>%</i>
+                </div>
+                <div>
+                    <!-- class="hidden" -->
                     <div class="flex flex-col space-y-1">
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();increment()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();decincrement()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
                         </nwn-button>
-                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();decrement()">
+                        <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();decdecrement()">
                             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
                         </nwn-button>
                     </div>
@@ -43,7 +62,7 @@
         </div>
         <p class="text-body text-marsgray-500">{{label}}</p>
     </div>
-    <div (click) = "togglePercent(false)" *ngIf="percentage === true">
+    <!-- <div (click) = "togglePercent(false)" *ngIf="percentage === true">
         <div  class="flex flex-row items-center justify-between">
             <div class="flex flex-row items-center justify-between space-x-2 mr-2 border-r border-marsgray-300">
                 <input class="disabledInput" disabled type="number" value="{{ counterPer }}" />
@@ -59,7 +78,9 @@
                 </div>
             </div>
             <div class="flex flex-row items-center justify-between">
-                <input class="enabledInput" type="number" value="{{ counter }}" />  %
+                <div class="percent">
+                <input class="enabledInput" type="number" value="{{ counter }}" />  
+            </div>
                 <div class="mx-2">
                     <div class="flex flex-col space-y-1">
                         <nwn-button type="icon" size="no-size" class="leading-0" (click)="$event.stopPropagation();increment()">
@@ -73,5 +94,5 @@
             </div>
         </div>
         <p class="text-body text-marsgray-500">{{label}}</p>
-    </div>
+    </div> -->
 </div>

@@ -26,6 +26,7 @@ quarter: number
 retail_median_base_price_w_o_vat: number
 
 tpr_discount: number
+tpr_coefficient:number
 week: number
 year: number
   }
@@ -115,4 +116,18 @@ year: number
             total : Total,
             weekly : Array<Weekly>
           }>
+  }
+
+  export interface PS{
+    id : any
+    account_name : string,
+    product :  string ,
+    base : {
+      total : Total,
+      weekly : Array<Weekly>
+    }
+    simulated : {
+      total : Total,
+      weekly : Array<Weekly>
+    }
   }

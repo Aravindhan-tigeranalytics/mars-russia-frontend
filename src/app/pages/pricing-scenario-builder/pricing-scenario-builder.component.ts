@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ModalService } from '@molecules/modal/modal.service';
 import {OptimizerService,SimulatorService,PricingService} from '@core/services'
-import { CheckboxModel, FilterModel, PricingModel, Product } from '@core/models';
+import { CheckboxModel, FilterModel, HierarchyCheckBoxModel, PricingModel, Product } from '@core/models';
+import * as utils from "@core/utils"
 
 @Component({
     selector: 'nwn-pricing-scenario-builder',
@@ -20,6 +21,10 @@ export class PricingScenarioBuilderComponent implements OnInit {
     selected_strategic_cell:string[] = [] as any
     selected_brand:string[] = [] as any
     selected_brand_format:string[] = [] as any
+    count_ret = {
+        "retailers" : this.selected_retailer.length,
+        "products" : this.selected_product.length
+    }
 
     retailers:Array<CheckboxModel> = []
     categories:Array<CheckboxModel> = [] 
@@ -27,17 +32,34 @@ export class PricingScenarioBuilderComponent implements OnInit {
     brands_format:Array<CheckboxModel> = []
     brands:Array<CheckboxModel> = []
     product_group:Array<CheckboxModel> = []
+    showtbas = false
 
+    hierarchy_model : Array<HierarchyCheckBoxModel> = []
+    
     pricingArray:PricingModel[] = []
     constructor(private modalService: ModalService,public restApi: SimulatorService,
         private optimize : OptimizerService,private pricing : PricingService) {}
 
     ngOnInit(): void {
+        this.pricing.getPricingSimulatedObservable().subscribe(data=>{
+            console.log("tabsdata " , data)
+            if(data){
+                this.showtbas = true
+
+            }
+            else{
+                this.showtbas = false
+            }
+        })
 
         this.optimize.fetchVal().subscribe(data=>{
-            this.reset()
-            this.product = data
-            this._populateFilters(this.product)
+            if(data && data.length > 0){
+                this.reset()
+                this.product = data
+                this._populateFilters(this.product)
+
+            }
+           
 
           },error=>{
             console.log(error , "error")
@@ -50,6 +72,22 @@ export class PricingScenarioBuilderComponent implements OnInit {
     //     console.log($event , "save scenrio event")
     //     this.pricing
     // }
+    _populateHierarchyModel(products : Product[]){
+        if(products.length > 0){
+            this.hierarchy_model.push({"value" : "All" , "checked" : false,"child" : []}) 
+        }
+
+        // this.hierarchy_model.push({"value" : "All" , "checked" : true,"child" : []})
+        this.retailers.forEach(d=>{
+            // debugger
+            this.hierarchy_model.push({...d , ...{"child" : products.filter(p=>p.account_name == d.value).map(m=>({"value" : m.product_group , "checked" : false,"id" : m.id}))}})
+            
+            // debugger
+            // this.hierarchy_model.push(d)
+        })
+        console.log(this.hierarchy_model , "hierarchy model......")
+
+    }
     _populateFilters(products : Product[]){
         // debugger
        this.retailers = [...new Set(products.map(item => item.account_name))].map(e=>({"value" : e,"checked" : false}));
@@ -58,11 +96,22 @@ export class PricingScenarioBuilderComponent implements OnInit {
        this.brands_format = [...new Set(products.map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : false}));;
        this.brands = [...new Set(products.map(item => item.brand_filter))].map(e=>({"value" : e,"checked" : false}));;
        this.product_group = [...new Set(products.map(item => item.product_group))].map(e=>({"value" : e,"checked" : false}));;
-        
+    //    debugger 
+       this._populateHierarchyModel(products)
     // this.retailers.forEach(() => this.ordersFormArray.push(new FormControl(false)));
       
 
     }
+
+    loadScenarioEvent($event){
+        let ids = $event.meta.map(d=>this.product.filter(dd=>(dd.account_name == d.retailer && (dd.product_group == d.product_group)))[0]).map(d=>d.id)
+        // debugger
+        this.pricing.getPricingMetric(ids).subscribe(data=>{
+            this.pricingArray = [...this.pricingArray , ...data]
+            console.log(data , "pricin metics data...")
+        })
+    }
+  
     reset(){
         
         this._populateFilters(this.product)
@@ -81,6 +130,17 @@ export class PricingScenarioBuilderComponent implements OnInit {
     closeModal(id: string) {
         this.modalService.close(id);
     }
+    modalEvent($event){
+        if($event['type'] == "open"){
+            this.openModal($event['id'])
+
+        }
+        else{
+            this.closeModal($event['id'])
+
+        }
+
+    }
     receiveMessage($event: any) {
         console.log($event , 'recieved');
         this.openModal($event);
@@ -89,6 +149,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
         console.log(event , "event checked")
         // this.retailers.filter(val=>val.value != event.value).forEach(val=>val.checked = false)
         if(event.checked){
+            
             // debugger
             this.selected_retailer = [...this.selected_retailer, event.value]
             // this.filter_model.retailer = this.selected_retailer
@@ -111,7 +172,8 @@ export class PricingScenarioBuilderComponent implements OnInit {
         this.strategic_cell = [...new Set(this.product.filter(val=>this.selected_retailer.includes(val.account_name)).map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (this.selected_strategic_cell.includes(e))}));
         this.brands_format = [...new Set(this.product.filter(val=>this.selected_retailer.includes(val.account_name)).map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand_format.includes(e))}));
         this.brands = [...new Set(this.product.filter(val=>this.selected_retailer.includes(val.account_name)).map(item => item.brand_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand.includes(e))}));
-
+        this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = true
+        
         }
         else{
             this.selected_retailer = this.selected_retailer.filter(e=>e!=event.value)
@@ -121,11 +183,12 @@ export class PricingScenarioBuilderComponent implements OnInit {
         this.strategic_cell = [...new Set(this.product.map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (this.selected_strategic_cell.includes(e))}));
         this.brands_format = [...new Set(this.product.map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand_format.includes(e))}));
         this.brands = [...new Set(this.product.map(item => item.brand_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand.includes(e))}));
-
+        this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = false
 
         }
 
         console.log(this.retailers , "retailers ")
+        this.count_ret = {...this.count_ret ,...{"retailers" : this.selected_retailer.length}}
         
        
     }
@@ -273,10 +336,60 @@ export class PricingScenarioBuilderComponent implements OnInit {
     
 
         }
+        this.count_ret = {...this.count_ret ,...{"products" : this.selected_product.length}}
        
 
     }
+    hierarchyProductChange(event){
+        console.log(event , "event")
+        if(event.value == "All"){
+            if(event.checked){
+                this.hierarchy_model.forEach(h=>{
+                    h.checked = true
+                    h.child.forEach(hc=>{
+                        hc.checked = true
+                    })
+                })
+
+            }
+            else{
+                this.hierarchy_model.forEach(h=>{
+                    h.checked = false
+                    h.child.forEach(hc=>{
+                        hc.checked = false
+                    })
+                })
+            }
+            
+
+        }
+        
+         
+        else if('product' in event){  // product change
+            this.productChange(event["product"])
+            // debugger
+            if(event.product.checked){
+                this.hierarchy_model.filter(d=>d.value == event.retailer.value)[0].child.filter(d=>d.value == event.product.value)[0].checked = true
+
+            }
+            else{
+                this.hierarchy_model.filter(d=>d.value == event.retailer.value)[0].child.filter(d=>d.value == event.product.value)[0].checked = false
+
+            }
+
+        }
+        else{ //retailer change
+            this.retailerChange(event)
+            
+            
+        }
+
+        
+        
+    }
     filterApply(event){
+        
+        console.log(this.hierarchy_model , "hierarchy model..")
         console.log(event,"after apply")
         if(event.key != undefined){
             // if(event.key == 'Retailer'){
@@ -299,11 +412,18 @@ export class PricingScenarioBuilderComponent implements OnInit {
                 
             // }
             if(event.key == 'Product groups'){
-                let selected = this.product.filter(e=>
-                    (this.selected_retailer.includes(e.account_name)) &&
-                    (this.selected_product.includes(e.product_group))
+                this.closeModal("addnew-pricngtool")
+                console.log(this.hierarchy_model , "hierarchy model...")
+                console.log(this.product , "availalbe product......")
+                // let selected = this.product.filter(e=>
+                //     (this.selected_retailer.includes(e.account_name)) &&
+                //     (this.selected_product.includes(e.product_group))
                 
-                ).map(d=>d.id)
+                // ).map(d=>d.id)
+                // debugger
+                let selected = 
+                 [].concat.apply([] , this.hierarchy_model.filter(d=>d.checked).map(d=>d.child.filter(d=>d.checked).map(d=>d.id)) as any[]);
+                // this.hierarchy_model.filter(d=>d.checked).map(d=>d.child.filter(d=>d.checked).map(d=>d.id)).flat(1);
                 console.log(selected , "selected product for api")
                 // this.filter_model = {...this.filter_model , ...{"product_group" : this.selected_product}}
 
@@ -316,18 +436,60 @@ export class PricingScenarioBuilderComponent implements OnInit {
             }
         }
     }
+    _filterPricingArray(obj , is_product){
+       if(is_product){
+        this.pricingArray = this.pricingArray.filter(d=>!(d.account_name == obj['retailer'] && d.product_group == obj["product"]))
+        var idx = this.selected_product.findIndex(p =>p== obj["product"]);
+        this.selected_product.splice(idx,1); 
+        this.count_ret = {...this.count_ret ,...{"products" : this.selected_product.length}}
+
+       }
+       else{
+        this.pricingArray = this.pricingArray.filter(d=>!(d.account_name == obj['retailer']))
+        var idx = this.selected_retailer.findIndex(p =>p== obj["retailer"]);
+        this.selected_retailer.splice(idx,1); 
+        this.count_ret = {...this.count_ret ,...{"retailers" : this.selected_retailer.length}}
+
+       }
+      
+        console.log(this.selected_product , "sel pr af")
+    }
     simulateReset($event){
+      
         if($event.type == 'simulate'){
-            console.log(this.pricingArray.map(d=>d.tpr_discount = 0) , "disounts..")
+            // console.log(this.pricingArray.map(d=>d.tpr_discount = 0) , "disounts..")
             
-            let form = {"pricing" : this.pricingArray , ...$event.data}
+            let form = {...$event.data}
             console.log(form, "simulate from data...")
+            let retailers:any = []
+            form.products.forEach(element => {
+               retailers.push({"account_name" : element.account_name , "product_group" : element.product_group})
+                element.list_price_date = utils.convertMomentToDate(element.list_price_date)
+                element.rsp_date = utils.convertMomentToDate(element.rsp_date)
+                element.cogs_date = utils.convertMomentToDate(element.cogs_date)
+                
+            });
+            form = {...form ,...{"retailers" : retailers} }
+            console.log(form , "final form")
             this.pricing.calculatePricingMetrics(form).subscribe(data=>{
                 console.log(data , "price simulated response...")
 
                 this.pricing.setPricingSimulatedObservable(data)
             })
         }
+    }
+
+    removeRetailerEvent($event){
+        if("product" in $event){
+            this._filterPricingArray($event['product']  ,true)
+
+        }
+        if("retailer" in $event){
+            this._filterPricingArray($event['retailer'] , false)
+
+        }
+        
+        console.log($event , "remove retailer event fired..")
     }
 
     close($event){

@@ -2,14 +2,19 @@ export interface PricingPromoModel{
     lpi : number,
     rsp : number,
     cogs : number ,
-    elasticity : number
+    elasticity : number,
+
 }
 
 export interface MetaInfo {
     id?: number,
     retailer : string,
     product_group : string,
-    pricing : boolean | PricingPromoModel
+    
+    pricing : boolean | PricingPromoModel,
+    cogs_date? : Date
+    list_price_date? : Date,  
+    rsp_date? : Date
 }
 
 

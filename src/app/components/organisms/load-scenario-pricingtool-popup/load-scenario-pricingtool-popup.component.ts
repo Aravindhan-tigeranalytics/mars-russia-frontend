@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output , EventEmitter } from '@angular/core';
 import { ListPromotion } from '@core/models';
 import {OptimizerService , PricingService} from "@core/services"
 @Component({
@@ -9,6 +9,10 @@ import {OptimizerService , PricingService} from "@core/services"
 export class LoadScenarioPricingtoolPopupComponent implements OnInit {
     selectedIndex!: number;
     list_promotion:Array<ListPromotion> = []
+    selected_promotion : ListPromotion = null as any
+
+    @Output()
+    load_scenario_event = new EventEmitter()
     constructor(private optimizerService : OptimizerService , private pricingService : PricingService) {
         this.optimizerService.fetch_load_scenario()
     }
@@ -36,7 +40,13 @@ export class LoadScenarioPricingtoolPopupComponent implements OnInit {
         },
     ];
 
-    select(index: number) {
+    loadScenario(){
+        this.load_scenario_event.emit(this.selected_promotion)
+
+    }
+
+    select(index: number,slected_promotion) {
         this.selectedIndex = index;
+        this.selected_promotion = slected_promotion
     }
 }

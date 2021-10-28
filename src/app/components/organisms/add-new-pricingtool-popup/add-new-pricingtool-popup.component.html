@@ -1,10 +1,10 @@
 <div class="w-[650px] bg-white mx-auto my-6">
     <div class="border-b border-marsgray-200">
-        <nwn-command-header type="stroke" nwnSvgIcon="plus">Add more</nwn-command-header>
+        <nwn-command-header type="stroke" nwnSvgIcon="plus">{{heading}}</nwn-command-header>
     </div>
 
     <div class="border-b border-marsgray-200">
-        <nwn-command-search [hideClose]="true"></nwn-command-search>
+        <nwn-command-search [value] = "searchText"  (inputChangeEvent)="inputChangeEvent($event)" [hideClose]="true"></nwn-command-search>
     </div>
    
     <!-- {{product}} Products
@@ -12,14 +12,44 @@
     {{retailers}} Retailers -->
     <div class="h-[448px] scrollbar-y bg-white">
         <div>
-            <ng-container *ngFor="let retailer of retailers">
-            <nwn-command-multiselect [value] = "retailer.value" [checked]="retailer.checked" [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
+
+            <!-- <nwn-command-multiselect
+            (valueChangeSelect)="valueChangeSelect($event)"
+             [value] = "'All'" [checked]="false" 
+             [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
+                >All</nwn-command-multiselect
+            > -->
+            
+            <ng-container *ngFor="let retailer of hierarchy_model">
+                <nwn-command-multiselect
+                (valueChangeSelect)="valueChangeSelect($event)"
+                 [value] = "retailer.value" [checked]="retailer.checked" 
+                 [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
+                    >{{retailer.value}}</nwn-command-multiselect
+                >
+                <nwn-command-multiselect
+                [value] = "p.value" [checked]="p.checked"
+                *ngFor="let p of retailer.child | appFilter:searchText : 'hierarchy'" 
+                [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
+                (valueChangeSelect)="valueChangeSelectProduct($event , retailer)"
+                    >{{p.value}}</nwn-command-multiselect
+                >
+            </ng-container>
+            <!-- <ng-container *ngFor="let retailer of retailers">
+            <nwn-command-multiselect
+            (valueChangeSelect)="valueChangeSelect($event)"
+             [value] = "retailer.value" [checked]="retailer.checked" 
+             [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
                 >{{retailer.value}}</nwn-command-multiselect
             >
-            <nwn-command-multiselect *ngFor="let p of product | subFilter : retailer.value" [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
-                >{{p}}</nwn-command-multiselect
+            <nwn-command-multiselect
+            [value] = "p.value" [checked]="p.checked"
+            *ngFor="let p of product | subFilter : retailer : true : product_group" 
+            [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
+            (valueChangeSelect)="valueChangeSelectProduct($event)"
+                >{{p.value}}</nwn-command-multiselect
             >
-        </ng-container>
+        </ng-container> -->
             <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true" [cmdMultiselectSub]="true"
                 >Milkyway XXL</nwn-command-multiselect
             >
@@ -67,5 +97,6 @@
             >
         </div> -->
     </div>
-    <nwn-search-footer [showKeyBoardCtrl]="true" [showAdd]="true" type="primary"></nwn-search-footer>
+    <nwn-search-footer *ngIf="heading == 'Add more'" (click) = "apply()" [showKeyBoardCtrl]="true" [showAdd]="true" type="primary"></nwn-search-footer>
+    <nwn-search-footer *ngIf="heading != 'Add more'" (click) = "apply()" [showKeyBoardCtrl]="true" [showApply]="true" type="primary"></nwn-search-footer>
 </div>

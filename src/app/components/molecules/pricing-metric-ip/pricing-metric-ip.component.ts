@@ -1,33 +1,41 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,ViewChild } from '@angular/core';
  
 import { ControlValueAccessor,NG_VALUE_ACCESSOR, } from '@angular/forms'
+import {DatePickerComponent} from 'ng2-date-picker';
 
 @Component({
-    selector: 'nwn-pricing-metric',
-    templateUrl: './pricing-metric.component.html',
-    styleUrls: ['./pricing-metric.component.css'],
+    selector: 'nwn-pricing-metric-ip',
+    templateUrl: './pricing-metric-ip.component.html',
+    styleUrls: ['./pricing-metric-ip.component.css'],
     providers: [
         {
           provide: NG_VALUE_ACCESSOR,
           multi:true,
-          useExisting: PricingMetricComponent
+          useExisting: PricingMetricIpComponent
         }
       ]
 })
-export class PricingMetricComponent implements ControlValueAccessor {
+export class PricingMetricIpComponent implements ControlValueAccessor {
+    @ViewChild('dayPicker') datePicker: DatePickerComponent;
     constructor() {}
     @Input()
     percentage = false;
 
     @Input()
-    counterPer = 18.02;
+    counterPer = 45.67;
     @Input()
     label = "List Price"
     @Input()
-    base = 0
+    base = 40.67
+
+    @Input()
+    disable = false
 
     enabled = "abs"
     absenable = true
+
+    open() { this.datePicker.api.open(); }  
+ close() { this.datePicker.api.close(); }
 
     toggleEnable(){
         this.absenable = !this.absenable
@@ -48,7 +56,9 @@ export class PricingMetricComponent implements ControlValueAccessor {
         console.log(this.percentage , "curr percent ")
     }
 
-    onChange = (quantity) => {};
+    onChange = (quantity) => {
+        console.log(quantity , "onchange called")
+    };
 
   onTouched = () => {};
 
@@ -66,10 +76,15 @@ export class PricingMetricComponent implements ControlValueAccessor {
 
     }
     writeValue(quantity: number) {
-        this.counterPer = quantity;
+        //  console.log(quantity , "quantity")
+        //  console.log(this.base , "base vlue")
+        //  console.log(this.counter , "counter value")
+        this.counter = quantity;
+        this.counterPer = this.convertAbsolute(this.base , this.counter)
       }
     
       registerOnChange(onChange: any) {
+          console.log("register on change" , onchange)
         this.onChange = onChange;
       }
     
@@ -77,56 +92,27 @@ export class PricingMetricComponent implements ControlValueAccessor {
         this.onTouched = onTouched;
       }
 
-      decincrement(){
-          if(this.absenable){
-            this.incrementPer()
-
-          }
-          else{
-              this.increment()
-
-          }
-
-      }
-      decdecrement(){
-        if(this.absenable){
-            this.decrementPer()
-
-        }
-        else{
-            this.decrement()
-        }
-
-      }
-
-    incrementPer() {
-        this.counterPer++;
-        // console.log(this.counterPer , "counter per")
-        // console.log(this.base , "base value")
-        this.counter = this.convertPercent(this.counterPer , this.base)
-        this.onChange(this.counterPer)
-    }
-
-    decrementPer() {
-        this.counterPer--;
-        // let per = ((this.counterPer - this.base)/this.base) * 100
-        this.counter = this.convertPercent(this.counterPer , this.base)
-        this.onChange(this.counterPer)
-    }
-
+      
+ 
     counter = 0;
 
     increment() {
+        if(this.disable){
+            return
+        }
        
         this.counter++;
-        this.counterPer = this.convertAbsolute(this.counterPer , this.counter)
-        this.onChange(this.counterPer)
+        this.counterPer = this.convertAbsolute(this.base , this.counter)
+        this.onChange(this.counter)
     }
 
     decrement() {
+        if(this.disable){
+            return
+        }
         this.counter--;
-        this.counterPer = this.convertAbsolute(this.counterPer , this.counter)
-        this.onChange(this.counterPer)
+        this.counterPer = this.convertAbsolute(this.base , this.counter)
+        this.onChange(this.counter)
     }
     convertAbsolute(base , per){
         base = Number(base)
@@ -135,6 +121,7 @@ export class PricingMetricComponent implements ControlValueAccessor {
         let abs = base + (base * per)/100
         // console.log(abs , "abs")
         // console.log(typeof(abs) , "type abs")
+
         return Number(abs.toFixed(2))
 
     }

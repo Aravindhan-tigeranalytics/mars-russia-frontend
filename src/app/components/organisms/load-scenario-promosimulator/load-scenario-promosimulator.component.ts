@@ -111,14 +111,14 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
     loadScenario(){
         console.log(this.selected_promotion , "selected promotions")
         if(Array.isArray(this.selected_promotion.meta)){
-            if(this.selected_promotion.meta.length > 1){
+            // if(this.selected_promotion.meta.length > 1){
 
                 this.metaInfo = []
                 this.metaInfo = [...this.metaInfo , ...this.selected_promotion.meta]
                 this.modal.open('product-choose')
                 return
 
-            }
+            // }
         }
 
         this.loadPromotionEvent.emit({

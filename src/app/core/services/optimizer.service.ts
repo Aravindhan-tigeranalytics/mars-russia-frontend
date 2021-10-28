@@ -284,14 +284,18 @@ export class OptimizerService {
     return this.apiService.get<LoadedScenarioModel>('api/scenario/list-saved-promo/' + arg)
       // http://localhost:8000/api/scenario/list-saved-promo/39/
   }
-  fetch_optimizer_scenario_by_id(id){
-      return this.apiService.get<any>('api/optimiser/list-saved-optimizer/' + id)
+  fetch_optimizer_scenario_by_id(id , pricing_id){
+    let arg= String(id)
+    if(pricing_id){
+    arg  = id + "/" + pricing_id
+    }
+      return this.apiService.get<any>('api/optimiser/list-saved-optimizer/' + arg)
 
-  }
+  } 
   set_base_line_promotion(promotions:any){
     this.base_line_promotion = [...this.base_line_promotion , ...promotions]
     this.base_line_promotion = [...new Set(this.base_line_promotion)]
-    console.log(this.base_line_promotion , "Base line promotion set")
+    // console.log(this.base_line_promotion , "Base line promotion set")
 
   }
 

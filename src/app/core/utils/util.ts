@@ -1,3 +1,45 @@
+// import { type } from "os"
+
+import * as moment from "moment"
+
+export function reducePercent(value , percent){
+  return value * (1  - (percent / 100))
+}
+
+
+export function _divide(n1 , n2){
+    if(!n1 || !n2){
+      return 0
+
+    }
+    return n1/n2
+  }
+
+  export function isArray(obj : any ) {
+    return Array.isArray(obj)
+ }
+
+
+export function convertMomentToDate(moment_date){
+  console.log(moment_date , "moentdatemoentdatemoentdatemoentdatemoentdatemoentdate")
+  // debugger
+  if(!moment_date){
+    return null
+  }
+  // console.log()
+  let x = moment_date
+  if(moment_date instanceof moment){
+    x = x.toDate()
+  }
+  
+  let hoursDiff = x.getHours() - x.getTimezoneOffset() / 60;
+  let minutesDiff = (x.getHours() - x.getTimezoneOffset()) % 60;
+  x.setHours(hoursDiff);
+  x.setMinutes(minutesDiff);
+  return x
+}
+
+
 export function generateMessage1(metric , type){
   // debugger
   // arrow: "carret-up"
@@ -408,6 +450,7 @@ export function colorForDifference(base:any, simulated:any){
 }
 
 export function formatNumber(number: any,currency: boolean,percentage: boolean,debug=false ){
+  // console.log(number , "format Fplchatdata....number funtion ")
   // if(debug){
   //   debugger
   // }
