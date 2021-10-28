@@ -40,7 +40,7 @@
     </div>
     <div class="h-[448px] scrollbar-y px-6 py-4 bg-white space-y-3" [ngClass]="{ hidden: openTab !== 3, block: openTab === 3 }">
         <div class="border border-marsgray-300" *ngFor="let promotion of list_promotion_optimizer;">
-            <nwn-scenario-load-card [value] = "promotion.id" (click)="changeCheckboxEvent($event)" [showCheckbox]="true" [showSubHead]="true">
+            <nwn-scenario-load-card [value] = "promotion.id" (changeCheckboxEvent)="toggleId($event)" [showCheckbox]="true" [showSubHead]="true">
                 <p slcHead>{{promotion.name}}</p>
                 <p slcContent>
                     {{promotion.comments}}
