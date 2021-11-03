@@ -101,7 +101,7 @@ export class PromotionDetailsComponent implements OnInit {
             displayKey: 'name', // if objects array passed which key to be displayed defaults to description
             search: true,
         };
-        console.log(this.base_promotions , "base promotions")
+        // console.log(this.base_promotions , "base promotions")
         this.form.valueChanges.subscribe(data=>{
             // console.log(data , "form changes subscription")
             // let promo = null

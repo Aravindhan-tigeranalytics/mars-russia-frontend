@@ -9,10 +9,20 @@ import * as d3 from 'd3';
 export class PlChartComponent implements OnInit,OnChanges {
     @Input() plchartdata: any[];
     @Input() tooltipText : string = 'Simulated'
+// export class PlChartComponent implements OnInit {
+//     private data = [
+//         { group: 'LSV', base: '16000000', simulated: '21000000' },
+//         { group: 'Trade Expense', base: '8000000', simulated: '10000000' },
+//         { group: 'NSV', base: '2000000', simulated: '4000000' },
+//         { group: 'COGS', base: '18000000', simulated: '20000000' },
+//         { group: 'MAC', base: '18000000', simulated: '20000000' },
+//         { group: 'RSV v/o VAT', base: '14000000', simulated: '16000000' },
+//         { group: 'Customer Margin', base: '2000000', simulated: '4000000' },
+//     ];
 
     private svg: any;
     private margin = { top: 10, right: 0, bottom: 20, left: 60 };
-    private boundingWidth = 1200 - this.margin.left - this.margin.right;
+    private boundingWidth = 1267 - this.margin.left - this.margin.right;
     private boundingHeight = 400 - this.margin.top - this.margin.bottom;
     constructor() { 
         // Initialization inside the constructor

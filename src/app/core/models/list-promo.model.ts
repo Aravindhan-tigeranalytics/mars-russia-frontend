@@ -2,14 +2,27 @@ export interface PricingPromoModel{
     lpi : number,
     rsp : number,
     cogs : number ,
-    elasticity : number
+    promo? : number,
+    base_lpi? : number,
+    base_rsp? : number,
+    base_cogs? : number ,
+    base_promo? : number,
+    cogs_date? : Date
+    list_price_date? : Date,  
+    rsp_date? : Date,
+    promo_date? : Date,
+    follow_competition? : boolean,
+    inc_elasticity? : number,
+    inc_net_elasticity?:number
+
 }
 
 export interface MetaInfo {
     id?: number,
     retailer : string,
     product_group : string,
-    pricing : boolean | PricingPromoModel
+    
+    pricing : boolean | PricingPromoModel,
 }
 
 
@@ -18,7 +31,7 @@ export interface ListPromotion {
     name: string,
     comments: string,
     scenario_type: string,
-    meta: boolean | MetaInfo | Array<MetaInfo>,
+    meta: MetaInfo | Array<MetaInfo>,
     
     
     }

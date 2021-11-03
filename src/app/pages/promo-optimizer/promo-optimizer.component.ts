@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ModalService } from '@molecules/modal/modal.service';
-import { CheckboxModel,ListPromotion,Product,FilterModel } from "../../core/models"
+import { CheckboxModel,ListPromotion,Product,FilterModel,MetaInfo } from "../../core/models"
 // import {OptimizerService} from '../../core/services/optimizer.service'
 import {SimulatorService,OptimizerService} from "@core/services"
 import { Router,NavigationEnd ,RoutesRecognized} from '@angular/router';
@@ -392,23 +392,44 @@ export class PromoOptimizerComponent implements OnInit {
         this.closeModal($event)
     }
     loadOptimizer($event){
+        console.log($event , "$event... load optimizer")
+        let pricing = null
+        let meta:any;
+        // debugger
+        if("price_id" in $event){
+            pricing= $event['price_id']
+            meta =  $event['promotion']['meta'].find(d=>d.id==$event['price_id'])
+
+        }
+        else{
+            meta =  $event['promotion']['meta']
+        }
         this.isOptimiserFilterApplied = false
-        this.filter_model["retailer"] =  $event['promotion']['meta']['retailer']
-        this.filter_model["product_group"] =  $event['promotion']['meta']['product_group']
-        this.productChange({"value" : $event['promotion']['meta']['product_group'] , "checked" : true})
-            this.retailerChange({"value" : $event['promotion']['meta']['retailer'] , "checked" : true})
+        // debugger
+        this.filter_model["retailer"] = meta['retailer']
+        this.filter_model["product_group"] =  meta['product_group']
+        this.productChange({"value" : meta['product_group'] , "checked" : true})
+            this.retailerChange({"value" : meta['retailer'] , "checked" : true})
         // this.selected_product = $event['meta']['product_group']
         // this.selected_retailer = 
         // console.log($event , "load event")
         this.optimize.setAccAndPPGFilteredFlagObservable(true)
         
-        this.optimize.fetch_optimizer_scenario_by_id($event['promotion']["id"]).subscribe(data=>{
+        this.optimize.fetch_optimizer_scenario_by_id($event['promotion']["id"],pricing).subscribe(data=>{
             if(data){
                 
                 console.log(data , "fetch response ..")
                 // this.optimizer_response = data
                 let promotion = this.optimize.getPromotionById($event['promotion']["id"])
+                // debugger
+                if("price_id" in $event){
+                    promotion.meta = (promotion.meta as MetaInfo[]).filter(d=>d.id==$event['price_id'])
+        
+                }
+
                 data["meta"] = promotion
+               
+                
                 console.log(data , "data with promotion details")
                 this.optimize.setoptimizerDataObservable(data)
                 this.restApi.setIsSaveScenarioLoadedObservable({"flag" : true , "data" : {
@@ -509,6 +530,7 @@ export class PromoOptimizerComponent implements OnInit {
 
     }
     _optimize(formdata){
+        // if(thi)
 
         this.optimize.optimizeResult(formdata).subscribe(data=>{
             if(data['opt_pop_up_flag_final'] == 0){

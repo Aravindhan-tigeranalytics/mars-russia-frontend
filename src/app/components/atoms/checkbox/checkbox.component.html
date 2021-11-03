@@ -1,5 +1,5 @@
-<label class="flex flex-row space-x-4 leading-none h-3 items-center">
-    <div class="relative">
+<label class="flex flex-row {{spacex}} leading-none h-3 items-center">
+    <div class="relative checktool">
         <input
             type="checkbox"
             [ngClass]="{
@@ -33,9 +33,16 @@
         >
             <path d="M1 3.00012L4 6.00012L9.00024 1" stroke-width="2" stroke-linecap="round" />
         </svg>
+
+        <div [ngClass]="{ hidden: showTooltip == false }">
+            <div class="btn-tooltip">
+                <ng-content select="[tooltipContent]"></ng-content>
+            </div>
+        </div>
     </div>
 
     <div class="text-marsgray-700 text-body leading-none w-full mb-1" [ngClass]="{ hidden: showLabel == false }">
+        <!-- {{spacex}} -->
         <ng-content></ng-content>
     </div>
 </label>

@@ -15,6 +15,11 @@ checked:boolean = false
 @Output() valueChange = new EventEmitter();
 @Input()
 showLabel: boolean = false;
+@Input()
+showTooltip = false
+
+@Input()
+spacex = 'space-x-4'
  
 
     @Input() checkboxData = false;

@@ -7,13 +7,13 @@ export class  WeekType implements PipeTransform {
     // 'default' | 'active' | 'filled' | 'filled-active' = 'default';
     // console.log(current_quarter , "current quarter...")
     // console.log(selected_quarter , "selected_quarter in weektype pipe")
-    console.log(selected_quarter.match(/\d/g) , "selected quater in pipe................")
-    console.log(current_quarter.match(/\d/g) , "selected quater in pipe current_quarter ................")
+    // console.log(selected_quarter.match(/\d/g) , "selected quater in pipe................")
+    // console.log(current_quarter.match(/\d/g) , "selected quater in pipe current_quarter ................")
     if(current_quarter.match(/\d/g)[0] != "1"){
       return 'default'
     }
     
-    console.log(weekly_map , "weekly map in weektype pipe")
+    // console.log(weekly_map , "weekly map in weektype pipe")
     let av_quater = weekly_map.map(d=>{
       if('selected_promotion' in d){
         return d.week.quater

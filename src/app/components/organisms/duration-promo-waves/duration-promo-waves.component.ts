@@ -96,8 +96,8 @@ export class DurationPromoWavesComponent {
                 else{
                     this.value =  String(this.duration_max)
                 }
-                console.log(this.basepromo , "base promo")
-                console.log(this.value , "base promo generated value")
+                // console.log(this.basepromo , "base promo")
+                // console.log(this.value , "base promo generated value")
             } 
         }
     }

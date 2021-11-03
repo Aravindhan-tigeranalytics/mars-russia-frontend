@@ -11,6 +11,12 @@ export class CommandMultiselectComponent {
     @Input()
     leftBorder: boolean = false;
     @Input()
+    cmdMultiselectHead: boolean = false;
+    @Input()
+    cmdMultiselectSub: boolean = false;
+    @Input()
+    disabled: boolean = false;
+    @Input()
     value:any = ''
     @Input()
     checked:boolean = false

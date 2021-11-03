@@ -14,6 +14,8 @@ export class LoadedPromosimulatorScenarioComponent {
   @Output()
   deleteClicked =  new EventEmitter()
 
+  symbol = "₽"
+
   constructor(private modalService: ModalService){}
   deleteClickedEvent($event){
       this.deleteClicked.emit(this.promotion_viewed)

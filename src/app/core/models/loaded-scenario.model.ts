@@ -83,6 +83,7 @@ export interface LoadedScenarioModel {
     scenario_type:string;
     promo_elasticity : number
     holiday_array : any[];
+    pricing_id?:number
     
     base:{
         total : PromoSimulatedTotalModel;
@@ -93,3 +94,4 @@ export interface LoadedScenarioModel {
         weekly : Array<PromoSimulatedWeeklyModel>
     }
   }
+

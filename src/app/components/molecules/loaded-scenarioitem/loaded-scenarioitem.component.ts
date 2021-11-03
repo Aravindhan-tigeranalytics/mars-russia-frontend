@@ -10,6 +10,9 @@ export class LoadedScenarioitemComponent {
     title: string = 'Untitled';
     @Output()
     openInfoEvent = new EventEmitter()
+
+    @Input()
+    subtitle = "Pricing Scenario"
     // @Input()
     // info_promotion = null as any
 

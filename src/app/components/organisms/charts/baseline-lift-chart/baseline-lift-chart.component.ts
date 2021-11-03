@@ -18,6 +18,7 @@ export class BaselineLiftChartComponent implements OnInit,OnChanges {
         this.baselineliftdata = [];
      }
     ngOnChanges(changes: SimpleChanges) {
+        console.log("changes in baselie chart")
  
         for (let property in changes) {
             if (property === 'baselineliftdata') {

@@ -16,7 +16,7 @@ export class KpiMetricsComponent implements OnInit, AfterViewInit {
     translate_y: string = '';
     currentTranslateRate: string = '';
     @Input()
-    loaded_scenario:Array<LoadedScenarioModel> = []
+    loaded_scenario:Array<LoadedScenarioModel | any> = []
     @Output()
     deleteCompareEvent  = new EventEmitter()
     units:CompareMetricModel = {"value" : [],"visible": false , key:"Units"}
@@ -276,48 +276,13 @@ this.format = "percent"
                 
                 
                 
-                // this.units_compare = {"value" : this.units , "visible" : true}
-
-                // this.increment_units.push(this._generate_obj(element , "increment_units"))
-                // this.volume.push(this._generate_obj(element , "volume"))
-                // this.lsv.push(this._generate_obj(element , "lsv"))
-                // this.nsv.push(this._generate_obj(element , "nsv"))
-                // this.mac.push(this._generate_obj(element , "mac"))
-                // this.mac_per_nsv.push(this._generate_obj(element , "mac_percent" , true))
-                // this.te.push(this._generate_obj(element , "te"))
-                // this.te_per_lsv.push(this._generate_obj(element , "te_percent_of_lsv", true))
-                // this.te_per_unit.push(this._generate_obj(element , "te_per_unit"))
-                // this.roi.push(this._generate_obj(element , "roi", true))
-                // this.lift.push(this._generate_obj(element , "lift", true))
-                // this.asp.push(this._generate_obj(element , "asp"))
-                // this.promo_asp.push(this._generate_obj(element , "asp"))
-                // this.rsv_w_o_vat.push(this._generate_obj(element , "total_rsv_w_o_vat"))
-                // this.customer_margin.push(this._generate_obj(element , "rp"))
-                // this.rp_percent.push(this._generate_obj(element , "rp_percent", true))
-
-                // lsv:Array<any> = []
-                // nsv:Array<any> = []
-                // mac : Array<any> = []
-                // mac_per_nsv:Array<any> = []
-                // te : Array<any> = []
-                // te_per_lsv:Array<any> = []
-                // te_per_unit:Array<any> = []
-                // roi:Array<any> = []
-                // lift:Array<any> = []
+                
             
             
            
             
         });
-        // console.log(this.scenario_names , "genrated base value scenario_names")
-        // console.log(this.base_units , "genrated base value base")
-        // console.log(this.units , "genrated base value units")
-        // console.log(this.increment_units , "genrated base value inc")
-        // console.log(this.volume , "genrated base value volume")
-        // setTimeout(()=>{
-        //     this.units_compare = {"value" : this.units , "visible" : true}
-        //     console.log("setting")
-        // },10000)
+        
 
     }
 
@@ -411,9 +376,200 @@ this.format = "percent"
                 
                 this.loaded_scenario = changes[property].currentValue
                 // console.log(this.loaded_scenario , "after delete loaded scenario")
-                this.generate_metrics(this.loaded_scenario)
+                // this.generate_metrics(this.loaded_scenario)
+                this.generate_metrics_pricing(this.loaded_scenario)
                
             } 
         }
     }
+
+    generate_metrics_pricing(loaded_scenario : Array<LoadedScenarioModel|any>){
+        
+        // this.scenario_names = []
+         
+        loaded_scenario.forEach(element => {
+            this._update_price_base(element)
+            if(this.scenario_names.find(d=>d.id == element.scenario_id)){
+                return
+            }
+            // debugger
+
+            let ele = {
+                "id" : element.scenario_id,
+                "name" : element.scenario_name,
+                "comment" : element.scenario_comment,
+                "retailer" : {
+                    "account_name" : element.base[0].account_name,
+                    "product_group" : element.base[0].product
+                }
+            }
+            this.scenario_names.push(ele)
+                // this.base_units.push(this._generate_obj(element , "base_units"))
+                // this.units.push(this._generate_obj(element , "units"))
+                
+                this.units.value.push(this._generate_obj_pricing(element , "units", false,false))
+                this.units.visible = true
+                this.base_units.value.push(this._generate_obj_pricing(element , "base_units",false,false))
+                this.base_units.visible = true
+                this.increment_units.value.push(this._generate_obj_pricing(element , "increment_units",false,false))
+                this.increment_units.visible = true
+                this.volume.value.push(this._generate_obj_pricing(element , "volume",false,false))
+                this.volume.visible = true
+                this.lsv.value.push(this._generate_obj_pricing(element , "lsv"))
+                this.lsv.visible = true
+                this.nsv.value.push(this._generate_obj_pricing(element , "nsv"))
+                this.nsv.visible = true
+                this.mac.value.push(this._generate_obj_pricing(element , "mac"))
+                this.mac.visible = true
+                this.mac_per_nsv.value.push(this._generate_obj_pricing(element , "mac_percent", true))
+                this.mac_per_nsv.visible = true
+                this.te.value.push(this._generate_obj_pricing(element , "te"))
+                this.te.visible = true
+                this.te_per_lsv.value.push(this._generate_obj_pricing(element , "te_percent_of_lsv", true))
+                this.te_per_lsv.visible = true
+                this.te_per_unit.value.push(this._generate_obj_pricing(element , "te_per_unit"))
+                this.te_per_unit.visible = true
+                this.roi.value.push(this._generate_obj_pricing(element , "roi", true))
+                this.roi.visible = true
+                this.lift.value.push(this._generate_obj_pricing(element , "lift", true))
+                this.lift.visible = true
+                this.asp.value.push(this._generate_obj_pricing(element , "asp"))
+                this.asp.visible = true
+                this.promo_asp.value.push(this._generate_obj_pricing(element , "avg_promo_selling_price"))
+                this.promo_asp.visible = true
+                this.rsv_w_o_vat.value.push(this._generate_obj_pricing(element , "total_rsv_w_o_vat"))
+                this.rsv_w_o_vat.visible = true
+                this.customer_margin.value.push(this._generate_obj_pricing(element , "rp"))
+                this.customer_margin.visible = true
+                this.rp_percent.value.push(this._generate_obj_pricing(element , "rp_percent", true))
+                this.rp_percent.visible = true
+           
+            
+        });
+        
+
+        
+    }
+    _update_price_base(element){
+        // debugger
+        let base ={
+            "units" : 0,"base_units" : 0,"increment_units" : 0,"volume" : 0 , "lsv" : 0 , "nsv" : 0,"mac" : 0,
+            "mac_percent" : 0 , "te" : 0 , "te_percent_of_lsv": 0 , "te_per_unit" : 0 , "roi":0,"lift" : 0,
+            "asp" : 0, "avg_promo_selling_price" : 0,"total_rsv_w_o_vat" : 0 , "rp" : 0, "rp_percent" :0
+
+
+        }
+        let sim = {
+            "units" : 0,"base_units" : 0,"increment_units" : 0,"volume" : 0 , "lsv" : 0 , "nsv" : 0,"mac" : 0,
+            "mac_percent" : 0 , "te" : 0 , "te_percent_of_lsv": 0 , "te_per_unit" : 0 , "roi":0,"lift" : 0,
+            "asp" : 0, "avg_promo_selling_price" : 0,"total_rsv_w_o_vat" : 0 , "rp" : 0, "rp_percent" :0
+        }
+        element.base.forEach((e,i) => {
+            // debugger
+           base['units']+= element.base[i].total['units']
+           sim['units']+= element.simulated[i].total['units']
+            
+           base['base_units']+= element.base[i].total['base_units']
+           sim['base_units']+= element.simulated[i].total['base_units']
+
+           base['increment_units']+= element.base[i].total['increment_units']
+           sim['increment_units']+= element.simulated[i].total['increment_units']
+
+           base['volume']+= element.base[i].total['volume']
+           sim['volume']+= element.simulated[i].total['volume']
+
+           base['lsv']+= element.base[i].total['lsv']
+           sim['lsv']+= element.simulated[i].total['lsv']
+
+           base['nsv']+= element.base[i].total['nsv']
+           sim['nsv']+= element.simulated[i].total['nsv']
+
+           base['mac']+= element.base[i].total['mac']
+           sim['mac']+= element.simulated[i].total['mac']
+
+           base['mac_percent']= element.base[i].total['mac_percent']
+           sim['mac_percent']= element.simulated[i].total['mac_percent']
+
+           base['te']+= element.base[i].total['te']
+           sim['te']+= element.simulated[i].total['te']
+
+           base['te_percent_of_lsv']= element.base[i].total['te_percent_of_lsv']
+           sim['te_percent_of_lsv']= element.simulated[i].total['te_percent_of_lsv']
+
+           base['te_per_unit']= element.base[i].total['te_per_unit']
+           sim['te_per_unit']= element.simulated[i].total['te_per_unit']
+
+           base['roi']= element.base[i].total['roi']
+           sim['roi']= element.simulated[i].total['roi']
+
+           base['lift']= element.base[i].total['lift']
+           sim['lift']= element.simulated[i].total['lift']
+
+           base['asp']= element.base[i].total['asp']
+           sim['asp']= element.simulated[i].total['asp']
+
+           base['avg_promo_selling_price']= element.base[i].total['avg_promo_selling_price']
+           sim['avg_promo_selling_price']= element.simulated[i].total['avg_promo_selling_price']
+
+           base['total_rsv_w_o_vat']+= element.base[i].total['total_rsv_w_o_vat']
+           sim['total_rsv_w_o_vat']+= element.simulated[i].total['total_rsv_w_o_vat']
+
+           base['rp']+= element.base[i].total['rp']
+           sim['rp']+= element.simulated[i].total['rp']
+
+           base['rp_percent']= element.base[i].total['rp_percent']
+           sim['rp_percent']= element.simulated[i].total['rp_percent']
+            
+            
+        });
+        element.base['total'] = base
+        element.simulated['total'] = sim
+    }
+    _generate_obj_pricing(element:any , key:keyof PromoSimulatedTotalModel,per:boolean = false ,is_curr:boolean = true){
+        // debugger
+        let base = element.base.total[key]
+                let simulated = element.simulated.total[key]
+                let difference = simulated - base
+                let percent = 0
+                if(per){
+                    percent =difference
+
+                }
+                else{
+                    percent = (difference/base) * 100
+
+                }
+                
+
+
+     let ret =  {
+         "id" : element.scenario_id,
+            "base" : base,
+            "simulated" : simulated,
+            "base_perton" : base,
+            "simulated_perton" : simulated,
+            "base_perunit" : base,
+            "simulated_petunit" : simulated,
+            "difference" : difference,
+            "percent" : Utils.convertCurrency(percent , true),
+            "converted_base" : Utils.convertCurrency(base , per,is_curr),
+            "converted_simulated" : Utils.convertCurrency(simulated , per,is_curr),
+            "converted_difference" : Utils.convertCurrency(difference,per,is_curr),
+            "arrow" : difference < 0 ? "carret-down" : "carret-up",
+            "color" : difference < 0 ? "red" : "green"
+
+        }
+        let rev_color = ["te","te_percent_of_lsv","te_per_unit"]
+        if(rev_color.includes(key)){
+            ret["color"] =  difference > 0 ? "red" : "green"
+        }
+        return ret
+        // this.te.value.push(this._generate_obj(element , "te"))
+        // this.te.visible = true
+        // this.te_per_lsv.value.push(this._generate_obj(element , "te_percent_of_lsv", true))
+        // this.te_per_lsv.visible = true
+        // this.te_per_unit.value.push(this._generate_obj(element , "te_per_unit"))
+
+    }
+
 }

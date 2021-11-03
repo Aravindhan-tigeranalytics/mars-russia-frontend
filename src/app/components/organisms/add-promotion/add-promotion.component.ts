@@ -152,7 +152,7 @@ export class AddPromotionComponent implements OnInit {
         // debugger
         this.base_line_promotions = this.base_line_promotions.filter(val=>val.value!=e.value)
         // this.base_line_promotions.indexOf()
-        console.log(e.value , "base line promo value")
+        // console.log(e.value , "base line promo value")
 
     }
     applyPromotion(){

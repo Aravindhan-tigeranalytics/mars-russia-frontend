@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ModalService } from '@molecules/modal/modal.service';
 import {FormBuilder, FormGroup,FormArray,FormControl,ValidatorFn} from '@angular/forms';
-import {OptimizerService} from '@core/services'
-import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel, ListPromotion, FilterModel} from "@core/models"
+import {OptimizerService,PricingService} from '@core/services'
+import {ProductWeek , Product, CheckboxModel,LoadedScenarioModel,UploadModel, ListPromotion, FilterModel, MetaInfo} from "@core/models"
 import * as utils from "@core/utils"
 // import {} from 'file-saver'
 import * as FileSaver from 'file-saver';
@@ -62,7 +62,9 @@ export class PromoScenarioBuilderComponent implements OnInit {
       }
 
     constructor(private toastr: ToastrService,private modalService: ModalService,public restApi: SimulatorService,
-        private optimize : OptimizerService,private formBuilder: FormBuilder) {
+        private optimize : OptimizerService,private formBuilder: FormBuilder,
+        private pricingService : PricingService
+        ) {
 
             this.form = this.formBuilder.group({
                 orders: new FormArray([])
@@ -467,7 +469,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
 
     }
     simulateResetEvent($event){
-        console.log($event , "event passed")
+        console.log(this.promotion_viewed , "loaded scenario detaila")
+        // console.log($event , "event passed")
         this.promotion_map = $event.promotion_map
         let form = {
             "account_name" : this.selected_retailer ,
@@ -475,7 +478,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             "product_group" : this.selected_product,
         "param_depth_all" : false,
     "promo_elasticity" : $event.promo_elasticity}
-        console.log($event.promotion_map , "promotion maps available")
+        // console.log($event.promotion_map , "promotion maps available")
     
         $event.promotion_map.forEach(element => {
             let key = "week-" + element.week.week
@@ -502,6 +505,13 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 return
             }
 
+            console.log(form , "generated form for simulation..")
+            // debugger
+
+            if(this.promotion_viewed?.scenario_type == 'pricing'){
+                form = {...form , ...{"pricing" : (this.promotion_viewed.meta as MetaInfo).pricing}}
+            }
+            console.log(form , "updated form...")
             this.optimize.getPromoSimulateData(form).subscribe(data=>{
                 this.toastr.success('Simulated Successfully', 'Success')
                 this.optimize.setSimulatedDataObservable(data)
@@ -570,7 +580,22 @@ export class PromoScenarioBuilderComponent implements OnInit {
         this.uploaded_file = $event
         
     }
-    generateListPromotion(){
+    _getmeta($event){
+        if(utils.isArray($event['promotion']['meta'])){
+            let obj = $event['promotion']['meta'].find(d=>d.retailer == this.loaded_scenario.account_name && d.product_group == this.loaded_scenario.product_group)
+
+         return  {
+            "lpi" : obj['pricing']['lpi'],
+            "rsp" : obj['pricing']['rsp'],
+            "cogs" : obj['pricing']['cogs']   ,
+            "elasticity" : obj['pricing']['elasticity'],
+         }     
+        }
+        return false
+
+    }
+    generateListPromotion($event){
+        $event['promotion']['meta']
         // debugger
         this.promotion_viewed = {
             "id" : this.loaded_scenario.scenario_id,
@@ -578,14 +603,17 @@ export class PromoScenarioBuilderComponent implements OnInit {
             "comments" : this.loaded_scenario.scenario_comment,
             "scenario_type" : this.loaded_scenario.scenario_type,
             "meta" : {
+                "id" :this.loaded_scenario.pricing_id,
                 "product_group" : this.loaded_scenario.product_group,
                 "retailer" : this.loaded_scenario.account_name,
-                "pricing" : false
+                "pricing" : this._getmeta($event)
             }
         }
-
+       
     }
     loadPromotionEvent($event){
+        console.log($event)
+        // debugger
         let pricing = null
         if("price_id" in $event){
             pricing= $event['price_id']
@@ -596,7 +624,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             console.log(data , "fetch loaded scenario response")
             this.loaded_scenario = data
             this.loaded_scenario.scenario_comment = $event.comments
-            this.generateListPromotion()
+            this.generateListPromotion($event)
             this.filter_model["product_group"] = data.product_group
             this.filter_model["retailer"] = data.account_name
             // debugger
@@ -739,6 +767,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
         }
         else if($event.type == 'save'){
             console.log('save clicked')
+            console.log(this.promotion_viewed , "promotion viewed")
             let weekly = {
                 "name" : $event['name'],
                 "comments" : $event["comments"],
@@ -748,6 +777,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 "param_depth_all" : false,
                 "promo_elasticity" : 0,
                 "scenario_id": this.loaded_scenario.scenario_id
+            
             }
             this.promotion_map.forEach(element => {
                 let key = "week-" + element.week.week
@@ -756,25 +786,36 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 weekly[key] = obj
                 
             });
+            // debugger
+            if(this.promotion_viewed.scenario_type == "pricing"){
+                weekly = {...weekly , ...{"price_id" : (this.promotion_viewed.meta as MetaInfo).id }}
+                this.pricingService.updatePricingScenario(this.loaded_scenario.scenario_id , weekly).subscribe(data=>{
+                    console.log(data , "update priing...")
+                })
+              
+            }
+            else{
+
+           
             
             this.optimize.updatePromoScenario(weekly).subscribe(data=>{
                 this.save_scenario_error = null
                 this.modalService.close("save-scenario-popup")
                 this.toastr.success('Scenario Updated Successfully', 'Success')
-                let promotion : ListPromotion = {
-                    "id" : data["saved_id"],
-                    "name" : weekly["name"],
-                    "comments" : weekly["comments"],
-                    "scenario_type" : "promo",
-                    "meta" : {
-                        "retailer" : weekly["account_name"],
-                        "product_group" : weekly["product_group"],
-                        "pricing" : false
-                    }
+                // let promotion : ListPromotion = {
+                //     "id" : data["saved_id"],
+                //     "name" : weekly["name"],
+                //     "comments" : weekly["comments"],
+                //     "scenario_type" : "promo",
+                //     "meta" : {
+                //         "retailer" : weekly["account_name"],
+                //         "product_group" : weekly["product_group"],
+                //         "pricing" : false
+                //     }
     
     
-                }
-                this.optimize.addPromotionList(promotion)
+                // }
+                // this.optimize.addPromotionList(promotion)
                 console.log("saved data" , data)
                 this.promotion_viewed.name = $event['name']
                 this.scenarioTitle = $event['name']
@@ -793,6 +834,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 this.save_scenario_error = error.detail
             })
         }
+    }
     }
 
     receiveMessage($event: any) {

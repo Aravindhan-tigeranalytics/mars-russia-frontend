@@ -19,6 +19,7 @@ import {AuthModule} from "./auth/auth.module"
 import { GlobalErrorHandler } from "@core/services/global-error-handler.service";
 // import {AuthRoutingModule} from "./auth/auth-routing.module"
 import { environment } from 'src/environments/environment';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule,
@@ -52,6 +53,7 @@ import {
         ToastrModule.forRoot(), // ToastrModule added 
         PagesModule,CoreModule, 
         SharedModule,
+        NoopAnimationsModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
         NgxUiLoaderHttpModule.forRoot({ showForeground: true, 
           exclude: [
@@ -66,5 +68,12 @@ import {
       }
     ],
     bootstrap: [AppComponent],
-})
+  })
+
+// @NgModule({
+//     declarations: [AppComponent],
+//     imports: [BrowserModule, AppRoutingModule, ComponentModule, PagesModule, ],
+//     providers: [],
+//     bootstrap: [AppComponent],
+// })
 export class AppModule {}

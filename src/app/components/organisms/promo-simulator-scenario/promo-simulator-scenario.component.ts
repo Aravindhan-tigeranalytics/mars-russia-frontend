@@ -8,6 +8,8 @@ import { ListPromotion } from '@core/models';
 })
 export class PromoSimulatorScenarioComponent {
 
+    symbol = "₽"
+
     @Input()
     promotion_viewed : ListPromotion = {
         "id" : 1,
@@ -22,7 +24,7 @@ export class PromoSimulatorScenarioComponent {
                     "cogs" : 23.33,
                     "lpi" : 23.45,
                     "rsp" : 22.33,
-                    "elasticity" : -2.03
+                    "inc_elasticity" : -2.03
                 }
             },
             {
@@ -32,7 +34,7 @@ export class PromoSimulatorScenarioComponent {
                     "cogs" : 23.33,
                     "lpi" : 23.45,
                     "rsp" : 22.33,
-                    "elasticity" : -2.03
+                    "inc_elasticity" : -2.03
                 }
             }
         ]
