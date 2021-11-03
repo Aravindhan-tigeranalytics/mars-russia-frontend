@@ -7,7 +7,12 @@
     <!-- <div *ngIf="showBase" class="text-center">
         <p class="text-marsyellow-800 text-caption">{{base}}</p>
     </div> -->
-    <div class="mb-2 flex flex-row items-center justify-between space-x-1">
+    <div class="mb-2  flex flex-row items-center justify-around space-x-1">
+       
+        <ng-content></ng-content>
+
+    </div>
+    <div class="flex flex-row items-center justify-between space-x-1">
         <nwn-button type="icon" size="iconsm" (click)="decrement()">
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="minus"></nwn-svg-icon>
         </nwn-button>
@@ -35,10 +40,6 @@
             <nwn-svg-icon type="stroke" size="md" nwnSvgIcon="plus"></nwn-svg-icon>
         </nwn-button>
     </div>
-    <div class="flex flex-row items-center justify-around space-x-1">
-       
-        <ng-content></ng-content>
-
-    </div>
+   
     <!-- <p class="text-center text-body text-marsgray-500 ml-1"> <ng-content select="[priceContent]"></ng-content></p> -->
 </div>

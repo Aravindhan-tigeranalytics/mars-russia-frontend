@@ -5,8 +5,18 @@ import * as moment from "moment"
 export function reducePercent(value , percent){
   return value * (1  - (percent / 100))
 }
+export function increasePercent(value , percent){
+  return value * (1  + (percent / 100))
 
+}
 
+export function findPercentDifference(a,b){
+  console.log(a,b , "findPercentDifferencefindPercentDifferencefindPercentDifference")
+  let val = ((a-b)/a) * 100
+  
+  return parseFloat(val.toFixed(2));
+  
+}
 export function _divide(n1 , n2){
     if(!n1 || !n2){
       return 0

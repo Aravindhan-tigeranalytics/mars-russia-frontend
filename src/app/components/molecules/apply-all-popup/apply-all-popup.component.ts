@@ -17,9 +17,15 @@ export class ApplyAllPopupComponent {
 
     applyElasticity = 0;
     applyDate;
+    tpr_constant = false
 
-    valueChange($event){
+    valueChange($event , is_tpr){
         console.log($event)
+        console.log(is_tpr , "istpr")
+        if(is_tpr){
+            this.tpr_constant = is_tpr
+            return
+        }
         this.group.find(d=>d.value == $event['value'])!['checked'] = $event['checked']
         // console.log(this.group)
     }
@@ -33,7 +39,8 @@ export class ApplyAllPopupComponent {
         this.applyCloseEvent.emit({
             "metric" : this.metric,
              "value" : form.value,
-             "products" : this.group
+             "products" : this.group,
+             "tpr_constant" : this.tpr_constant
         })
         this.applyElasticity = 0
         this.applyDate = null

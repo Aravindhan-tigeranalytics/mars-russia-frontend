@@ -66,11 +66,9 @@
 <nwn-modal id="addnew-pricngtool" class="hidden">
     <nwn-add-new-pricingtool-popup 
     [hierarchy_model] = "hierarchy_model"
-    [retailers] = "retailers" 
-    [product] = "product"
+    [count_ret] = "count_ret"
     (filterApply)="filterApply($event)"
-    [product_group] = "product_group"
-    (retailerChange) = "retailerChange($event)"
+    (hier_null) = "hier_null($event)"
     (productChange) = "hierarchyProductChange($event)" 
     ></nwn-add-new-pricingtool-popup>
 </nwn-modal>

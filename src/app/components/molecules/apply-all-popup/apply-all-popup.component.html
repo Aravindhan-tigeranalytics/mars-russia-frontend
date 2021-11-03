@@ -32,6 +32,19 @@
             <nwn-price-elasticity [(ngModel)]="applyElasticity"  name="applyElasticity"  [showBase] = "false"></nwn-price-elasticity>
              
           </div>
+
+          <div *ngIf="metric == 'Promo price'" style="width: 200px;" class="flex flex-row mb-6">
+            <!-- <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+              TPR Constant : 
+            </label>
+          </div> -->
+          <div class="block text-gray-700 text-sm font-bold mb-2">
+            <nwn-checkbox
+            (valueChange) = "valueChange($event , true)" 
+             [showLabel]="True">  TPR Constant</nwn-checkbox>
+          </div>
+        </div>
           
         </form>
 

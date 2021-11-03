@@ -1,7 +1,9 @@
-import { Component, Input,ViewChild } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, Input,Output,ViewChild,EventEmitter } from '@angular/core';
  
 import { ControlValueAccessor,NG_VALUE_ACCESSOR, } from '@angular/forms'
 import {DatePickerComponent} from 'ng2-date-picker';
+
 
 @Component({
     selector: 'nwn-pricing-metric-ip',
@@ -16,6 +18,7 @@ import {DatePickerComponent} from 'ng2-date-picker';
       ]
 })
 export class PricingMetricIpComponent implements ControlValueAccessor {
+
     @ViewChild('dayPicker') datePicker: DatePickerComponent;
     constructor() {}
     @Input()
@@ -30,6 +33,9 @@ export class PricingMetricIpComponent implements ControlValueAccessor {
 
     @Input()
     disable = false
+
+    @Output()
+    valueChangedEvent = new EventEmitter()
 
     enabled = "abs"
     absenable = true
@@ -65,22 +71,14 @@ export class PricingMetricIpComponent implements ControlValueAccessor {
 
     changeEnabled(type){
         this.enabled = type
-        // if(type == 'per'){
-        //     this.enabled = type
-
-        // }
-        // else{
-
-
-        // }
+       
 
     }
     writeValue(quantity: number) {
-        //  console.log(quantity , "quantity")
-        //  console.log(this.base , "base vlue")
-        //  console.log(this.counter , "counter value")
+       
         this.counter = quantity;
         this.counterPer = this.convertAbsolute(this.base , this.counter)
+        
       }
     
       registerOnChange(onChange: any) {
@@ -97,13 +95,17 @@ export class PricingMetricIpComponent implements ControlValueAccessor {
     counter = 0;
 
     increment() {
+        // console.log(this.disable , "increment button clicked")
         if(this.disable){
             return
         }
        
         this.counter++;
         this.counterPer = this.convertAbsolute(this.base , this.counter)
+        
+        
         this.onChange(this.counter)
+        this.valueChangedEvent.emit(this.counter)
     }
 
     decrement() {
@@ -112,7 +114,9 @@ export class PricingMetricIpComponent implements ControlValueAccessor {
         }
         this.counter--;
         this.counterPer = this.convertAbsolute(this.base , this.counter)
+        
         this.onChange(this.counter)
+        this.valueChangedEvent.emit(this.counter)
     }
     convertAbsolute(base , per){
         base = Number(base)

@@ -392,14 +392,15 @@ this.format = "percent"
             if(this.scenario_names.find(d=>d.id == element.scenario_id)){
                 return
             }
+            // debugger
 
             let ele = {
                 "id" : element.scenario_id,
                 "name" : element.scenario_name,
                 "comment" : element.scenario_comment,
                 "retailer" : {
-                    "account_name" : 'element.account_name',
-                    "product_group" : 'element.product_group'
+                    "account_name" : element.base[0].account_name,
+                    "product_group" : element.base[0].product
                 }
             }
             this.scenario_names.push(ele)

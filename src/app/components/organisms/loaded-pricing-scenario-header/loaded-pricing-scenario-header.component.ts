@@ -23,32 +23,27 @@ import * as moment from 'moment';
     styleUrls: ['./loaded-pricing-scenario-header.component.css'],
 })
 export class LoadedPricingScenarioHeaderComponent implements OnInit {
+    datePickerConfig = {
+        min : '1-1-2019',
+        max : '31-12-2023'
+    }
     rets = ['Orbit OTC' ]
     panels = ["Tander" , "Lenta" , "Pyatraochka"]
+    disable_button = true
+    disable_save_download = true
     @ViewChild(MatAccordion) accordion: MatAccordion;
     @ViewChild('dayPicker') datePicker: DatePickerComponent;
     step = 0;
     uploaded_file:any = null
+    mindate = "01-01-2022"
 
     open(element) { 
          console.log(element , "");
         (element as DatePickerComponent).api.open()
-        // console.log(element)
-        // console.log(this.datePicker , "datepicker")
-
-        // this.datePicker.api.open(); 
+       
     }  
     close() { this.datePicker.api.close(); }
 
-    openJquryDate(){
-
-        $( function() {
-            
-            ($("#my_date_picker") as any).datepicker();
-          } );
-       
-        ($("#my_date_picker") as any).datepicker();
-    }
 
 
   setStep(index: number) {
@@ -166,6 +161,9 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     }
 
     downloadPricing(){
+        if(this.disable_save_download){
+            return
+        }
         this.pricingService.downloadPricing().subscribe(data=>{
             const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
             console.log(data , "download api called and returned...")
@@ -257,11 +255,11 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     applyCloseEvent($event){
         // console.log($event , "Event..")
         // console.log(this.currentProduct , "current  retailer")
-        $event['metric']
-        $event['value']["date"]
-        $event['value']["applyElasticity"]
+        // $event['metric']
+        // $event['value']["date"]
+        // $event['value']["applyElasticity"]
 
-        $event['products']
+        // $event['products']
 
         let ctrl =  this.lenta.controls.filter(d=>(d.get('account_name')?.value == this.currentProduct))
         ctrl = ctrl.filter(d=>this.isCheckBoxModel( $event['products'], d.get('product_group')?.value))
@@ -291,8 +289,11 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
              patch['disable_elasticity'] =  $event.checked
  
             }
-            else{
-             patch['disable_promo'] =  $event.checked
+            else if($event['metric'] == 'Promo price'){
+                console.log($event , "promo price event")
+                patch['promo_date'] = $event['value']["applyDate"]
+                patch["inc_promo_price"] =  $event['value']["applyElasticity"]  
+                patch["is_tpr_constant"]  = $event["tpr_constant"]
  
             }
             c.patchValue(patch)
@@ -315,6 +316,10 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
         }
         else if(v == 'rsp_date'){
             patch['rsp_date'] = null
+        }
+        else if(v == 'promo_date'){
+            patch['promo_date'] = null
+
         }
         
         // debugger
@@ -383,6 +388,12 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
         // sendMessage()"
 
     }
+    openSavePopup(modal){
+        if(this.disable_save_download){
+            return 
+        }
+        this.sendMessage(modal)
+    }
 
     fileUpload($event){
         console.log($event , "iploadfile even")
@@ -419,6 +430,7 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
  }
 
     sendMessage(modalType: string): void {
+        // if(modalType == )
         this.modalEvent.emit(modalType);
     }
     subProductSelectEvent(event){
@@ -519,21 +531,76 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;
     }
+    openInfoEvent($event){
+        this.modalService.open($event)
+    }
 
     load_scenario_event($event){
         this.modalService.close('load-scenario-pricingtool-popup')
         this.chosen_promotion = $event as ListPromotion
        this.loadScenarioEvent.emit($event)
+       console.log(this.chosen_promotion , "chosen promotion.........")
     }
     clearFormArray = (formArray: FormArray) => {
         formArray = this.formBuilder.array([]);
       }
       _updatePromoPriceVar(e:PricingModel , form){
           if(e.tpr_discount){
-form['promo_price'] = form['promo_price'] +  utils.reducePercent(e.list_price , e.tpr_discount)
+form['promo_price'] = form['promo_price'] +  utils.reducePercent(e.retail_median_base_price_w_o_vat , e.tpr_discount)
 form['promo_price_count'] = form['promo_price_count'] + 1
           }
           
+      }
+      _updateASPVar(e:PricingModel , form){
+        if(e.tpr_discount){
+form['asp'] = form['asp'] +  e.retail_median_base_price_w_o_vat
+form['asp_count'] = form['asp_count'] + 1
+        }
+        
+    }
+    promo_changed($event , i){
+        let base_rsp =  this.lenta.at(i).get('rsp')?.value
+        let inc_rsp_per = this.lenta.at(i).get('inc_rsp')?.value
+        let base_promo =  this.lenta.at(i).get('promo_price')?.value
+        let inc_promo_per = this.lenta.at(i).get('inc_promo_price')?.value
+        let tpr = utils.findPercentDifference(
+            utils.increasePercent(base_rsp,inc_rsp_per),
+            utils.increasePercent(base_promo , inc_promo_per)
+
+        )
+        this.lenta.at(i).patchValue({
+         "avg_tpr" : tpr
+     })
+
+
+
+    }
+      rsp_changed($event , i){
+          let tpr_const = this.lenta.at(i).get('is_tpr_constant')?.value
+          if(tpr_const){
+              this.lenta.at(i).patchValue({
+                  "inc_promo_price" : $event
+              })
+          }
+          else{
+            //   debugger
+           let base_rsp =  this.lenta.at(i).get('rsp')?.value
+           let inc_rsp_per = this.lenta.at(i).get('inc_rsp')?.value
+           let base_promo =  this.lenta.at(i).get('promo_price')?.value
+           let inc_promo_per = this.lenta.at(i).get('inc_promo_price')?.value
+           let tpr = utils.findPercentDifference(
+               utils.increasePercent(base_rsp,inc_rsp_per),
+               utils.increasePercent(base_promo , inc_promo_per)
+
+           )
+           this.lenta.at(i).patchValue({
+            "avg_tpr" : tpr
+        })
+
+
+          }
+        //   console.log(tpr_const , "tpr constant")
+        //   console.log($event , i , "rsp changed")
       }
       _populateForm(form){
           Object.values(form).forEach((e:any)=>{
@@ -557,20 +624,49 @@ form['promo_price_count'] = form['promo_price_count'] + 1
                 list_price_date :[null],
                 cogs_date :[null],
                 rsp_date :[null],
+                promo_date : [null],
                 disable_list_price : [false],
                 disable_cogs : [false],
                 disable_rsp : [false],
                 disable_elasticity : [false],
-                disable_promo : [false]
+                disable_promo : [false],
+                is_tpr_constant : [false],
+                avg_tpr : [utils.findPercentDifference(utils._divide(e.asp ,e.asp_count ) , 
+                    utils._divide(e.promo_price ,e.promo_price_count ))]
 
 
               }))
           })
+
+        //   this.lenta.valueChanges.subscribe(data=>{
+        //       console.log(data , "data value changes lenta")
+        //       data.forEach((element , index) => {
+                  
+        //         //   this.lenta.at(index).patchValue({
+        //         //       "inc_promo_price" : element.inc_rsp,
+                    
+
+        //         //   },
+        //         //   {emitEvent: false})
+                  
+        //       });
+        //   })
       }
 
     groupPricing(){
+        let mindate
+        let maxdate
         
         console.log(this.pricingArray , "pricing Array...")
+        if(this.pricingArray.length > 0){
+            mindate = new Date(this.pricingArray[0].date)
+            maxdate = new Date(this.pricingArray[0].date)
+            this.disable_button = false
+        }
+        else{
+            this.disable_button = true
+
+        }
         this.unique_retailers = []
        this.lenta.clear()
     
@@ -579,6 +675,7 @@ let form={
 }
         this.pricingArray.forEach(e=>{
             let retailer = e.account_name + e.product_group
+            // debugger
             if(retailer in form){
                 form[retailer]["list_price"] = form[retailer]["list_price"] +  e.list_price ,
                 form[retailer]["list_price_count"]  = form[retailer]["list_price_count"] + 1,
@@ -599,116 +696,85 @@ let form={
                 "net_elasticity" : e.net_elasticity,
                 "promo_price" : 0,
                 "promo_price_count" : 0,
+                "asp" : 0,
+                "asp_count" : 0,
                 "retailer" : e.account_name + e.product_group,
                 "account_name" : e.account_name,
                 "product_group" : e.product_group,
             }    
             }
             this._updatePromoPriceVar(e, form[retailer])
+            this._updateASPVar(e, form[retailer])
            
         
 
              
             e.date = new Date(e.date)
+            if(e.date < mindate){
+                mindate = e.date
+            }
+            if(e.date > maxdate){
+                maxdate = e.date
+            }
+           
           
-            let arr = this.lenta
-        //     if(arr.length > 0){
-        //    if(arr.length > 0 && !arr.value.find(d=>(d.product_group === e.product_group) && (d.account_name == e.account_name))){
-               
-             
-        //     arr.push(
-        //          this.formBuilder.group({
-        //             retailer : [e.account_name + e.product_group],
-        //             account_name : [e.account_name],
-        //             product_group : [e.product_group],
-        //             list_price: [Number((e.list_price).toFixed(2))],
-        //             inc_list_price : [0],
-        //             cogs: [Number(e.cogs).toFixed(2)],
-        //             inc_cogs: [0],
-        //             elasticity : [Number((e.base_price_elasticity).toFixed(2))],
-        //             net_elasticity : [Number((e.net_elasticity).toFixed(2))],
-        //             inc_net_elasticity : [Number((e.net_elasticity).toFixed(2))],
-        //             inc_elasticity : [Number((e.base_price_elasticity).toFixed(2))],
-        //             rsp: [Number((e.retail_median_base_price_w_o_vat).toFixed(2))],
-        //             inc_rsp: [0],
-        //             follow_competition: [false],
-        //             list_price_date :[null],
-        //             cogs_date :[null],
-        //             rsp_date :[null],
-        //             disable_list_price : [false],
-        //             disable_cogs : [false],
-        //             disable_rsp : [false],
-        //             disable_elasticity : [false],
-        //             disable_promo : [false]
-
-        //          })
-        //        )
-
-        //    }
-                
-
-        //     }
-        //     else{
-        //         this.lenta.push(this.formBuilder.group({
-        //             retailer : [e.account_name + e.product_group],
-        //             account_name : [e.account_name],
-        //             product_group : [e.product_group],
-        //             list_price: [Number((e.list_price).toFixed(2))],
-        //             inc_list_price : [0],
-        //             cogs: [Number(e.cogs).toFixed(2)],
-        //             inc_cogs: [0],
-        //             elasticity : [Number((e.base_price_elasticity).toFixed(2))],
-        //             net_elasticity : [Number((e.net_elasticity).toFixed(2))],
-        //             inc_net_elasticity : [Number((e.net_elasticity).toFixed(2))],
-        //             inc_elasticity : [Number((e.base_price_elasticity).toFixed(2))],
-        //             rsp: [Number((e.retail_median_base_price_w_o_vat).toFixed(2))],
-        //             inc_rsp: [0],
-        //             follow_competition: [false],
-        //             list_price_date :[null],
-        //             cogs_date :[null],
-        //             rsp_date :[null],
-        //             disable_list_price : [false],
-        //             disable_cogs : [false],
-        //             disable_rsp : [false],
-        //             disable_elasticity : [false],
-        //             disable_promo : [false]
-
-
-        //         }))
-                
-        //     }
             
+             
         })
+        if(this.pricingArray.length > 0){
+            // debugger
+            this.datePickerConfig = {
+                ...this.datePickerConfig,
+               ...{ min : `${mindate.getDate()}-${mindate.getMonth()+1}-${mindate.getFullYear()}`,
+                  max : `${maxdate.getDate()}-${maxdate.getMonth()+1}-${maxdate.getFullYear()}`
+          
+               }
+              };
+
+        }
+         
+       
         this._populateForm(form)
         console.log(form , "formpromopriceinclusion")
         // debugger
         if(this.chosen_promotion){
             (this.chosen_promotion.meta as MetaInfo[]).forEach(m=>{
-                // d.retailer d.product_group
-                // debugger
+                let pricing = m.pricing as PricingPromoModel
                let ctrl =  this.lenta.controls.find(d=>(d.get('account_name')?.value == m.retailer) &&
                 (d.get('product_group')?.value == m.product_group))
                 console.log(ctrl , "contol chosen")
 
-                // debugger
-                console.log(moment(m.list_price_date , "YYYY-MM-dd") , "date functions")
-                console.log(moment(m.cogs_date , "YYYY-MM-dd") , "date functions")
-                console.log(moment(m.rsp_date , "YYYY-MM-dd") , "date functions")
-                // console.log(moment(m.list_price_date , "YYYY-MM-dd") , "date functions")
-                // list_price_date : m.list_price_date ? new Date(m.list_price_date) : m.list_price_date,
-                // cogs_date :m.cogs_date ? new Date(m.cogs_date) : m.cogs_date,
-                // rsp_date :m.rsp_date ? new Date(m.rsp_date) : m.rsp_date,
+              
             
                 ctrl?.patchValue({
-                    list_price_date : m.list_price_date ? moment(m.list_price_date , "YYYY-MM-dd"):m.list_price_date,
-                    cogs_date :m.cogs_date ? moment(m.cogs_date, "YYYY-MM-dd") :m.cogs_date,
-                    rsp_date :m.rsp_date ? moment(m.rsp_date, "YYYY-MM-dd"): m.rsp_date,
-                    inc_cogs : (m.pricing as PricingPromoModel).cogs,
-                    inc_list_price : (m.pricing as PricingPromoModel).lpi,
-                    inc_rsp : (m.pricing as PricingPromoModel).rsp
+                    list_price_date : pricing.list_price_date ? moment(pricing.list_price_date , "YYYY-MM-dd"):pricing.list_price_date,
+                    cogs_date :pricing.cogs_date ? moment(pricing.cogs_date, "YYYY-MM-dd") :pricing.cogs_date,
+                    rsp_date :pricing.rsp_date ? moment(pricing.rsp_date, "YYYY-MM-dd"): pricing.rsp_date,
+                    promo_date : pricing.promo_date,
+                    inc_cogs : pricing.cogs,
+                    inc_list_price : pricing.lpi,
+                    inc_rsp :pricing.rsp,
+                    inc_promo_price : pricing.promo,
+                    follow_competition : pricing.follow_competition,
+                    inc_net_elasticity : pricing.inc_net_elasticity,
+                    inc_elasticity : pricing.inc_elasticity
+
+
 
 
                 })
+                let base_rsp =  ctrl?.get('rsp')?.value
+                let inc_rsp_per = ctrl?.get('inc_rsp')?.value
+                let base_promo =  ctrl?.get('promo_price')?.value
+                let inc_promo_per = ctrl?.get('inc_promo_price')?.value
+                let tpr = utils.findPercentDifference(
+                    utils.increasePercent(base_rsp,inc_rsp_per),
+                    utils.increasePercent(base_promo , inc_promo_per)
+     
+                )
+                ctrl?.patchValue({
+                 "avg_tpr" : tpr
+             })
 
             })
             // let ret = (this.chosen_promotion.meta as MetaInfo[]).find(d=>d.retailer == e.account_name && d.product_group == e.product_group)
@@ -739,9 +805,16 @@ let form={
     }
     
    
-    simulatePrice(){
+    simulatePrice(value){
+        if(this.disable_button){
+            return 
+        }
+        if(value == 'reset'){
+            this.chosen_promotion = null as any
+
+        }
         this.simulateResetEvent.emit({
-            "type" : 'simulate',
+            "type" : value,
             'data' : this.pricingForm.value
         })
 
@@ -774,13 +847,92 @@ let form={
         
     }
 
-    ngOnInit() {
-        
-        
-
-        this.pricingForm.valueChanges.subscribe(data=>{
-            // console.log(data , "values changes form prcing form....")
+    tpr_change($event , i){
+        console.log($event , i , "event with i")
+        // debugger;
+        this.lenta.at(i).patchValue({
+            "disable_promo" : $event.checked
         })
+
+        if($event.checked){
+            let rsp_change = this.lenta.at(i).get('inc_rsp')?.value
+            this.lenta.at(i).patchValue({
+                "inc_promo_price" : rsp_change
+            })
+            let base_rsp =  this.lenta.at(i).get('rsp')?.value
+           let inc_rsp_per = this.lenta.at(i).get('inc_rsp')?.value
+           let base_promo =  this.lenta.at(i).get('promo_price')?.value
+           let inc_promo_per = this.lenta.at(i).get('inc_promo_price')?.value
+           let tpr = utils.findPercentDifference(
+               utils.increasePercent(base_rsp,inc_rsp_per),
+               utils.increasePercent(base_promo , inc_promo_per)
+
+           )
+           this.lenta.at(i).patchValue({
+            "avg_tpr" : tpr
+        })
+    
+
+        }
+        // this.lenta.at(i).get('promo_price')?.disable();
+//         if($event.checked){
+//             this.lenta.get(i)?.patchValue({
+//                 "disable_promo" : $event.checked
+// })
+
+//         }
+//         else{
+//             this.lenta.get(i)?.patchValue({
+//                 "disable_promo" : $event.checked
+// })
+
+//         }
+        
+    }
+
+    ngOnInit() {
+        this.pricingService.getPricingSimulatedObservable().subscribe(data=>{
+            if(data){
+this.disable_save_download = false
+            }
+            else{
+                this.disable_save_download = true
+            }
+        })
+
+        // this.lenta.valueChanges.subscribe(data=>{
+           
+        //     data.forEach((element , index) => {
+        //         console.log(element , index , "element and index...")
+        //         if(element.is_tpr_constant){
+        //             this.lenta.at(index).patchValue({
+        //                 "disable_promo" : true
+        //             })
+
+        //         }
+        //         else{
+        //             this.lenta.at(index).patchValue({
+        //                 "disable_promo" : false
+        //             })
+
+        //         }
+                
+        //     });
+
+        // })
+        
+    
+
+        // this.pricingForm.valueChanges.subscribe(data=>{
+        //     console.log(data , "data ...form changes")
+        //     // if(data['products']['is_tpr_constant']){
+
+        //     // }
+        //     // else{
+
+        //     // }
+        //     // console.log(data , "values changes form prcing form....")
+        // })
     }
     ngOnChanges(changes : SimpleChanges) :void{
         for (let property in changes) {

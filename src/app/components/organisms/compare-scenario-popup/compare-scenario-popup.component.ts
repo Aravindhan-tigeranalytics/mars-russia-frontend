@@ -16,6 +16,7 @@ import { color } from 'd3';
 
 
 export class CompareScenarioPopupComponent implements OnInit {
+    pricing = false
 
     CompareScenarioChartData:any = []
     legendColors:any = ['#0000a0','#00d7b9','#ffdc00','#a6db00','#9600ff','#ff32a0','#ff3c14','#ff8200']
@@ -35,6 +36,7 @@ export class CompareScenarioPopupComponent implements OnInit {
         this.optimizer.getCompareScenarioObservable().subscribe(data=>{
             
             if(data.length > 0){
+                this.pricing = false
                 this.compare_scenario_data = data
                
                 
@@ -79,6 +81,7 @@ export class CompareScenarioPopupComponent implements OnInit {
         this.pricingService.getCompareScenarioPriceObservable().subscribe(data=>{
             console.log(data , "pricing compare scenario data")
             if(data.length > 0){
+                this.pricing = true
                 this.modal.open('compare-scenario-popup')
                 this.compare_scenario_data = data
 
@@ -91,6 +94,7 @@ export class CompareScenarioPopupComponent implements OnInit {
                     this.loaded_scenario = data
                     this.CompareScenarioChartData = []
                     this.legendNames = []
+                    // debugger;
                     if(this.loaded_scenario.length > 0){
                         this.CompareScenarioChartData = [
                             { "group": "RSV w/o VAT"}, 
@@ -101,6 +105,7 @@ export class CompareScenarioPopupComponent implements OnInit {
                             { "group": "COGS"},
                             { "group": "MAC"}, 
                         ]
+                        
                         for(let i = 0; i < this.loaded_scenario.length; i++){
                             // debugger
                             // return [
@@ -108,8 +113,9 @@ export class CompareScenarioPopupComponent implements OnInit {
                             //     nsv_base , nsv_sim , cogs_base,cogs_sim,mac_base , mac_sim,
                             
                             // ]
+                           
                             let dArray = this.getAggreated(this.loaded_scenario[i])
-                            this.legendNames.push({'name': 'name1','color': this.legendColors[i]})
+                            this.legendNames.push({'name': this.loaded_scenario[i]['scenario_name'],'color': this.legendColors[i]})
                             let key:any = 'simulated_'+JSON.stringify(i+1)
                             this.CompareScenarioChartData[0][key] = dArray[1]
                             this.CompareScenarioChartData[1][key] = dArray[3] 
@@ -136,6 +142,7 @@ export class CompareScenarioPopupComponent implements OnInit {
         console.log(this.screenWidth,this.screenHeight)
     }
     getAggreated(data){
+        
         let base_predicted = 0
                 let simulated_prediced = 0
                 let inc_base = 0
@@ -144,7 +151,10 @@ export class CompareScenarioPopupComponent implements OnInit {
                     nsv_base , nsv_sim , cogs_base,cogs_sim,mac_base , mac_sim;
                 rsv_base = rsv_sim = rp_base =rp_sim = lsv_base = lsv_sim = te_base = te_sim=
                     nsv_base = nsv_sim = cogs_base=cogs_sim=mac_base = mac_sim= 0
+                    console.log(data.base)
+                    // debugger
                 data.base.forEach((d , i)=>{
+                    // debugger
                   
                     base_predicted+=data.base[i].total.units
                     simulated_prediced+=data.simulated[i].total.units

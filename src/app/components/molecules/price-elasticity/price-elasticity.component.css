@@ -1,7 +1,7 @@
 .enabledInput {
     @apply text-title-medium text-marsgray-700
     w-[80px]
-    h-9
+    /* h-9 */
     px-2
     py-1
     rounded-none
@@ -9,6 +9,8 @@
     focus:border-marsgray-500 focus:outline-none
     bg-marsgray-50
     text-center;
+    font-size: 18px;
+    height: 2rem;
 }
 
 input[type='number'] {

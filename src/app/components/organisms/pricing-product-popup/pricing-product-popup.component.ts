@@ -8,7 +8,7 @@ import {MetaInfo} from "@core/models"
 })
 export class PricingProductPopupComponent {
 
-    symbol = "%"
+    symbol = "₽"
 
     @Input()
     metaInfo: MetaInfo[] = []

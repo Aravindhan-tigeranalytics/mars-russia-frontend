@@ -30,6 +30,10 @@ input::-webkit-inner-spin-button {
     h-9
     px-0
     py-1 border-none bg-transparent  text-left;
+    font-size: 18px;
+    text-align: center!important;
+    /* border-radius: 5px; */
+    height : 2rem;
 }
 /* datepicker */
 ::ng-deep .dp-picker-input {

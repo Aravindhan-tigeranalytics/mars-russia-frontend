@@ -508,7 +508,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             console.log(form , "generated form for simulation..")
             // debugger
 
-            if(this.promotion_viewed.scenario_type == 'pricing'){
+            if(this.promotion_viewed?.scenario_type == 'pricing'){
                 form = {...form , ...{"pricing" : (this.promotion_viewed.meta as MetaInfo).pricing}}
             }
             console.log(form , "updated form...")

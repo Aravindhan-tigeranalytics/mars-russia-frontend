@@ -72,7 +72,12 @@ export class PricingScenarioBuilderComponent implements OnInit {
     //     console.log($event , "save scenrio event")
     //     this.pricing
     // }
+
+    hier_null($event){
+        console.log($event ,"event")
+    }
     _populateHierarchyModel(products : Product[]){
+        this.hierarchy_model = []
         if(products.length > 0){
             this.hierarchy_model.push({"value" : "All" , "checked" : false,"child" : []}) 
         }
@@ -102,10 +107,44 @@ export class PricingScenarioBuilderComponent implements OnInit {
       
 
     }
+    updateFormWhileLoading($event){
+        $event.meta.forEach(element => {
+            this.hierarchy_model.forEach(dm=>{
+                if(dm.value == element.retailer){
+                    dm.checked = true
+                    dm.child.forEach(dc=>{
+                        if(dc.value == element.product_group){
+                            dc.checked = true
+                        }
+                    })
+                }
+            })
+             
+            this.selected_retailer = [...this.selected_retailer,element.retailer]
+            
+            this.retailers.filter(val=>val.value ==element.retailer).forEach(val=>val.checked = true)
+
+            this.selected_product = [...this.selected_product,element.product_group]
+            this.product_group.filter(val=>val.value == element.product_group).forEach(val=>val.checked = true)
+
+            
+       
+            
+            
+        });
+        this.selected_product = [...new Set(this.selected_product)];
+        this.selected_retailer = [...new Set(this.selected_retailer)];
+        this.count_ret = {...this.count_ret ,...{"retailers" : this.selected_retailer.length,
+        "products" : this.selected_product.length}}
+
+    }
+    // this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = true
 
     loadScenarioEvent($event){
+        this.reset()
         let ids = $event.meta.map(d=>this.product.filter(dd=>(dd.account_name == d.retailer && (dd.product_group == d.product_group)))[0]).map(d=>d.id)
         // debugger
+        this.updateFormWhileLoading($event)
         this.pricing.getPricingMetric(ids).subscribe(data=>{
             this.pricingArray = [...this.pricingArray , ...data]
             console.log(data , "pricin metics data...")
@@ -118,6 +157,19 @@ export class PricingScenarioBuilderComponent implements OnInit {
         this.optimize.setProductWeekObservable([])
         this.optimize.setLoadedScenarioModel(null as any)
         this.restApi.setIsSaveScenarioLoadedObservable(null)
+        this.pricing.setPricingSimulatedObservable(null as any);
+        // this.pricingArray = [...this.pricingArray , ...[]]
+        this.pricingArray = []
+        this.selected_retailer = []
+        this.selected_brand = []
+        this.selected_brand_format= []
+        this.selected_category= []
+        this.selected_strategic_cell= []
+        this.selected_product = []
+        this.count_ret = {...this.count_ret ,
+            ...{"retailers" : this.selected_retailer.length,
+        "products" : this.selected_product.length
+        }}
         
         // this.filter_model =  {"retailer" : "Retailers" , "brand" : 'Brands' , "brand_format" : 'Brand Formats' ,
         // "category" : 'Category' , "product_group" : 'Product groups' , "strategic_cell" :  'Strategic cells'}
@@ -172,7 +224,11 @@ export class PricingScenarioBuilderComponent implements OnInit {
         this.strategic_cell = [...new Set(this.product.filter(val=>this.selected_retailer.includes(val.account_name)).map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (this.selected_strategic_cell.includes(e))}));
         this.brands_format = [...new Set(this.product.filter(val=>this.selected_retailer.includes(val.account_name)).map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand_format.includes(e))}));
         this.brands = [...new Set(this.product.filter(val=>this.selected_retailer.includes(val.account_name)).map(item => item.brand_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand.includes(e))}));
-        this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = true
+        // this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = true
+        if( this.hierarchy_model.filter(d=>d.value == event.value).length > 0){
+            this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = true
+
+        }
         
         }
         else{
@@ -183,7 +239,12 @@ export class PricingScenarioBuilderComponent implements OnInit {
         this.strategic_cell = [...new Set(this.product.map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (this.selected_strategic_cell.includes(e))}));
         this.brands_format = [...new Set(this.product.map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand_format.includes(e))}));
         this.brands = [...new Set(this.product.map(item => item.brand_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand.includes(e))}));
-        this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = false
+        // this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = false
+        if(this.hierarchy_model.filter(d=>d.value == event.value).length > 0){
+            this.hierarchy_model.filter(d=>d.value == event.value)[0].checked = false
+
+        }
+        
 
         }
 
@@ -254,30 +315,31 @@ export class PricingScenarioBuilderComponent implements OnInit {
 
     }
         brandChange(event:CheckboxModel){
-        // this.brands.filter(val=>val.value != event.value).forEach(val=>val.checked = false)
-        // if(event.checked){
-        //     this.selected_brand = event.value
-        //     this.brands.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
-        //     // this.filter_model.brand = this.selected_brand
+        this.brands.filter(val=>val.value != event.value).forEach(val=>val.checked = false)
+        if(event.checked){
+            this.selected_brand = [...this.selected_brand, event.value]
+            this.brands.filter(val=>val.value == event.value).forEach(val=>val.checked = true)
+            // this.filter_model.brand = this.selected_brand
 
-        //     this.strategic_cell = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (e===this.selected_strategic_cell)}));
-        //     this.product_group = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.product_group))].map(e=>({"value" : e,"checked" : (e===this.selected_product)}));
-        //     this.retailers = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.account_name))].map(e=>({"value" : e,"checked" : (e===this.selected_retailer)}));
-        //     this.brands_format = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : (e===this.selected_brand_format)}));
-        //     this.categories = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.corporate_segment))].map(e=>({"value" : e,"checked" : (e===this.selected_category)}));
+            this.strategic_cell = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (this.selected_strategic_cell.includes(e))}));
+            this.product_group = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.product_group))].map(e=>({"value" : e,"checked" : (this.selected_product.includes(e))}));
+            this.retailers = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.account_name))].map(e=>({"value" : e,"checked" : (this.selected_retailer.includes(e))}));
+            this.brands_format = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand_format.includes(e))}));
+            this.categories = [...new Set(this.product.filter(val=>val.brand_filter == event.value).map(item => item.corporate_segment))].map(e=>({"value" : e,"checked" : (this.selected_category.includes(e))}));
     
 
-        // }
-        // else{
-        //     this.selected_brand = 'Brands'
-        //     this.strategic_cell = [...new Set(this.product.map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (e===this.selected_strategic_cell)}));
-        //     this.product_group = [...new Set(this.product.map(item => item.product_group))].map(e=>({"value" : e,"checked" : (e===this.selected_product)}));
-        //     this.retailers = [...new Set(this.product.map(item => item.account_name))].map(e=>({"value" : e,"checked" : (e===this.selected_retailer)}));
-        //     this.brands_format = [...new Set(this.product.map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : (e===this.selected_brand_format)}));
-        //     this.categories = [...new Set(this.product.map(item => item.corporate_segment))].map(e=>({"value" : e,"checked" : (e===this.selected_category)}));
+        }
+        else{
+            this.selected_brand = this.selected_brand.filter(e=>e!=event.value)
+            // this.selected_brand = 'Brands'
+            this.strategic_cell = [...new Set(this.product.map(item => item.strategic_cell_filter))].map(e=>({"value" : e,"checked" : (this.selected_strategic_cell.includes(e))}));
+            this.product_group = [...new Set(this.product.map(item => item.product_group))].map(e=>({"value" : e,"checked" : (this.selected_product.includes(e))}));
+            this.retailers = [...new Set(this.product.map(item => item.account_name))].map(e=>({"value" : e,"checked" : (this.selected_retailer.includes(e))}));
+            this.brands_format = [...new Set(this.product.map(item => item.brand_format_filter))].map(e=>({"value" : e,"checked" : (this.selected_brand_format.includes(e))}));
+            this.categories = [...new Set(this.product.map(item => item.corporate_segment))].map(e=>({"value" : e,"checked" : (this.selected_category.includes(e))}));
     
 
-        // }
+        }
        
 
     }
@@ -429,6 +491,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
 
                 // let arr = [358]
                 this.pricing.getPricingMetric(selected).subscribe(data=>{
+                    this.pricingArray = []
                     this.pricingArray = [...this.pricingArray , ...data]
                     console.log(data , "pricin metics data...")
                 })
@@ -459,23 +522,27 @@ export class PricingScenarioBuilderComponent implements OnInit {
         if($event.type == 'simulate'){
             // console.log(this.pricingArray.map(d=>d.tpr_discount = 0) , "disounts..")
             
+            // let form = {"pricing" : this.pricingArray , ...$event.data}
+            // console.log(form, "simulate from data...")
             let form = {...$event.data}
-            console.log(form, "simulate from data...")
             let retailers:any = []
             form.products.forEach(element => {
-               retailers.push({"account_name" : element.account_name , "product_group" : element.product_group})
+                retailers.push({"account_name" : element.account_name , "product_group" : element.product_group})
                 element.list_price_date = utils.convertMomentToDate(element.list_price_date)
                 element.rsp_date = utils.convertMomentToDate(element.rsp_date)
                 element.cogs_date = utils.convertMomentToDate(element.cogs_date)
                 
             });
             form = {...form ,...{"retailers" : retailers} }
-            console.log(form , "final form")
             this.pricing.calculatePricingMetrics(form).subscribe(data=>{
                 console.log(data , "price simulated response...")
 
                 this.pricing.setPricingSimulatedObservable(data)
             })
+        }
+        else{
+            this.reset()
+
         }
     }
 

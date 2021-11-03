@@ -13,6 +13,8 @@ import { OptimizerService } from '@core/services';
 })
 export class ModalComponent implements OnInit, OnDestroy {
     @Input()
+    overflow = true
+    @Input()
     id!: string;
     private element: any;
 

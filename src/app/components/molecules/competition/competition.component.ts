@@ -1,4 +1,4 @@
-import { Component, OnInit , Output,EventEmitter } from '@angular/core';
+import { Component, OnInit , Output,EventEmitter, Input } from '@angular/core';
 import { ControlValueAccessor,NG_VALUE_ACCESSOR, } from '@angular/forms'
 
 @Component({
@@ -15,8 +15,11 @@ import { ControlValueAccessor,NG_VALUE_ACCESSOR, } from '@angular/forms'
 })
 export class CompetitionComponent implements ControlValueAccessor{
 
-  // @Output() toggleEvent = new EventEmitter();
+  @Output() toggleEvent = new EventEmitter();
   follow_competition : boolean = false
+
+  @Input()
+  spacex = "space-x-1"
 
   constructor() { }
 
@@ -41,7 +44,7 @@ export class CompetitionComponent implements ControlValueAccessor{
   toggle($event){
     console.log($event , "toggle event...")
     console.log(this.follow_competition , "before..")
-    // this.toggleEvent.emit($event)
+    this.toggleEvent.emit($event)
     this.follow_competition = $event.checked
     this.onChange(this.follow_competition)
     console.log(this.follow_competition , "after ")

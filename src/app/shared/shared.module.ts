@@ -5,7 +5,7 @@ import {FormsModule , ReactiveFormsModule} from '@angular/forms'
 // import {SIPipe} from "./pipe/si.pipe"
 // import {WeekType} from "./pipe/week-type.pipe"
 // import {ImagePipe} from "./pipe/image.pipe"
-import {SubTabFilter,FilterPipe,ImagePipe,SIPipe,WeekType} from "./pipe"
+import {SubTabFilter,FilterPipe,ImagePipe,SIPipe,WeekType,PercentageIncrease} from "./pipe"
 import { RouterModule } from '@angular/router';
 
 
@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     FilterPipe,
+    PercentageIncrease,
     SIPipe,
     WeekType,
     ImagePipe,
@@ -26,6 +27,7 @@ import { RouterModule } from '@angular/router';
   ],
   exports : [
     FilterPipe,
+    PercentageIncrease,
     SIPipe,
     WeekType,
     ImagePipe,

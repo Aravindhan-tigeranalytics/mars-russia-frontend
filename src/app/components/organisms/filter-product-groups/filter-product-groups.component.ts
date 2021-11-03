@@ -26,6 +26,7 @@ export class FilterProductGroupsComponent extends ModalApply implements OnInit {
 
   ngOnInit(): void {
     this.restApi.ClearScearchText.asObservable().subscribe(data=>{
+      console.log(data , "data...closing modal")
       if(data=="filter-product-groups"){
         console.log(data,"from modal apply")
       console.log(this.product_groups , "produt groups clear search")
