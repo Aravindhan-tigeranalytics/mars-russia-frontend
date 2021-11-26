@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter, SimpleChanges } from '@angular/core';
 // import { IMyDpOptions } from 'mydatepicker';
 
 @Component({
@@ -7,15 +7,44 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./calendar.component.css'],
 })
 export class CalendarComponent implements OnInit {
-    constructor() {}
+    @Input()
+    datePickerConfig:any = null
 
+    @Output()
+    applyCloseEvent= new EventEmitter()
+
+    @Input()
+    applyDate
+
+    @Input()
+    date_form = {
+        "index" : null,
+        "metric_type" : null
+    }
+
+    constructor() {}
+   
     ngOnInit(): void {}
 
-    // public myDatePickerOptions: IMyDpOptions = {
-    //     // other options...
-    //     dateFormat: 'dd.mm.yyyy',
-    // };
+    applyAllClose(form){
+        this.applyCloseEvent.emit({
+            
+             "value" : form.value,
+             "date_form" :this.date_form
+             
+        })
 
-    // // Initialized to specific date (09.10.2018).
-    // public model: any = { date: { year: 2018, month: 10, day: 9 } };
+    }
+    ngOnChanges(changes : SimpleChanges) :void
+    {   
+        for (let property in changes) {
+            if (property === 'applyDate'){
+                this.applyDate = changes[property].currentValue
+
+            }
+
+        }
+        console.log(changes , "changes in datepopup")
+    }
+
 }

@@ -11,7 +11,11 @@ export function increasePercent(value , percent){
 }
 
 export function findPercentDifference(a,b){
-  console.log(a,b , "findPercentDifferencefindPercentDifferencefindPercentDifference")
+  if(a == 0 || b ==0){
+    return 0
+  }
+  
+  // console.log(a,b , "findPercentDifferencefindPercentDifferencefindPercentDifference")
   let val = ((a-b)/a) * 100
   
   return parseFloat(val.toFixed(2));
@@ -305,6 +309,10 @@ export function generateMessageRandomSimulator(index: any,financial_metrics,metr
 }
 
 export function decodePromotion(promo_name:string){
+  // let regex = /\d+(\.\d{0,4})/g
+  let regex = /\d+(?:\.\d{0,4})?/g
+  // /\d+/g
+  // debugger
   let obj ={
     "promo_mechanics" : "",
     "promo_depth" : 0,
@@ -313,51 +321,61 @@ export function decodePromotion(promo_name:string){
   }
   if(promo_name.includes("N+1")){
     obj["promo_mechanics"] = "N+1"
-    let arr:Array<any>|null = promo_name.match(/\d+/g) 
+    let arr:Array<any>|null = promo_name.match(regex) 
     if(arr?.length ==3){
-      obj["promo_depth"] = parseInt(arr[1])
-      obj["co_investment"] = parseInt(arr[2])
+      obj["promo_depth"] = parseFloat(arr[1])
+      obj["co_investment"] = parseFloat(arr[2])
       
     }
     if(arr?.length ==2){
-      obj["promo_depth"] = parseInt(arr[1])
+      obj["promo_depth"] = parseFloat(arr[1])
       obj["co_investment"] = 0
     }
   }
   else if(promo_name.includes("Motivation")){
-    let arr:Array<any>|null = promo_name.match(/\d+/g) 
+    let arr:Array<any>|null = promo_name.match(regex) 
     obj["promo_mechanics"] = "Motivation"
     if(arr?.length ==2){
-      obj["promo_depth"] = parseInt(arr[0])
-      obj["co_investment"] = parseInt(arr[1])
+      obj["promo_depth"] = parseFloat(arr[0])
+      obj["co_investment"] = parseFloat(arr[1])
     }
     if(arr?.length ==1){
-      obj["promo_depth"] = parseInt(arr[0])
+      obj["promo_depth"] = parseFloat(arr[0])
       obj["co_investment"] = 0
     }
   }
   else if(promo_name.includes("Traffic")){
-    let arr:Array<any>|null = promo_name.match(/\d+/g)
+    let arr:Array<any>|null = promo_name.match(regex)
     obj["promo_mechanics"] = "Traffic"
     if(arr?.length ==2){
-      obj["promo_depth"] = parseInt(arr[0])
-      obj["co_investment"] = parseInt(arr[1])
+      obj["promo_depth"] = parseFloat(arr[0])
+      obj["co_investment"] = parseFloat(arr[1])
     }
     if(arr?.length ==1){
-      obj["promo_depth"] = parseInt(arr[0])
+      obj["promo_depth"] = parseFloat(arr[0])
       obj["co_investment"] = 0
     }
   }
   else if(promo_name.includes("TPR")){
+    // debugger
+    
     obj["promo_mechanics"] = "TPR"
-    let arr:Array<any>|null = promo_name.match(/\d+/g)
+    let arr:Array<any>|null = promo_name.match(regex)
     if(arr?.length ==2){
-      obj["promo_depth"] = parseInt(arr[0])
-      obj["co_investment"] = parseInt(arr[1])
+      obj["promo_depth"] = parseFloat(arr[0])
+      obj["co_investment"] = parseFloat(arr[1])
     }
     if(arr?.length ==1){
-      obj["promo_depth"] = parseInt(arr[0])
-      obj["co_investment"] = 0
+      if(promo_name.includes("Co")){
+        obj["promo_depth"] = 0
+        obj["co_investment"] = parseFloat(arr[0])
+      }
+      else{
+        obj["promo_depth"] = parseFloat(arr[0])
+        obj["co_investment"] = 0
+
+      }
+     
     }
   }
   return obj
@@ -384,7 +402,14 @@ export function genratePromotion(motivation , n_plus_1, traffic , promo_depth , 
 promo_string+=promo_name + "-" + promo_depth + "%"
   }
   if(co_inv){
-    promo_string+= " (Co-"+co_inv+"%)"
+    if(promo_depth){
+      promo_string+= " (Co-"+co_inv+"%)"
+    }
+    else{
+      promo_string+=promo_name + " (Co-"+co_inv+"%)"
+
+    }
+   
   }
   // console.log(promo_string , "generate promotion details promo-string")
   return promo_string

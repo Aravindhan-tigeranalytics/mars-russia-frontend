@@ -194,7 +194,7 @@ export class LoadedScenarioHeaderComponent implements OnInit,OnDestroy {
         this.filterResetEvent.emit($event)
         
     }
-
+    
     downloadWeeklyInput(){
         if(this.disable_button){
             return

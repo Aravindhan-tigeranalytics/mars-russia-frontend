@@ -11,12 +11,22 @@ import {ModalApply} from "../../../shared/modal-apply.component"
 export class FilterBrandsComponent extends ModalApply implements OnInit {
 
   @Input()
+  pricing = false
+
+  all_ : CheckboxModel = {"value" : "All" , "checked" : false}
+
+  // brandFormatSelectedPricing :any[] = []
+
+  @Input()
   brands:Array<CheckboxModel> = []
   @Input()
   filter_model : FilterModel
 
   @Output()
   brandChange = new EventEmitter()
+
+  @Input()
+  count_ret : any = null
 
   placeholder:any = 'Search brands'
   constructor(public restApi: SimulatorService) {
@@ -28,18 +38,88 @@ export class FilterBrandsComponent extends ModalApply implements OnInit {
       if(data=="filter-brands"){
         console.log(data,"from modal apply")
       this.searchText = ""
-      if(this.filter_model.brand == "Brands"){
-
-        this.brands.forEach(element => {
-          element.checked = false
+      if(this.count_ret){
+        if(this.count_ret["brand"].length == 0){
+          this.all_.checked = false
+          this.brands.forEach(element => {
+            element.checked = false
+            
+            
+          });
+           
           
-        });
-        this.valueChangeSelect({...this.retailerSelected , ...{"checked" : false}})
+          
+        }
+        this.brands.forEach(d=>d.checked = this.count_ret['brand'].includes(d.value))
+        if(this.brands.length == this.count_ret['brand'].length){
+          this.all_.checked = true
+        }
+        else{
+          this.all_.checked = false
+        }
+
+
       }
+      else{
+        if(this.filter_model.brand == "Brands"){
+
+          this.brands.forEach(element => {
+            element.checked = false
+            
+          });
+          this.valueChangeSelect({...this.retailerSelected , ...{"checked" : false}})
+        }
+
+      }
+     
       
       }
       
     })
+  }
+  allselect($event){
+     
+    if($event.checked){
+     
+      // this.brandFormatSelectedPricing = []
+       
+       this.brands.forEach(d=>{
+         d.checked = true
+        //  this.brandFormatSelectedPricing.push(d.value)
+       })
+       this.all_ = {...this.all_ , ...{"checked": true}}
+    }
+    else{
+     
+      // this.brandFormatSelectedPricing = []
+      this.brands.forEach(d=>{
+        d.checked = false
+        
+      })
+      this.all_ = {...this.all_ , ...{"checked": false}}
+
+    }
+     
+    
+  }
+  valueChangeSelectPricing(event:any){
+    this.brands.filter(d=>d.value == event.value)[0].checked = event.checked
+     
+    if(event.checked){
+      // if(!(event.value in this.brandFormatSelectedPricing)){
+      //   this.brandFormatSelectedPricing.push(event.value)
+
+      // }
+    }
+    else{
+      this.all_ = {...this.all_ , ...{"checked": false}}
+      
+      // this.brandFormatSelectedPricing = this.brandFormatSelectedPricing.filter(d=>d!=event.value)
+    }
+    
+     
+
+
   }
   
   valueChangeSelect(event:any){
@@ -47,8 +127,17 @@ export class FilterBrandsComponent extends ModalApply implements OnInit {
     this.brandChange.emit(event)
   }
   apply(id){
+    if(this.pricing){
+      this.filterApply.emit({"key" : "Brands" , "values" : this.brands.filter(d=>d.checked).map(d=>d.value)})
 
-    this.filterApply.emit({"key" : "Brands"})
+    }
+    else{
+      this.filterApply.emit({"key" : "Brands"})
+
+    }
+
+
+    
     this.closeModal.emit(id)
     this.searchText = ""
   }

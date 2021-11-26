@@ -13,7 +13,10 @@ export interface PricingPromoModel{
     promo_date? : Date,
     follow_competition? : boolean,
     inc_elasticity? : number,
-    inc_net_elasticity?:number
+    inc_net_elasticity?:number,
+    base_elasticity? : number,
+    base_net_elasticity?:number,
+    is_tpr_constant?:boolean
 
 }
 

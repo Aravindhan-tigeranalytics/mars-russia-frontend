@@ -95,7 +95,7 @@ export class PricingMetricIpComponent implements ControlValueAccessor {
     counter = 0;
 
     increment() {
-        // console.log(this.disable , "increment button clicked")
+        console.log(this.disable , "increment button clicked")
         if(this.disable){
             return
         }
@@ -109,6 +109,7 @@ export class PricingMetricIpComponent implements ControlValueAccessor {
     }
 
     decrement() {
+        console.log(this.disable)
         if(this.disable){
             return
         }

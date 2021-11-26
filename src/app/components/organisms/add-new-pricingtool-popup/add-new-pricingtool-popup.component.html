@@ -13,12 +13,9 @@
     <div class="h-[448px] scrollbar-y bg-white">
         <div>
 
-            <!-- <nwn-command-multiselect
-            (valueChangeSelect)="valueChangeSelect($event)"
-             [value] = "'All'" [checked]="false" 
-             [leftBorder]="false" [hideClose]="true" [cmdMultiselectHead]="true"
-                >All</nwn-command-multiselect
-            > -->
+            <nwn-command-multiselect (valueChangeSelect) = "allselect($event)" 
+            [value] = "all_.value" [checked]="all_.checked" 
+            [leftBorder]="false" [hideClose]="true" >{{all_.value}}</nwn-command-multiselect>
             
             <ng-container *ngFor="let retailer of hierarchy_model">
                 <nwn-command-multiselect

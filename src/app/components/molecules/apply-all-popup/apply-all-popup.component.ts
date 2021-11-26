@@ -15,6 +15,9 @@ export class ApplyAllPopupComponent {
     @Input()
     group:CheckboxModel[] = []
 
+    @Input()
+    datePickerConfig:any = null
+
     applyElasticity = 0;
     applyDate;
     tpr_constant = false

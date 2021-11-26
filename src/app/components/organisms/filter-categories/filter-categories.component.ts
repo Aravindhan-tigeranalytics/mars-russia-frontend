@@ -11,9 +11,19 @@ import {ModalApply} from "../../../shared/modal-apply.component"
 export class FilterCategoriesComponent extends ModalApply  implements OnInit {
 
   @Input()
+  pricing = false
+
+  all_ : CheckboxModel = {"value" : "All" , "checked" : false}
+
+  @Input()
   categories:Array<CheckboxModel> = []
   @Input()
   filter_model : FilterModel
+  @Input()
+  count_ret : any = null
+
+  // categorySelectedPricing :any[] = []
+  
 
   @Output()
   categoryChange = new EventEmitter()
@@ -28,6 +38,30 @@ export class FilterCategoriesComponent extends ModalApply  implements OnInit {
       if(data == "filter-categories"){
         console.log(data,"from modal apply")
       this.searchText = ""
+
+      if(this.count_ret){
+        
+        if(this.count_ret["category"].length == 0){
+          this.all_.checked = false
+          this.categories.forEach(element => {
+            element.checked = false
+            
+            
+          });
+           
+          
+          
+        }
+        this.categories.forEach(d=>d.checked = this.count_ret['category'].includes(d.value))
+        if(this.categories.length == this.count_ret['category'].length){
+          this.all_.checked = true
+        }
+        else{
+          this.all_.checked = false
+        }
+
+      }
+      else{
       if(this.filter_model.category == "Category"){
 
         this.categories.forEach(element => {
@@ -36,17 +70,70 @@ export class FilterCategoriesComponent extends ModalApply  implements OnInit {
         });
         this.valueChangeSelect({...this.retailerSelected , ...{"checked" : false}})
       }
+    }
       }
       
     })
+  }
+  allselect($event){
+     
+    if($event.checked){
+     
+      // this.categorySelectedPricing = []
+       
+       this.categories.forEach(d=>{
+         d.checked = true
+        //  this.categorySelectedPricing.push(d.value)
+       })
+       this.all_ = {...this.all_ , ...{"checked": true}}
+    }
+    else{
+     
+      // this.categorySelectedPricing = []
+      this.categories.forEach(d=>{
+        d.checked = false
+        
+      })
+      this.all_ = {...this.all_ , ...{"checked": false}}
+
+    }
+     
+    
+  }
+  valueChangeSelectPricing(event:any){
+    this.categories.filter(d=>d.value == event.value)[0].checked = event.checked
+     
+    if(event.checked){
+      // if(!(event.value in this.categorySelectedPricing)){
+      //   this.categorySelectedPricing.push(event.value)
+
+      // }
+    }
+    else{
+      this.all_ = {...this.all_ , ...{"checked": false}}
+      
+      // this.categorySelectedPricing = this.categorySelectedPricing.filter(d=>d!=event.value)
+    }
+    
+     
+
+
   }
   valueChangeSelect(event:any){
     this.retailerSelected = event
     this.categoryChange.emit(event)
   }
   apply(id){
+    if(this.pricing){
+      this.filterApply.emit({"key" : "Category" , "values" :  this.categories.filter(d=>d.checked).map(d=>d.value)})
 
-    this.filterApply.emit({"key" : "Category"})
+    }
+    else{
+      this.filterApply.emit({"key" : "Category"})
+
+    }
+
+   
     this.closeModal.emit(id)
     this.searchText = ""
   }

@@ -11,6 +11,8 @@ import * as Utils from "@core/utils"
 })
 export class KpiMetricsComponent implements OnInit, AfterViewInit {
     format = "absolute"
+    @Input()
+    pricing = false
     abs_selected:string = "selected"
     per_selected:string = "unselected"
     translate_y: string = '';
@@ -369,19 +371,7 @@ this.format = "percent"
             name: 'Per unit',
         },
     ];
-    ngOnChanges(changes: SimpleChanges) {
- 
-        for (let property in changes) {
-            if (property === 'loaded_scenario') {
-                
-                this.loaded_scenario = changes[property].currentValue
-                // console.log(this.loaded_scenario , "after delete loaded scenario")
-                // this.generate_metrics(this.loaded_scenario)
-                this.generate_metrics_pricing(this.loaded_scenario)
-               
-            } 
-        }
-    }
+   
 
     generate_metrics_pricing(loaded_scenario : Array<LoadedScenarioModel|any>){
         
@@ -570,6 +560,29 @@ this.format = "percent"
         // this.te_per_lsv.visible = true
         // this.te_per_unit.value.push(this._generate_obj(element , "te_per_unit"))
 
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+ 
+        for (let property in changes) {
+            if (property === 'loaded_scenario') {
+                console.log(this.pricing , "pricing............................................")
+                
+                this.loaded_scenario = changes[property].currentValue
+
+                console.log(this.loaded_scenario , "after delete loaded scenario")
+                if(this.pricing){
+                    this.generate_metrics_pricing(this.loaded_scenario)
+                }
+                else{
+                    this.generate_metrics(this.loaded_scenario)
+
+                }
+               
+                // 
+               
+            } 
+        }
     }
 
 }

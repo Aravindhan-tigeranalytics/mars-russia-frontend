@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { User } from '@core/models';
+import {AuthService} from "@core/services"
 
 @Component({
   selector: 'nwn-home-page',
@@ -7,15 +9,21 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
+  user : User
+  groups : any[] = []
 
-  constructor(private router: Router) { }
+  constructor(private router: Router , private authService : AuthService) { }
 
   ngOnInit(): void {
+    this.user=this.authService.userObservable.getValue()
+    this.groups = this.user.user.groups.map(d=>d.name)
+    console.log(this.user , "user value inhome page")
   }
 
   redirectPage(url: any){
     if(url == 'pricing-tool'){
-      window.open("https://mars-tool.azurewebsites.net/", '_blank')
+      this.router.navigate(['/pricing-tool'])
+      // window.open("https://mars-tool.azurewebsites.net/", '_blank')
     }
     else if(url == 'promo-tool'){
       this.router.navigate(['/promo'])

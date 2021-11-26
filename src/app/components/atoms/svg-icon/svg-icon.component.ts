@@ -54,5 +54,6 @@ export class SvgIconComponent {
         | 'my-scenarios'
         | 'user-guide'
         | 'light-bulb'
+        | 'date'
         | 'carret-down' = 'logout';
 }

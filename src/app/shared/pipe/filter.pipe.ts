@@ -5,7 +5,7 @@ import {HierarchyCheckBoxModel , CheckboxModel} from "@core/models"
 export class FilterPipe implements PipeTransform {
    
   transform(items: any[], searchText: string,args?:any): any[] {
-    console.log(items , "ITEMS HIER")
+    // console.log(items , "ITEMS HIER")
     // console.log(args , "args any extra")
       // console.log(items ,"items in pipe ")
     if (!items) {

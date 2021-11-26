@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div id="kpi-metrics" [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
-                <nwn-kpi-metrics (deleteCompareEvent)="deleteCompareEvent($event)" [loaded_scenario]="loaded_scenario"></nwn-kpi-metrics>
+                <nwn-kpi-metrics [pricing] = "pricing" (deleteCompareEvent)="deleteCompareEvent($event)" [loaded_scenario]="loaded_scenario"></nwn-kpi-metrics>
             </div>
             <div *ngIf="!pricing" id="promotion-plans" [ngClass]="{ hidden: openTab !== 3, block: openTab === 3 }">
                 <nwn-promotion-plans-tab [loaded_scenario]="loaded_scenario"></nwn-promotion-plans-tab>

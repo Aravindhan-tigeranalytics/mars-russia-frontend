@@ -113,6 +113,7 @@ export class WeeksIgnoredComponent {
         for (let property in changes) {
             if (property === 'quarter_year') {
                 // console.log(changes[property].currentValue , "current value")
+                this.weekly_map = []
                 this.quarter_year = changes[property].currentValue
                 this.selected_quarter=this.quarter_year[0]
                

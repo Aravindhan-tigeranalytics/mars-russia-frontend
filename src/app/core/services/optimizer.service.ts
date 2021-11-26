@@ -243,7 +243,8 @@ export class OptimizerService {
   fetch_week_value(id:number){
    
     this.apiService.get<ProductWeek[]>('api/scenario/promo-simulate-test/'+id).subscribe(
-      data=>this.productWeekObservable.next(data)
+      data=>this.productWeekObservable.next(data),
+      err=>{throw err}
       )
 
   }
@@ -324,6 +325,10 @@ export class OptimizerService {
         return this.apiService.postd('api/scenario/compare-scenario-download/' , requestData 
           )
   }
+  downloadCompareScenarioExcelPricing(requestData: any): Observable<any> {
+    return this.apiService.postd('api/scenario/compare-scenario-download-pricing/' , requestData 
+      )
+}
 
   downloadOptimiserExcel(requestData: any): Observable<any> {
     return this.apiService.postd('api/optimiser/optimizer-download/' , requestData 

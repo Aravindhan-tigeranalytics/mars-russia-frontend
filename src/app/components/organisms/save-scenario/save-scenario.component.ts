@@ -35,17 +35,15 @@ export class SaveScenarioComponent implements OnInit{
                     name:  '',
                     comment: ''
                 });
-                // this.optimize.getLoadedScenarioModel().subscribe(scenarioData=>{
-                //     this.saveForm.patchValue({
-                //         name: scenarioData.scenario_name,
-                //         comment: scenarioData.scenario_comment
-                //     });
-                // })
+               
             }
             else {
-                if(data.data.type=='optimizer'){
+                console.log(data.data.type , "loadededtypeloadededtypeloadededtypeloadededtypeloadededtypeloadededtypeloadededtype")
+                console.log(data.data.source_type , "loadededtype source")
+                if(data.data.type=='optimizer' || (data.data.type !=data.data.source_type)){
                     this.showSave = false
                 }
+                // else if()
                 else{
                     this.showSave = true
                 }
@@ -55,10 +53,7 @@ export class SaveScenarioComponent implements OnInit{
                         name: data.data.name,
                         comment: data.data.comments,
                     });
-                // this.saveForm.patchValue({
-                //     name:  '',
-                //     comment: ''
-                // });
+                
             }
         })
     }

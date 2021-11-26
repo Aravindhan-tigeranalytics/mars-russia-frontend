@@ -6,7 +6,16 @@
         <nwn-command-search [value]="searchText" [placeholder]="placeholder" [hideClose]="true" (inputChangeEvent)="inputChangeEvent($event)"></nwn-command-search>
     </div>
     <div class="scrollbar-y h-[287px]">
-        <nwn-command-multiselect  (valueChangeSelect)="valueChangeSelect($event,'Category')" *ngFor="let category of categories | appFilter: searchText;" [value] = "category.value" [checked]="category.checked" [leftBorder]="false" [hideClose]="true">{{category.value}}</nwn-command-multiselect>
+        
+        <ng-container *ngIf="!pricing">
+            <nwn-command-multiselect  (valueChangeSelect)="valueChangeSelect($event)" *ngFor="let category of categories | appFilter: searchText;" [value] = "category.value" [checked]="category.checked" [leftBorder]="false" [hideClose]="true">{{category.value}}</nwn-command-multiselect>
+        </ng-container>
+        
+       
+        <ng-container *ngIf="pricing">
+            <nwn-command-multiselect (valueChangeSelect) = "allselect($event)" [value] = "all_.value" [checked]="all_.checked" [leftBorder]="false" [hideClose]="true" >{{all_.value}}</nwn-command-multiselect>
+            <nwn-command-multiselect (valueChangeSelect)="valueChangeSelectPricing($event)" *ngFor="let category of categories | appFilter: searchText;" [value] = "category.value" [checked]="category.checked" [leftBorder]="false" [hideClose]="true" >{{category.value}}</nwn-command-multiselect>
+        </ng-container>
         <!-- <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Chocolate</nwn-command-multiselect>
         <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Chocolate</nwn-command-multiselect>
         <nwn-command-multiselect [leftBorder]="false" [hideClose]="true">Chocolate</nwn-command-multiselect>

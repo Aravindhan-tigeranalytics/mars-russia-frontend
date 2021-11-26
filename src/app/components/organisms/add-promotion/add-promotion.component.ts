@@ -175,6 +175,7 @@ export class AddPromotionComponent implements OnInit {
     }
 
     addPromotions(){
+        // debugger
         if(this.form.value.promo != ""){
             if(Object.prototype.toString.call(this.form.value.promo).slice(8, -1).toLowerCase() == 'array'){
                 this.errMsg.mechanic = true
@@ -186,7 +187,7 @@ export class AddPromotionComponent implements OnInit {
             return
         }
 
-        if(this.form.value.tpr == 0 || this.form.value.tpr == null){
+        if((this.form.value.tpr == 0 || this.form.value.tpr == null) && (this.form.value.co_inv == 0 || this.form.value.co_inv == null)){
             this.errMsg.discount = true
             return
         }

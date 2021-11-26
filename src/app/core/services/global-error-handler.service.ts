@@ -13,7 +13,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     return this.injector.get(ToastrService);
   }
   handleError(error) {
-    console.log(error , "handleerror")
+    // console.log(error , "handleerror")
       if(error.status_code == 401){
         localStorage.removeItem('token');
         localStorage.removeItem('user')
@@ -23,7 +23,16 @@ export class GlobalErrorHandler implements ErrorHandler {
 
       }
       else{
-        this.toastrService.error(error)
+        console.log(error , "error in global handler")
+        if('detail' in error){
+          this.toastrService.error(error['detail'])
+
+        }
+        else{
+          this.toastrService.error(error)
+
+        }
+       
    
 
       }

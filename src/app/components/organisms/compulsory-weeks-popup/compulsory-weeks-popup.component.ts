@@ -104,6 +104,7 @@ export class CompulsoryWeeksPopupComponent implements OnInit {
             } 
             if (property === 'product_week') {
                 // console.log(changes[property].currentValue , "current value")
+                this.weekly_map = []
                 this.product_week = changes[property].currentValue
                 this.filter_product_week()
                
@@ -113,5 +114,9 @@ export class CompulsoryWeeksPopupComponent implements OnInit {
                
             } 
         }
+        console.log(this.weekly_map , "weekly map in cumpolsory........................................................")
+        console.log(this.week_validation , "week validation")
+        console.log(this.product_week , "product week")
+        
     }
 }

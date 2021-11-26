@@ -21,6 +21,9 @@ export class CompetitionComponent implements ControlValueAccessor{
   @Input()
   spacex = "space-x-1"
 
+  @Input()
+  disable = false
+
   constructor() { }
 
   onChange = (quantity) => {};

@@ -436,7 +436,8 @@ export class PromoOptimizerComponent implements OnInit {
                     "name" : data.meta.name,
                     "comments" : data.meta.comments,
                     "id" : data.meta.id,
-                    "type" : data.meta.scenario_type
+                    "type" : data.meta.scenario_type,
+                    "source_type" : "optimizer"
     
                 }})
                 // this.isOptimiserFilterApplied = true
@@ -652,7 +653,8 @@ export class PromoOptimizerComponent implements OnInit {
                 "name" : $event['name'],
                 "comments" :  $event["comments"],
                 "id" : data["message"],
-                "type" :  "optimizer"
+                "type" :  "optimizer",
+                "source_type" : "optimizer"
 
             }})
 

@@ -121,7 +121,7 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         ).subscribe(data=>{
             if(data){
                 this.reset()
-                console.log(data , "data of optimizer loaded")
+                console.log(data , "data of optimizer loaded ")
                 this.disable_button = false
                 this.isExpand = false
                 this.optimizer_data = data
@@ -168,6 +168,11 @@ export class LoadedOptimizerHeaderComponent implements OnInit {
         }
     }
     reset(){
+        console.log("-----------------------------------------------------")
+        console.log(this.week_validation , "week validation")
+        console.log(this.product_week , "week validation product_week")
+        console.log(this.cumpulsory_week_val , "week validation cumpulsory_week_val")
+        // console.log("resettttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
         this.disable_button = true
         this.isExpand = true
         this.optimizer_data  = null as any
@@ -211,6 +216,19 @@ this.cumpulsory_week = 0
 this.cumpulsory_week_val= []
 this.ignored_week_val = []
 this.ignored_week = 0
+this.week_validation = {
+    "min_promo_gap" : this.param_gap_min,
+    "max_promo_gap" : this.param_gap_max,
+    "promo_max" : this.max_week,
+    "promo_min" : this.min_week,
+    "max_consecutive_promo" : this.duration_max,
+    "min_consecutive_promo" : this.duration_min
+}
+
+console.log("----------------------------------------------------- after")
+console.log(this.week_validation , "week validation")
+console.log(this.product_week , "week validation product_week")
+console.log(this.cumpulsory_week_val , "week validation cumpulsory_week_val")
 
     }
     download(){
@@ -372,11 +390,12 @@ this.checkboxMetrices.find(d=>{
 
     }
     optimizeReset(type){
+        // debugger
         if(type=="optimize"){
             let form = this.optimizerData()
            
 
-            if(this.info_promotion.scenario_type == "pricing"){
+            if(this.info_promotion?.scenario_type == "pricing"){
                 form = {...this.optimizerData() , ...{"pricing" : this.info_promotion.meta[0].pricing}}
 
             }
@@ -415,7 +434,9 @@ this.checkboxMetrices.find(d=>{
     }
     optimizerData(){
     console.log(this.info_promotion , "info promotions....")
+    // debugger;
        let decoded =  this.selected_promotions.map(d=>Utils.decodePromotion(d))
+    //    debugger;
 
        console.log(this.checkboxMetrices, "check box metrices")
     

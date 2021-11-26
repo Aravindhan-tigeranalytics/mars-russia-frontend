@@ -102,6 +102,11 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     ret = ['abc']
     chosen_promotion : ListPromotion = null as any
     applyAllMetric = "List Price"
+    date_form = {
+        "index" : null,
+        "metric_type" : null
+    }
+
 
     addRet(){
         this.ret = [...this.ret , 'abd']
@@ -119,6 +124,10 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
 
     @Output()
     removeRetailerEvent = new EventEmitter()
+
+    selectedDate;
+
+   
 
     removeProductEvent(index , retailer){
         console.log(index , "event")
@@ -203,8 +212,7 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     
                     }
                     
-                    console.log(data , "pricing data returnresponse")
-                    console.log(promotion , "saved promotion...")
+                   this.chosen_promotion = promotion
 
                     this.optimizeService.addPromotionList(promotion)
 
@@ -218,34 +226,42 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
 
     }
     getMetaArray(pricing_form){
+        console.log(pricing_form , "pricing form")
+        
         let res:any= []
         pricing_form['products'].forEach(element => {
             res.push({
                 "retailer" : element.account_name,
                 "product_group" : element.product_group,
-                // "lis"
-                "cogs_date" : element.cogs_date,
-                "list_price_date" : element.list_price_date,  
-                "rsp_date": element.rsp_date,
+               
                 "pricing" : {
+                    "cogs_date" : element.cogs_date,
+                    "list_price_date" : element.list_price_date,  
+                    "rsp_date": element.rsp_date,
+                    "promo_date" : element.promo_date,
+                    "base_lpi" : element.list_price,
+                    "base_rsp" : element.rsp,
+                    "base_cogs" : element.cogs ,
+                    "base_promo" : element.promo_price,
+
                     "lpi" : element.inc_list_price,
                     "rsp" : element.inc_rsp,
                     "cogs" : element.inc_cogs,
-                    "elasticity" : element.inc_elasticity,
+                    "promo" : element.inc_promo_price,
+                    
+                    "follow_competition" : element.follow_competition,
+                    "inc_elasticity" : element.inc_elasticity,
+                    "inc_net_elasticity":element.inc_net_elasticity,
+                    "base_elasticity" : element.elasticity,
+                    "base_net_elasticity":element.net_elasticity,
+                    "is_tpr_constant":element.is_tpr_constant
                 }
             })
             
         });
         return res
 
-        // let res = []
-        // for i
-        // return [{
-        //     "retailer" : '0',
-        //     "product_group" : '0',
-        //     "pricing" : false
-        // }]
-
+         
     }
     isCheckBoxModel(check:CheckboxModel[] , val){
         return check.find(c=>c.value == val)?.checked
@@ -460,7 +476,7 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     }
 
     // expand and collapse
-    isExpand = true;
+    isExpand = false;
     expandHeader() {
         this.isExpand = !this.isExpand;
     }
@@ -530,6 +546,52 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
     openTab = 0;
     toggleTabs($tabNumber: number): void {
         this.openTab = $tabNumber;
+    }
+    applyDateTopopup(date , i , type , disable = false){
+        if(disable){
+            return
+        }
+      
+        this.selectedDate= date
+        this.date_form = {
+            "index": i,
+            "metric_type" : type
+        }
+        
+
+       this.modalService.open("calendar-popup")
+    }
+    applyCloseEventCalendarPopup($event){
+        let patch = {
+
+        }
+        if($event["date_form"]["metric_type"] == 'promo'){
+            patch = {
+                promo_date : $event["value"]["applyDate"]
+            }
+
+        }
+        else if($event["date_form"]["metric_type"]=="cogs"){
+            patch = {
+                cogs_date : $event["value"]["applyDate"]
+            }
+
+        }
+        else if($event["date_form"]["metric_type"]=="listprice"){
+            patch = {
+                list_price_date : $event["value"]["applyDate"]
+            }
+
+        }
+        else if($event["date_form"]["metric_type"]=="retail"){
+            patch = {
+                rsp_date : $event["value"]["applyDate"]
+            }
+
+        }
+        this.lenta.at($event["date_form"]["index"]).patchValue(patch)
+        console.log($event , "$event popup...")
+        this.modalService.close('calendar-popup')
     }
     openInfoEvent($event){
         this.modalService.open($event)
@@ -604,6 +666,10 @@ form['asp_count'] = form['asp_count'] + 1
       }
       _populateForm(form){
           Object.values(form).forEach((e:any)=>{
+
+            let tpr_avg = utils.findPercentDifference(utils._divide(e.asp ,e.asp_count ) , 
+            utils._divide(e.promo_price ,e.promo_price_count ))
+            //   debugger
               this.lenta.push(this.formBuilder.group({
                 retailer : [e.retailer],
                 account_name : [e.account_name],
@@ -629,10 +695,9 @@ form['asp_count'] = form['asp_count'] + 1
                 disable_cogs : [false],
                 disable_rsp : [false],
                 disable_elasticity : [false],
-                disable_promo : [false],
+                disable_promo : [tpr_avg ? false : true],
                 is_tpr_constant : [false],
-                avg_tpr : [utils.findPercentDifference(utils._divide(e.asp ,e.asp_count ) , 
-                    utils._divide(e.promo_price ,e.promo_price_count ))]
+                avg_tpr : [tpr_avg]
 
 
               }))
@@ -654,6 +719,7 @@ form['asp_count'] = form['asp_count'] + 1
       }
 
     groupPricing(){
+        // debugger
         let mindate
         let maxdate
         
@@ -730,6 +796,7 @@ let form={
           
                }
               };
+            //   this.selectedDate = `${mindate.getDate()}-${mindate.getMonth()+1}-${mindate.getFullYear()}`
 
         }
          
@@ -738,45 +805,49 @@ let form={
         console.log(form , "formpromopriceinclusion")
         // debugger
         if(this.chosen_promotion){
-            (this.chosen_promotion.meta as MetaInfo[]).forEach(m=>{
-                let pricing = m.pricing as PricingPromoModel
-               let ctrl =  this.lenta.controls.find(d=>(d.get('account_name')?.value == m.retailer) &&
-                (d.get('product_group')?.value == m.product_group))
-                console.log(ctrl , "contol chosen")
-
-              
-            
-                ctrl?.patchValue({
-                    list_price_date : pricing.list_price_date ? moment(pricing.list_price_date , "YYYY-MM-dd"):pricing.list_price_date,
-                    cogs_date :pricing.cogs_date ? moment(pricing.cogs_date, "YYYY-MM-dd") :pricing.cogs_date,
-                    rsp_date :pricing.rsp_date ? moment(pricing.rsp_date, "YYYY-MM-dd"): pricing.rsp_date,
-                    promo_date : pricing.promo_date,
-                    inc_cogs : pricing.cogs,
-                    inc_list_price : pricing.lpi,
-                    inc_rsp :pricing.rsp,
-                    inc_promo_price : pricing.promo,
-                    follow_competition : pricing.follow_competition,
-                    inc_net_elasticity : pricing.inc_net_elasticity,
-                    inc_elasticity : pricing.inc_elasticity
-
-
-
-
+            if(utils.isArray(this.chosen_promotion.meta)){
+                (this.chosen_promotion.meta as MetaInfo[]).forEach(m=>{
+                    let pricing = m.pricing as PricingPromoModel
+                   let ctrl =  this.lenta.controls.find(d=>(d.get('account_name')?.value == m.retailer) &&
+                    (d.get('product_group')?.value == m.product_group))
+                    console.log(ctrl , "contol chosen")
+    
+                  
+                
+                    ctrl?.patchValue({
+                        list_price_date : pricing.list_price_date ? moment(pricing.list_price_date , "YYYY-MM-dd"):pricing.list_price_date,
+                        cogs_date :pricing.cogs_date ? moment(pricing.cogs_date, "YYYY-MM-dd") :pricing.cogs_date,
+                        rsp_date :pricing.rsp_date ? moment(pricing.rsp_date, "YYYY-MM-dd"): pricing.rsp_date,
+                        promo_date : pricing.promo_date,
+                        inc_cogs : pricing.cogs,
+                        inc_list_price : pricing.lpi,
+                        inc_rsp :pricing.rsp,
+                        inc_promo_price : pricing.promo,
+                        follow_competition : pricing.follow_competition,
+                        inc_net_elasticity : pricing.inc_net_elasticity,
+                        inc_elasticity : pricing.inc_elasticity
+    
+    
+    
+    
+                    })
+                    let base_rsp =  ctrl?.get('rsp')?.value
+                    let inc_rsp_per = ctrl?.get('inc_rsp')?.value
+                    let base_promo =  ctrl?.get('promo_price')?.value
+                    let inc_promo_per = ctrl?.get('inc_promo_price')?.value
+                    let tpr = utils.findPercentDifference(
+                        utils.increasePercent(base_rsp,inc_rsp_per),
+                        utils.increasePercent(base_promo , inc_promo_per)
+         
+                    )
+                    ctrl?.patchValue({
+                     "avg_tpr" : tpr
+                 })
+    
                 })
-                let base_rsp =  ctrl?.get('rsp')?.value
-                let inc_rsp_per = ctrl?.get('inc_rsp')?.value
-                let base_promo =  ctrl?.get('promo_price')?.value
-                let inc_promo_per = ctrl?.get('inc_promo_price')?.value
-                let tpr = utils.findPercentDifference(
-                    utils.increasePercent(base_rsp,inc_rsp_per),
-                    utils.increasePercent(base_promo , inc_promo_per)
-     
-                )
-                ctrl?.patchValue({
-                 "avg_tpr" : tpr
-             })
-
-            })
+                
+            }
+            
             // let ret = (this.chosen_promotion.meta as MetaInfo[]).find(d=>d.retailer == e.account_name && d.product_group == e.product_group)
         }
        
@@ -799,6 +870,14 @@ let form={
         // pricingForm.get('Lenta').controls.get('products')'
         this.displayProduct = this.pricingForm.controls.products.value.map(d=>d.account_name)
         this.displayProduct =  [...new Set(this.displayProduct)]
+        if(this.displayProduct.length > 0){
+
+            this.isExpand = true
+        }
+        else{
+            this.isExpand = false
+        }
+       
       
 
 
@@ -806,17 +885,26 @@ let form={
     
    
     simulatePrice(value){
-        if(this.disable_button){
-            return 
-        }
+        
         if(value == 'reset'){
             this.chosen_promotion = null as any
+            this.simulateResetEvent.emit({
+                "type" : value,
+                'data' : this.pricingForm.value
+            })
 
         }
-        this.simulateResetEvent.emit({
-            "type" : value,
-            'data' : this.pricingForm.value
-        })
+        else{
+            if(this.disable_button){
+                return 
+            }
+            this.simulateResetEvent.emit({
+                "type" : value,
+                'data' : this.pricingForm.value
+            })
+
+        }
+       
 
     }
    
@@ -850,6 +938,11 @@ let form={
     tpr_change($event , i){
         console.log($event , i , "event with i")
         // debugger;
+        let pro = this.lenta.at(i).get('promo_price')?.value
+        // if(!pro){
+        //     return 
+        // } 
+        console.log(pro , "promo price")
         this.lenta.at(i).patchValue({
             "disable_promo" : $event.checked
         })

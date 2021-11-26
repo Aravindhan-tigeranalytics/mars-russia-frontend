@@ -11,6 +11,10 @@ import { retry } from 'rxjs/operators';
     styleUrls: ['./pricing-scenario-builder-tabs.component.css'],
 })
 export class PricingScenarioBuilderTabsComponent implements OnInit {
+    @ViewChild('scrollOne') scrollOne: ElementRef;
+    @ViewChild('scrollTwo') scrollTwo: ElementRef;
+    @ViewChild('scrollOneOP') scrollOneOP: ElementRef;
+    @ViewChild('scrollTwoOP') scrollTwoOP: ElementRef;
     translate_y: string = '';
     currentTranslateRate: string = '';
     format = "absolute"
@@ -59,6 +63,33 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
         })
        
     }
+    updateScroll(value:any){
+        if(value == 'GraphBase'){
+            const scrollOne = this.scrollOne.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwo.nativeElement as HTMLElement;
+
+            scrollTwo.scrollLeft = scrollOne.scrollLeft;
+        }
+        else if(value == 'GraphSimulated'){
+            const scrollOne = this.scrollOne.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwo.nativeElement as HTMLElement;
+
+            scrollOne.scrollLeft = scrollTwo.scrollLeft;
+        }
+        else if(value == 'GraphOP'){
+            const scrollOne = this.scrollOneOP.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwoOP.nativeElement as HTMLElement;
+
+            scrollTwo.scrollLeft = scrollOne.scrollLeft;
+        }
+        else if(value == 'TableOP'){
+            const scrollOne = this.scrollOneOP.nativeElement as HTMLElement;
+            const scrollTwo = this.scrollTwoOP.nativeElement as HTMLElement;
+
+            scrollOne.scrollLeft = scrollTwo.scrollLeft;
+        }
+      }
+
     filterApply($event){
 
         

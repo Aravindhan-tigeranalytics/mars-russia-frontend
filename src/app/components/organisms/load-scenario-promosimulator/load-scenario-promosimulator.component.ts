@@ -108,6 +108,7 @@ export class LoadScenarioPromosimulatorComponent implements OnInit {
         this.modal.close('load-scenario-promosimulator')
 
     }
+   
     loadScenario(){
         console.log(this.selected_promotion , "selected promotions")
         if(Array.isArray(this.selected_promotion.meta)){

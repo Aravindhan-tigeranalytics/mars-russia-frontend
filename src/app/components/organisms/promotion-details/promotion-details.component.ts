@@ -168,11 +168,15 @@ export class PromotionDetailsComponent implements OnInit {
             this.errMsg.mechanic = true
             return
         }
-
-        if(this.form.value.tpr == 0 || this.form.value.tpr == null){
+        if((this.form.value.tpr == 0 || this.form.value.tpr == null) && (this.form.value.co_inv == 0 || this.form.value.co_inv == null)){
             this.errMsg.discount = true
             return
         }
+
+        // if(this.form.value.tpr == 0 || this.form.value.tpr == null){
+        //     this.errMsg.discount = true
+        //     return
+        // }
         if(this.promo_generated){
             if(!this.input_promotions.find(v=>v.value == this.promo_generated)){
                 this.input_promotions.push({"value" : this.promo_generated , "checked" : false})

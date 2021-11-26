@@ -13,7 +13,7 @@
             (click)="select(i,loadPricingSimulatorItem)"
             [ngClass]="{ active: selectedIndex == i }"
         >
-            <nwn-scenario-load-card [showInfo]="true">
+            <nwn-scenario-load-card [id] = "loadPricingSimulatorItem" (infoClickedEvent) = "infoClickedEvent($event)" [showInfo]="true">
                 <p slcHead>{{ loadPricingSimulatorItem.name }}</p>
                 <p slcContent>{{ loadPricingSimulatorItem.comments }}</p>
             </nwn-scenario-load-card>
@@ -21,3 +21,6 @@
     </div>
     <nwn-search-footer (click) = "loadScenario()" [showKeyBoardCtrl]="true" [showLoad]="true"></nwn-search-footer>
 </div>
+<nwn-modal id="pricing-simulator-popup" class="hidden">
+    <nwn-promo-simulator-scenario (confirmatonEventModal)="modalConfirmation($event)" (deleteClicked) = "deleteClickedEvent($event)" [promotion_viewed] = "promotion_viewed" ></nwn-promo-simulator-scenario>
+</nwn-modal>

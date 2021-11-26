@@ -44,6 +44,7 @@ const routes: Routes = [
         path: 'promo',
         component: PromoToolComponent,
         canActivate: [AuthGuard],
+        data: { roles: ["promo" , "admin" , "optimizer"] },
         // loadChildren: () => import
         children: [
             {
@@ -60,6 +61,8 @@ const routes: Routes = [
     {
         path: 'pricing-tool',
         component: PricingToolComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ["pricing" , "admin"] },
         children: [
             {
                 path: 'pricing-scenario-builder',

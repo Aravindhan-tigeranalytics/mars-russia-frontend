@@ -30,6 +30,10 @@ spacex = 'space-x-4'
   ngOnInit(): void {
   }
   checkValue(e:any){
+    // console.log(this.disable , "disable in checkvalue")
+    if(this.disable){
+      return
+    }
     this.valueChange.emit({"value" : this.value,
     "checked" : e.target.checked
   });

@@ -469,8 +469,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
 
     }
     simulateResetEvent($event){
-        console.log(this.promotion_viewed , "loaded scenario detaila")
-        // console.log($event , "event passed")
+         
+        
         this.promotion_map = $event.promotion_map
         let form = {
             "account_name" : this.selected_retailer ,
@@ -481,15 +481,13 @@ export class PromoScenarioBuilderComponent implements OnInit {
         // console.log($event.promotion_map , "promotion maps available")
     
         $event.promotion_map.forEach(element => {
+            // debugger;
+
             let key = "week-" + element.week.week
-            // var thenum = thestring.replace(/[^0-9]/g,'')
-            // debugger
+            
             let obj = utils.decodePromotion(element.selected_promotion)
-            // {
-            //     "promo_depth":parseInt(element.selected_promotion.replace(/[^0-9]/g,'')),
-            //     "promo_mechanics":"",
-            //     "co_investment":parseInt(element.week.co_investment)
-            // }
+            
+            
             form[key] = obj
             
         });
@@ -588,14 +586,20 @@ export class PromoScenarioBuilderComponent implements OnInit {
             "lpi" : obj['pricing']['lpi'],
             "rsp" : obj['pricing']['rsp'],
             "cogs" : obj['pricing']['cogs']   ,
-            "elasticity" : obj['pricing']['elasticity'],
+            "base_elasticity" : obj['pricing']['base_elasticity'],
+            "inc_elasticity" : obj['pricing']['base_elasticity'],
+            "base_net_elasticity" : obj['pricing']['base_elasticity'],
+            "inc_net_elasticity" : obj['pricing']['base_elasticity'],
+            "base_lpi" : obj['pricing']['base_lpi'],
+            "base_rsp" : obj['pricing']['base_rsp'],
+            "base_cogs" : obj['pricing']['base_cogs'],
          }     
         }
         return false
 
     }
     generateListPromotion($event){
-        $event['promotion']['meta']
+        // $event['promotion']['meta']
         // debugger
         this.promotion_viewed = {
             "id" : this.loaded_scenario.scenario_id,
@@ -643,7 +647,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 "name" : this.loaded_scenario.scenario_name,
                 "comments" : this.loaded_scenario.scenario_comment,
                 "id" : this.loaded_scenario.scenario_id,
-                "type" : this.loaded_scenario.scenario_type
+                "type" : this.loaded_scenario.scenario_type,
+                "source_type" : "promo"
 
             }})
         })
@@ -684,6 +689,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
 
     }
     _saveEvent($event){
+        console.log(this.promotion_viewed , "saved promotion while saving....")
         if(this.promotion_map.length == 0){
             this.toastr.error('please choose atleastone promotion');
             return
@@ -698,6 +704,9 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 "product_group" : this.selected_product,
                 "param_depth_all" : false,
                 "promo_elasticity" : 0
+            }
+            if(this.promotion_viewed.scenario_type == "pricing"){
+                weekly["pricing_scenario_id"]  =  (this.promotion_viewed.meta as MetaInfo).id
             }
             this.promotion_map.forEach(element => {
                 let key = "week-" + element.week.week
@@ -726,7 +735,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 }
                 this.optimize.addPromotionList(promotion)
                 this.scenarioTitle = weekly["name"]
-                // debugger
+                
                 this.promotion_viewed = {...{
                     "id" : data["saved_id"],
                     "name" : weekly["name"],
@@ -749,13 +758,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
                     "name" :weekly["name"],
                     "comments" : weekly["comments"],
                     "id" :  data["saved_id"],
-                    "type" : "promo"
-
-                    // "id" : data["saved_id"],
-                    // "name" : weekly["name"],
-                    // "comments" : weekly["comments"],
-                    // "scenario_type" : "promo",
-    
+                    "type" : "promo",
+                    "source_type" : "promo"
                 }})
 
             },
@@ -802,20 +806,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 this.save_scenario_error = null
                 this.modalService.close("save-scenario-popup")
                 this.toastr.success('Scenario Updated Successfully', 'Success')
-                // let promotion : ListPromotion = {
-                //     "id" : data["saved_id"],
-                //     "name" : weekly["name"],
-                //     "comments" : weekly["comments"],
-                //     "scenario_type" : "promo",
-                //     "meta" : {
-                //         "retailer" : weekly["account_name"],
-                //         "product_group" : weekly["product_group"],
-                //         "pricing" : false
-                //     }
-    
-    
-                // }
-                // this.optimize.addPromotionList(promotion)
+                
                 console.log("saved data" , data)
                 this.promotion_viewed.name = $event['name']
                 this.scenarioTitle = $event['name']
@@ -826,7 +817,8 @@ export class PromoScenarioBuilderComponent implements OnInit {
                     "name" : $event['name'],
                     "comments" : $event["comments"],
                     "id" :  data["saved_id"],
-                    "type" : "promo"
+                    "type" : "promo",
+                    "source_type" : "promo"
                 }})
             },
             error=>{
@@ -849,22 +841,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
             this.restApi.setIsSaveScenarioLoadedObservable(null)
         }
         else if($event == 'save-scenario-popup'){
-            // this.optimize.getLoadedScenarioModel().subscribe(data=>{
-            //     if(data != null && data != undefined){
-            //         this.show_save = true
-            //         // this.restApi.setIsSaveScenarioLoadedObservable({"flag" : true , "data" : {
-            //         //     "name" : data.scenario_name,
-            //         //     "comments" : data.scenario_comment,
-            //         //     "id" :  data.scenario_id,
-            //         //     "type" : data.scenario_type
-            //         // }})
-                    
-            //     }
-            //     else {
-            //         this.show_save = false
-            //         // this.restApi.setIsSaveScenarioLoadedObservable(null)
-            //     }
-            // })
+            
             this.save_scenario_error = null
             this.openModal($event);
         }

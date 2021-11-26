@@ -12,6 +12,8 @@ export class AddNewPricingtoolPopupComponent implements OnInit {
 
   searchText  = ''
 
+  all_ : CheckboxModel = {"value" : "All" , "checked" : false}
+
   @Input()
   heading = 'Add more'
 
@@ -20,6 +22,8 @@ export class AddNewPricingtoolPopupComponent implements OnInit {
 
   @Input()
   count_ret:any
+  @Input()
+  filter_model
 
   
 
@@ -34,16 +38,40 @@ export class AddNewPricingtoolPopupComponent implements OnInit {
   @Output()
   filterApply  = new EventEmitter()
 
+  selectedHierModel:any[] = []
+
   // Product groups
 
   constructor(public restApi: SimulatorService,private toastr: ToastrService,) { }
 
   ngOnInit(): void {
     this.restApi.ClearScearchText.asObservable().subscribe(data=>{
-      console.log(data,"from modal apply")
+      
       this.searchText = ""
       if(data=="addnew-pricngtool"){
+        console.log(this.filter_model , "filter model...")
         console.log(this.count_ret , "count ret.........")
+        if(this.count_ret["retailers"].length == 0){
+         
+          this.hierarchy_model.forEach(d=>{
+            d.checked = false
+            d.child.forEach(ch=>ch.checked = false)
+            // this.productChange.emit({"value" : d.value , "checked" : false})
+            
+          })
+
+        }
+        if(this.count_ret["products"].length == 0){
+          
+
+          this.hierarchy_model.forEach(d=>{
+            
+              d.child.forEach(de=>{
+                de.checked = false
+              })
+            
+          })
+        }
 
       }
     })
@@ -53,11 +81,7 @@ export class AddNewPricingtoolPopupComponent implements OnInit {
     this.searchText = $event
   }
 
-  valueChangeSelect(event:any){
-    this.productChange.emit(event)
-  //  console.log(event , "value change event..")
-   
-  }
+ 
   validateHier(){
     let parent_valid = false
     let child_valid = false
@@ -84,25 +108,91 @@ export class AddNewPricingtoolPopupComponent implements OnInit {
    
     return parent_valid && child_valid
   }
-  valueChangeSelectProduct(event:any , retailer){
+  allselect($event){
+     
+    if($event.checked){
+      this.hierarchy_model.forEach(d=>{
+      
+         d.checked = true
+        d.child.forEach(ch=>{
+          ch.checked = true
+        })
+      
+    })
+     
+      
+    }
+    else{
+      this.hierarchy_model.forEach(d=>{
+      
+        d.checked = false
+       d.child.forEach(ch=>{
+         ch.checked = false
+       })
+     
+   })
+     
+     
 
-    this.productChange.emit(
-     {"product" : event , "retailer" : retailer}
-    )
-    // console.log(retailer , "retailer value mapping")
-    // console.log(event , "value change product")
+    }
+     
+    
+  }
+  valueChangeSelect(event:any){
+    // {"value" : '' , "checked" : false}
+    // this.productChange.emit(event)
+    let ret = this.hierarchy_model.filter(d=>d.value == event.value)[0]
+    ret.checked = event.checked
+   console.log(event , "value change event..")
+   
+  }
+  checkTrue(children:CheckboxModel[]){
+    let ret = false
+    children.forEach(d=>{
+      if(d.checked){
+        ret = true
+      
+      }
+    })
+return ret
+  }
+  valueChangeSelectProduct(event:any , retailer){
+    // debugger
+    console.log(event , "event")
+    console.log(retailer , "retailer")
+    console.log(this.hierarchy_model , "hier model init")
+    
+    let ret = this.hierarchy_model.filter(d=>d.value == retailer.value)[0]
+    console.log(ret , "ret...")
+    
+    ret.child.filter(ch=>ch.value == event.value)[0].checked = event.checked
+    ret.checked = this.checkTrue(ret.child)
+    console.log(ret , "retttt after fin")
+    // console.log()
+    // if(this.checkTrue(ret.child)){
+    //   ret.checked = true
+    // }
+    
+
+    
+    
+console.log(this.hierarchy_model , "hier model")
+    // retailer.checked = true
   }
   apply(){
     // console.log(this.hierarchy_model , "hiermodel")
-    if(this.validateHier()){
-      this.filterApply.emit({
-      "key" : "Product groups"
-    })
+  
+    // console.log(data , "genrated data..")
 
-    }
-    // this.filterApply.emit({
+    // if(this.validateHier()){
+    //   this.filterApply.emit({
     //   "key" : "Product groups"
     // })
+
+    // }
+    this.filterApply.emit({
+      "key" : "Product groups"
+    })
   }
   ngOnChanges(changes: SimpleChanges) {
     // console.log(changes , "changes")

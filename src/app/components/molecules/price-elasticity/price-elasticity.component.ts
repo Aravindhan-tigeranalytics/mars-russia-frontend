@@ -25,6 +25,9 @@ export class PriceElasticityComponent implements ControlValueAccessor  {
     @Input()
     base = 0
 
+    @Input()
+    step = 1
+
     onChange = (quantity) => {};
 
   onTouched = () => {};
@@ -33,14 +36,14 @@ export class PriceElasticityComponent implements ControlValueAccessor  {
     increment() {
       console.log("increment clicked")
       console.log(this.counter , "counter values...")
-        this.counter++;
+        this.counter = this.counter + this.step;
         this.counter = Number((this.counter).toFixed(2))
         console.log(this.counter)
         this.onChange(this.counter)
     }
 
     decrement() {
-        this.counter--;
+        this.counter = this.counter - this.step;
         this.counter = Number((this.counter).toFixed(2))
         this.onChange(this.counter)
     }

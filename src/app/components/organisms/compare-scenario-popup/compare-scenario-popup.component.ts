@@ -1,10 +1,11 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ModalService } from '@molecules/modal/modal.service';
 // import {OptimizerService ,} from '../../../core/services/optimizer.service'
 import {OptimizerService , PricingService} from "@core/services"
 import { LoadedScenarioModel } from 'src/app/core/models';
-import { Observable, of, from, BehaviorSubject, combineLatest } from 'rxjs';
+import { Observable, of, from, BehaviorSubject, combineLatest ,Subject} from 'rxjs';
+import {takeUntil} from "rxjs/operators"
 import * as FileSaver from 'file-saver';
 import { color } from 'd3';
 
@@ -15,8 +16,9 @@ import { color } from 'd3';
 })
 
 
-export class CompareScenarioPopupComponent implements OnInit {
+export class CompareScenarioPopupComponent implements OnInit,OnDestroy {
     pricing = false
+    private unsubscribe$: Subject<any> = new Subject<any>();
 
     CompareScenarioChartData:any = []
     legendColors:any = ['#0000a0','#00d7b9','#ffdc00','#a6db00','#9600ff','#ff32a0','#ff3c14','#ff8200']
@@ -33,7 +35,9 @@ export class CompareScenarioPopupComponent implements OnInit {
     legendNames:any = []
     // length_compare = 0
     ngOnInit(): void {
-        this.optimizer.getCompareScenarioObservable().subscribe(data=>{
+        this.optimizer.getCompareScenarioObservable().pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe(data=>{
             
             if(data.length > 0){
                 this.pricing = false
@@ -78,7 +82,9 @@ export class CompareScenarioPopupComponent implements OnInit {
             
            
         })
-        this.pricingService.getCompareScenarioPriceObservable().subscribe(data=>{
+        this.pricingService.getCompareScenarioPriceObservable().pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe(data=>{
             console.log(data , "pricing compare scenario data")
             if(data.length > 0){
                 this.pricing = true
@@ -191,8 +197,18 @@ export class CompareScenarioPopupComponent implements OnInit {
         return color;
       }
     downloadExcel(){
+        let obs$:any;
+        console.log(this.pricing , "pricing")
         if(this.compare_scenario_data.length > 0){
-            this.optimizer.downloadCompareScenarioExcel(this.compare_scenario_data).subscribe((data: any) => {
+            
+           
+            if(this.pricing){
+                obs$ = this.optimizer.downloadCompareScenarioExcelPricing(this.compare_scenario_data)
+            }
+            else{
+                obs$ = this.optimizer.downloadCompareScenarioExcel(this.compare_scenario_data)
+            }
+            obs$.subscribe((data: any) => {
                 const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
             
                 FileSaver.saveAs(
@@ -211,14 +227,33 @@ export class CompareScenarioPopupComponent implements OnInit {
         this.openTab = $tabNumber;
     }
     openAdd(){
-        this.modal.close('compare-scenario-popup')
-        this.modal.open('compare-promo-scenario')
+        if(this.pricing){
+            
+            this.modal.close('compare-scenario-popup')
+            this.modal.open('compare-pricing-scenario')
+        }
+        else{
+            this.modal.close('compare-scenario-popup')
+            this.modal.open('compare-promo-scenario')
+
+        }
+       
         // id="compare-promo-scenario"
     }
     backClicked() {
         this.openTab = 1
         this.optimizer.clearCompareScenarioObservable()
+        this.pricingService.clearCompareScenarioObservable()
         this.modal.close('compare-scenario-popup')
         // this._location.back();
+    }
+    ngOnDestroy(){
+        console.log("destroying sceario header")
+        // this.optimizer.getCompareScenarioObservable()
+        this.optimizer.clearCompareScenarioObservable()
+        this.pricingService.clearCompareScenarioObservable()
+        // clearCompareScenarioObservable
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 }

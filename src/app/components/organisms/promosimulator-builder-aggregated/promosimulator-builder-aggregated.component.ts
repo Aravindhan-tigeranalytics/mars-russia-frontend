@@ -171,7 +171,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
     }
 
     convertToGraphNTableData(data: any){
-        console.log(data , "converttograpthtabledata")
+        // debugger;
+        // console.log(data , "converttograpthtabledata")
         this.weeklyData = []
         this.product = null
         if(data){
@@ -300,7 +301,7 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "converted_difference": "(" + Utils.formatNumber(data['simulated']['total']['roi']-data['base']['total']['roi'],true,false) + ")",
                 "color":  this.colorForDifference(data['base']['total']['roi'] , data['simulated']['total']['roi']),
             }
-            // debugger
+          
 
             this.asp = {
                 "converted_base": Utils.formatNumber(data['base']['total']['asp'],true,false),
@@ -310,6 +311,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
                 "percent": "(" + Utils.percentageDifference(data['simulated']['total']['asp'],data['base']['total']['asp']) + "%)",
                 "converted_difference": "(" + Utils.formatNumber(Math.round(data['simulated']['total']['asp'])-Math.round(data['base']['total']['asp']),true,false) + ")"
             }
+
+            // debugger
 
             this.promo_asp = {
                 "converted_base": Utils.formatNumber(data['base']['total']['avg_promo_selling_price'],true,false),
@@ -366,7 +369,8 @@ export class PromosimulatorBuilderAggregatedComponent implements OnInit, AfterVi
             for(let i = 0; i < 52; i++){
                 let promotion_value = ''
                 let promotion_value_simulated = ''
-                // debugger
+                
+              
                 promotion_value =  Utils.genratePromotion(
                     data['base']['weekly'][i]['flag_promotype_motivation'],
                     data['base']['weekly'][i]['flag_promotype_n_pls_1'],
