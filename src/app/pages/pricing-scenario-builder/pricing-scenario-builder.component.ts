@@ -39,7 +39,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
     showtbas = false
 
     hierarchy_model : Array<HierarchyCheckBoxModel> = []
-    total_hierarchy_model : Array<HierarchyCheckBoxModel> = []
+    selected_hierarchy_model : Array<HierarchyCheckBoxModel> = []
     
     pricingArray:PricingModel[] = []
     constructor(private modalService: ModalService,public restApi: SimulatorService,
@@ -83,7 +83,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
     }
     _populateHierarchyModel(products : Product[]){
         this.hierarchy_model = []
-        this.total_hierarchy_model = []
+        // this.total_hierarchy_model = []
         // if(products.length > 0){
         //     this.hierarchy_model.push({"value" : "All" , "checked" : false,"child" : []}) 
         // }
@@ -95,8 +95,8 @@ export class PricingScenarioBuilderComponent implements OnInit {
             
             
         })
-        this.total_hierarchy_model = this.hierarchy_model
-        console.log(this.hierarchy_model , "hierarchy model......")
+        // this.total_hierarchy_model = this.hierarchy_model
+        // console.log(this.hierarchy_model , "hierarchy model......")
 
     }
     _populateFilters(products : Product[]){
@@ -183,6 +183,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
     }
   
     reset(){
+
         // debugger
         
         this._populateFilters(this.product)
@@ -198,6 +199,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
         this.selected_category= []
         this.selected_strategic_cell= []
         this.selected_product = []
+        this.selected_hierarchy_model = []
         this.count_ret = {
             "retailers" : this.selected_retailer,
         "products" : this.selected_product,
@@ -236,7 +238,22 @@ export class PricingScenarioBuilderComponent implements OnInit {
         console.log($event , 'recieved');
         this.openModal($event);
     }
-    
+    isProductCheckedHierarchy(retailer , product){
+        console.log(retailer , "::" , product)
+        console.log(this.selected_hierarchy_model , "selected hier model...isProductCheckedHierarchy")
+        console.log(this.selected_hierarchy_model.filter(d=>d.value == retailer), "result")
+        let selh = this.selected_hierarchy_model.filter(d=>d.value == retailer)
+        if(selh.length > 0){
+            let ch = selh[0].child.find(ch=>ch.value == product)
+            if(ch){
+                return ch.checked
+            }
+
+        }
+         
+        return false
+
+    }
     retailerChange(filter_hier = true){
         // debugger
             this.retailers.forEach(d=>d.checked = this.selected_retailer.includes(d.value))
@@ -250,10 +267,10 @@ export class PricingScenarioBuilderComponent implements OnInit {
 
                 this.retailers.forEach(d=>{
                     if(this.selected_retailer.includes(d.value)){
-                        // debugger
-                        this.hierarchy_model.push({...d,...{"checked":false} , ...{"child" : this.product.filter(p=>p.account_name == d.value)
+                       
+                        this.hierarchy_model.push({...d,...{"checked":this.selected_retailer.includes(d.value)} , ...{"child" : this.product.filter(p=>p.account_name == d.value)
                     .filter(val=>this.selected_retailer.includes(val.account_name))
-                    .map(m=>({"value" : m.product_group , "checked" : false,"id" : m.id}))}})
+                    .map(m=>({"value" : m.product_group , "checked" : this.isProductCheckedHierarchy(d.value , m.product_group),"id" : m.id}))}})
                     
 
                     }
@@ -274,7 +291,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
             
                 this.hierarchy_model.push({...d , ...{"child" : this.product.filter(p=>p.account_name == d.value)
                
-                .map(m=>({"value" : m.product_group , "checked" : false,"id" : m.id}))}})
+                .map(m=>({"value" : m.product_group , "checked" : this.isProductCheckedHierarchy(d.value , m.product_group),"id" : m.id}))}})
                 
                 
             })
@@ -663,7 +680,7 @@ export class PricingScenarioBuilderComponent implements OnInit {
             else if(event.key == 'Product groups'){
                 this.selected_product= []
                 // debugger
-                console.log(this.hierarchy_model , "hierarchy model...product group")
+                
                 // console.log(this.product , "availalbe product......")
                 let ret = this.hierarchy_model.filter(d=>d.checked)
                 ret.forEach(d=>{
@@ -673,10 +690,13 @@ export class PricingScenarioBuilderComponent implements OnInit {
 
                         }
                     })
+                    // d.child.filter(c=>c.checked)
                 })
+                this.selected_hierarchy_model = ret
                 this.selected_retailer = ret.map(d=>d.value)
                 this.selected_product = [...new Set(this.selected_product)];
         this.selected_retailer = [...new Set(this.selected_retailer)];
+        console.log(this.selected_hierarchy_model , "selected hier")
 
                 this.count_ret = {...this.count_ret ,...{"products" : this.selected_product,
             "retailers":this.selected_retailer}}
@@ -686,12 +706,12 @@ export class PricingScenarioBuilderComponent implements OnInit {
                 let selected = 
                  [].concat.apply([] , this.hierarchy_model.filter(d=>d.checked).map(d=>d.child.filter(d=>d.checked).map(d=>d.id)) as any[]);
                
-                console.log(selected , "selected product for api")
+                // console.log(selected , "selected product for api")
                  
                 this.pricing.getPricingMetric(selected).subscribe(data=>{
                     this.pricingArray = []
                     this.pricingArray = [...this.pricingArray , ...data]
-                    console.log(data , "pricin metics data...")
+                    // console.log(data , "pricin metics data...")
                 },err=>{
                     throw err
                 })

@@ -32,6 +32,7 @@
             "
             type="number"
             [value] = "counter"
+            (input)="onInputChange($event.target.value)"
             placeholder="0"
            
         />

@@ -47,6 +47,7 @@
                 <!-- disabled -->
                
             <input
+            (input)="onInputChange($event.target.value)"
             [ngClass]="{ 'enabledInput': disable === false,
                 'disabledInput': disable === true
             

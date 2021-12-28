@@ -109,7 +109,7 @@ export class PricingMetricIpComponent implements ControlValueAccessor {
     }
 
     decrement() {
-        console.log(this.disable)
+        // console.log(this.disable)
         if(this.disable){
             return
         }
@@ -129,6 +129,19 @@ export class PricingMetricIpComponent implements ControlValueAccessor {
 
         return Number(abs.toFixed(2))
 
+    }
+    onInputChange(val){
+        if(val){
+        if(this.disable){
+            return
+        }
+        this.counter = val;
+        this.counterPer = this.convertAbsolute(this.base , this.counter)
+        
+        this.onChange(this.counter)
+        this.valueChangedEvent.emit(this.counter)
+    }
+        // console.log(val , "ip value...")
     }
     convertPercent(inc , base){
         base = Number(base)

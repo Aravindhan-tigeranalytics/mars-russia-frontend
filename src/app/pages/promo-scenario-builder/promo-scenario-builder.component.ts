@@ -705,7 +705,7 @@ export class PromoScenarioBuilderComponent implements OnInit {
                 "param_depth_all" : false,
                 "promo_elasticity" : 0
             }
-            if(this.promotion_viewed.scenario_type == "pricing"){
+            if(this.promotion_viewed?.scenario_type == "pricing"){
                 weekly["pricing_scenario_id"]  =  (this.promotion_viewed.meta as MetaInfo).id
             }
             this.promotion_map.forEach(element => {

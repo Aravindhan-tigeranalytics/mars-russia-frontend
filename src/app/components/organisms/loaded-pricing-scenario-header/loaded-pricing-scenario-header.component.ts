@@ -24,8 +24,8 @@ import * as moment from 'moment';
 })
 export class LoadedPricingScenarioHeaderComponent implements OnInit {
     datePickerConfig = {
-        min : '1-1-2019',
-        max : '31-12-2023'
+        min : '1-1-2022',
+        max : '31-12-2022'
     }
     rets = ['Orbit OTC' ]
     panels = ["Tander" , "Lenta" , "Pyatraochka"]
@@ -87,6 +87,8 @@ export class LoadedPricingScenarioHeaderComponent implements OnInit {
 
     @Input()
     count_ret : any
+    @Input()
+    showtbas= false
     unique_retailers : any[] = []
     lpi = 0
     rsp = 0
@@ -728,9 +730,11 @@ form['asp_count'] = form['asp_count'] + 1
             mindate = new Date(this.pricingArray[0].date)
             maxdate = new Date(this.pricingArray[0].date)
             this.disable_button = false
+            this.isExpand = true
         }
         else{
             this.disable_button = true
+            this.isExpand = false
 
         }
         this.unique_retailers = []
@@ -796,7 +800,17 @@ let form={
           
                }
               };
+              console.log(mindate , "datepickconfig mindate")
+              console.log(maxdate , "datepickconfig maxdate")
+              console.log(this.datePickerConfig , "datepickconfig")
             //   this.selectedDate = `${mindate.getDate()}-${mindate.getMonth()+1}-${mindate.getFullYear()}`
+
+        }
+        else{
+            this.datePickerConfig = {
+                min : '1-1-2022',
+                max : '31-12-2022'
+            }
 
         }
          
@@ -987,6 +1001,7 @@ let form={
         this.pricingService.getPricingSimulatedObservable().subscribe(data=>{
             if(data){
 this.disable_save_download = false
+this.isExpand = false
             }
             else{
                 this.disable_save_download = true

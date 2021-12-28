@@ -20,6 +20,7 @@ export class PricingScenarioBuilderTabsComponent implements OnInit {
     format = "absolute"
     abs_selected:string = "selected"
     per_selected:string = "unselected"
+    count = 0
     constructor(private elRef: ElementRef , private pricingService : PricingService) {}
 
     public weeklyTableWidth: any;
@@ -166,8 +167,7 @@ filtered['simulated']  = this.price_simulated.simulated.filter(d=>selected.filte
 
      
     hierarchyProductChange($event){
-        console.log($event , "hiererachy change event in tabs starting")
-        console.log(this.hierarchy_model , "starting")
+        
          
         if('product' in $event){  
             
@@ -218,14 +218,13 @@ filtered['simulated']  = this.price_simulated.simulated.filter(d=>selected.filte
             
             
         }
-        console.log($event , "hiererachy change event in tabs ending")
-        console.log(this.hierarchy_model , "ending")
+       
 
 
     }
     genrateHierachy(){ 
         this.hierarchy_model = []
-        this.hierarchy_model.push({"value" : "All" , "checked" : true,"child" : []})
+        // this.hierarchy_model.push({"value" : "All" , "checked" : true,"child" : []})
         this.price_simulated.base.forEach(d=>{
             let hmodel = this.hierarchy_model.find(v=>v.value == d.account_name)
             if(hmodel){
@@ -242,6 +241,8 @@ filtered['simulated']  = this.price_simulated.simulated.filter(d=>selected.filte
 
             }
             else{
+                this.count++
+
                 this.hierarchy_model.push({
                     "value" : d.account_name,
                     "checked" : true,
@@ -257,6 +258,7 @@ filtered['simulated']  = this.price_simulated.simulated.filter(d=>selected.filte
        
 
         })
+        this.config_ = {...this.config_ , ...{"placeholder" :  "Select("+ this.count + ")"}}
         
         console.log(this.hierarchy_model , "hierarchy model in tabs")
 
@@ -703,6 +705,11 @@ filtered['simulated']  = this.price_simulated.simulated.filter(d=>selected.filte
     config = {
         displayKey: 'name', // if objects array passed which key to be displayed defaults to description
         search: true,
+        
+    };
+    config_ = {
+       
+        placeholder: 'Select (0)',
     };
 
     productsValues = [

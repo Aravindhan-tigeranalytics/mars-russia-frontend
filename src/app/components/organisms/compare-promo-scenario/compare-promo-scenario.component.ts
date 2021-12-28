@@ -1,4 +1,4 @@
-import { Component , OnInit } from '@angular/core';
+import { Component , Input, OnInit } from '@angular/core';
 import { ModalService } from '@molecules/modal/modal.service';
 import {OptimizerService} from '../../../core/services/optimizer.service'
 import { ListPromotion} from "../../../core/models"
@@ -17,6 +17,7 @@ export class ComparePromoScenarioComponent implements OnInit {
     list_promotion_promo:Array<ListPromotion> = []
     list_promotion_optimizer:Array<ListPromotion> = []
     selected_id:Array<number> = []
+    @Input()
     openTab = 2;
     searchText = ''
     promotion_viewed:ListPromotion = null as any

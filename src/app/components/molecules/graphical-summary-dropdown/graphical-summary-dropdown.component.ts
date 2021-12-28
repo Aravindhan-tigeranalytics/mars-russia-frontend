@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'nwn-graphical-summary-dropdown',
@@ -8,14 +8,17 @@ import { Component, OnInit } from '@angular/core';
 export class GraphicalSummaryDropdownComponent implements OnInit {
     constructor() {}
 
+    @Input()
+    config = {
+       
+        placeholder: 'Select (0)',
+    };
+
+
     ngOnInit(): void {}
 
     singleSelect: any = [];
-    config = {
-        displayKey: 'name', // if objects array passed which key to be displayed defaults to description
-        search: true,
-    };
-
+   
     productsValues = [
         {
             _id: 'all',

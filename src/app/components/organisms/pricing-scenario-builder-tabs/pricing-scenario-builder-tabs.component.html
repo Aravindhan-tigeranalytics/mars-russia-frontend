@@ -17,8 +17,7 @@
 
     <div id="graphical-summary" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
         <div class="flex graphical-summary-dropdown py-8">
-            <nwn-graphical-summary-dropdown (click) = "openModal('summary-aggregate')"></nwn-graphical-summary-dropdown>
-            <!--  -->
+            <nwn-graphical-summary-dropdown [config]="config_" (click) = "openModal('summary-aggregate')"></nwn-graphical-summary-dropdown>
         </div>
         <div class="flex flex-row justify-start border-b border-t border-marsgray-300">
             <div class="border-r border-marsgra-300 pr-6 py-5">

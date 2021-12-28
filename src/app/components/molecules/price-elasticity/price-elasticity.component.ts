@@ -42,6 +42,18 @@ export class PriceElasticityComponent implements ControlValueAccessor  {
         this.onChange(this.counter)
     }
 
+    onInputChange(val){
+      if(val){
+      
+      this.counter = val;
+      
+      
+      this.onChange(this.counter)
+      
+  }
+      // console.log(val , "ip value...")
+  }
+
     decrement() {
         this.counter = this.counter - this.step;
         this.counter = Number((this.counter).toFixed(2))

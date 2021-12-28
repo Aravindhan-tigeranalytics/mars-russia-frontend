@@ -51,6 +51,7 @@ export class AddNewPricingtoolPopupComponent implements OnInit {
       if(data=="addnew-pricngtool"){
         console.log(this.filter_model , "filter model...")
         console.log(this.count_ret , "count ret.........")
+        if(this.count_ret){
         if(this.count_ret["retailers"].length == 0){
          
           this.hierarchy_model.forEach(d=>{
@@ -72,6 +73,8 @@ export class AddNewPricingtoolPopupComponent implements OnInit {
             
           })
         }
+
+      }
 
       }
     })
@@ -158,16 +161,16 @@ return ret
   }
   valueChangeSelectProduct(event:any , retailer){
     // debugger
-    console.log(event , "event")
-    console.log(retailer , "retailer")
-    console.log(this.hierarchy_model , "hier model init")
+    // console.log(event , "event")
+    // console.log(retailer , "retailer")
+    // console.log(this.hierarchy_model , "hier model init")
     
     let ret = this.hierarchy_model.filter(d=>d.value == retailer.value)[0]
     console.log(ret , "ret...")
     
     ret.child.filter(ch=>ch.value == event.value)[0].checked = event.checked
     ret.checked = this.checkTrue(ret.child)
-    console.log(ret , "retttt after fin")
+    // console.log(ret , "retttt after fin")
     // console.log()
     // if(this.checkTrue(ret.child)){
     //   ret.checked = true
@@ -176,7 +179,7 @@ return ret
 
     
     
-console.log(this.hierarchy_model , "hier model")
+// console.log(this.hierarchy_model , "hier model")
     // retailer.checked = true
   }
   apply(){
@@ -184,17 +187,26 @@ console.log(this.hierarchy_model , "hier model")
   
     // console.log(data , "genrated data..")
 
-    // if(this.validateHier()){
-    //   this.filterApply.emit({
-    //   "key" : "Product groups"
-    // })
-
-    // }
-    this.filterApply.emit({
-      "key" : "Product groups"
+    if(this.validateHier()){
+      this.filterApply.emit({
+      "key" : "Product groups",
+       
     })
   }
+    // }
+    // this.filterApply.emit({
+    //   "key" : "Product groups"
+    // })
+  }
   ngOnChanges(changes: SimpleChanges) {
+   
+    for (let property in changes) {
+      if (property === 'heading') {
+        if(changes[property].currentValue ==  "select retailer and product"){
+          this.all_.checked = true
+        }
+
+      }}
     // console.log(changes , "changes")
  
      
